@@ -32,6 +32,7 @@ class KnpMenuSubscriber extends BaseMenuSubscriber implements EventSubscriberInt
 
     public function onKnpMenuEvent(KnpMenuEvent $event)
     {
+        dd($event);
         $env = $this->parameterBag->get('kernel.environment');
         $isAdmin = ('dev' == $env) || $this->security->isGranted("ROLE_ADMIN");
 

@@ -1,5 +1,5 @@
-name: n4
-type: php:8.0
+name: kpa
+type: php:8.1
 
 runtime:
     extensions:

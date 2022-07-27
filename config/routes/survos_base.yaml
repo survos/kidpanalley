@@ -1,0 +1,3 @@
+survos_landing: {path: /landing, controller: 'Survos\BaseBundle\Controller\LandingController::landing'}
+app_profile: {path: /landing, controller: 'Survos\BaseBundle\Controller\LandingController::landing'}
+app_logout: {path: /landing, controller: 'Survos\BaseBundle\Controller\LandingController::landing'}
