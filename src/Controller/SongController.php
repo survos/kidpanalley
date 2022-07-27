@@ -42,7 +42,7 @@ class SongController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route(path: '/{id}', name: 'song_show', methods: ['GET'])]
+    #[Route(path: '/{id}', name: 'song_show', methods: ['GET'], options: ['expose' => true])]
     public function show(Song $song) : Response
     {
         return $this->render('song/show.html.twig', [

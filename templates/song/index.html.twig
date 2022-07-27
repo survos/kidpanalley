@@ -5,6 +5,27 @@
 {% block body %}
     <h1>Song index</h1>
 
+    {% component api_grid with {
+        class: 'App\\Entity\\Song',
+        caller: _self,
+        columns: [
+            {name: '_actions', prefix: 'song_', actions: ['show']},
+            'id',
+            'year',
+            'school',
+            'title'
+        ]
+    } %}
+        {% block title %}
+            <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+        {% endblock %}
+        {% block youtubeId %}
+            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
+        {% endblock %}
+
+    {% endcomponent %}
+
+
     <table class="table table-condensed table-striped js-datatable">
         <thead>
             <tr>

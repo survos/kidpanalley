@@ -4,10 +4,21 @@ namespace App\Entity;
 
 use App\Repository\SongRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\BaseBundle\Entity\SurvosBaseEntity;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use Survos\Grid\Api\Filter\MultiFieldSearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    normalizationContext: ['groups' => 'song.read', 'rp']
+)]
+#[ApiFilter(OrderFilter::class, properties: ['title'])]
+#[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 class Song implements RouteParametersInterface, \Stringable
 {
@@ -16,18 +27,24 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['song.read'])]
     private $id;
     #[ORM\Column(type: 'text')]
+    #[Groups(['song.read'])]
     private $title;
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['song.read'])]
     private $date;
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['song.read'])]
     private $year;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['song.read'])]
     private $school;
     #[ORM\Column(type: 'text', nullable: true)]
     private $lyrics;
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.read'])]
     private $featuredArtist;
     #[ORM\Column(type: 'text', nullable: true)]
     private $recordingCredits;
@@ -42,8 +59,10 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'text', nullable: true)]
     private $publisher;
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.read'])]
     private $notes;
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['song.read'])]
     private $lyricsLength;
     public function getId(): ?int
     {
@@ -190,6 +209,7 @@ class Song implements RouteParametersInterface, \Stringable
 
         return $this;
     }
+    #[Groups(['song.read'])]
     public function getUniqueIdentifiers(): array
     {
         return ['id' => $this->getId()];
