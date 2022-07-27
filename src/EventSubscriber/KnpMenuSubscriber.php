@@ -14,24 +14,24 @@ class KnpMenuSubscriber extends BaseMenuSubscriber implements EventSubscriberInt
 {
     use KnpMenuHelperTrait;
 
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
-
-    /**
-     * @param AuthorizationCheckerInterface $security
-     */
-    private $security;
-
-    public function __construct(AuthorizationCheckerInterface $security, ParameterBagInterface $parameterBag)
+    public function __construct(
+        /**
+         * @param AuthorizationCheckerInterface $security
+         */
+        private readonly AuthorizationCheckerInterface $security,
+        private readonly ParameterBagInterface $parameterBag
+    )
     {
-        $this->security = $security;
-        $this->parameterBag = $parameterBag;
     }
 
     public function onKnpMenuEvent(KnpMenuEvent $event)
     {
+        $env = null;
+        $menu = null;
+        $songMenu = null;
+        $isAdmin = null;
+        $videoMenu = null;
+        $isSuperAdmin = null;
         dd($event);
         $env = $this->parameterBag->get('kernel.environment');
         $isAdmin = ('dev' == $env) || $this->security->isGranted("ROLE_ADMIN");
@@ -72,7 +72,7 @@ class KnpMenuSubscriber extends BaseMenuSubscriber implements EventSubscriberInt
         // ...
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
 //            KnpMenuEvent::class => 'onKnpMenuEvent',

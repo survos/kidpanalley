@@ -20,21 +20,12 @@ use Symfony\Component\Security\Core\Security;
 class NavbarUserSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var Security
-     */
-    protected $security;
-
-    /**
      * @param Security $security
      */
-    public function __construct(Security $security)
+    public function __construct(protected Security $security)
     {
-        $this->security = $security;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -43,9 +34,6 @@ class NavbarUserSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ShowUserEvent $event
-     */
     public function onShowUser(ShowUserEvent $event)
     {
 
@@ -59,8 +47,8 @@ class NavbarUserSubscriber implements EventSubscriberInterface
         $user = new UserModel();
         $user
             ->setId($myUser->getId())
-            ->setName($myUser->getUsername())
-            ->setUsername($myUser->getUsername())
+            ->setName($myUser->getUserIdentifier())
+            ->setUsername($myUser->getUserIdentifier())
             ->setIsOnline(true)
             ->setTitle('demo user')
             ->setAvatar('/bundles/adminlte/images/default_avatar.png')

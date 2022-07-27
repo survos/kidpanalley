@@ -11,25 +11,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[\Symfony\Component\Console\Attribute\AsCommand('app:load-data')]
 class LoadDataCommand extends Command
 {
-    protected static $defaultName = 'app:load-data';
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-    /**
-     * @var AppService
-     */
-    private $appService;
-
-    public function __construct(EntityManagerInterface $entityManager, AppService $appService, string $name = null)
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly AppService $appService, string $name = null)
     {
         parent::__construct($name);
-        $this->entityManager = $entityManager;
-        $this->appService = $appService;
     }
-
     protected function configure()
     {
         $this
@@ -38,7 +26,6 @@ class LoadDataCommand extends Command
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

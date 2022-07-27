@@ -34,9 +34,9 @@ class AdminMenu extends BaseAdminMenu implements AdminMenuInterface
 {
     use AdminMenuTrait;
 
-    public function __construct(private AuthorizationCheckerInterface $security,
+    public function __construct(private readonly AuthorizationCheckerInterface $security,
                                 protected Environment                 $twig,
-                                private ManagerRegistry $managerRegistry,
+                                private readonly ManagerRegistry $managerRegistry,
                                 protected UmbrellaAdminConfiguration  $configuration,
     )
     {
@@ -46,6 +46,7 @@ class AdminMenu extends BaseAdminMenu implements AdminMenuInterface
     public function buildMenu(MenuBuilder $builder, array $options)
     {
 
+        $subMenu = null;
         $options = (new OptionsResolver())
             ->setDefaults([
                 'jurisdiction' => null

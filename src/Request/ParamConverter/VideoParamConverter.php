@@ -14,14 +14,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class VideoParamConverter implements ParamConverterInterface
 {
 
-    private $registry;
-
     /**
      * @param ManagerRegistry $registry Manager registry
      */
-    public function __construct(ManagerRegistry $registry = null)
+    public function __construct(private readonly ?\Doctrine\Persistence\ManagerRegistry $registry = null)
     {
-        $this->registry = $registry;
     }
 
     /**
@@ -29,7 +26,7 @@ class VideoParamConverter implements ParamConverterInterface
      *
      * Check, if object supported by our converter
      */
-    public function supports(ParamConverter $configuration)
+    public function supports(ParamConverter $configuration): bool
     {
         return Video::class == $configuration->getClass();
     }

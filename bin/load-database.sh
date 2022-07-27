@@ -9,3 +9,4 @@ echo "database $dbname now ready for migrations or restore"
 #bin/console doctrine:schema:update --force
 bin/console doctrine:migrations:migrate -n
 bin/create-admins.sh
+bin/console app:load-data

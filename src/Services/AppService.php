@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Entity\Song;
 use App\Entity\Video;
@@ -27,33 +25,18 @@ use Yectep\PhpSpreadsheetBundle\Factory;
 class AppService
 {
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-    private $serializer;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var Factory
-     */
-    private $spreadsheet;
-
-    public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, Factory $spreadsheet, LoggerInterface $logger)
+    public function __construct(private readonly EntityManagerInterface $em,
+                                private readonly SerializerInterface $serializer,
+                                private readonly Factory $spreadsheet,
+                                private readonly LoggerInterface $logger)
     {
-        $this->em = $em;
-        $this->serializer = $serializer;
-        $this->logger = $logger;
-        $this->spreadsheet = $spreadsheet;
     }
 
     private function getText($elements)
     {
         $text = '';
         foreach ($elements as $element) {
-            $elementClass =  get_class($element);
+            $elementClass =  $element::class;
             switch ($elementClass) {
                 case PageBreak::class:
                     $text .= "\f";
@@ -128,16 +111,16 @@ class AppService
                 dd($absoluteFilePath, $phpWord);
                 */
 
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = shell_exec($cmd = sprintf('catdoc "%s"', $absoluteFilePath));
                 // split on formfeed
                 $songs = preg_split("|\f|", $text);
 
 
                 foreach ($songs as $songStr) {
-                    $lines = explode("\n", $songStr);
+                    $lines = explode("\n", (string) $songStr);
                     // remove all blank lines
-                    $lines = array_filter($lines, function ($str) { return !empty(trim($str)); });
+                    $lines = array_filter($lines, fn($str) => !empty(trim((string) $str)));
                     // we could go through each line and see if a title matches.  For now, just use the first line as the title.
                     //
                     $title = array_shift($lines);
@@ -164,6 +147,7 @@ class AppService
 
     public function loadSongs()
     {
+        $em = null;
         /** @var Xls $readerXlsx */
         $readerXlsx  = $this->spreadsheet->createReader('Xls');
         /** @var Spreadsheet $spreadsheet */
@@ -200,7 +184,7 @@ class AppService
                         $song
                             ->setDate(new \DateTimeImmutable($data['date']));
                         $song->setYear((int)$song->getDate()->format('Y'));
-                    } catch (\Exception $e) {
+                    } catch (\Exception) {
                         $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
                     }
                 }
@@ -209,7 +193,7 @@ class AppService
                         ->setYear((int)$data['year']);
                 }
 
-                $song->setNotes(json_encode($data));
+                $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
                 array_push($songs, $song);
                 // dump($data);
             }
@@ -222,26 +206,21 @@ class AppService
         $em->flush();
     }
 
-    /**
-     * @Cache(expires="tomorrow", public=true)
-     */
+    #[Cache(expires: 'tomorrow', public: true)]
     private function fetchUrl($url)
     {
         $client = HttpClient::create();
         $response = $client->request('GET', $url);
-
         switch ($response->getStatusCode()) {
             case 403:
-                $errors = json_decode($response->getContent(false), FALSE);
+                $errors = json_decode($response->getContent(false), FALSE, 512, JSON_THROW_ON_ERROR);
                 dd($url, $errors->error);
                 break;
             case 200:
                 $list = $response->toArray();
-                $list = json_decode(json_encode($list), FALSE);
+                $list = json_decode(json_encode($list, JSON_THROW_ON_ERROR), FALSE, 512, JSON_THROW_ON_ERROR);
                 return $list;
         }
-
-
     }
 
     public function testGoogleApi()
@@ -261,7 +240,10 @@ class AppService
             echo $item['volumeInfo']['title'], "<br /> \n";
         }
     }
-    public function fetchYoutubeChannel($key, $channelId)
+    /**
+     * @return \App\Entity\Video[]
+     */
+    public function fetchYoutubeChannel($key, $channelId): array
     {
         $videos = [];
         $next = '';

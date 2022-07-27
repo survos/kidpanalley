@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-class DocxConversion{
-    private $filename;
+use DOMDocument;
+use ZipArchive;
 
-    public function __construct($filePath) {
-        $this->filename = $filePath;
+class DocxConversion{
+    public function __construct(private $filename)
+    {
     }
 
     private function read_doc() {
@@ -67,8 +68,8 @@ class DocxConversion{
         if(true === $zip_handle->open($input_file)){
             if(($xml_index = $zip_handle->locateName($xml_filename)) !== false){
                 $xml_datas = $zip_handle->getFromIndex($xml_index);
-                $xml_handle = DOMDocument::loadXML($xml_datas, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
-                $output_text = strip_tags($xml_handle->saveXML());
+                $xml_handle = (new DOMDocument())->loadXML($xml_datas, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
+                $output_text = strip_tags((string) $xml_handle->saveXML());
             }else{
                 $output_text .="";
             }
@@ -87,8 +88,8 @@ class DocxConversion{
             $slide_number = 1; //loop through slide files
             while(($xml_index = $zip_handle->locateName("ppt/slides/slide".$slide_number.".xml")) !== false){
                 $xml_datas = $zip_handle->getFromIndex($xml_index);
-                $xml_handle = DOMDocument::loadXML($xml_datas, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
-                $output_text .= strip_tags($xml_handle->saveXML());
+                $xml_handle = (new DOMDocument())->loadXML($xml_datas, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
+                $output_text .= strip_tags((string) $xml_handle->saveXML());
                 $slide_number++;
             }
             if($slide_number == 1){
@@ -108,7 +109,7 @@ class DocxConversion{
             return "File Not exists";
         }
 
-        $fileArray = pathinfo($this->filename);
+        $fileArray = pathinfo((string) $this->filename);
         $file_ext  = $fileArray['extension'];
         if($file_ext == "doc" || $file_ext == "docx" || $file_ext == "xlsx" || $file_ext == "pptx")
         {

@@ -25,35 +25,15 @@ use Yectep\PhpSpreadsheetBundle\Factory;
 
 class AppController extends AbstractController
 {
-    /**
-     * @var Spreadsheet
-     */
-    private $spreadsheet;
-    /**
-     * @var Factory
-     */
-    private $factory;
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private readonly \Yectep\PhpSpreadsheetBundle\Factory $factory;
 
     private $auth;
 
-    const ENDPOINT = 'https://www.kidpanalley.org/wp-json/wp/v2/pages';
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    final const ENDPOINT = 'https://www.kidpanalley.org/wp-json/wp/v2/pages';
 
-    public function __construct(Factory $factory, Environment $twig, EntityManagerInterface $em)
+    public function __construct(private readonly Factory $spreadsheet, private readonly Environment $twig, private readonly EntityManagerInterface $em)
     {
-        $this->spreadsheet = $factory;
-        $this->factory = $factory;
-        $this->twig = $twig;
-
-
-        $this->em = $em;
+        $this->factory = $spreadsheet;
     }
 
     private function getAuth()
@@ -63,10 +43,8 @@ class AppController extends AbstractController
         return [$u, $p];
     }
 
-    /**
-     * @Route("/welcome", name="adminlte_welcome", methods={"GET"})
-     * @Route("/", name="app_homepage", methods={"GET"})
-     */
+    #[Route(path: '/welcome', name: 'adminlte_welcome', methods: ['GET'])]
+    #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
     public function homepage(SongRepository $songRepository)
     {
         $user = $this->getUser();
@@ -96,7 +74,7 @@ class AppController extends AbstractController
         /** @var Song $currentSong */
         $currentSong = null;
         $songLyrics = '';
-        foreach (explode("\n", $text) as $s) {
+        foreach (explode("\n", (string) $text) as $s) {
             $s = trim($s);
 
             // total hack, but too lazy to do it right
@@ -134,10 +112,7 @@ class AppController extends AbstractController
         return $this->em->getRepository(Song::class)->findAll();
     }
 
-    /**
-     *
-     * @Route("/song_credits", name="app_credits_page")
-     */
+    #[Route(path: '/song_credits', name: 'app_credits_page')]
     public function credits()
     {
         return $this->render('app/song_credits.html.twig', [
@@ -146,12 +121,10 @@ class AppController extends AbstractController
     }
 
 
-        /**
-     *
-     * @Route("/publish", name="app_publish")
-     */
+        #[Route(path: '/publish', name: 'app_publish')]
     public function publish(array $options)
     {
+        $song = null;
         $wordpressPagePayload = (new OptionsResolver())
             ->setDefaults(
                 [
@@ -169,12 +142,9 @@ class AppController extends AbstractController
             'content' => $content=$this->createPage($song)
         ];
         */
-
         $client = HttpClient::create();
-
         $method = 'POST';
         $endPoint = self::ENDPOINT;
-
         /*
         if ($wordpressId = $song->getWordpressPageId()) {
             // update instead of create
@@ -182,76 +152,56 @@ class AppController extends AbstractController
             // add id?
             // $method = 'PUT';
         } else {
-
+        
         }
         */
         $results = $client->request($method, $endPoint, $data = [
             'auth_basic' => $this->getAuth(),
             'json' => $wordpressPagePayload
         ]);
-
         /*
         $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
            'https://www.kidpanalley.org', $u, $p);
         dump($command);
-
+        
         $results = exec($command);
         */
-
-        $response = json_decode($results->getContent());
-
+        $response = json_decode($results->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $id = $response->id;
         $song->setWordpressPageId($id);
-
-
         dump($id, $endPoint, $data, $results, $response);
-
         /* lyrics-page, but is this different?
-        $client = HttpClient::create();
-        $endPoint = self::ENDPOINT . '/1870';
-        $results = $client->request('GET', $endPoint, $data = [
-            'auth_basic' => $this->getAuth(),
-        ]);
-        $lyricsPage = json_decode($results->getContent());
-        */
-
-
+           $client = HttpClient::create();
+           $endPoint = self::ENDPOINT . '/1870';
+           $results = $client->request('GET', $endPoint, $data = [
+               'auth_basic' => $this->getAuth(),
+           ]);
+           $lyricsPage = json_decode($results->getContent());
+           */
     }
 
-    /**
-     *
-     * @Route("/load-kpa-channel", name="app_load_youtube_channel")
-     */
+    #[Route(path: '/load-kpa-channel', name: 'app_load_youtube_channel')]
     public function loadYoutubeChannel(EntityManagerInterface $em, LoggerInterface $logger, ParameterBagInterface $bag, AppService $appService)
     {
         $key = $bag->get('youtube_api_key');
         $channel = $bag->get('youtube_channel');
         $videos = $appService->fetchYoutubeChannel($key, $channel);
         return $this->redirectToRoute('video_index');
-
     }
 
-    /**
-     *
-     * @Route("/load-kpa-songs", name="app_load_songs")
-     */
+    #[Route(path: '/load-kpa-songs', name: 'app_load_songs')]
     public function loadSongs(AppService $appService)
     {
         $appService->loadSongs();
         return $this->redirectToRoute('song_index');
-
         return $this->render('app/index.html.twig', [
             'lyrics' => $lyrics,
             'songs' => $songs
         ]);
-
     }
 
 
-    /**
-     *
-     * @Route("/load-lyrics-from-files", name="app_load_lyrics")
-     */
+    #[Route(path: '/load-lyrics-from-files', name: 'app_load_lyrics')]
     public function index(AppService $appService, EntityManagerInterface $em)
     {
         $dir = __DIR__ . '/../../data/lyrics';
@@ -259,14 +209,9 @@ class AppController extends AbstractController
         return $this->redirectToRoute('song_index', ['lyrics_only' => true]);
     }
 
-    /**
-     *
-     * @Route("/load-best-friends", name="app_load_best_friends")
-     */
+    #[Route(path: '/load-best-friends', name: 'app_load_best_friends')]
     public function bestFriends(EntityManagerInterface $em)
     {
-
-
         /** @var Xls $readerXlsx */
         $readerXlsx  = $this->spreadsheet->createReader('Xlsx');
         /** @var Spreadsheet $spreadsheet */
@@ -275,42 +220,36 @@ class AppController extends AbstractController
         } catch (\Exception $exception) {
             dd($exception);
         }
-
-
-
         /** @var Worksheet $sheet */
         $sheet = $spreadsheet->getActiveSheet();
-            foreach ($sheet->toArray() as $idx=>$row) {
-                if ($idx === 0) {
-                    $header = $row;
-                } else {
-                    $data = array_combine($header, $row);
-                    $title = $data['Song Title'];
-                    if (!$title) {
-                        continue;
-                    }
-                    // look for the title
-                    dump($data);
-                    if (!$song = $em->getRepository(Song::class)->findOneBy(['title' => $title])) {
-                        $song = (new Song())
-                            ->setTitle($title);
-                        $em->persist($song);
-                    }
-                    $song
-                        ->setWriters($data['Writers'])
-                        ->setMusicians($data['Musicians'])
-                        ->setRecordingCredits($data['Recording Credits'])
-                        ->setFeaturedArtist($data['Featured Artist']);
-                    $this->createPage($song);
-                    $em->flush();
+        foreach ($sheet->toArray() as $idx=>$row) {
+            if ($idx === 0) {
+                $header = $row;
+            } else {
+                $data = array_combine($header, $row);
+                $title = $data['Song Title'];
+                if (!$title) {
+                    continue;
                 }
+                // look for the title
+                dump($data);
+                if (!$song = $em->getRepository(Song::class)->findOneBy(['title' => $title])) {
+                    $song = (new Song())
+                        ->setTitle($title);
+                    $em->persist($song);
+                }
+                $song
+                    ->setWriters($data['Writers'])
+                    ->setMusicians($data['Musicians'])
+                    ->setRecordingCredits($data['Recording Credits'])
+                    ->setFeaturedArtist($data['Featured Artist']);
+                $this->createPage($song);
+                $em->flush();
             }
-
-            $songs = $this->getSongs();
+        }
+        $songs = $this->getSongs();
         $lyrics = $this->loadBestFriendsLyrics($songs);
-
         // dd($spreadsheet);
-
         return $this->render('app/index.html.twig', [
             'controller_name' => 'AppController',
             'lyrics' => $lyrics,
