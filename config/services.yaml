@@ -7,6 +7,7 @@ parameters:
   api_username: '%env(API_USERNAME)%'
   api_password: '%env(API_PASSWORD)%'
   youtube_api_key: '%env(YOUTUBE_API_KEY)%'
+  youtube_channel: '%env(YOUTUBE_CHANNEL)%'
   router.request_context.scheme: 'https' # needed for oauth login?
 
 services:

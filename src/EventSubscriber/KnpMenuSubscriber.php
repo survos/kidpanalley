@@ -75,7 +75,7 @@ class KnpMenuSubscriber extends BaseMenuSubscriber implements EventSubscriberInt
     {
         return [
 //            KnpMenuEvent::class => 'onKnpMenuEvent',
-            MenuBuilder::SIDEBAR_MENU_EVENT => 'onKnpMenuEvent',
+            KnpMenuEvent::SIDEBAR_MENU_EVENT => 'onKnpMenuEvent',
         ];
     }
 }

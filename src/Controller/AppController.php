@@ -225,7 +225,8 @@ class AppController extends AbstractController
     public function loadYoutubeChannel(EntityManagerInterface $em, LoggerInterface $logger, ParameterBagInterface $bag, AppService $appService)
     {
         $key = $bag->get('youtube_api_key');
-        $videos = $appService->fetchYoutubeChannel($key, 'UCt7IqS6nJWbJk6HByzJs5Tg');
+        $channel = $bag->get('youtube_channel');
+        $videos = $appService->fetchYoutubeChannel($key, $channel);
         return $this->redirectToRoute('video_index');
 
     }

@@ -230,13 +230,37 @@ class AppService
         $client = HttpClient::create();
         $response = $client->request('GET', $url);
 
-        $list = $response->toArray();
+        switch ($response->getStatusCode()) {
+            case 403:
+                $errors = json_decode($response->getContent(false), FALSE);
+                dd($url, $errors->error);
+                break;
+            case 200:
+                $list = $response->toArray();
+                $list = json_decode(json_encode($list), FALSE);
+                return $list;
+        }
 
-        $list = json_decode(json_encode($list), FALSE);
-        return $list;
 
     }
 
+    public function testGoogleApi()
+    {
+        $client = new Google\Client();
+        $client->setApplicationName("Client_Library_Examples");
+        $client->setDeveloperKey("YOUR_APP_KEY");
+
+        $service = new Google\Service\Books($client);
+        $query = 'Henry David Thoreau';
+        $optParams = [
+            'filter' => 'free-ebooks',
+        ];
+        $results = $service->volumes->listVolumes($query, $optParams);
+
+        foreach ($results->getItems() as $item) {
+            echo $item['volumeInfo']['title'], "<br /> \n";
+        }
+    }
     public function fetchYoutubeChannel($key, $channelId)
     {
         $videos = [];

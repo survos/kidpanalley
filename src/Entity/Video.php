@@ -95,7 +95,7 @@ class Video extends SurvosBaseEntity
         return $this;
     }
 
-    function getUniqueIdentifiers()
+    public function getUniqueIdentifiers(): array
     {
         return ['videoId' => $this->getYoutubeId()];
     }

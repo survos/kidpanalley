@@ -1,0 +1,106 @@
+name: n4
+type: php:8.0
+
+runtime:
+    extensions:
+        - apcu
+        - mbstring
+        - json
+        - amqp
+        - apcu
+        - bcmath
+        - gd
+        - intl
+        - curl
+        - mysqli
+        - pdo_pgsql
+        - xsl
+        - sodium
+    sizing_hints:
+        # values are considered megabytes
+        request_memory: 10
+        reserved_memory: 70
+
+variables:
+  php-ext:
+    redis: 5.3.1
+
+
+build:
+    flavor: none
+
+web:
+    locations:
+        "/":
+            root: "public"
+            expires: 1h
+            passthru: "/index.php"
+        '/upload':
+            root: 'public/upload'
+            scripts: false
+            allow: true
+
+
+disk: 1200
+
+crons:
+  scrape_sites:
+    spec: '*/5 * * * *'
+    cmd: croncape bin/console app:scrape-sites --limit 50
+
+  snapshot:
+    # everyday at 5AM
+    spec: 0 5 * * *
+    cmd: |
+      # only snapshot the master environment, aka production
+      if [ "$SYMFONY_BRANCH" = master ]; then
+          croncape symfony env:snapshot:create --no-wait
+      fi
+
+  renewcert:
+    # Force a redeploy at 10 am (UTC) on the 1st and 15th of every month.
+    # for the master branch, aka production
+    spec: '0 10 1,15 * *'
+    cmd: |
+      if [ "$SYMFONY_BRANCH" = master ]; then
+          croncape symfony redeploy --no-wait
+      fi
+
+workers:
+    message_consumer:
+      size: XS
+      resources:
+          base_memory: 64 # Keep in sync with the `memory-limit` flag value
+          memory_ratio: 128
+
+      commands:
+          start: symfony console messenger:consume high normal low -v --time-limit=3600 --memory-limit=64M
+
+relationships:
+    redis: "redis:redis"
+    database: "news_database:postgresql"
+    rabbitmq: "hhrabbitmq:rabbitmq"
+    elasticsearch: "news_search7:elasticsearch"
+
+mounts:
+    "/var": { source: local, source_path: var }
+    '/public/scrape': { source: service, service: files, source_path: scrape }
+
+hooks:
+    build: |
+        set -x -e
+
+        curl -s https://get.symfony.com/cloud/configurator | (>&2 bash)
+          (>&2
+            # php-ext-install redis https://github.com/phpredis/phpredis.git 5.2.2
+            php-ext-install redis 5.3.1
+            symfony-build
+          )
+
+    deploy: |
+        set -x -e
+        (>&2
+          symfony-deploy
+        )
+
+

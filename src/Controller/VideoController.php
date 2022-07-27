@@ -21,7 +21,7 @@ class VideoController extends AbstractController
     public function index(VideoRepository $videoRepository): Response
     {
         return $this->render('video/index.html.twig', [
-            'videos' => $videoRepository->findBy([], null, 30),
+            'videos' => $videoRepository->findBy([], ['id' => 'DESC'], 30),
             'videoCount' => $videoRepository->count([])
         ]);
     }

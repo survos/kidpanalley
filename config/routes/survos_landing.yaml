@@ -17,7 +17,7 @@ app_change_password: {path: /change-password, controller: 'Survos\BaseBundle\Con
 app_typography: {path: /typography, controller: 'Survos\BaseBundle\Controller\LandingController::typography'}
 survos_landing_credits: {path: /credits, controller: 'Survos\BaseBundle\Controller\LandingController::credits'}
 
-survos_landing_bundle_oauth:
-    resource: '@SurvosBaseBundle/Controller/OAuthController.php'
-    prefix: /
-    type: annotation
+#survos_landing_bundle_oauth:
+#    resource: '@SurvosBaseBundle/Controller/OAuthController.php'
+#    prefix: /
+#    type: annotation

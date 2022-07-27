@@ -263,7 +263,7 @@ class Song extends SurvosBaseEntity
         return $this;
     }
 
-    function getUniqueIdentifiers()
+    public function getUniqueIdentifiers(): array
     {
         return ['id' => $this->getId()];
     }
