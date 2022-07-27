@@ -1,5 +1,5 @@
 api_platform:
-    metadata_backward_compatibility_layer: false
+#    metadata_backward_compatibility_layer: false
 
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
@@ -7,6 +7,10 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
+
+    graphql:
+        # Enabled by default with installed webonyx/graphql-php.
+        enabled: false
 
     defaults:
         pagination_client_items_per_page: true

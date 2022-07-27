@@ -121,7 +121,7 @@ class AppController extends AbstractController
     }
 
 
-        #[Route(path: '/publish', name: 'app_publish')]
+    #[Route(path: '/publish', name: 'app_publish')]
     public function publish(array $options)
     {
         $song = null;
@@ -152,7 +152,7 @@ class AppController extends AbstractController
             // add id?
             // $method = 'PUT';
         } else {
-        
+
         }
         */
         $results = $client->request($method, $endPoint, $data = [
@@ -163,7 +163,7 @@ class AppController extends AbstractController
         $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
            'https://www.kidpanalley.org', $u, $p);
         dump($command);
-        
+
         $results = exec($command);
         */
         $response = json_decode($results->getContent(), null, 512, JSON_THROW_ON_ERROR);
