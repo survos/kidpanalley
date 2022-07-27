@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Video</h1>
 
-    {{ dump(video) }}
+{#    {{ dump(video.rawData) }}#}
 
     <object width="420" height="315"
             data="https://www.youtube.com/embed/{{ video.youtubeId }}">

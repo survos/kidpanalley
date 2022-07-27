@@ -250,11 +250,13 @@ class AppService
         $next = '';
         $repo = $this->em->getRepository(Video::class);
         do {
-            $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=250&channelId=$channelId&type=video&key=$key&pageToken=$next");
+            $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
             $list = $this->fetchUrl($url);
             $next = $list->nextPageToken ?? false;
-            foreach ($list->items as $item) {
-                $item = (object) $item;
+            foreach ($list->items as $rawData) {
+//                dump($rawData);
+//                dump(json_encode($rawData));
+                $item = (object) $rawData;
                 $id = $item->id->videoId;
                 if (!$video = $repo->findOneBy(['youtubeId' => $id])) {
                     $video = (new Video())
@@ -262,7 +264,10 @@ class AppService
                     $this->em->persist($video);
                 }
                 $snippet = $item->snippet;
+                $raw = json_decode(json_encode($rawData), true);
+                assert($raw, "Raw is null");
                 $video
+                    ->setRawData($raw)
                     ->setTitle($snippet->title)
                     ->setDescription($snippet->description);
                 $video->setDate(new \DateTimeImmutable($snippet->publishedAt));

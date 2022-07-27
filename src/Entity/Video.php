@@ -40,6 +40,9 @@ class Video implements RouteParametersInterface
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['video.read'])]
     private $date;
+
+    #[ORM\Column(nullable: true)]
+    private array $rawData = [];
     public function getId(): ?int
     {
         return $this->id;
@@ -92,5 +95,17 @@ class Video implements RouteParametersInterface
     public function getUniqueIdentifiers(): array
     {
         return ['videoId' => $this->getYoutubeId()];
+    }
+
+    public function getRawData(): array|object|null
+    {
+        return $this->rawData;
+    }
+
+    public function setRawData(array $rawData): self
+    {
+        $this->rawData = $rawData;
+
+        return $this;
     }
 }
