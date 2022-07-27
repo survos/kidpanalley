@@ -1,9 +1,8 @@
-# config/packages/api_platform.yaml
 api_platform:
+    metadata_backward_compatibility_layer: false
+
     mapping:
-        paths:
-            - '%kernel.project_dir%/src/Entity'
-#            - '%kernel.project_dir%/config/api_platform' # yaml or xml directory configuration
+        paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
@@ -13,7 +12,38 @@ api_platform:
         pagination_client_items_per_page: true
         pagination_enabled: true
         pagination_client_enabled: false
-        # To allow partial pagination for all resource collections.
+          # To allow partial pagination for all resource collections.
         # This improves performances by skipping the `COUNT` query.
         pagination_partial: false
         pagination_items_per_page: 40
+
+    collection:
+        # The name of the query parameter to filter nullable results (with the ExistsFilter).
+        exists_parameter_name: 'exists'
+
+        # The default order of results.
+        order: 'ASC'
+
+        # The name of the query parameter to order results (with the OrderFilter).
+        order_parameter_name: 'order'
+
+#        pagination:
+#
+#            # To allow the client to enable or disable the pagination.
+#            client_enabled: false
+#
+#            # To allow the client to set the number of items per page.
+#            client_items_per_page: true
+#
+#            # The default number of items per page.
+#            items_per_page: 40
+
+
+#services:
+#    App\Api\Filter\MultiFieldSearchFilter:
+#        arguments:
+#            $searchParameterName: 'ignoored'
+
+#    Survos\Grid\Api\DataProvider\DataTablesCollectionProvider:
+#            bind:
+#                $collectionDataProvider: '@api_platform.doctrine.orm.default.collection_data_provider'

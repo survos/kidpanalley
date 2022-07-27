@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4caeb6a5b6ed2dd962403cd0ebcf354",
+    "content-hash": "0aaf0cdd366e6a5700aab0fb18c692d5",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4874,10 +4874,16 @@
         {
             "name": "survos/base-bundle",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "//home/tac/survos/bundles/base-bundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/BaseBundle.git",
                 "reference": "80982967d4dccc73971c61a9dec0dbee5acc704f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/BaseBundle/zipball/80982967d4dccc73971c61a9dec0dbee5acc704f",
+                "reference": "80982967d4dccc73971c61a9dec0dbee5acc704f",
+                "shasum": ""
             },
             "require": {
                 "api-platform/core": "^2.6 || ^3.0",
@@ -4929,6 +4935,7 @@
                 "twig/markdown-extra": "use markdown_to_html filter",
                 "zenstruck/foundry": "for easily creating fixtures"
             },
+            "default-branch": true,
             "bin": [
                 "bin/reset-postgres-database"
             ],
@@ -4979,9 +4986,11 @@
                 "generator",
                 "symfony5"
             ],
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "source": "https://github.com/survos/BaseBundle/tree/master",
+                "issues": "https://github.com/survos/BaseBundle/issues"
+            },
+            "time": "2022-07-25T19:21:43+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
@@ -5093,20 +5102,20 @@
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "6d44e51a0f54ef9838d5f2935c961562a9bc3084"
+                "reference": "ab2306a959e5cc70529bfdc01efdcd7ca3f8de23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/6d44e51a0f54ef9838d5f2935c961562a9bc3084",
-                "reference": "6d44e51a0f54ef9838d5f2935c961562a9bc3084",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/ab2306a959e5cc70529bfdc01efdcd7ca3f8de23",
+                "reference": "ab2306a959e5cc70529bfdc01efdcd7ca3f8de23",
                 "shasum": ""
             },
             "require": {
-                "api-platform/core": "^2.6",
+                "api-platform/core": "^2.7 || ^3.0",
                 "doctrine/doctrine-bundle": "^2.7",
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
@@ -5129,6 +5138,14 @@
                 "symfony/webpack-encore-bundle": "^1.11"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                },
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Survos\\Grid\\": "src/"
@@ -5151,9 +5168,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.0.2"
+                "source": "https://github.com/survos/SurvosGridBundle/tree/1.0.3"
             },
-            "time": "2022-06-23T13:28:33+00:00"
+            "time": "2022-07-27T12:26:47+00:00"
         },
         {
             "name": "symfony/asset",

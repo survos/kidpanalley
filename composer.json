@@ -26,8 +26,8 @@
         "nelmio/cors-bundle": "^2.1",
         "phpoffice/phpword": "dev-master",
         "sensio/framework-extra-bundle": "^6.2",
-        "survos/base-bundle": "*@dev",
-        "survos/grid-bundle": "^1.0",
+        "survos/base-bundle": "dev-master",
+        "survos/grid-bundle": "^1.0.3",
         "symfony/asset": "^6.0",
         "symfony/console": "^6.0",
         "symfony/dotenv": "^6.0",
@@ -93,10 +93,6 @@
         "symfony/polyfill-php56": "*"
     },
     "repositories": {
-        "base": {
-            "type": "path",
-            "url": "//home/tac/survos/bundles/base-bundle"
-        },
         "survos_base_bundle": {
             "type": "vcs",
             "url": "git@github.com:survos/BaseBundle.git"
@@ -113,6 +109,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
+            "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
             "doctrine:migrations:migrate -n": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
@@ -129,7 +126,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "^6.0"
+            "require": "^6.1"
         }
     }
 }

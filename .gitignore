@@ -24,3 +24,5 @@ yarn-error.log
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+/public/js/fos_js_routes.json

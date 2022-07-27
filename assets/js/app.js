@@ -3,6 +3,9 @@ require('bootstrap');
 require('Hinclude/hinclude');
 require('../css/app.scss');
 
+// start the Stimulus application
+import './../bootstrap';
+
 // require('admin-lte'); // This comes from yarn add admin-lte (not the admin-lte bundle, which includes bootstrap).
 // require('jquery-sparkline');
 

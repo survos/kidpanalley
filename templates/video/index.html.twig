@@ -3,41 +3,27 @@
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    <h1>Video (Showing {{ videos|length }} of {{ videoCount }}</h1>
+    <h1>Youtube videos ({{ videoCount }})</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>YoutubeId</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for video in videos %}
-            <tr>
-                <td>{{ video.id }}</td>
-                <td><a href="{{ path('video_show', video.rp) }}">{{ video.youtubeId }}</a></td>
-                <td>{{ video.title|raw }}</td>
-                <td>{{ video.description|escape }}</td>
-                <td>{{ video.date ? video.date|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('video_show', video.rp) }}">show</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('video_edit', video.rp) }}">edit</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% component api_grid with {
+        class: 'App\\Entity\\Video',
+        caller: _self,
+        columns: [
+            {name: '_actions', prefix: 'video_', actions: ['show']},
+        'id',
+            'youtubeId',
+            'title',
+            'description',
+            'date'
+        ]
+    } %}
+        {% block title %}
+            <a href="{{ path('video_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+        {% endblock %}
+        {% block youtubeId %}
+            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
+        {% endblock %}
 
-    <a href="{{ path('video_new') }}">Create new</a>
+    {% endcomponent %}
+
 {% endblock %}

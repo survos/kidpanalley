@@ -2,16 +2,23 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
+use Survos\Grid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     normalizationContext: ['groups' => 'video.read', 'rp']
 )]
+#[ApiFilter(OrderFilter::class, properties: ['title'])]
+#[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video implements RouteParametersInterface
 {
@@ -81,6 +88,7 @@ class Video implements RouteParametersInterface
 
         return $this;
     }
+    #[Groups(['rp','video.read'])]
     public function getUniqueIdentifiers(): array
     {
         return ['videoId' => $this->getYoutubeId()];

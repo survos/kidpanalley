@@ -42,7 +42,7 @@ class VideoController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route(path: '/{videoId}', name: 'video_show', methods: ['GET'])]
+    #[Route(path: '/{videoId}', name: 'video_show', methods: ['GET'], options: ['expose' => true])]
     public function show(Video $video) : Response
     {
         return $this->render('video/show.html.twig', [
