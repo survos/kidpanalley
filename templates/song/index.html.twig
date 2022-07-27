@@ -26,55 +26,5 @@
     {% endcomponent %}
 
 
-    <table class="table table-condensed table-striped js-datatable">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Year</th>
-                <th>School</th>
-                <th>Lyrics</th>
-                <th>FeaturedArtist</th>
-                <th>RecordingCredits</th>
-                <th>Musicians</th>
-                <th>Writers</th>
-                <th>WordpressPageId</th>
-                <th>Recording</th>
-                <th>Publisher</th>
-                <th>Notes</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for song in songs %}
-            <tr>
-                <td>{{ song.id }}</td>
-                <td><a href="{{ path('song_show', song.rp) }}">{{ song.title }}</a></td>
-                <td>{{ song.date ? song.date|date('Y-m-d') : '' }}</td>
-                <td>{{ song.year }}</td>
-                <td>{{ song.school }}</td>
-                <td>{{ song.lyricsLength }}</td>
-                <td>{{ song.featuredArtist }}</td>
-                <td>{{ song.recordingCredits }}</td>
-                <td>{{ song.musicians }}</td>
-                <td>{{ song.writers }}</td>
-                <td>{{ song.wordpressPageId }}</td>
-                <td>{{ song.recording }}</td>
-                <td>{{ song.publisher }}</td>
-                <td>{{ song.notes }}</td>
-                <td>
-                    <a href="{{ path('song_show', {'id': song.id}) }}">show</a>
-                    <a href="{{ path('song_edit', {'id': song.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="15">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('song_new') }}">Create new</a>
 {% endblock %}

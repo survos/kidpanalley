@@ -37,9 +37,9 @@ class LoadDataCommand extends Command
         $key = $this->bag->get('youtube_api_key');
         $channel = $this->bag->get('youtube_channel');
         $this->appService->fetchYoutubeChannel($key, $channel);
+        $io->success('Videos Loaded');
 
-//        $this->appService->loadSongs();
-
+        $this->appService->loadSongs();
         $io->success('Songs Loaded');
 
         return 0;
