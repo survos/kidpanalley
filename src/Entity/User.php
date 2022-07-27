@@ -7,60 +7,43 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
- */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[ORM\Table(name: 'users')]
+#[ORM\Entity(repositoryClass: \App\Repository\UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     use \Survos\BaseBundle\Traits\GithubTrait;
     use \Survos\BaseBundle\Traits\FacebookTrait;
     use \Survos\BaseBundle\Traits\GoogleTrait;
-
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
      */
-    private $password;
-
+    #[ORM\Column(type: 'string')]
+    private ?string $password = null;
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
-
+    private bool $isVerified = false;
     public function getId(): ?int
     {
         return $this->id;
     }
-
     public function getEmail(): ?string
     {
         return $this->email;
     }
-
     public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -70,7 +53,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string) $this->email;
     }
-
     /**
      * @see UserInterface
      */
@@ -82,14 +64,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
         return $this;
     }
-
     /**
      * @see UserInterface
      */
@@ -97,14 +77,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string) $this->password;
     }
-
     public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
-
     /**
      * @see UserInterface
      */
@@ -112,7 +90,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
-
     /**
      * @see UserInterface
      */
@@ -121,12 +98,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getUsername();
     }
-
     public function setToken($clientKey, $token) {
         $method = 'set' . $clientKey . 'Id';
         if (method_exists($this, $method)) {
@@ -134,23 +109,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-
     public function getUserIdentifier(): string
     {
         return $this->getEmail();
     }
-
     public function isVerified(): bool
     {
         return $this->isVerified;
     }
-
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
 
         return $this;
     }
-
-
 }
