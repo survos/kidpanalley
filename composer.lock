@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8e7caae3f558d2ca8fb874573d7e6ff",
+    "content-hash": "942766599446dd3fe991ee42b4cdb6cb",
     "packages": [
         {
             "name": "api-platform/core",
@@ -5099,7 +5099,7 @@
         },
         {
             "name": "survos/grid-bundle",
-            "version": "dev-main",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
@@ -5134,7 +5134,6 @@
                 "symfony/var-dumper": "^6.1",
                 "symfony/webpack-encore-bundle": "^1.11"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -13592,7 +13591,6 @@
     "stability-flags": {
         "phpoffice/phpword": 20,
         "survos/base-bundle": 20,
-        "survos/grid-bundle": 20,
         "yectep/phpspreadsheet-bundle": 20
     },
     "prefer-stable": true,
