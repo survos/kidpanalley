@@ -27,7 +27,7 @@
         "phpoffice/phpword": "dev-master",
         "sensio/framework-extra-bundle": "^6.2",
         "survos/base-bundle": "dev-master",
-        "survos/grid-bundle": "*@dev",
+        "survos/grid-bundle": "dev-main",
         "symfony/asset": "^6.0",
         "symfony/console": "^6.0",
         "symfony/dotenv": "^6.0",
@@ -93,10 +93,6 @@
         "symfony/polyfill-php56": "*"
     },
     "repositories": {
-        "grid": {
-            "type": "path",
-            "url": "//home/tac/survos/bundles/grid-bundle"
-        },
         "survos_base_bundle": {
             "type": "vcs",
             "url": "git@github.com:survos/BaseBundle.git"
