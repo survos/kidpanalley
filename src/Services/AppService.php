@@ -209,6 +209,7 @@ class AppService
     #[Cache(expires: 'tomorrow', public: true)]
     private function fetchUrl($url)
     {
+
         $client = HttpClient::create();
         $response = $client->request('GET', $url);
         switch ($response->getStatusCode()) {
@@ -249,7 +250,7 @@ class AppService
         $next = '';
         $repo = $this->em->getRepository(Video::class);
         do {
-            $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
+            $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=250&channelId=$channelId&type=video&key=$key&pageToken=$next");
             $list = $this->fetchUrl($url);
             $next = $list->nextPageToken ?? false;
             foreach ($list->items as $item) {
@@ -268,7 +269,6 @@ class AppService
 
                 array_push($videos, $video);
             }
-
         } while ($next);
         $this->em->flush();
         // dd($list);
