@@ -53,12 +53,14 @@ class AdminMenu extends BaseAdminMenu implements AdminMenuInterface
             ])->resolve($options);
 
         $rootMenu = $builder->root();
+        $menu = $rootMenu;
 
 
         $lvl = 0;
         $taxMenu = $this->addMenuItem($rootMenu, ['label' => 'Songs', 'style' => 'header', 'icon' => 'fas fa-home']);
 
-        $this->addMenuItem($taxMenu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
+        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
+        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
         return;
         $this->addMenuItem($taxMenu, ['label' => 'Nueva con wiki', 'route' => 'wiki_new_entity']);
 

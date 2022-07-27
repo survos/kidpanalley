@@ -125,6 +125,18 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.1"
     },
+    "friendsofsymfony/jsrouting-bundle": {
+        "version": "3.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.3",
+            "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
+        },
+        "files": [
+            "config/routes/fos_js_routing.yaml"
+        ]
+    },
     "google/apiclient": {
         "version": "2.0",
         "recipe": {
@@ -417,6 +429,9 @@
     },
     "survos/core-bundle": {
         "version": "1.0.7"
+    },
+    "survos/grid-bundle": {
+        "version": "1.0.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "6.2-dev"
@@ -764,6 +779,9 @@
             "config/routes/dev/twig.yaml",
             "templates/base.html.twig"
         ]
+    },
+    "symfony/ux-twig-component": {
+        "version": "v2.3.0"
     },
     "symfony/validator": {
         "version": "4.3",

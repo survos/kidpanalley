@@ -26,4 +26,7 @@ return [
     Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
     Survos\BootstrapBundle\SurvosBootstrapBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+    FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+    Survos\Grid\SurvosGridBundle::class => ['all' => true],
 ];

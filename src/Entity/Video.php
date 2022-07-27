@@ -2,23 +2,36 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\BaseBundle\Entity\SurvosBaseEntity;
+use Survos\CoreBundle\Entity\RouteParametersInterface;
+use Survos\CoreBundle\Entity\RouteParametersTrait;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: \App\Repository\VideoRepository::class)]
-class Video extends SurvosBaseEntity
+#[ApiResource(
+    normalizationContext: ['groups' => 'video.read', 'rp']
+)]
+#[ORM\Entity(repositoryClass: VideoRepository::class)]
+class Video implements RouteParametersInterface
 {
+    use RouteParametersTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['video.read'])]
     private $id;
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
+    #[Groups(['video.read'])]
     private $youtubeId;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['video.read'])]
     private $title;
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['video.read'])]
     private $description;
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['video.read'])]
     private $date;
     public function getId(): ?int
     {

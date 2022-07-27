@@ -1,4 +1,15 @@
 {
-    "controllers": [],
+    "controllers": {
+        "@survos/grid-bundle": {
+            "grid": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "api_grid": {
+                "enabled": true,
+                "fetch": "lazy"
+            }
+        }
+    },
     "entrypoints": []
 }

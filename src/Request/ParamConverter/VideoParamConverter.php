@@ -71,6 +71,7 @@ class VideoParamConverter implements ParamConverterInterface
 
         // Map found video to the route's parameter
         $request->attributes->set($configuration->getName(), $video);
+        return true;
     }
 
 }
