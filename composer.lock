@@ -972,34 +972,31 @@
         },
         {
             "name": "doctrine/event-manager",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/event-manager.git",
-                "reference": "41370af6a30faa9dc0368c4a6814d596e81aba7f"
+                "reference": "eb2ecf80e3093e8f3c2769ac838e27d8ede8e683"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/41370af6a30faa9dc0368c4a6814d596e81aba7f",
-                "reference": "41370af6a30faa9dc0368c4a6814d596e81aba7f",
+                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/eb2ecf80e3093e8f3c2769ac838e27d8ede8e683",
+                "reference": "eb2ecf80e3093e8f3c2769ac838e27d8ede8e683",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "conflict": {
-                "doctrine/common": "<2.9@dev"
+                "doctrine/common": "<2.9"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^6.0",
-                "phpunit/phpunit": "^7.0"
+                "doctrine/coding-standard": "^9",
+                "phpstan/phpstan": "~1.4.10 || ^1.5.4",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "vimeo/psalm": "^4.22"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Doctrine\\Common\\": "lib/Doctrine/Common"
@@ -1046,7 +1043,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/event-manager/issues",
-                "source": "https://github.com/doctrine/event-manager/tree/1.1.x"
+                "source": "https://github.com/doctrine/event-manager/tree/1.1.2"
             },
             "funding": [
                 {
@@ -1062,7 +1059,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-29T18:28:51+00:00"
+            "time": "2022-07-27T22:18:11+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -4874,12 +4871,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BaseBundle.git",
-                "reference": "80982967d4dccc73971c61a9dec0dbee5acc704f"
+                "reference": "39d62b6f3c422e22e3cf7e6dd30ebd18d15755f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/BaseBundle/zipball/80982967d4dccc73971c61a9dec0dbee5acc704f",
-                "reference": "80982967d4dccc73971c61a9dec0dbee5acc704f",
+                "url": "https://api.github.com/repos/survos/BaseBundle/zipball/39d62b6f3c422e22e3cf7e6dd30ebd18d15755f5",
+                "reference": "39d62b6f3c422e22e3cf7e6dd30ebd18d15755f5",
                 "shasum": ""
             },
             "require": {
@@ -4987,7 +4984,7 @@
                 "source": "https://github.com/survos/BaseBundle/tree/master",
                 "issues": "https://github.com/survos/BaseBundle/issues"
             },
-            "time": "2022-07-25T19:21:43+00:00"
+            "time": "2022-07-27T21:43:57+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
@@ -4995,12 +4992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
-                "reference": "b7814911c54dad81dc6952d394f0ca4a31ddb42b"
+                "reference": "1dbc4dba2daa512025778fc7e93f5f98a6cfa59b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/b7814911c54dad81dc6952d394f0ca4a31ddb42b",
-                "reference": "b7814911c54dad81dc6952d394f0ca4a31ddb42b",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/1dbc4dba2daa512025778fc7e93f5f98a6cfa59b",
+                "reference": "1dbc4dba2daa512025778fc7e93f5f98a6cfa59b",
                 "shasum": ""
             },
             "require": {
@@ -5014,11 +5011,14 @@
                 "twig/twig": "^3.4"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1.7"
+                "phpstan/phpstan": "^1.8"
             },
             "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                },
                 "symfony": {
                     "require": "^6.1"
                 }
@@ -5043,7 +5043,7 @@
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
                 "source": "https://github.com/survos/BootstrapBundle/tree/master"
             },
-            "time": "2022-07-11T14:12:20+00:00"
+            "time": "2022-07-27T21:45:38+00:00"
         },
         {
             "name": "survos/core-bundle",
@@ -5103,12 +5103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "5d73079e0a8913be0f17e8203d6d50a019ba1f69"
+                "reference": "4739d3da1d7016218061bb74277c8d1298969501"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/5d73079e0a8913be0f17e8203d6d50a019ba1f69",
-                "reference": "5d73079e0a8913be0f17e8203d6d50a019ba1f69",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/4739d3da1d7016218061bb74277c8d1298969501",
+                "reference": "4739d3da1d7016218061bb74277c8d1298969501",
                 "shasum": ""
             },
             "require": {
@@ -5168,7 +5168,7 @@
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
                 "source": "https://github.com/survos/SurvosGridBundle/tree/main"
             },
-            "time": "2022-07-27T18:26:43+00:00"
+            "time": "2022-07-28T09:33:47+00:00"
         },
         {
             "name": "symfony/asset",
