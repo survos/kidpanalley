@@ -93,18 +93,6 @@
         "symfony/polyfill-php56": "*"
     },
     "repositories": {
-        "survos_base_bundle": {
-            "type": "vcs",
-            "url": "git@github.com:survos/BaseBundle.git"
-        },
-        "adminlte": {
-            "type": "vcs",
-            "url": "git@github.com:tacman/AdminLTEBundle.git"
-        },
-        "survosbase": {
-            "type": "vcs",
-            "url": "git@github.com:survos/BaseBundle.git"
-        }
     },
     "scripts": {
         "auto-scripts": {

@@ -433,6 +433,9 @@
     "survos/grid-bundle": {
         "version": "1.0.2"
     },
+    "survos/inspection-bundle": {
+        "version": "dev-main"
+    },
     "swiftmailer/swiftmailer": {
         "version": "6.2-dev"
     },
