@@ -5087,12 +5087,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "ed237171a19af97f6e3e92d8dabeb102a01d5bf3"
+                "reference": "d4984b7f7cf2e1da8b6db9229a9983f41fd59795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/ed237171a19af97f6e3e92d8dabeb102a01d5bf3",
-                "reference": "ed237171a19af97f6e3e92d8dabeb102a01d5bf3",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/d4984b7f7cf2e1da8b6db9229a9983f41fd59795",
+                "reference": "d4984b7f7cf2e1da8b6db9229a9983f41fd59795",
                 "shasum": ""
             },
             "require": {
@@ -5154,7 +5154,7 @@
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
                 "source": "https://github.com/survos/SurvosGridBundle/tree/main"
             },
-            "time": "2022-08-02T12:05:13+00:00"
+            "time": "2022-08-02T12:47:17+00:00"
         },
         {
             "name": "survos/inspection-bundle",
