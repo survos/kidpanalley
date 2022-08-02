@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b424f131be6550730274db58ce4c9cf1",
+    "content-hash": "b5aca040a950b4f65fe9247056d68c34",
     "packages": [
         {
             "name": "api-platform/core",
@@ -5087,12 +5087,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "d4984b7f7cf2e1da8b6db9229a9983f41fd59795"
+                "reference": "ecdd1544df19820c8a3d091fd9777cfd1f8bc1c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/d4984b7f7cf2e1da8b6db9229a9983f41fd59795",
-                "reference": "d4984b7f7cf2e1da8b6db9229a9983f41fd59795",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/ecdd1544df19820c8a3d091fd9777cfd1f8bc1c5",
+                "reference": "ecdd1544df19820c8a3d091fd9777cfd1f8bc1c5",
                 "shasum": ""
             },
             "require": {
@@ -5154,7 +5154,7 @@
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
                 "source": "https://github.com/survos/SurvosGridBundle/tree/main"
             },
-            "time": "2022-08-02T12:47:17+00:00"
+            "time": "2022-08-02T12:58:58+00:00"
         },
         {
             "name": "survos/inspection-bundle",
