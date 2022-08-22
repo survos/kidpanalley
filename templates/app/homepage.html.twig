@@ -73,7 +73,6 @@
 {#                'removable' : 'widget-box.remove'|trans ~ '...',#}
 {#            } %}#}
 
-                {% import '@SurvosBootstrap/Macros/buttons.html.twig'  as btn %}
                 {% block box_title %}Adminstration{% endblock %}
                 {% block box_body %}
                     <div class="callout callout-warning">
@@ -86,17 +85,18 @@
                         </p>
                     </div>
                 {% endblock %}
+
                 {% block box_footer %}
-                    {% import '@SurvosBootstrap/Macros/buttons.html.twig'  as btn %}
                     <div class="pull-right">
                         {% if app.user %}
-                        {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }}
+                            {{ component('button', {label: "log out", icon: 'fas fa-logout', color: 'success', size: 'lg', a: {href: path('app_logout') }}) }}
+{#                        {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }}#}
                         {% else %}
-                        {{ btn.link_button('login', path('app_login'), 'fas fa-login', 'success', 'lg') }}
-                        {{ btn.link_button('register', path('app_register'), 'fas fa-login', 'primary', 'lg') }}
+                            {{ component('button', {label: "Log In", icon: 'fas fa-login', color: 'success', size: 'lg', a: {href: path('app_login') }}) }}
+{#                        {{ btn.link_button('login', path('app_login'), 'fas fa-login', 'success', 'lg') }}#}
+{#                        {{ btn.link_button('register', path('app_register'), 'fas fa-login', 'primary', 'lg') }}#}
                         {% endif %}
                     </div>
                 {% endblock %}
-{#            {% endembed %}#}
 {% endblock %}
 

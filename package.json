@@ -7,6 +7,8 @@
         "@symfony/webpack-encore": "^3.0.0",
         "core-js": "^3.23.0",
         "regenerator-runtime": "^0.13.9",
+        "sass": "^1.54.5",
+        "sass-loader": "^13.0.0",
         "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
@@ -16,5 +18,10 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.1.2",
+        "Hinclude": "^1.2.0",
+        "daterangepicker": "^3.1.0"
     }
 }
