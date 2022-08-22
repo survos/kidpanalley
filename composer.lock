@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe585da46d3a5b1524c066e5cc2fe419",
+    "content-hash": "007c885506a22fc21a833d18fb4ee6db",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4606,10 +4606,16 @@
         {
             "name": "survos/bootstrap-bundle",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/BootstrapBundle.git",
+                "reference": "d915d35aa3af3bb6b6b6dd2a5fa34de7cd4cf427"
+            },
             "dist": {
-                "type": "path",
-                "url": "//home/tac/survos/bundles/bootstrap-bundle",
-                "reference": "53f6bd6f8de27764a9337990e8612d3f649d34e7"
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/d915d35aa3af3bb6b6b6dd2a5fa34de7cd4cf427",
+                "reference": "d915d35aa3af3bb6b6b6dd2a5fa34de7cd4cf427",
+                "shasum": ""
             },
             "require": {
                 "knplabs/knp-menu-bundle": "^3.2",
@@ -4617,6 +4623,7 @@
                 "symfony/config": "^6.1",
                 "symfony/dependency-injection": "^6.1",
                 "symfony/http-kernel": "^6.1",
+                "symfony/options-resolver": "^6.1",
                 "symfony/security-bundle": "^6.1",
                 "symfony/ux-twig-component": "^2.3",
                 "twig/string-extra": "^3.4",
@@ -4625,6 +4632,7 @@
             "require-dev": {
                 "phpstan/phpstan": "^1.8"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -4639,14 +4647,7 @@
                     "Survos\\BootstrapBundle\\": "src/"
                 }
             },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "phpstan": [
-                    "vendor/bin/phpstan analyse"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4657,9 +4658,11 @@
                 }
             ],
             "description": "Integrates a simple bootstrap theme in a Symfony application",
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/survos/BootstrapBundle/issues",
+                "source": "https://github.com/survos/BootstrapBundle/tree/master"
+            },
+            "time": "2022-08-22T23:52:03+00:00"
         },
         {
             "name": "survos/core-bundle",
@@ -4852,11 +4855,17 @@
         },
         {
             "name": "survos/maker-bundle",
-            "version": "dev-main",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosMakerBundle.git",
+                "reference": "09553298b3e40210fe117286666d89de2700cbbb"
+            },
             "dist": {
-                "type": "path",
-                "url": "//home/tac/survos/bundles/maker-bundle",
-                "reference": "fad9093a50466aef8ebad5d5b55011a6ea8d6d58"
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/09553298b3e40210fe117286666d89de2700cbbb",
+                "reference": "09553298b3e40210fe117286666d89de2700cbbb",
+                "shasum": ""
             },
             "require": {
                 "php": ">= 8.0",
@@ -4872,10 +4881,7 @@
                 "doctrine/orm": "^2.3",
                 "haydenpierce/class-finder": "^0.4.3",
                 "phpstan/phpstan": "^1.4",
-                "rector/rector": "^0.13.9",
                 "sensio/framework-extra-bundle": "^6.2",
-                "squizlabs/php_codesniffer": "^3.7",
-                "survos/bootstrap-bundle": "^2.0",
                 "symfony/form": ">= 6.0",
                 "symfony/http-client": "^6.0",
                 "symfony/maker-bundle": "^1.38",
@@ -4891,7 +4897,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.1.0-dev"
+                    "dev-master": "2.1.0-dev"
                 },
                 "symfony": {
                     "require": "^6.1",
@@ -4904,20 +4910,7 @@
                     "Survos\\Bundle\\MakerBundle\\": "src"
                 }
             },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-ci": [
-                    "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml coverage"
-                ],
-                "test-coverage": [
-                    "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html build/coverage"
-                ],
-                "test-phpstan": [
-                    "vendor/bin/phpstan analyse"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4933,9 +4926,11 @@
                 "generator",
                 "symfony"
             ],
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/survos/SurvosMakerBundle/issues",
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.0.1"
+            },
+            "time": "2022-07-20T19:32:47+00:00"
         },
         {
             "name": "symfony/asset",
