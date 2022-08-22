@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Song;
 use App\Repository\SongRepository;
+use App\Repository\VideoRepository;
 use App\Services\AppService;
 use App\Services\DocxConversion;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,12 +46,13 @@ class AppController extends AbstractController
 
     #[Route(path: '/welcome', name: 'adminlte_welcome', methods: ['GET'])]
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
-    public function homepage(SongRepository $songRepository)
+    public function homepage(SongRepository $songRepository, VideoRepository $videoRepository)
     {
         $user = $this->getUser();
         return $this->render('app/homepage.html.twig', [
             'user' => $user,
-            'songCount' => $songRepository->count([])
+            'songCount' => $songRepository->count([]),
+            'videoCount' => $videoRepository->count([])
         ]);
     }
 

@@ -1,4 +1,4 @@
-{% extends "@theme/base.html.twig" %}
+{% extends "@SurvosBootstrap/sneat/" ~ layout|default('base') ~ ".html.twig" %}
 
 {% block logo_mini %}<b>KPA</b>{% endblock %}
 {% block logo_large '<b>KPA</b> Admin' %}
@@ -21,7 +21,7 @@
     {% endblock %}
 
 {# could also overwrite template
-        {% include '@SurvosBaseBundle/Partials/_footer.html.twig' %}
+        {% include '@SurvosBootstrapBundle/Partials/_footer.html.twig' %}
 #}
 
 {% block footer %}

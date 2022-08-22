@@ -6,57 +6,43 @@
 
 {% block page_content %}
 
-    <div class="col-12 px-0 mb-4">
-        <div class="card border-light shadow-sm">
-            <div class="card-body">
-                <h2 class="h5">Acquisition</h2>
-                <p>Tells you where your visitors originated from, such as search engines, social networks or website referrals.</p>
-                <div class="d-block">
-                    <div class="d-flex align-items-center pt-3 me-5">
-                        <div class="icon icon-shape icon-sm icon-shape-danger rounded me-3"><span class="fas fa-chart-bar"></span></div>
-                        <div class="d-block">
-                            <label class="mb-0">Bounce Rate</label>
-                            <h4 class="mb-0">33.50%</h4>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center pt-3">
-                        <div class="icon icon-shape icon-sm icon-shape-quaternary rounded me-3"><span class="fas fa-chart-area"></span></div>
-                        <div class="d-block">
-                            <label class="mb-0">Sessions</label>
-                            <h4 class="mb-0">9,567</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="row">
         <div class="col-md-6">
-            {# ... infobox widget, solid background ... #}
-            {% embed '@SurvosBase/Widgets/infobox-widget.html.twig'  with {
-                'solid' : 'red',
-                'icon'  : 'fas fa-wrench',
-                'progress' : 40
-            } %}
+            {% component card with {
+            }%}
+                {% block title 'Songs' %}
+                {% block text %}
+                    <div class="text-light small fw-semibold">Songs</div>
+                    Songs written by KPA kids
+                {% endblock %}
+                {% block links %}
+                    <div class="demo-inline-spacing">
 
-                {% block box_text %}This site is for administrators only{% endblock %}
-                {% block progress_description %}Songs, Videos, Schools{% endblock %}
-            {% endembed %}
+                        <a href="{{ path('song_index') }}" class="btn btn-outline-primary">Go to {{ songCount }} Songs</a>
+                    </div>
+                {% endblock %}
+            {% endcomponent %}
 
         </div>
         <div class="col-md-6">
 
-            {# ... infobox widget, colored icon ... #}
-            {% embed '@SurvosBase/Widgets/infobox-widget.html.twig'  with {
-                'color' : 'aqua',
-                'icon'  : 'fas fa-music',
-            } %}
-                {% block box_text %}Songs{% endblock %}
-                {% block box_number %}{{ songCount }}{% endblock %}
-                {% block progress_description %}Songs in the Database{% endblock %}
-            {% endembed %}
+            {% component card with {
+            }%}
+                {% block title 'Songs' %}
+                {% block text %}
+                    <div class="text-light small fw-semibold">Videos</div>
+                    Of songs
+                {% endblock %}
+                {% block links %}
+                    <div class="demo-inline-spacing">
+                        {#                        {{ btn.link_button('Website', 'https://kidpanalley.com', 'floppy') }}#}
+
+
+                        <a href="{{ path('video_index') }}" class="btn btn-outline-primary">Go to {{ videoCount }} Videos</a>
+                    </div>
+                {% endblock %}
+            {% endcomponent %}
         </div>
     </div>
 
@@ -66,24 +52,6 @@
                 Visitors should go to the KPA website or our Facebook page.
             </div>
 
-            This was from adminlte.
-            {# ... box widget with defaults ... #}
-{#            {% embed '@SurvosBase/Widgets/box-widget.html.twig' %}#}
-
-                {% import '@SurvosBase/Macros/buttons.html.twig'  as btn %}
-{#                {% block box_title %}Visitors{% endblock %}#}
-{#                {% block box_body %}#}
-{#                    <div class="callout callout-info">#}
-{#                        Visitors should go to the KPA website or our Facebook page.#}
-{#                    </div>#}
-{#                {% endblock %}#}
-{#                {% block box_footer %}#}
-{#                    <div class="pull-right">#}
-{#                        {{ btn.link_button('Website', 'https://kidpanalley.com', 'floppy') }}#}
-{#                        {{ btn.link_button('Facebook', 'https://facebook.com/KidPanAlley', 'floppy') }}#}
-{#                    </div>#}
-{#                {% endblock %}#}
-{#            {% endembed %}#}
         </div>
 
         <div class="col-md-6">
@@ -98,14 +66,14 @@
 
 {% block visitor_about_box %}
             {# ... box widget with some options ... #}
-{#            {% embed '@SurvosBase/Widgets/box-widget.html.twig' with {#}
+{#            {% embed '@SurvosBootstrap/Widgets/box-widget.html.twig' with {#}
 {#                'boxtype' : 'success',#}
 {#                'solid' : 0,#}
 {#                'collapsible' : 'widget-box.collapse'|trans ~ '... ',#}
 {#                'removable' : 'widget-box.remove'|trans ~ '...',#}
 {#            } %}#}
 
-                {% import '@SurvosBase/Macros/buttons.html.twig'  as btn %}
+                {% import '@SurvosBootstrap/Macros/buttons.html.twig'  as btn %}
                 {% block box_title %}Adminstration{% endblock %}
                 {% block box_body %}
                     <div class="callout callout-warning">
@@ -119,7 +87,7 @@
                     </div>
                 {% endblock %}
                 {% block box_footer %}
-                    {% import '@SurvosBase/Macros/buttons.html.twig'  as btn %}
+                    {% import '@SurvosBootstrap/Macros/buttons.html.twig'  as btn %}
                     <div class="pull-right">
                         {% if app.user %}
                         {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }}

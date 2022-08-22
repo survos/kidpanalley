@@ -110,9 +110,6 @@
             "config/routes/easy_admin.yaml"
         ]
     },
-    "egulias/email-validator": {
-        "version": "2.1.x-dev"
-    },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
     },
@@ -164,23 +161,8 @@
     "guzzlehttp/psr7": {
         "version": "1.x-dev"
     },
-    "knplabs/knp-menu": {
-        "version": "3.2-dev"
-    },
     "knplabs/knp-menu-bundle": {
-        "version": "3.1.x-dev"
-    },
-    "knpuniversity/oauth2-client-bundle": {
-        "version": "1.20",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.20",
-            "ref": "80acc9223a205cbf5d9828fd616c82a374d281dd"
-        },
-        "files": [
-            "config/packages/knpu_oauth2_client.yaml"
-        ]
+        "version": "v3.2.0"
     },
     "laminas/laminas-code": {
         "version": "3.4.1"
@@ -409,20 +391,8 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "stof/doctrine-extensions-bundle": {
-        "version": "1.7",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.2",
-            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
-        },
-        "files": [
-            "config/packages/stof_doctrine_extensions.yaml"
-        ]
-    },
-    "survos/base-bundle": {
-        "version": "1.x-dev"
+    "survos/api-grid-bundle": {
+        "version": "dev-main"
     },
     "survos/bootstrap-bundle": {
         "version": "dev-master"
@@ -435,6 +405,9 @@
     },
     "survos/inspection-bundle": {
         "version": "1.1.x-dev"
+    },
+    "survos/maker-bundle": {
+        "version": "dev-main"
     },
     "swiftmailer/swiftmailer": {
         "version": "6.2-dev"
@@ -572,12 +545,12 @@
         "version": "4.4.x-dev"
     },
     "symfony/mailer": {
-        "version": "4.3",
+        "version": "6.1",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "4.3",
-            "ref": "15658c2a0176cda2e7dba66276a2030b52bd81b2"
+            "ref": "97a61eabb351d7f6cb7702039bcfe07fe9d7e03c"
         },
         "files": [
             "config/packages/mailer.yaml"
@@ -591,9 +564,6 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
-    },
-    "symfony/mime": {
-        "version": "4.4.x-dev"
     },
     "symfony/monolog-bridge": {
         "version": "4.4.x-dev"
@@ -641,9 +611,6 @@
         "version": "1.15-dev"
     },
     "symfony/polyfill-intl-icu": {
-        "version": "1.12-dev"
-    },
-    "symfony/polyfill-intl-idn": {
         "version": "1.12-dev"
     },
     "symfony/polyfill-intl-normalizer": {
@@ -865,17 +832,8 @@
     "twig/extra-bundle": {
         "version": "3.x-dev"
     },
-    "twig/string-extra": {
-        "version": "v3.0.3"
-    },
     "twig/twig": {
         "version": "3.x-dev"
-    },
-    "umbrella2/adminbundle": {
-        "version": "v6.1"
-    },
-    "umbrella2/corebundle": {
-        "version": "v6.1"
     },
     "webimpress/safe-writer": {
         "version": "2.1.x-dev"

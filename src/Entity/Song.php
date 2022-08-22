@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     normalizationContext: ['groups' => 'song.read', 'rp']
 )]
-#[ApiFilter(OrderFilter::class, properties: ['title'])]
+#[ApiFilter(OrderFilter::class, properties: ['title','year','school'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ORM\Entity(repositoryClass: SongRepository::class)]

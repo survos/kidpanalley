@@ -13,6 +13,6 @@ app_typography: {path: /typography, controller: 'Survos\BaseBundle\Controller\La
 survos_landing_credits: {path: /credits, controller: 'Survos\BaseBundle\Controller\LandingController::credits'}
 
 #survos_landing_bundle_oauth:
-#    resource: '@SurvosBaseBundle/Controller/OAuthController.php'
+#    resource: '@SurvosBootstrapBundle/Controller/OAuthController.php'
 #    prefix: /
 #    type: annotation

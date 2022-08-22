@@ -1,14 +1,12 @@
 {
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^6.0.0",
         "@hotwired/stimulus": "^3.1.0",
+        "@survos/api-grid-bundle": "file:vendor/survos/api-grid-bundle/assets",
         "@survos/grid-bundle": "file:vendor/survos/grid-bundle/assets",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^3.0.0",
         "core-js": "^3.23.0",
         "regenerator-runtime": "^0.13.9",
-        "sass": "^1.54.0",
-        "sass-loader": "^13.0.2",
         "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
@@ -18,12 +16,5 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    },
-    "dependencies": {
-        "@popperjs/core": "^2.7.0",
-        "Hinclude": "^1.2.0",
-        "bootstrap": "^5.1.3",
-        "daterangepicker": "^3.0.5",
-        "moment": "^2.26.0"
     }
 }
