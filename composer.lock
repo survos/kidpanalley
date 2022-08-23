@@ -4855,16 +4855,16 @@
         },
         {
             "name": "survos/maker-bundle",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosMakerBundle.git",
-                "reference": "09553298b3e40210fe117286666d89de2700cbbb"
+                "reference": "037e0aba33f66817c3978dc7ec5eb9b1ea7cd613"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/09553298b3e40210fe117286666d89de2700cbbb",
-                "reference": "09553298b3e40210fe117286666d89de2700cbbb",
+                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/037e0aba33f66817c3978dc7ec5eb9b1ea7cd613",
+                "reference": "037e0aba33f66817c3978dc7ec5eb9b1ea7cd613",
                 "shasum": ""
             },
             "require": {
@@ -4881,7 +4881,10 @@
                 "doctrine/orm": "^2.3",
                 "haydenpierce/class-finder": "^0.4.3",
                 "phpstan/phpstan": "^1.4",
+                "rector/rector": "^0.13.9",
                 "sensio/framework-extra-bundle": "^6.2",
+                "squizlabs/php_codesniffer": "^3.7",
+                "survos/bootstrap-bundle": "^2.0",
                 "symfony/form": ">= 6.0",
                 "symfony/http-client": "^6.0",
                 "symfony/maker-bundle": "^1.38",
@@ -4897,7 +4900,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1.0-dev"
+                    "dev-main": "2.1.0-dev"
                 },
                 "symfony": {
                     "require": "^6.1",
@@ -4928,9 +4931,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosMakerBundle/issues",
-                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.0.1"
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.0.2"
             },
-            "time": "2022-07-20T19:32:47+00:00"
+            "time": "2022-08-23T01:14:33+00:00"
         },
         {
             "name": "symfony/asset",
