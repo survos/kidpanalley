@@ -27,6 +27,12 @@
                     "datatables.net-searchbuilder-bs5/css/searchBuilder.bootstrap5.min.css": true
                 }
             }
+        },
+        "@survos/workflow-helper-bundle": {
+            "workflow": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []
