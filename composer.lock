@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40c1b89d39353bf5c969f44c06ef6ecd",
+    "content-hash": "33ad3def293ff12ca10b7e70b61df660",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4602,6 +4602,60 @@
                 "source": "https://github.com/survos/SurvosApiGridBundle/tree/main"
             },
             "time": "2022-08-17T21:04:47+00:00"
+        },
+        {
+            "name": "survos/auth-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosAuthBundle.git",
+                "reference": "93d01caacd1fa617fca4e1ba71f2d4735e2b3ca2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosAuthBundle/zipball/93d01caacd1fa617fca4e1ba71f2d4735e2b3ca2",
+                "reference": "93d01caacd1fa617fca4e1ba71f2d4735e2b3ca2",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2.13",
+                "php": "^8.1",
+                "symfony/config": "^6.1",
+                "symfony/console": "^6.1",
+                "symfony/dependency-injection": "^6.1",
+                "symfony/http-kernel": "^6.1",
+                "symfony/password-hasher": "^6.1",
+                "symfony/security-bundle": "^6.1",
+                "twig/twig": "^3.4"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\AuthBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Helper commands and classes for symfony security",
+            "support": {
+                "issues": "https://github.com/survos/SurvosAuthBundle/issues",
+                "source": "https://github.com/survos/SurvosAuthBundle/tree/main"
+            },
+            "time": "2022-08-23T18:35:16+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
@@ -13133,6 +13187,7 @@
     "stability-flags": {
         "phpoffice/phpword": 20,
         "survos/api-grid-bundle": 20,
+        "survos/auth-bundle": 20,
         "survos/bootstrap-bundle": 20,
         "survos/grid-bundle": 20,
         "yectep/phpspreadsheet-bundle": 20

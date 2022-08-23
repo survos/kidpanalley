@@ -28,6 +28,7 @@
         "phpoffice/phpword": "dev-master",
         "sensio/framework-extra-bundle": "^6.2",
         "survos/api-grid-bundle": "1.1.x-dev",
+        "survos/auth-bundle": "dev-main",
         "survos/bootstrap-bundle": "^2.0-dev",
         "survos/grid-bundle": "^1.1-dev",
         "survos/inspection-bundle": "^1.0",
