@@ -102,6 +102,10 @@
         "symfony/polyfill-php56": "*"
     },
     "repositories": {
+        "bootstrap": {
+            "type": "path",
+            "url": "//home/tac/survos/bundles/bootstrap-bundle"
+        }
     },
     "scripts": {
         "auto-scripts": {
