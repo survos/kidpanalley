@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Message\FetchYoutubeChannelMessage;
+use App\Message\LoadSongsMessage;
 use App\Services\AppService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -11,12 +13,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
-#[\Symfony\Component\Console\Attribute\AsCommand('app:load-data')]
+#[\Symfony\Component\Console\Attribute\AsCommand('app:load-data', "Load the songs and videos")]
 class LoadDataCommand extends Command
 {
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly ParameterBagInterface $bag,
+                                private MessageBusInterface $bus,
                                 private readonly AppService $appService, string $name = null)
     {
         parent::__construct($name);
@@ -24,7 +28,6 @@ class LoadDataCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
@@ -33,15 +36,13 @@ class LoadDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        // @todo: get filename
-        $key = $this->bag->get('youtube_api_key');
-        $channel = $this->bag->get('youtube_channel');
-        $this->appService->fetchYoutubeChannel($key, $channel);
-        $io->success('Videos Loaded');
 
-        $this->appService->loadSongs();
-        $io->success('Songs Loaded');
+        $this->bus->dispatch(new FetchYoutubeChannelMessage());
+        $io->success('Videos Load Requested');
 
-        return 0;
+        $this->bus->dispatch(new LoadSongsMessage());
+        $io->success('Songs Load Requested');
+
+        return self::SUCCESS;
     }
 }

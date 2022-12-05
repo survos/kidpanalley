@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+
+
+# more verbose on the first run
+symfony console messenger:consume async -vv --limit 1 --time-limit 3;
+# symfony console messenger:consume high normal low -vv --limit 1 --time-limit 30;
+
+## use sleep  so that you can break out with ^C
+while true; do sleep 3; symfony console messenger:consume async -v --limit 30 --time-limit 90;  done;
