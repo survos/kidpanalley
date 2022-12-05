@@ -26,7 +26,6 @@
         "mindscreen/yarnlock": "^1.0",
         "nelmio/cors-bundle": "^2.1",
         "phpoffice/phpword": "dev-master",
-        "sensio/framework-extra-bundle": "^6.2",
         "survos/api-grid-bundle": "^1.2",
         "survos/auth-bundle": "^1.2",
         "survos/bootstrap-bundle": "dev-main",
