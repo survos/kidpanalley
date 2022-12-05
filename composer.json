@@ -27,12 +27,12 @@
         "nelmio/cors-bundle": "^2.1",
         "phpoffice/phpword": "dev-master",
         "sensio/framework-extra-bundle": "^6.2",
-        "survos/api-grid-bundle": "1.1.x-dev",
-        "survos/auth-bundle": "dev-main",
-        "survos/bootstrap-bundle": "^2.0-dev",
-        "survos/grid-bundle": "^1.1-dev",
-        "survos/inspection-bundle": "^1.0",
-        "survos/workflow-helper-bundle": "^2.0",
+        "survos/api-grid-bundle": "^1.2",
+        "survos/auth-bundle": "^1.2",
+        "survos/bootstrap-bundle": "dev-main",
+        "survos/grid-bundle": "^1.2",
+        "survos/inspection-bundle": "^1.2",
+        "survos/workflow-helper-bundle": "^1.2",
         "symfony/asset": "^6.0",
         "symfony/console": "^6.0",
         "symfony/dotenv": "^6.0",
@@ -104,7 +104,7 @@
     "repositories": {
         "bootstrap": {
             "type": "path",
-            "url": "//home/tac/survos/bundles/bootstrap-bundle"
+            "url": "//home/tac/g/survos/survos/packages/bootstrap-bundle"
         }
     },
     "scripts": {
