@@ -1,9 +1,11 @@
 # kidpanalley
 Tools for KPA
 
-Load the exists assets via
+Load the exists assets (youtube and songs) via
 
-    bin/console app:load-assets
+```bash
+bin/console app:load-data
+```
     
 Database Tables
 
