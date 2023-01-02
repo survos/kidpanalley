@@ -108,7 +108,6 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
-            "doctrine:migrations:migrate -n": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [

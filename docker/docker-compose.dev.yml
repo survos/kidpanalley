@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  php:
+    image: ${REGISTRY_IMAGE}/app_php:${TAG}
+    networks:
+      - backend
+    volumes:
+      - ${APPLICATION}:/var/www/app
+
+  nginx:
+    image: ${REGISTRY_IMAGE}/app_nginx:${TAG}
+    depends_on:
+      - php
+    ports:
+      - '8069:80'
+    networks:
+      - backend
+    volumes:
+      - ${APPLICATION}:/var/www/app
+
+networks:
+  backend:

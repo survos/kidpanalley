@@ -1,0 +1,84 @@
+version: '3.4'
+
+x-worker-template: &worker_template
+  image: ${REGISTRY_IMAGE}/app_php:${TAG}
+  env_file:
+    - .app_env
+  environment:
+    WAIT_APP: 1
+    APP_HOST: php
+    WAIT_RABBIT: 1
+    RABBITMQ_HOST: 'rabbitmq'
+    RABBITMQ_PORT: '5672'
+  healthcheck:
+    disable: true
+  depends_on:
+    - rabbitmq
+  restart: unless-stopped
+  networks:
+    - backend
+  volumes:
+    - /mnt/data/kpa/app/log:/var/www/app/var/log
+
+services:
+  php:
+    image: ${REGISTRY_IMAGE}/app_php:${TAG}
+    env_file:
+      - .app_env
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    networks:
+      - backend
+    restart: unless-stopped
+    volumes:
+      - /mnt/data/kpa/app/log:/var/www/app/var/log
+
+  nginx:
+    image: ${REGISTRY_IMAGE}/app_nginx:${TAG}
+    depends_on:
+      - php
+    networks:
+      - backend
+      - webproxy
+    restart: unless-stopped
+    labels: &nginx_labels
+      - "traefik.enable=true"
+      - "traefik.http.routers.kpa-nginx.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.kpa-nginx.entrypoints=websecure"
+      - "traefik.http.routers.kpa-nginx.tls=true"
+      - "traefik.http.routers.kpa-nginx.tls.certresolver=myhttpchallenge"
+      - "traefik.port=80"
+      - "traefik.docker.network=webproxy"
+#    ports: # todo: remove
+#      - '8069:80'
+
+  worker1:
+    <<: *worker_template
+    command: 'bin/console messenger:consume async -v --limit 30 --time-limit 90'
+
+  worker2:
+    <<: *worker_template
+    command: 'bin/console messenger:consume async -v --limit 30 --time-limit 90'
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: 'guest'
+      RABBITMQ_DEFAULT_PASS: 'guest'
+    sysctls:
+      - "net.core.somaxconn=4096"
+      - "net.ipv4.tcp_max_syn_backlog=4096"
+      - "net.ipv4.conf.default.rp_filter=0"
+    networks:
+      - backend
+    restart: unless-stopped
+    volumes:
+      - /mnt/data/kpa/rabbitmq:/var/lib/rabbitmq
+
+networks:
+  backend:
+  webproxy:
+    external: true

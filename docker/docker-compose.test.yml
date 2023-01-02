@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  php:
+    image: ${REGISTRY_IMAGE}/app_php_base:${TAG}
+    working_dir: /var/www/app
+    environment:
+      DATABASE_URL: 'postgresql://main:main@postgres:5432/kpa_test?serverVersion=14.5&charset=utf8'
+    depends_on:
+      - postgres
+    networks:
+      - backend
+    volumes:
+      - ${APPLICATION}:/var/www/app
+
+  postgres:
+    image: postgres:14.5-alpine
+    environment:
+      - POSTGRES_DB=kpa_test
+      - POSTGRES_USER=main
+      - POSTGRES_PASSWORD=main
+    networks:
+      - backend
+
+networks:
+  backend:
