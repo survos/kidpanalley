@@ -10,8 +10,8 @@ framework:
             # sync: 'sync://'
 
         routing:
-            App\Message\FetchYoutubeChannelMessage: async
-            App\Message\LoadSongsMessage: async
+#            App\Message\FetchYoutubeChannelMessage: async
+#            App\Message\LoadSongsMessage: async
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 

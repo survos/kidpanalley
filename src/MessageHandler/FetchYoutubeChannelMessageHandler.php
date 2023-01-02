@@ -25,7 +25,7 @@ final class FetchYoutubeChannelMessageHandler implements MessageHandlerInterface
         $channel = $this->bag->get('youtube_channel');
 
         $this->logger->warning("Fetching...");
-//        $this->appService->fetchYoutubeChannel($key, $channel);
+        $this->appService->fetchYoutubeChannel($key, $channel);
 
         // do something with your message
     }
