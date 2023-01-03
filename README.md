@@ -1,4 +1,15 @@
 # kidpanalley
+
+
+```bash
+git clone git@github.com:survos/kidpanalley.git kpa && cd kpa
+composer install && yarn install --force && yarn dev
+symfony server:start -d
+bin/console app:load-data
+bin/consume
+```
+
+
 Tools for KPA
 
 Load the exists assets (youtube and songs) via

@@ -1732,16 +1732,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "3.2.4",
+            "version": "3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "5f35e41eba05fdfbabd95d72f83795c835fb7ed2"
+                "reference": "b531a2311709443320c786feb4519cfaf94af796"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/5f35e41eba05fdfbabd95d72f83795c835fb7ed2",
-                "reference": "5f35e41eba05fdfbabd95d72f83795c835fb7ed2",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/b531a2311709443320c786feb4519cfaf94af796",
+                "reference": "b531a2311709443320c786feb4519cfaf94af796",
                 "shasum": ""
             },
             "require": {
@@ -1750,7 +1750,6 @@
                 "symfony/polyfill-intl-idn": "^1.15"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^8.5.8|^9.3.3",
                 "vimeo/psalm": "^4"
             },
@@ -1788,7 +1787,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/3.2.4"
+                "source": "https://github.com/egulias/EmailValidator/tree/3.2.5"
             },
             "funding": [
                 {
@@ -1796,7 +1795,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-30T14:09:25+00:00"
+            "time": "2023-01-02T17:26:14+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2141,7 +2140,7 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.280.0",
+            "version": "v0.281.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
@@ -2179,7 +2178,7 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.280.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.281.0"
             },
             "time": "2022-12-24T01:38:12+00:00"
         },
@@ -4496,16 +4495,16 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.2.38",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "9dbd6a4a41c2a2bbe7771831f3973a79876ba7be"
+                "reference": "34580add669d8f7229e92eef0a420a49a84f06d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/9dbd6a4a41c2a2bbe7771831f3973a79876ba7be",
-                "reference": "9dbd6a4a41c2a2bbe7771831f3973a79876ba7be",
+                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/34580add669d8f7229e92eef0a420a49a84f06d1",
+                "reference": "34580add669d8f7229e92eef0a420a49a84f06d1",
                 "shasum": ""
             },
             "require": {
@@ -4514,8 +4513,8 @@
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "friendsofsymfony/jsrouting-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/grid-bundle": "^1.2.38",
-                "survos/inspection-bundle": "^1.2.38",
+                "survos/grid-bundle": "^1.2.42",
+                "survos/inspection-bundle": "^1.2.42",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -4524,25 +4523,25 @@
                 "twig/twig": "^3.4"
             },
             "conflict": {
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/core-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/core-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
@@ -4590,22 +4589,22 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:34+00:00"
+            "time": "2023-01-02T14:12:38+00:00"
         },
         {
             "name": "survos/auth-bundle",
-            "version": "1.2.38",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosAuthBundle.git",
-                "reference": "b4b4bf215bd3dd7a0687fb4a05a75060b1b7043c"
+                "reference": "38934b5f75d543297144f2f8c6223e2d81167a58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosAuthBundle/zipball/b4b4bf215bd3dd7a0687fb4a05a75060b1b7043c",
-                "reference": "b4b4bf215bd3dd7a0687fb4a05a75060b1b7043c",
+                "url": "https://api.github.com/repos/survos/SurvosAuthBundle/zipball/38934b5f75d543297144f2f8c6223e2d81167a58",
+                "reference": "38934b5f75d543297144f2f8c6223e2d81167a58",
                 "shasum": ""
             },
             "require": {
@@ -4623,27 +4622,27 @@
                 "twig/twig": "^3.4"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/core-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/inspection-bundle": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/core-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/inspection-bundle": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8"
@@ -4672,9 +4671,9 @@
             "description": "Helper commands and classes for symfony security",
             "support": {
                 "issues": "https://github.com/survos/SurvosAuthBundle/issues",
-                "source": "https://github.com/survos/SurvosAuthBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosAuthBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:42+00:00"
+            "time": "2023-01-02T14:12:37+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
@@ -4682,18 +4681,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
-                "reference": "ece1799bb61f551bf744cd3b2c34c863e48fe793"
+                "reference": "7c5a20658f38ff1b09163465bc111b3d059009b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/ece1799bb61f551bf744cd3b2c34c863e48fe793",
-                "reference": "ece1799bb61f551bf744cd3b2c34c863e48fe793",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/7c5a20658f38ff1b09163465bc111b3d059009b8",
+                "reference": "7c5a20658f38ff1b09163465bc111b3d059009b8",
                 "shasum": ""
             },
             "require": {
                 "knplabs/knp-menu-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.3",
+                "survos/core-bundle": "^1.2",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -4704,26 +4703,26 @@
                 "twig/twig": "^3.4"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/inspection-bundle": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/inspection-bundle": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8"
@@ -4757,20 +4756,20 @@
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
                 "source": "https://github.com/survos/BootstrapBundle/tree/main"
             },
-            "time": "2023-01-02T00:57:49+00:00"
+            "time": "2023-01-03T01:54:03+00:00"
         },
         {
             "name": "survos/core-bundle",
-            "version": "dev-main",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
-                "reference": "271a8ca14af89f87f7369d24bfd2a7ba3408c54c"
+                "reference": "c155327020651847d1dcbb14165dcf89668161dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/271a8ca14af89f87f7369d24bfd2a7ba3408c54c",
-                "reference": "271a8ca14af89f87f7369d24bfd2a7ba3408c54c",
+                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/c155327020651847d1dcbb14165dcf89668161dc",
+                "reference": "c155327020651847d1dcbb14165dcf89668161dc",
                 "shasum": ""
             },
             "require": {
@@ -4783,27 +4782,27 @@
                 "twig/twig": "^3.4"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/inspection-bundle": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/inspection-bundle": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
@@ -4814,7 +4813,6 @@
                 "symfony/var-dumper": "^6.1.0",
                 "symfony/webpack-encore-bundle": "^1.11"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -4839,22 +4837,22 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:42+00:00"
+            "time": "2023-01-02T14:12:37+00:00"
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.2.38",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "2ac635645ae2b85a2ec5fde5c3800abc405ba0b1"
+                "reference": "3888a620913ea186cb963c0eb7611887b48bf7ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/2ac635645ae2b85a2ec5fde5c3800abc405ba0b1",
-                "reference": "2ac635645ae2b85a2ec5fde5c3800abc405ba0b1",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/3888a620913ea186cb963c0eb7611887b48bf7ab",
+                "reference": "3888a620913ea186cb963c0eb7611887b48bf7ab",
                 "shasum": ""
             },
             "require": {
@@ -4862,7 +4860,7 @@
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.2.38",
+                "survos/core-bundle": "^1.2.42",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -4872,26 +4870,26 @@
                 "twig/twig": "^3.4"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/inspection-bundle": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/inspection-bundle": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
@@ -4937,54 +4935,54 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosGridBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:44+00:00"
+            "time": "2023-01-02T14:12:33+00:00"
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.2.38",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "116dd3a8dbaa07b3059626f21b94395f60b99ca0"
+                "reference": "4998639746d6336931986c7f688a1b02d25c3373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/116dd3a8dbaa07b3059626f21b94395f60b99ca0",
-                "reference": "116dd3a8dbaa07b3059626f21b94395f60b99ca0",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/4998639746d6336931986c7f688a1b02d25c3373",
+                "reference": "4998639746d6336931986c7f688a1b02d25c3373",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^2.7 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.2.38",
+                "survos/core-bundle": "^1.2.42",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
                 "twig/twig": "^3.4"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
@@ -5017,28 +5015,28 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:41+00:00"
+            "time": "2023-01-02T14:12:42+00:00"
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.2.38",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "9aa34e52d9f3ae9930bbf2ff21757dc79257fdcc"
+                "reference": "87180e283b96a79805d5d1c0964226ceabae2f8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/9aa34e52d9f3ae9930bbf2ff21757dc79257fdcc",
-                "reference": "9aa34e52d9f3ae9930bbf2ff21757dc79257fdcc",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/87180e283b96a79805d5d1c0964226ceabae2f8c",
+                "reference": "87180e283b96a79805d5d1c0964226ceabae2f8c",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.12",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.2.38",
+                "survos/core-bundle": "^1.2.42",
                 "symfony/console": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
                 "symfony/messenger": "^6.1.0",
@@ -5047,26 +5045,26 @@
                 "symfony/yaml": "^6.1.0"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/inspection-bundle": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/maker-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/inspection-bundle": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/maker-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42"
             },
             "require-dev": {
                 "ekino/phpstan-banned-code": "^1.0",
@@ -5116,9 +5114,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:44+00:00"
+            "time": "2023-01-02T14:12:38+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -11460,16 +11458,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.4",
+            "version": "1.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2"
+                "reference": "4d18c5d98965029c2aa1ccbd91dc22e7ba8c5034"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d03bccee595e2146b7c9d174486b84f4dc61b0f2",
-                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4d18c5d98965029c2aa1ccbd91dc22e7ba8c5034",
+                "reference": "4d18c5d98965029c2aa1ccbd91dc22e7ba8c5034",
                 "shasum": ""
             },
             "require": {
@@ -11499,7 +11497,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.4"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.5"
             },
             "funding": [
                 {
@@ -11515,7 +11513,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-17T13:33:52+00:00"
+            "time": "2023-01-02T21:35:42+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -13077,16 +13075,16 @@
         },
         {
             "name": "survos/maker-bundle",
-            "version": "1.2.38",
+            "version": "1.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosMakerBundle.git",
-                "reference": "dc7ce8e158ff87da4b04b167b30889d83325bad9"
+                "reference": "21a1996b10507251135abd78ce23e035ad8ee599"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/dc7ce8e158ff87da4b04b167b30889d83325bad9",
-                "reference": "dc7ce8e158ff87da4b04b167b30889d83325bad9",
+                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/21a1996b10507251135abd78ce23e035ad8ee599",
+                "reference": "21a1996b10507251135abd78ce23e035ad8ee599",
                 "shasum": ""
             },
             "require": {
@@ -13103,27 +13101,27 @@
                 "zenstruck/console-extra": "^1.1"
             },
             "conflict": {
-                "survos/api-grid-bundle": "<1.2.38",
-                "survos/auth-bundle": "<1.2.38",
-                "survos/barcode-bundle": "<1.2.38",
-                "survos/bootstrap-bundle": "<1.2.38",
-                "survos/command-bundle": "<1.2.38",
-                "survos/core-bundle": "<1.2.38",
-                "survos/crawler-bundle": "<1.2.38",
-                "survos/doc-bundle": "<1.2.38",
-                "survos/faker-bundle": "<1.2.38",
-                "survos/grid-bundle": "<1.2.38",
-                "survos/grid-group-bundle": "<1.2.38",
-                "survos/html-prettify-bundle": "<1.2.38",
-                "survos/import-bridge": "<1.2.38",
-                "survos/inspection-bundle": "<1.2.38",
-                "survos/location-bundle": "<1.2.38",
-                "survos/providence-bundle": "<1.2.38",
-                "survos/ruler-bundle": "<1.2.38",
-                "survos/stripe-product": "<1.2.38",
-                "survos/tree-bundle": "<1.2.38",
-                "survos/wiki-bundle": "<1.2.38",
-                "survos/workflow-helper-bundle": "<1.2.38"
+                "survos/api-grid-bundle": "<1.2.42",
+                "survos/auth-bundle": "<1.2.42",
+                "survos/barcode-bundle": "<1.2.42",
+                "survos/bootstrap-bundle": "<1.2.42",
+                "survos/command-bundle": "<1.2.42",
+                "survos/core-bundle": "<1.2.42",
+                "survos/crawler-bundle": "<1.2.42",
+                "survos/doc-bundle": "<1.2.42",
+                "survos/faker-bundle": "<1.2.42",
+                "survos/grid-bundle": "<1.2.42",
+                "survos/grid-group-bundle": "<1.2.42",
+                "survos/html-prettify-bundle": "<1.2.42",
+                "survos/import-bridge": "<1.2.42",
+                "survos/inspection-bundle": "<1.2.42",
+                "survos/location-bundle": "<1.2.42",
+                "survos/providence-bundle": "<1.2.42",
+                "survos/ruler-bundle": "<1.2.42",
+                "survos/stripe-product": "<1.2.42",
+                "survos/tree-bundle": "<1.2.42",
+                "survos/wiki-bundle": "<1.2.42",
+                "survos/workflow-helper-bundle": "<1.2.42"
             },
             "require-dev": {
                 "doctrine/doctrine-bundle": "^2.7",
@@ -13182,9 +13180,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosMakerBundle/issues",
-                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.2.38"
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.2.42"
             },
-            "time": "2023-01-02T00:57:40+00:00"
+            "time": "2023-01-02T14:12:32+00:00"
         },
         {
             "name": "symfony/browser-kit",
