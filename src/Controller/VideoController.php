@@ -20,10 +20,20 @@ class VideoController extends AbstractController
     public function index(VideoRepository $videoRepository) : Response
     {
         return $this->render('video/index.html.twig', [
+            'videos' => $videoRepository->findBy([], ['id' => 'DESC']),
+            'videoCount' => $videoRepository->count([])
+        ]);
+    }
+    #[Route(path: '/browse', name: 'video_browse', methods: ['GET'])]
+    public function browse(VideoRepository $videoRepository) : Response
+    {
+        return $this->render('video/browse.html.twig', [
+            'class' => Video::class,
             'videos' => $videoRepository->findBy([], ['id' => 'DESC'], 30),
             'videoCount' => $videoRepository->count([])
         ]);
     }
+
     #[Route(path: '/new', name: 'video_new', methods: ['GET', 'POST'])]
     public function new(Request $request) : Response
     {

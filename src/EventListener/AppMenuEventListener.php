@@ -36,6 +36,7 @@ final class AppMenuEventListener
 
         $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
         $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
+        $this->addMenuItem($menu, ['route' => 'video_browse', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
 
         $this->addMenuItem($menu, ['route' => 'app_homepage']);
         // for nested menus, don't add a route, just a label, then use it for the argument to addMenuItem

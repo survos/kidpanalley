@@ -3,12 +3,14 @@
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    <h1>Youtube videos ({{ videoCount }}, in-memory)</h1>
+    <h1>Youtube videos ({{ videoCount }}, loaded via AJAX)</h1>
 
-    {% component grid with {
-        data: videos,
+    {% component api_grid with {
+        class: 'App\\Entity\\Video',
+        caller: _self,
         columns: [
             {name: '_actions', prefix: 'video_', actions: ['show']},
+        'id',
             'youtubeId',
             'title',
             'description',
@@ -17,9 +19,6 @@
     } %}
         {% block title %}
             <a href="{{ path('video_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
-        {% endblock %}
-        {% block date %}
-            {{ row.date|date('Y-m-d') }}
         {% endblock %}
         {% block youtubeId %}
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
