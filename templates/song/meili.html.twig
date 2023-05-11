@@ -4,10 +4,24 @@
 
 {% block body %}
     <h1>Song index</h1>
+    <div class="dtsp-verticalContainer row">
+        <div class="search-panes xxdtsp-verticalPanes col-3">
+        </div>
+        <div class="xxcontainer col-9">
+            {{ block('gridTable') }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block gridTable %}
+
 
     {% component api_grid with {
         class: class,
+        apiGetCollectionUrl: "/api/meili",
         caller: _self,
+        dom: 'P<"dtsp-dataTable"rQfti>l',
         columns: [
             {name: '_actions', prefix: 'song_', actions: ['show']},
             'id',

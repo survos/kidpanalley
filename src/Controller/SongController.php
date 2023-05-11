@@ -21,9 +21,20 @@ class SongController extends AbstractController
     public function index(SongRepository $songRepository) : Response
     {
         return $this->render('song/index.html.twig', [
+            'class' => Song::class,
             'songs' => $songRepository->findBy([], ['id' => 'DESC'], 20),
         ]);
     }
+
+    // browse with meili
+    #[Route(path: '/meili', name: 'song_browse', methods: ['GET'])]
+    public function browse(SongRepository $songRepository) : Response
+    {
+        return $this->render('song/meili.html.twig', [
+            'class' => Song::class,
+        ]);
+    }
+
     #[Route(path: '/new', name: 'song_new', methods: ['GET', 'POST'])]
     public function new(Request $request) : Response
     {

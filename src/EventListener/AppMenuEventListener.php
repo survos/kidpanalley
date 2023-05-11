@@ -35,6 +35,7 @@ final class AppMenuEventListener
         $options = $event->getOptions();
 
         $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
+        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
         $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
         $this->addMenuItem($menu, ['route' => 'video_browse', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
 
