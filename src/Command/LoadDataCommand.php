@@ -28,7 +28,7 @@ class LoadDataCommand extends Command
     protected function configure()
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+//            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1f24861eaa5fe2103eefc9bb4182936",
+    "content-hash": "c212ea7401ff2f616ecdd76091817c8c",
     "packages": [
         {
             "name": "api-platform/core",
@@ -5577,6 +5577,61 @@
                 "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.44"
             },
             "time": "2023-05-11T12:50:11+00:00"
+        },
+        {
+            "name": "survos/scraper-bundle",
+            "version": "1.4.44",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosScraperBundle.git",
+                "reference": "f35aeabf30ebbca84a89de0620c2aa0c613a4255"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosScraperBundle/zipball/f35aeabf30ebbca84a89de0620c2aa0c613a4255",
+                "reference": "f35aeabf30ebbca84a89de0620c2aa0c613a4255",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/cache": "^6.1",
+                "symfony/config": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/http-client": "^6.1.0",
+                "symfony/http-kernel": "^6.1.0",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "^6.1.0",
+                "symfony/framework-bundle": "^6.1.0",
+                "symfony/phpunit-bridge": "^6.1.0",
+                "symfony/twig-bundle": "^6.1.0",
+                "symfony/var-dumper": "^6.1.0",
+                "symfony/webpack-encore-bundle": "^1.11"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\Scraper\\": "src/",
+                    "Survos\\Scraper\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Scrape and cache web pages",
+            "keywords": [
+                "symfony-ux",
+                "symfony6"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/SurvosScraperBundle/issues",
+                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.4.44"
+            },
+            "time": "2023-05-10T16:42:53+00:00"
         },
         {
             "name": "survos/workflow-helper-bundle",
@@ -13629,6 +13684,80 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
+            "name": "survos/command-bundle",
+            "version": "1.4.44",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosCommandBundle.git",
+                "reference": "b8af15bf2e748c62d90cc55b4eff02ed0a83f2e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosCommandBundle/zipball/b8af15bf2e748c62d90cc55b4eff02ed0a83f2e6",
+                "reference": "b8af15bf2e748c62d90cc55b4eff02ed0a83f2e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/config": "^6.1.0",
+                "symfony/console": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/form": "^6.1.0",
+                "symfony/framework-bundle": "^6.1.0",
+                "symfony/http-kernel": "^6.1.0",
+                "zenstruck/console-extra": "^1.1"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/core-bundle": "<1.2.57",
+                "survos/crawler-bundle": "<1.2.57",
+                "survos/doc-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\CommandBundle\\": "src/",
+                    "Survos\\CommandBundle\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Run Symfony console commands from a web interface",
+            "support": {
+                "issues": "https://github.com/survos/SurvosCommandBundle/issues",
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.44"
+            },
+            "time": "2023-05-11T11:54:08+00:00"
+        },
+        {
             "name": "survos/composer-json-manipulator",
             "version": "11.2.0",
             "source": {
@@ -15002,8 +15131,8 @@
         "php": "^8.2",
         "ext-ctype": "*",
         "ext-dom": "*",
-        "ext-xml": "*",
         "ext-iconv": "*",
+        "ext-xml": "*",
         "ext-zip": "*"
     },
     "platform-dev": [],

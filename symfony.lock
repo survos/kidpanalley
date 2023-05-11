@@ -421,6 +421,9 @@
     "survos/bootstrap-bundle": {
         "version": "dev-master"
     },
+    "survos/command-bundle": {
+        "version": "1.4.44"
+    },
     "survos/core-bundle": {
         "version": "1.0.7"
     },
@@ -435,6 +438,9 @@
     },
     "survos/maker-bundle": {
         "version": "1.0.2"
+    },
+    "survos/scraper-bundle": {
+        "version": "1.4.44"
     },
     "survos/workflow-helper-bundle": {
         "version": "2.0.1"

@@ -3,6 +3,9 @@
 
 ```bash
 git clone git@github.com:survos/kidpanalley.git kpa && cd kpa
+bin/console d:database:create 
+bin/console doctrine:schema:update --force --complete
+
 composer install && yarn install --force && yarn dev
 symfony server:start -d
 bin/console app:load-data

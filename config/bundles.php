@@ -31,4 +31,6 @@ return [
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
     Meilisearch\Bundle\MeilisearchBundle::class => ['all' => true],
     Survos\CrawlerBundle\SurvosCrawlerBundle::class => ['dev' => true, 'test' => true],
+    Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
+    Survos\CommandBundle\SurvosCommandBundle::class => ['dev' => true, 'test' => true],
 ];

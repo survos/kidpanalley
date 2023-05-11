@@ -17,6 +17,7 @@ use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\IOFactory;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Survos\Scraper\Service\ScraperService;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -28,6 +29,7 @@ class AppService
     public function __construct(private readonly EntityManagerInterface $em,
                                 private readonly SerializerInterface $serializer,
                                 private readonly Factory $spreadsheet,
+                                private ScraperService $scraperService,
                                 private readonly LoggerInterface $logger)
     {
     }
@@ -250,10 +252,14 @@ class AppService
         $next = '';
         $repo = $this->em->getRepository(Video::class);
         do {
+
             $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
-            $list = $this->fetchUrl($url);
-            $next = $list->nextPageToken ?? false;
-            foreach ($list->items as $rawData) {
+
+            $json = $this->scraperService->fetchUrl($url, key: $channelId . '-' . $next);
+            $results = json_decode($json);
+//            $list = $this->fetchUrl($url);
+            $next = $results->nextPageToken ?? false;
+            foreach ($results->items as $rawData) {
 //                dump($rawData);
 //                dump(json_encode($rawData));
                 $item = (object) $rawData;
