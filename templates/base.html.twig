@@ -1,43 +1,43 @@
+{% extends "layout.html.twig" %}
+{#{% set appShortName = 'KPA' %}#}
 
-{% set appShortName = 'KPA' %}
 
+{#{% block logo_mini %}<b>KPA</b>{% endblock %}#}
+{#{% block logo_large '<b>KPA</b> Admin' %}#}
 
-{% block logo_mini %}<b>KPA</b>{% endblock %}
-{% block logo_large '<b>KPA</b> Admin' %}
+{#{% block page_title 'KPA Admin' %}#}
+{#{% block page_subtitle 'Songs and Music!' %}#}
 
-{% block page_title 'KPA Admin' %}
-{% block page_subtitle 'Songs and Music!' %}
+{#    {% block stylesheets %}#}
+{#        #}{# always include app?  Or add it to stylesheets block and always call parent?#}
+{#        #}
+{#        {{ parent() }}#}
+{#        {{ encore_entry_link_tags('app') }}#}
+{#    {% endblock %}#}
 
-    {% block stylesheets %}
-        {# always include app?  Or add it to stylesheets block and always call parent?
-        #}
-        {{ parent() }}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+{#    {% block javascripts %}#}
+{#        #}{# always include app?  Or add it to stylesheets block and always call parent?#}
+{#        #}
+{#        {{ parent() }}#}
+{#        {{ encore_entry_script_tags('app') }}#}
+{#    {% endblock %}#}
 
-    {% block javascripts %}
-        {# always include app?  Or add it to stylesheets block and always call parent?
-        #}
-        {{ parent() }}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+{# could also overwrite template#}
+{#        {% include '@SurvosBootstrapBundle/Partials/_footer.html.twig' %}#}
+{##}
 
-{# could also overwrite template
-        {% include '@SurvosBootstrapBundle/Partials/_footer.html.twig' %}
-#}
+{#{% block footer %}#}
+{#<footer class="main-footer">#}
+{#    <!-- To the right -->#}
+{#    <div class="pull-right hidden-xs">#}
 
-{% block footer %}
-<footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
+{#    </div>#}
+{#    <!-- Default to the left -->#}
+{#    <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved.#}
+{#    <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved.#}
+{#</footer>#}
+{#{% endblock %}#}
 
-    </div>
-    <!-- Default to the left -->
-    <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved.
-    <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved.
-</footer>
-{% endblock %}
-
-{% block body %}
-    {{ block('page_content') }}
-{% endblock %}
+{#{% block body %}#}
+{#    {{ block('page_content') }}#}
+{#{% endblock %}#}
