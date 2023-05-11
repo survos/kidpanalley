@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SongRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
+use Survos\ApiGrid\State\MeilliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
@@ -20,6 +23,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ORM\Entity(repositoryClass: SongRepository::class)]
+
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["school","year"], arguments: [
+    "searchParameterName" => "facet_filter",
+])]
+
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/meili',
+            provider: MeilliSearchStateProvider::class, # MeilisearchProvider
+            normalizationContext: ['movie.read', 'rp', 'searchable']
+        )
+    ],
+    openapiContext:  ["description" => 'meiliseach provider'],
+)]
+
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
@@ -30,16 +49,16 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read'])]
     private $id;
     #[ORM\Column(type: 'text')]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'searchable'])]
     private $title;
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'searchable'])]
     private $date;
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'searchable'])]
     private $year;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'searchable'])]
     private $school;
     #[ORM\Column(type: 'text', nullable: true)]
     private $lyrics;
