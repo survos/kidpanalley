@@ -28,15 +28,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     "searchParameterName" => "facet_filter",
 ])]
 
-#[ApiResource(
-    operations: [
-        new GetCollection(
-            uriTemplate: '/meili',
-            provider: MeilliSearchStateProvider::class, # MeilisearchProvider
-            normalizationContext: ['movie.read', 'rp', 'searchable']
-        )
-    ],
-    openapiContext:  ["description" => 'meiliseach provider'],
+#[GetCollection(
+    normalizationContext: ['movie.read', 'rp', 'searchable'],
+    provider: MeilliSearchStateProvider::class # MeilisearchProvider
+
 )]
 
 class Song implements RouteParametersInterface, \Stringable
