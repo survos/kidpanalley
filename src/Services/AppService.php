@@ -81,7 +81,6 @@ class AppService
             if (!file_exists($absoluteFilePath) || !is_readable($absoluteFilePath)) {
                 throw new \Exception($absoluteFilePath . ' is not readable');
             }
-            dd($absoluteFilePath);
 
             try {
 //                $reader = IOFactory::load($absoluteFilePath);
@@ -272,6 +271,7 @@ class AppService
                 $snippet = $item->snippet;
                 $raw = json_decode(json_encode($rawData), true);
                 assert($raw, "Raw is null");
+//                dd($raw, $snippet);
                 $video
                     ->setRawData($raw)
                     ->setTitle($snippet->title)

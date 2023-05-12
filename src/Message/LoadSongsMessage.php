@@ -2,6 +2,8 @@
 
 namespace App\Message;
 
+use App\MessageHandler\LoadSongsMessageHandler;
+
 final class LoadSongsMessage
 {
     /*
