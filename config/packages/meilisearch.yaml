@@ -12,6 +12,8 @@ meilisearch:
         filterableAttributes:
           - year
           - title
+          - school
         sortableAttributes:
           - year
           - title
+          - school
