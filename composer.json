@@ -21,6 +21,7 @@
         "easycorp/easyadmin-bundle": "*",
         "friendsofsymfony/jsrouting-bundle": "^3.2",
         "google/apiclient": "^2.0",
+        "kevinpapst/tabler-bundle": "dev-main",
         "league/oauth2-facebook": "^2.0",
         "league/oauth2-github": "^3.0",
         "league/oauth2-google": "^4.0",
@@ -132,7 +133,5 @@
             "allow-contrib": true,
             "require": "^6.2"
         }
-    },
-    "repositories": {
     }
 }

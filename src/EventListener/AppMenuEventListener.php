@@ -32,6 +32,33 @@ final class AppMenuEventListener
         }
 
         $menu = $event->getMenu();
+
+        $hasComponentBadge = 'x';
+        $extendedUIMenu = $this->addMenuItem($menu, array(
+            'label' => 'Extended UI',
+            'badge' => $hasComponentBadge,
+
+            'icon' => 'menu-icon tf-icons bx bx-copy',
+        ));
+        $this->addMenuItem($extendedUIMenu, array(
+            'icon' => false,
+            'label' => 'Perfect scrollbar',
+            'route' => 'app_homepage',
+            'rp' =>
+                array(
+                    'page' => 'extended-ui-perfect-scrollbar',
+                ),
+        ));
+        $this->addMenuItem($extendedUIMenu, array(
+            'icon' => false,
+            'label' => 'Text Divider',
+            'route' => 'app_homepage',
+            'badge' => $hasComponentBadge,
+            'rp' =>
+                array(
+                    'page' => 'extended-ui-text-divider',
+                ),
+        ));
         $options = $event->getOptions();
 
         $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);

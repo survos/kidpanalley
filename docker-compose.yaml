@@ -11,7 +11,7 @@ services:
             # For example, to allow the host to connect to port 3306 on the container, you would change
             # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
             # See https://docs.docker.com/compose/compose-file/compose-file-v3/#ports for more information.
-            - '5432'
+            - '5432:5432'
 
     rabbitmq:
         image: rabbitmq:3-management-alpine
@@ -25,14 +25,18 @@ services:
         networks:
             - rabbitmq_go_net
 
+
 ###> meilisearch/search-bundle ###
     meilisearch:
-      image: getmeili/meilisearch:${MEILISEARCH_VERSION:-v1.0}
+      container_name: 'meilisearch'
+      image: getmeili/meilisearch:${MEILISEARCH_VERSION:-v1.4}
+      ports:
+        - 7700:7700
       environment:
         # You should definitely change the master key in production
         MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-!ChangeMe!}
       volumes:
-        - meilisearch_data:/meili_data
+        - ./.docker/meili/:/meili_data/
 ###< meilisearch/search-bundle ###
 
 networks:

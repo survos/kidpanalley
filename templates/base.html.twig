@@ -1,5 +1,6 @@
 {% extends "layout.html.twig" %}
-{#{% set appShortName = 'KPA' %}#}
+{% set appShortName = 'KPA' %}
+{% block logo_mini 'KPA' %}
 
 
 {#{% block logo_mini %}<b>KPA</b>{% endblock %}#}
@@ -38,6 +39,6 @@
 {#</footer>#}
 {#{% endblock %}#}
 
-{#{% block body %}#}
-{#    {{ block('page_content') }}#}
-{#{% endblock %}#}
+{% block page_content %}
+    {{ block('body') }}
+{% endblock %}
