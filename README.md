@@ -3,6 +3,9 @@
 
 ```bash
 git clone git@github.com:survos/kidpanalley.git kpa && cd kpa
+echo "APP_ENV=dev" >> .env.local
+bin/console d:database:create 
+bin/console doctrine:schema:update --force --complete
 
 composer install && yarn install --force && yarn dev
 bin/console d:database:create 
