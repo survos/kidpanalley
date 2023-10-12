@@ -34,4 +34,5 @@ return [
     Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
     Survos\CommandBundle\SurvosCommandBundle::class => ['dev' => true, 'test' => true],
     KevinPapst\TablerBundle\TablerBundle::class => ['all' => true],
+    Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
 ];
