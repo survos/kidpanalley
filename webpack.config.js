@@ -46,7 +46,7 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     .configureBabel((config) => {
-        config.plugins.push('@babel/plugin-proposal-class-properties');
+        // config.plugins.push('@babel/plugin-proposal-class-properties');
     })
 
     // enables @babel/preset-env polyfills
@@ -71,5 +71,9 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
 ;
+
+const config = Encore.getWebpackConfig();
+config.resolve.symlinks = false;
+
 
 module.exports = Encore.getWebpackConfig();
