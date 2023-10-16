@@ -305,6 +305,18 @@
     "phpspec/prophecy": {
         "version": "v1.15.0"
     },
+    "phpstan/phpstan": {
+        "version": "1.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "f10b8054de1a94a3b9e8806a6453fd5c98491c44"
+        },
+        "files": [
+            "phpstan.dist.neon"
+        ]
+    },
     "phpunit/php-code-coverage": {
         "version": "9.2.10"
     },
@@ -740,6 +752,15 @@
     },
     "symfony/service-contracts": {
         "version": "1.1-dev"
+    },
+    "symfony/stimulus-bundle": {
+        "version": "2.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.8",
+            "ref": "9e33a8a3794b603fb4be6c04ee5ecab901ce549e"
+        }
     },
     "symfony/stopwatch": {
         "version": "4.4.x-dev"
