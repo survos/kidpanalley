@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VideoRepository extends ServiceEntityRepository
 {
+    use QueryBuilderHelperTrait;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Video::class);
