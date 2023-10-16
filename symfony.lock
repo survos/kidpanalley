@@ -158,6 +158,9 @@
     "guzzlehttp/psr7": {
         "version": "1.x-dev"
     },
+    "kevinpapst/tabler-bundle": {
+        "version": "dev-main"
+    },
     "knplabs/knp-menu-bundle": {
         "version": "v3.2.0"
     },

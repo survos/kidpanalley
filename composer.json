@@ -29,7 +29,7 @@
         "nelmio/cors-bundle": "^2.3.1",
         "nyholm/psr7": "^1.8",
         "phpoffice/phpword": "dev-master",
-        "survos/api-grid-bundle": "^1.5.55",
+        "survos/api-grid-bundle": "*@dev",
         "survos/auth-bundle": "^1.5.55",
         "survos/bootstrap-bundle": "dev-main",
         "survos/grid-bundle": "^1.5.55",
@@ -134,5 +134,9 @@
         }
     },
     "repositories": {
+        "api-grid": {
+            "type": "path",
+            "url": "../survos/packages/api-grid-bundle"
+        }
     }
 }

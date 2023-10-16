@@ -8,6 +8,9 @@ bin/console d:database:create
 bin/console doctrine:schema:update --force --complete
 
 composer install && yarn install --force && yarn dev
+bin/console d:database:create 
+bin/console doctrine:schema:update --force --complete
+symfony proxy:domain:attach kpa
 symfony server:start -d
 bin/console app:load-data
 bin/consume
