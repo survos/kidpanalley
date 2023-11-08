@@ -3,7 +3,7 @@
     "description": "Archives for Kid Pan Alley",
     "type": "project",
     "license": "proprietary",
-    "minimum-stability": "beta",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": "^8.2",
@@ -32,12 +32,13 @@
         "survos/api-grid-bundle": "^1.5",
         "survos/auth-bundle": "^1.5.55",
         "survos/bootstrap-bundle": "*@dev",
-        "survos/grid-bundle": "^1.5.55",
+        "survos/grid-bundle": "*@dev",
         "survos/inspection-bundle": "^1.5.55",
         "survos/scraper-bundle": "^1.5.55",
         "survos/workflow-helper-bundle": "^1.5.55",
         "symfony/amqp-messenger": "^6.3.4",
         "symfony/asset": "^6.3",
+        "symfony/asset-mapper": "^6.4",
         "symfony/console": "^6.3.4",
         "symfony/dotenv": "^6.3",
         "symfony/expression-language": "^6.3",
@@ -56,11 +57,11 @@
         "symfony/runtime": "^6.3.2",
         "symfony/security-bundle": "^6.3.5",
         "symfony/serializer": "^6.3.5",
+        "symfony/stimulus-bundle": "^2.x-dev",
         "symfony/translation": "^6.3.3",
         "symfony/twig-bundle": "^6.3",
         "symfony/validator": "^6.3.5",
         "symfony/web-link": "^6.3",
-        "symfony/webpack-encore-bundle": "^1.17.2",
         "symfony/workflow": "^6.3.4",
         "symfony/yaml": "^6.3.3",
         "symfonycasts/verify-email-bundle": "^1.14",
@@ -129,11 +130,15 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": true,
+            "allow-contrib": "true",
             "require": "^6.4"
         }
     },
     "repositories": {
+        "grid": {
+            "type": "path",
+            "url": "../survos/packages/grid-bundle"
+        },
         "bootstrap": {
             "type": "path",
             "url": "../survos/packages/bootstrap-bundle"

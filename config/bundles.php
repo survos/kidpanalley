@@ -24,7 +24,6 @@ return [
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Survos\BootstrapBundle\SurvosBootstrapBundle::class => ['all' => true],
-    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['dev' => true, 'test' => true],
     Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
     Survos\AuthBundle\SurvosAuthBundle::class => ['all' => true],

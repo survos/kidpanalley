@@ -6,6 +6,7 @@ require('Hinclude/hinclude');
 require('../css/app.scss');
 
 // start the Stimulus application
+console.log('starting stimulus');
 import './../bootstrap';
 
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0873b14e7d27172f616e99f748b7f85f",
+    "content-hash": "a8239999d5687e879b3cd605776ba9d8",
     "packages": [
         {
             "name": "api-platform/core",
@@ -308,6 +308,87 @@
                 }
             ],
             "time": "2022-01-17T14:14:24+00:00"
+        },
+        {
+            "name": "composer/semver",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/semver.git",
+                "reference": "35e8d0af4486141bc745f23a29cc2091eb624a32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/semver/zipball/35e8d0af4486141bc745f23a29cc2091eb624a32",
+                "reference": "35e8d0af4486141bc745f23a29cc2091eb624a32",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Semver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                },
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                },
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com",
+                    "homepage": "http://robbast.nl"
+                }
+            ],
+            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "keywords": [
+                "semantic",
+                "semver",
+                "validation",
+                "versioning"
+            ],
+            "support": {
+                "irc": "ircs://irc.libera.chat:6697/composer",
+                "issues": "https://github.com/composer/semver/issues",
+                "source": "https://github.com/composer/semver/tree/3.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-08-31T09:50:34+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -5462,31 +5543,25 @@
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.5.61",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "7b34b813f9bfce26e304553bcd060f42288518a8"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/7b34b813f9bfce26e304553bcd060f42288518a8",
-                "reference": "7b34b813f9bfce26e304553bcd060f42288518a8",
-                "shasum": ""
+                "type": "path",
+                "url": "../survos/packages/grid-bundle",
+                "reference": "bb56e3a10f6a1a979ab96ade8675114255175935"
             },
             "require": {
                 "doctrine/doctrine-bundle": "^2.7",
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.61",
-                "symfony/config": "^6.1.0",
-                "symfony/dependency-injection": "^6.1.0",
-                "symfony/http-kernel": "^6.1.0",
-                "symfony/options-resolver": "^6.1.0",
-                "symfony/stimulus-bundle": "^2.12",
+                "survos/core-bundle": "^1.5",
+                "symfony/config": "^6.3 || ^7.0",
+                "symfony/dependency-injection": "^6.3 || ^7.0",
+                "symfony/http-kernel": "^6.3 || ^7.0",
+                "symfony/options-resolver": "^6.3 || ^7.0",
+                "symfony/property-access": "^6.3",
+                "symfony/stimulus-bundle": "2.x-dev",
                 "symfony/ux-twig-component": "^2.9",
-                "symfony/webpack-encore-bundle": "^1.11",
                 "twig/twig": "^3.4"
             },
             "conflict": {
@@ -5514,11 +5589,11 @@
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
                 "roave/security-advisories": "dev-latest",
-                "symfony/browser-kit": "^6.1.0",
-                "symfony/framework-bundle": "^6.1.0",
-                "symfony/phpunit-bridge": "^6.1.0",
-                "symfony/twig-bundle": "^6.1.0",
-                "symfony/var-dumper": "^6.1.0"
+                "symfony/browser-kit": "^6.3 || ^7.0",
+                "symfony/framework-bundle": "^6.3 || ^7.0",
+                "symfony/phpunit-bridge": "^6.3 || ^7.0",
+                "symfony/twig-bundle": "^6.3 || ^7.0",
+                "symfony/var-dumper": "^6.3 || ^7.0"
             },
             "suggest": {
                 "monolog/monolog": "Allows more advanced logging of the application flow",
@@ -5530,7 +5605,7 @@
                     "dev-main": "1.6-dev"
                 },
                 "symfony": {
-                    "require": "^6.1.0"
+                    "require": "^6.3 || ^7.0"
                 }
             },
             "autoload": {
@@ -5538,7 +5613,11 @@
                     "Survos\\Grid\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "phpstan": [
+                    "vendor/bin/phpstan analyse"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -5553,11 +5632,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.5.61"
-            },
-            "time": "2023-10-20T17:44:43+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "survos/inspection-bundle",
@@ -5929,6 +6006,85 @@
                 }
             ],
             "time": "2023-10-20T05:44:23+00:00"
+        },
+        {
+            "name": "symfony/asset-mapper",
+            "version": "v6.4.0-BETA2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/asset-mapper.git",
+                "reference": "60f9cb8727507fc0726a6139a658f60cb77f76c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/asset-mapper/zipball/60f9cb8727507fc0726a6139a658f60cb77f76c3",
+                "reference": "60f9cb8727507fc0726a6139a658f60cb77f76c3",
+                "shasum": ""
+            },
+            "require": {
+                "composer/semver": "^3.0",
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/filesystem": "^5.4|^6.0|^7.0",
+                "symfony/http-client": "^6.3|^7.0"
+            },
+            "conflict": {
+                "symfony/framework-bundle": "<6.4"
+            },
+            "require-dev": {
+                "symfony/asset": "^5.4|^6.0|^7.0",
+                "symfony/browser-kit": "^5.4|^6.0|^7.0",
+                "symfony/console": "^5.4|^6.0|^7.0",
+                "symfony/event-dispatcher-contracts": "^3.0",
+                "symfony/finder": "^5.4|^6.0|^7.0",
+                "symfony/framework-bundle": "^6.4|^7.0",
+                "symfony/http-foundation": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
+                "symfony/web-link": "^5.4|^6.0|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\AssetMapper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Maps directories of assets & makes them available in a public directory with versioned filenames.",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/asset-mapper/tree/v6.4.0-BETA2"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-10-29T02:12:07+00:00"
         },
         {
             "name": "symfony/cache",
@@ -10127,33 +10283,35 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v2.12.0",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "e0e19de8df4d5b2bed57328ae69ef7904df660c7"
+                "reference": "f6c8ff81b7b2ae82327f4a71c5f9377eb31f83f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/e0e19de8df4d5b2bed57328ae69ef7904df660c7",
-                "reference": "e0e19de8df4d5b2bed57328ae69ef7904df660c7",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/f6c8ff81b7b2ae82327f4a71c5f9377eb31f83f1",
+                "reference": "f6c8ff81b7b2ae82327f4a71c5f9377eb31f83f1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
-                "symfony/config": "^5.4|^6.0",
-                "symfony/dependency-injection": "^5.4|^6.0",
-                "symfony/finder": "^5.4|^6.0",
-                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/config": "^5.4|^6.0|^7.0",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/deprecation-contracts": "^2.0|^3.0",
+                "symfony/finder": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
                 "twig/twig": "^2.15.3|^3.4.3"
             },
             "require-dev": {
-                "symfony/asset-mapper": "^6.3",
-                "symfony/framework-bundle": "^5.4|^6.0",
-                "symfony/phpunit-bridge": "^5.4|^6.0",
-                "symfony/twig-bundle": "^5.4|^6.0",
+                "symfony/asset-mapper": "^6.3|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/phpunit-bridge": "^5.4|^6.0|^7.0",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
                 "zenstruck/browser": "^1.4"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -10175,7 +10333,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.12.0"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/2.x"
             },
             "funding": [
                 {
@@ -10191,7 +10349,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-28T18:00:50+00:00"
+            "time": "2023-11-07T21:10:32+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -11201,79 +11359,6 @@
                 }
             ],
             "time": "2023-09-25T12:52:38+00:00"
-        },
-        {
-            "name": "symfony/webpack-encore-bundle",
-            "version": "v1.17.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "471ebbc03072dad6e31840dc317bc634a32785f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/471ebbc03072dad6e31840dc317bc634a32785f5",
-                "reference": "471ebbc03072dad6e31840dc317bc634a32785f5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "symfony/asset": "^4.4 || ^5.0 || ^6.0",
-                "symfony/config": "^4.4 || ^5.0 || ^6.0",
-                "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/http-kernel": "^4.4 || ^5.0 || ^6.0",
-                "symfony/polyfill-php80": "^1.25.0",
-                "symfony/service-contracts": "^1.0 || ^2.0 || ^3.0"
-            },
-            "require-dev": {
-                "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
-                "symfony/phpunit-bridge": "^5.3 || ^6.0",
-                "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
-                "symfony/web-link": "^4.4 || ^5.0 || ^6.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "thanks": {
-                    "name": "symfony/webpack-encore",
-                    "url": "https://github.com/symfony/webpack-encore"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\WebpackEncoreBundle\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Integration with your Symfony app & Webpack Encore!",
-            "support": {
-                "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
-                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.17.2"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-09-26T14:36:28+00:00"
         },
         {
             "name": "symfony/workflow",
@@ -15295,10 +15380,12 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "beta",
+    "minimum-stability": "dev",
     "stability-flags": {
         "phpoffice/phpword": 20,
         "survos/bootstrap-bundle": 20,
+        "survos/grid-bundle": 20,
+        "symfony/stimulus-bundle": 20,
         "yectep/phpspreadsheet-bundle": 20
     },
     "prefer-stable": true,
