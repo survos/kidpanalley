@@ -27,12 +27,11 @@
         "meilisearch/search-bundle": "^0.11.0",
         "mindscreen/yarnlock": "^1.0.1",
         "nelmio/cors-bundle": "^2.3.1",
-        "nyholm/psr7": "^1.8",
         "phpoffice/phpword": "dev-master",
-        "survos/api-grid-bundle": "^1.5",
+        "survos/api-grid-bundle": "*@dev",
         "survos/auth-bundle": "^1.5.55",
         "survos/bootstrap-bundle": "*@dev",
-        "survos/grid-bundle": "*@dev",
+        "survos/grid-bundle": "^1.6@dev",
         "survos/inspection-bundle": "^1.5.55",
         "survos/scraper-bundle": "^1.5.55",
         "survos/workflow-helper-bundle": "^1.5.55",
@@ -135,6 +134,10 @@
         }
     },
     "repositories": {
+        "api-grid": {
+            "type": "path",
+            "url": "../survos/packages/api-grid-bundle"
+        },
         "grid": {
             "type": "path",
             "url": "../survos/packages/grid-bundle"
