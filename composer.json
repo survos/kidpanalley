@@ -28,7 +28,7 @@
         "mindscreen/yarnlock": "^1.0.1",
         "nelmio/cors-bundle": "^2.3.1",
         "phpoffice/phpword": "dev-master",
-        "survos/api-grid-bundle": "*@dev",
+        "survos/api-grid-bundle": "dev-main",
         "survos/auth-bundle": "^1.5.55",
         "survos/bootstrap-bundle": "*@dev",
         "survos/grid-bundle": "^1.6@dev",

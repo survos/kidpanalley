@@ -25,6 +25,14 @@ final class AppMenuEventListener
     {
         return true;
     }
+    public function appSidebarMenu(KnpMenuEvent $event): void
+    {
+        if (!$this->supports($event)) {
+            return;
+        }
+        $menu = $event->getMenu();
+    }
+
 
     public function navbarMenu(KnpMenuEvent $event): void
     {
@@ -33,53 +41,16 @@ final class AppMenuEventListener
         }
         $menu = $event->getMenu();
         $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
-        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
+//        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
+        $subMenu = $this->addSubmenu($menu, 'songs');
+        $this->add($subMenu, 'song_index');
+        $this->add($subMenu, 'song_browse');
 
-    }
-    public function appSidebarMenu(KnpMenuEvent $event): void
-    {
-        if (!$this->supports($event)) {
-            return;
-        }
-
-        $menu = $event->getMenu();
-
-        $hasComponentBadge = 'x';
-        $extendedUIMenu = $this->addMenuItem($menu, array(
-            'label' => 'Extended UI',
-            'badge' => $hasComponentBadge,
-
-            'icon' => 'menu-icon tf-icons bx bx-copy',
-        ));
-        $this->addMenuItem($extendedUIMenu, array(
-            'icon' => false,
-            'label' => 'Perfect scrollbar',
-            'route' => 'app_homepage',
-            'rp' =>
-                array(
-                    'page' => 'extended-ui-perfect-scrollbar',
-                ),
-        ));
-        $this->addMenuItem($extendedUIMenu, array(
-            'icon' => false,
-            'label' => 'Text Divider',
-            'route' => 'app_homepage',
-            'badge' => $hasComponentBadge,
-            'rp' =>
-                array(
-                    'page' => 'extended-ui-text-divider',
-                ),
-        ));
-        $options = $event->getOptions();
-
-        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
-        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
         $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
         $this->addMenuItem($menu, ['route' => 'video_browse', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
-        $this->addMenuItem($menu, ['route' => 'survos_commands', 'label' => "Commands", 'icon' => 'fas fa-terminal']);
+        $subMenu = $this->addSubmenu($menu, 'admin');
+        $this->add($subMenu, 'survos_commands', label: "Commands");
 
-        $this->addMenuItem($menu, ['route' => 'app_homepage']);
-        // for nested menus, don't add a route, just a label, then use it for the argument to addMenuItem
         $nestedMenu = $this->addMenuItem($menu, ['label' => 'Credits']);
         foreach (['bundles', 'javascript'] as $type) {
             // $this->addMenuItem($nestedMenu, ['route' => 'survos_base_credits', 'rp' => ['type' => $type], 'label' => ucfirst($type)]);
