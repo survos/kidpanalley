@@ -37,11 +37,12 @@ class LoadDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
 
+        $this->bus->dispatch(new LoadSongsMessage());
+        $io->success('Songs Load Requested');
+
         $this->bus->dispatch(new FetchYoutubeChannelMessage());
         $io->success('Videos Load Requested');
 
-        $this->bus->dispatch(new LoadSongsMessage());
-        $io->success('Songs Load Requested');
 
         return self::SUCCESS;
     }

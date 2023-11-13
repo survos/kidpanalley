@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c07a8688772d9fbb8d3147f4519a2f96",
+    "content-hash": "b441989a374aa6ce3d4315424a088d89",
     "packages": [
         {
             "name": "api-platform/core",
@@ -15318,6 +15318,7 @@
         "survos/api-grid-bundle": 20,
         "survos/bootstrap-bundle": 20,
         "survos/grid-bundle": 20,
+        "symfony/stimulus-bundle": 20,
         "yectep/phpspreadsheet-bundle": 20
     },
     "prefer-stable": true,

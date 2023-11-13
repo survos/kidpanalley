@@ -56,6 +56,7 @@
         "symfony/runtime": "^6.3.2",
         "symfony/security-bundle": "^6.3.5",
         "symfony/serializer": "^6.3.5",
+        "symfony/stimulus-bundle": "^2.x-dev",
         "symfony/translation": "^6.3.3",
         "symfony/twig-bundle": "^6.3",
         "symfony/validator": "^6.3.5",
@@ -113,7 +114,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
+            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
