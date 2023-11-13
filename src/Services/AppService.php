@@ -32,7 +32,6 @@ class AppService
                                 private ScraperService $scraperService,
                                 private readonly LoggerInterface $logger)
     {
-        $this->scraperService->setLogger($this->logger);
     }
 
     private function getText($elements)

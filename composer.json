@@ -30,7 +30,7 @@
         "phpoffice/phpword": "dev-master",
         "survos/api-grid-bundle": "dev-main",
         "survos/auth-bundle": "^1.5.55",
-        "survos/bootstrap-bundle": "*@dev",
+        "survos/bootstrap-bundle": "^1.6-dev",
         "survos/grid-bundle": "^1.6@dev",
         "survos/inspection-bundle": "^1.5.55",
         "survos/scraper-bundle": "^1.5.55",
@@ -134,17 +134,5 @@
         }
     },
     "repositories": {
-        "api-grid": {
-            "type": "path",
-            "url": "../survos/packages/api-grid-bundle"
-        },
-        "grid": {
-            "type": "path",
-            "url": "../survos/packages/grid-bundle"
-        },
-        "bootstrap": {
-            "type": "path",
-            "url": "../survos/packages/bootstrap-bundle"
-        }
     }
 }
