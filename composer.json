@@ -31,7 +31,7 @@
         "survos/api-grid-bundle": "dev-main",
         "survos/auth-bundle": "^1.5.55",
         "survos/bootstrap-bundle": "^1.6-dev",
-        "survos/grid-bundle": "^1.6@dev",
+        "survos/grid-bundle": "^1.6-dev",
         "survos/inspection-bundle": "^1.5.55",
         "survos/scraper-bundle": "^1.5.55",
         "survos/workflow-helper-bundle": "^1.5.55",
@@ -56,7 +56,6 @@
         "symfony/runtime": "^6.3.2",
         "symfony/security-bundle": "^6.3.5",
         "symfony/serializer": "^6.3.5",
-        "symfony/stimulus-bundle": "^2.x-dev",
         "symfony/translation": "^6.3.3",
         "symfony/twig-bundle": "^6.3",
         "symfony/validator": "^6.3.5",
@@ -134,5 +133,9 @@
         }
     },
     "repositories": {
+        "grid": {
+            "type": "path",
+            "url": "../../../../ca/survos/packages//grid-bundle"
+        }
     }
 }
