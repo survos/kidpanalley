@@ -134,6 +134,10 @@
         }
     },
     "repositories": {
+        "api-grid": {
+            "type": "path",
+            "url": "../../../../ca/survos/packages//api-grid-bundle"
+        },
         "grid": {
             "type": "path",
             "url": "../../../../ca/survos/packages//grid-bundle"

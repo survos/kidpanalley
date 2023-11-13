@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b441989a374aa6ce3d4315424a088d89",
+    "content-hash": "1c11b0a4afc69e91ed9d3c162b3a3a27",
     "packages": [
         {
             "name": "api-platform/core",
@@ -5147,16 +5147,10 @@
         {
             "name": "survos/api-grid-bundle",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "21ef73b1290c2ef191c008cb22d40e4b7a47848a"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/21ef73b1290c2ef191c008cb22d40e4b7a47848a",
-                "reference": "21ef73b1290c2ef191c008cb22d40e4b7a47848a",
-                "shasum": ""
+                "type": "path",
+                "url": "../../../../ca/survos/packages//api-grid-bundle",
+                "reference": "6bd5c1da543bbbc351f8b11393fd3bd100019a2c"
             },
             "require": {
                 "api-platform/core": "^3.2",
@@ -5187,14 +5181,17 @@
                 "friendsofsymfony/jsrouting-bundle": "use path() in javascript grid rendering",
                 "monolog/monolog": "Allows more advanced logging of the application flow"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
                     "Survos\\ApiGrid\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "phpstan": [
+                    "vendor/bin/phpstan analyse"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -5209,11 +5206,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/main"
-            },
-            "time": "2023-11-12T17:05:28+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "survos/auth-bundle",
