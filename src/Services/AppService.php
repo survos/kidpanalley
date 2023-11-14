@@ -255,7 +255,7 @@ class AppService
             $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
 
             $results = $this->scraperService->fetchUrl($url, key: $channelId . '-' . $next);
-            dd($results);
+//            dd($results);
 
             $next = $results->nextPageToken ?? false;
             foreach ($results->items as $rawData) {

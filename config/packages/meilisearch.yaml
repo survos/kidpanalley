@@ -5,15 +5,15 @@ meilisearch:
   indices:
     # Define entities or documents that should be indexed to Meilisearch.
     # See https://github.com/meilisearch/meilisearch-symfony/wiki/configure-searchable-data
-    - name: song
-      class: App\Entity\Song
-      enable_serializer_groups: true
-      settings:
-        filterableAttributes:
-          - year
-          - title
-          - school
-        sortableAttributes:
-          - year
-          - title
-          - school
+#    - name: song
+#      class: App\Entity\Song
+#      enable_serializer_groups: true
+#      settings:
+#        filterableAttributes:
+#          - year
+#          - title
+#          - school
+#        sortableAttributes:
+#          - year
+#          - title
+#          - school
