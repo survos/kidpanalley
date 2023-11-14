@@ -33,4 +33,5 @@ return [
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
     Survos\Grid\SurvosGridBundle::class => ['all' => true],
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
+    Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
 ];

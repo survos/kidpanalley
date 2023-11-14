@@ -445,6 +445,9 @@
     "survos/crawler-bundle": {
         "version": "1.4.44"
     },
+    "survos/deployment-bundle": {
+        "version": "1.5.81"
+    },
     "survos/grid-bundle": {
         "version": "dev-main"
     },
