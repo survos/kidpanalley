@@ -12,6 +12,7 @@
         "ext-iconv": "*",
         "ext-xml": "*",
         "ext-zip": "*",
+        "ext-pdo_sqlite": "*",
         "api-platform/core": "^3.2",
         "composer/package-versions-deprecated": "^1.11.99.5",
         "doctrine/annotations": "^2.0.1",

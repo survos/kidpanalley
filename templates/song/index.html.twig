@@ -13,13 +13,15 @@
             'youtubeId',
             {name: 'year', searchable: true, sortable: true},
             {name: 'school', searchable: true, sortable: true},
-            {name: 'title', searchable: true, sortable: true},
+            {name: 'title', searchable: true, sortable: true, block: 'title'},
         ]
     } %}
         {% block title %}
+            x
             <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
         {% endblock %}
         {% block youtubeId %}
+            <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
         {% endblock %}
 
