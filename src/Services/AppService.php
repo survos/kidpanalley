@@ -32,7 +32,6 @@ class AppService
                                 private ScraperService $scraperService,
                                 private readonly LoggerInterface $logger)
     {
-        $this->scraperService->setLogger($this->logger);
     }
 
     private function getText($elements)
@@ -255,9 +254,9 @@ class AppService
 
             $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
 
-            $json = $this->scraperService->fetchUrl($url, key: $channelId . '-' . $next);
-            $results = json_decode($json);
-//            $list = $this->fetchUrl($url);
+            $results = $this->scraperService->fetchUrl($url, key: $channelId . '-' . $next);
+            dd($results);
+
             $next = $results->nextPageToken ?? false;
             foreach ($results->items as $rawData) {
 //                dump($rawData);

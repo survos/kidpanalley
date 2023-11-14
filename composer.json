@@ -28,10 +28,10 @@
         "mindscreen/yarnlock": "^1.0.1",
         "nelmio/cors-bundle": "^2.3.1",
         "phpoffice/phpword": "dev-master",
-        "survos/api-grid-bundle": "dev-main",
+        "survos/api-grid-bundle": "*@dev",
         "survos/auth-bundle": "^1.5.55",
         "survos/bootstrap-bundle": "*@dev",
-        "survos/grid-bundle": "^1.6@dev",
+        "survos/grid-bundle": "*@dev",
         "survos/inspection-bundle": "^1.5.55",
         "survos/scraper-bundle": "^1.5.55",
         "survos/workflow-helper-bundle": "^1.5.55",
@@ -114,7 +114,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
+            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
@@ -134,6 +134,10 @@
         }
     },
     "repositories": {
+        "bootstrap": {
+            "type": "path",
+            "url": "../survos/packages/bootstrap-bundle"
+        },
         "api-grid": {
             "type": "path",
             "url": "../survos/packages/api-grid-bundle"
@@ -141,10 +145,6 @@
         "grid": {
             "type": "path",
             "url": "../survos/packages/grid-bundle"
-        },
-        "bootstrap": {
-            "type": "path",
-            "url": "../survos/packages/bootstrap-bundle"
         }
     }
 }

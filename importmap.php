@@ -76,38 +76,31 @@ return [
     'datatables.net-responsive' => [
         'version' => '2.5.0',
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
-    'bootstrap' => [
-        'version' => '5.3.2',
-    ],
-    '@popperjs/core' => [
-        'version' => '2.11.8',
-    ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.2',
-        'type' => 'css',
-    ],
-    'datatables/media/css/jquery.dataTables.min.css' => [
-        'version' => '1.10.18',
-        'type' => 'css',
-    ],
     'datatables.net-select-bs5' => [
+        'version' => '1.7.0',
+    ],
+    'datatables.net-select' => [
         'version' => '1.7.0',
     ],
     'datatables.net-select-bs5/css/select.bootstrap5.min.css' => [
         'version' => '1.7.0',
         'type' => 'css',
     ],
-    'datatables.net-select' => [
-        'version' => '1.7.0',
+    'datatables.net-buttons-bs5' => [
+        'version' => '2.4.2',
     ],
-    'highlight.js' => [
-        'version' => '11.9.0',
+    'datatables.net-buttons' => [
+        'version' => '2.4.2',
     ],
-    'highlight.js/styles/github.min.css' => [
-        'version' => '11.9.0',
+    'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css' => [
+        'version' => '2.4.2',
+        'type' => 'css',
+    ],
+    'datatables.net-responsive-bs5' => [
+        'version' => '2.5.0',
+    ],
+    'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' => [
+        'version' => '2.5.0',
         'type' => 'css',
     ],
     'datatables.net-scroller-bs5' => [
@@ -128,6 +121,19 @@ return [
     ],
     'datatables.net-searchpanes-bs5/css/searchPanes.bootstrap5.min.css' => [
         'version' => '2.2.0',
+        'type' => 'css',
+    ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
+    'bootstrap' => [
+        'version' => '5.3.2',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.2',
         'type' => 'css',
     ],
 ];
