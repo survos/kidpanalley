@@ -4,10 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+  # these are the wordpress API keys
   api_username: '%env(API_USERNAME)%'
   api_password: '%env(API_PASSWORD)%'
+
   youtube_api_key: '%env(YOUTUBE_API_KEY)%'
-  youtube_channel: '%env(YOUTUBE_CHANNEL)%'
+  youtube_channel: UCt7IqS6nJWbJk6HByzJs5Tg # '%env(YOUTUBE_CHANNEL)%'
   router.request_context.scheme: 'https' # needed for oauth login?
 
 services:
