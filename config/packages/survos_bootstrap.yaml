@@ -7,10 +7,14 @@ survos_bootstrap:
     offcanvas: app_settings
   options:
     # consider https://startbootstrap.com/previews/simple-sidebar as another theme
-    theme: bs5
+    theme: bootswatch
     layout_direction: vertical
     allow_login: true
-    offcanvas: end
+  app:
+      social:
+        facebook: https://facebook.com/kidpanalley
+      code: kpa
+      abbr: <b>kpa</b>Archive
 
   menu_options:
     project: null

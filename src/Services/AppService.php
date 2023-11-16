@@ -254,21 +254,19 @@ class AppService
 
             $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
 
-            $results = $this->scraperService->fetchUrl($url, key: $channelId . '-' . $next);
-//            dd($results);
+            $results = $this->scraperService->fetchUrl($url, key: $channelId . '-x' . $next);
 
             $next = $results->nextPageToken ?? false;
-            foreach ($results->items as $rawData) {
-//                dump($rawData);
+            foreach ($results['data']['items'] as $rawData) {
 //                dump(json_encode($rawData));
                 $item = (object) $rawData;
-                $id = $item->id->videoId;
+                $id = $item->id['videoId'];
                 if (!$video = $repo->findOneBy(['youtubeId' => $id])) {
                     $video = (new Video())
                         ->setYoutubeId($id);
                     $this->em->persist($video);
                 }
-                $snippet = $item->snippet;
+                $snippet = (object)$item->snippet;
                 $raw = json_decode(json_encode($rawData), true);
                 assert($raw, "Raw is null");
 //                dd($raw, $snippet);

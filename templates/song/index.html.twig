@@ -3,7 +3,7 @@
 {% block title %}Song index{% endblock %}
 
 {% block body %}
-    <h1>Song index</h1>
+    <h1>Song index api_grid</h1>
     {% component api_grid with {
         class: class,
         caller: _self,
@@ -11,18 +11,19 @@
             {name: '_actions', prefix: 'song_', actions: ['show']},
             'id',
             'youtubeId',
-            {name: 'year', searchable: true, sortable: true},
+            {name: 'year', browsable: true, sortable: true},
             {name: 'school', searchable: true, sortable: true},
             {name: 'title', searchable: true, sortable: true, block: 'title'},
         ]
     } %}
         {% block title %}
-            x
             <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
         {% endblock %}
         {% block youtubeId %}
             <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+            {% if row.youtubeId|default(false) %}
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
+            {% endif %}
         {% endblock %}
 
     {% endcomponent %}

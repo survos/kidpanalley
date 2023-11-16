@@ -22,7 +22,7 @@ class SongController extends AbstractController
     {
         return $this->render('song/index.html.twig', [
             'class' => Song::class,
-            'songs' => $songRepository->findBy([], ['id' => 'DESC'], 20),
+            'data' => $songRepository->findBy([], ['id' => 'DESC'], 20),
         ]);
     }
 

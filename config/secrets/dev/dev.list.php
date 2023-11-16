@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'YOUTUBE_API_KEY' => null,
-    'YOUTUBE_CHANNEL' => null,
+    'APP_SECRET' => null,
+    'DATABASE_URL' => null,
 ];

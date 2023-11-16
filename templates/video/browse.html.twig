@@ -3,14 +3,12 @@
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    <h1>Youtube videos ({{ videoCount }}, loaded via AJAX)</h1>
-
     {% component api_grid with {
         class: 'App\\Entity\\Video',
         caller: _self,
         columns: [
             {name: '_actions', prefix: 'video_', actions: ['show']},
-        'id',
+            'id',
             'youtubeId',
             'title',
             'description',
