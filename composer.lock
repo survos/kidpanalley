@@ -5219,16 +5219,16 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "2cab75155d3379fe44fd98c5685fe58b84e83e83"
+                "reference": "0969fa24581eb2cd855afe034b47e12db586ead8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/2cab75155d3379fe44fd98c5685fe58b84e83e83",
-                "reference": "2cab75155d3379fe44fd98c5685fe58b84e83e83",
+                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/0969fa24581eb2cd855afe034b47e12db586ead8",
+                "reference": "0969fa24581eb2cd855afe034b47e12db586ead8",
                 "shasum": ""
             },
             "require": {
@@ -5238,7 +5238,7 @@
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "friendsofsymfony/jsrouting-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/inspection-bundle": "^1.5.84",
+                "survos/inspection-bundle": "^1.5.85",
                 "symfony/config": "^6.3 || ^7.0",
                 "symfony/dependency-injection": "^6.3 || ^7.0",
                 "symfony/dom-crawler": "^6.3",
@@ -5292,13 +5292,13 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.5.85"
             },
-            "time": "2023-11-16T00:04:23+00:00"
+            "time": "2023-11-16T00:10:02+00:00"
         },
         {
             "name": "survos/auth-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosAuthBundle.git",
@@ -5377,28 +5377,28 @@
             "description": "Helper commands and classes for symfony security",
             "support": {
                 "issues": "https://github.com/survos/SurvosAuthBundle/issues",
-                "source": "https://github.com/survos/SurvosAuthBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosAuthBundle/tree/1.5.85"
             },
             "time": "2023-11-10T13:56:53+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
-            "version": "1.5.83",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
-                "reference": "c7ec0600974048801ba64423ce2521c979de25ee"
+                "reference": "14a35a03c8c8577bc365e6136fb82adfda368ddf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/c7ec0600974048801ba64423ce2521c979de25ee",
-                "reference": "c7ec0600974048801ba64423ce2521c979de25ee",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/14a35a03c8c8577bc365e6136fb82adfda368ddf",
+                "reference": "14a35a03c8c8577bc365e6136fb82adfda368ddf",
                 "shasum": ""
             },
             "require": {
                 "knplabs/knp-menu-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.83",
+                "survos/core-bundle": "^1.5.85",
                 "symfony/config": "^6.3 | ^7.0",
                 "symfony/dependency-injection": "^6.3 | ^7.0",
                 "symfony/http-kernel": "^6.3 | ^7.0",
@@ -5463,13 +5463,13 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
-                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.83"
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.85"
             },
-            "time": "2023-11-15T16:27:09+00:00"
+            "time": "2023-11-16T00:10:04+00:00"
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -5545,22 +5545,22 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.85"
             },
             "time": "2023-11-01T18:34:12+00:00"
         },
         {
             "name": "survos/deployment-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosDeploymentBundle.git",
-                "reference": "a0e96b554f59dad70c35011b5d46a1b8779578df"
+                "reference": "9045d2c272648a72f371fb0b1aed6d024cfbc6ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosDeploymentBundle/zipball/a0e96b554f59dad70c35011b5d46a1b8779578df",
-                "reference": "a0e96b554f59dad70c35011b5d46a1b8779578df",
+                "url": "https://api.github.com/repos/survos/SurvosDeploymentBundle/zipball/9045d2c272648a72f371fb0b1aed6d024cfbc6ed",
+                "reference": "9045d2c272648a72f371fb0b1aed6d024cfbc6ed",
                 "shasum": ""
             },
             "require": {
@@ -5597,22 +5597,22 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosDeploymentBundle/issues",
-                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.85"
             },
-            "time": "2023-11-16T00:04:19+00:00"
+            "time": "2023-11-16T00:09:54+00:00"
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "5ca2299d12c59948f7ae61044e3eb9603d2e903d"
+                "reference": "0a88a1b5c8a063aaf8360174da8e9b57701dd577"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/5ca2299d12c59948f7ae61044e3eb9603d2e903d",
-                "reference": "5ca2299d12c59948f7ae61044e3eb9603d2e903d",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/0a88a1b5c8a063aaf8360174da8e9b57701dd577",
+                "reference": "0a88a1b5c8a063aaf8360174da8e9b57701dd577",
                 "shasum": ""
             },
             "require": {
@@ -5620,7 +5620,7 @@
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.84",
+                "survos/core-bundle": "^1.5.85",
                 "symfony/config": "^6.3 || ^7.0",
                 "symfony/dependency-injection": "^6.3 || ^7.0",
                 "symfony/http-kernel": "^6.3 || ^7.0",
@@ -5696,28 +5696,28 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosGridBundle/tree/1.5.85"
             },
-            "time": "2023-11-16T00:04:27+00:00"
+            "time": "2023-11-16T00:10:07+00:00"
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "7b1b7c522760989731c0c9f29ca440791bf86079"
+                "reference": "fef647eb50d1f6c53ae7a857c9f7cbfec1e19539"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/7b1b7c522760989731c0c9f29ca440791bf86079",
-                "reference": "7b1b7c522760989731c0c9f29ca440791bf86079",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/fef647eb50d1f6c53ae7a857c9f7cbfec1e19539",
+                "reference": "fef647eb50d1f6c53ae7a857c9f7cbfec1e19539",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^3.2",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.84",
+                "survos/core-bundle": "^1.5.85",
                 "symfony/config": "^6.3 || ^7.0",
                 "symfony/dependency-injection": "^6.3 || ^7.0",
                 "symfony/http-kernel": "^6.3 || ^7.0",
@@ -5777,13 +5777,13 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.5.85"
             },
-            "time": "2023-11-16T00:04:27+00:00"
+            "time": "2023-11-16T00:10:04+00:00"
         },
         {
             "name": "survos/scraper-bundle",
-            "version": "1.5.83",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosScraperBundle.git",
@@ -5832,28 +5832,28 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosScraperBundle/issues",
-                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.5.83"
+                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.5.85"
             },
             "time": "2023-11-01T17:57:05+00:00"
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.5.83",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "b417fd5679f9dd1542abf9565c32c814511a0a5d"
+                "reference": "ae216db740699ce723c50e6c634c66a66c68a74f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/b417fd5679f9dd1542abf9565c32c814511a0a5d",
-                "reference": "b417fd5679f9dd1542abf9565c32c814511a0a5d",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/ae216db740699ce723c50e6c634c66a66c68a74f",
+                "reference": "ae216db740699ce723c50e6c634c66a66c68a74f",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.12",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.83",
+                "survos/core-bundle": "^1.5.85",
                 "symfony/console": "^6.3 || ^7.0.0",
                 "symfony/http-kernel": "^6.3 || ^7.0.0",
                 "symfony/messenger": "^6.3 || ^7.0.0",
@@ -5929,9 +5929,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.83"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.85"
             },
-            "time": "2023-11-15T16:27:14+00:00"
+            "time": "2023-11-16T00:10:03+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -14162,7 +14162,7 @@
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -14207,13 +14207,13 @@
             "description": "Run Symfony console commands from a web interface",
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.85"
             },
             "time": "2023-11-12T17:04:59+00:00"
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.5.84",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCrawlerBundle.git",
@@ -14282,13 +14282,13 @@
             "description": "Provides a way to create tests that crawl a site",
             "support": {
                 "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.84"
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.85"
             },
             "time": "2023-11-10T13:56:54+00:00"
         },
         {
             "name": "survos/maker-bundle",
-            "version": "1.5.83",
+            "version": "1.5.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosMakerBundle.git",
@@ -14391,7 +14391,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosMakerBundle/issues",
-                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.83"
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.85"
             },
             "time": "2023-11-12T17:04:58+00:00"
         },
