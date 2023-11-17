@@ -427,6 +427,18 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
+    "sentry/sentry-symfony": {
+        "version": "4.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.6",
+            "ref": "f7b4706a3e8a6f096b7392f3146f4f7f65ff594c"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
     "survos/api-grid-bundle": {
         "version": "dev-main"
     },
