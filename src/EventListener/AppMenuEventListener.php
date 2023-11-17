@@ -4,6 +4,7 @@ namespace App\EventListener;
 
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -16,7 +17,9 @@ final class AppMenuEventListener
     use KnpMenuHelperTrait;
 
     public function __construct(
-        private ?AuthorizationCheckerInterface $security=null)
+        #[Autowire('%kernel.environment%')] private string $env,
+        private ?AuthorizationCheckerInterface $security=null
+    )
     {
         $this->setAuthorizationChecker($this->security);
     }
@@ -48,8 +51,10 @@ final class AppMenuEventListener
 
         $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
         $this->addMenuItem($menu, ['route' => 'video_browse', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
-        $subMenu = $this->addSubmenu($menu, 'admin');
-        $this->add($subMenu, 'survos_commands', label: "Commands");
+        if ($this->env === 'dev') {
+            $subMenu = $this->addSubmenu($menu, 'admin');
+            $this->add($subMenu, 'survos_commands', label: "Commands");
+        }
 
         $nestedMenu = $this->addMenuItem($menu, ['label' => 'Credits']);
         foreach (['bundles', 'javascript'] as $type) {
