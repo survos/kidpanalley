@@ -31,8 +31,8 @@ return [
     Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
     Survos\CommandBundle\SurvosCommandBundle::class => ['dev' => true, 'test' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
-    Survos\Grid\SurvosGridBundle::class => ['all' => true],
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
+    Survos\Grid\SurvosGridBundle::class => ['all' => true],
 ];

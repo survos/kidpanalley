@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Youtube videos ({{ videoCount }}, in-memory)</h1>
 
-    {% component grid with {
+    {% component api_grid with {
         data: videos,
         columns: [
             {name: '_actions', prefix: 'video_', actions: ['show']},
