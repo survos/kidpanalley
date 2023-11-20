@@ -6,5 +6,5 @@
 
 #survos_workflows: {path: /workflows, controller: 'Survos\WorkflowBundle\Controller\WorkflowController::workflows'}
 #
-survos_commands: {path: "/{_locale}/commands", controller: 'Survos\CommandBundle\Controller\CommandController::commands'}
-survos_command: {path: "/{_locale}/command/{commandName}", controller: 'Survos\CommandBundle\Controller\CommandController::runCommand'}
+survos_commands: {path: "/admin/{_locale}/commands", controller: 'Survos\CommandBundle\Controller\CommandController::commands'}
+survos_command: {path: "/admin/{_locale}/command/{commandName}", controller: 'Survos\CommandBundle\Controller\CommandController::runCommand'}

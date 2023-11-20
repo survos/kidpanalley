@@ -20,25 +20,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
+#[Groups(['video.read'])]
 class Video implements RouteParametersInterface
 {
     use RouteParametersTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['video.read'])]
     private $id;
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
-    #[Groups(['video.read'])]
     private $youtubeId;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['video.read'])]
     private $title;
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['video.read'])]
     private $description;
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Groups(['video.read'])]
     private $date;
 
     #[ORM\Column(nullable: true)]

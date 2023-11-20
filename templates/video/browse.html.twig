@@ -3,25 +3,32 @@
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    {% component api_grid with {
-        class: 'App\\Entity\\Video',
-        caller: _self,
-        columns: [
-            {name: '_actions', prefix: 'video_', actions: ['show']},
-            'id',
-            'youtubeId',
-            'title',
-            'description',
-            'date'
-        ]
-    } %}
-        {% block title %}
-            <a href="{{ path('video_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
-        {% endblock %}
-        {% block youtubeId %}
-            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
-        {% endblock %}
+    {% set columns = [
+        {name: '_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')},
+        'id',
+        'youtubeId',
+        'title',
+        {name: 'description', condition: false},
+        'date'
+    ] %}
 
-    {% endcomponent %}
+    <twig:api_grid
+        class="App\\Entity\\Video"
+        :columns="columns"
+        :caller="_self"
+        >
+        <twig:block name="id">
+            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">
+                <span class="bi bi-youtube"></span>
+            </a>
+            <a href="{{ path('video_show', row.uniqueIdentifiers) }}">
+                {{ row.title }}</a>
+        </twig:block>
+
+    {% block date %}
+        {{ row.date|date('Y-m-d') }}
+    {% endblock %}
+
+    </twig:api_grid>
 
 {% endblock %}

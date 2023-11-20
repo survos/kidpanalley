@@ -14,28 +14,33 @@
 
     {% block stylesheets %}
         {{ parent() }}
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css">
+
     {% endblock %}
 
     {% block javascripts %}
         {{ parent() }}
     {% endblock %}
 
+
 {# could also overwrite template
         {% include '@SurvosBootstrapBundle/Partials/_footer.html.twig' %}
 #}
 
-{% block footer %}
-    <footer class="main-footer">
-        Theme: {{ theme_option('theme') }}
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
+{#{% block footer %}#}
+{#    FOOTER {{ _self }}#}
+{#    <footer class="main-footer">#}
+{#        Theme: {{ theme_option('theme') }}#}
+{#        <!-- To the right -->#}
+{#        <div class="pull-right hidden-xs">#}
 
-        </div>
-        <!-- Default to the left -->
-        <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved.
-        <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved.
-    </footer>
-{% endblock %}
+{#        </div>#}
+{#        <!-- Default to the left -->#}
+{#        <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved.#}
+{#        <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved.#}
+{#    </footer>#}
+{#{% endblock %}#}
 
 {% block body %}
     {{ block('page_content') }}

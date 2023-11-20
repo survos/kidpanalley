@@ -22,7 +22,7 @@ return [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
     'twig' => [
-        'version' => '1.16.0',
+        'version' => '1.17.1',
     ],
     'locutus/php/strings/sprintf' => [
         'version' => '2.0.16',
@@ -61,16 +61,16 @@ return [
         'version' => '1.13.6',
     ],
     'datatables.net-bs5' => [
-        'version' => '1.13.7',
+        'version' => '1.13.8',
     ],
     'jquery' => [
         'version' => '3.7.1',
     ],
     'datatables.net' => [
-        'version' => '1.13.7',
+        'version' => '1.13.8',
     ],
     'datatables.net-bs5/css/dataTables.bootstrap5.min.css' => [
-        'version' => '1.13.7',
+        'version' => '1.13.8',
         'type' => 'css',
     ],
     'datatables.net-buttons-bs5' => [
@@ -135,5 +135,17 @@ return [
     'bootstrap/dist/css/bootstrap.min.css' => [
         'version' => '5.3.2',
         'type' => 'css',
+    ],
+    'stimulus-content-loader' => [
+        'version' => '4.2.0',
+    ],
+    'stimulus-reveal-controller' => [
+        'version' => '4.1.0',
+    ],
+    '@kanety/stimulus-zoom-image' => [
+        'version' => '1.0.0',
+    ],
+    '@kanety/stimulus-static-actions' => [
+        'version' => '1.0.1',
     ],
 ];

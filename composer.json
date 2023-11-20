@@ -31,9 +31,9 @@
         "nelmio/cors-bundle": "^2.3.1",
         "phpoffice/phpword": "dev-master",
         "sentry/sentry-symfony": "^4.12",
-        "survos/api-grid-bundle": "^1.5",
+        "survos/api-grid-bundle": "*@dev",
         "survos/auth-bundle": "^1.5.55",
-        "survos/bootstrap-bundle": "^1.5",
+        "survos/bootstrap-bundle": "*@dev",
         "survos/deployment-bundle": "^1.5",
         "survos/grid-bundle": "^1.5",
         "survos/inspection-bundle": "^1.5.55",
@@ -94,7 +94,8 @@
         "allow-plugins": {
             "symfony/flex": true,
             "symfony/runtime": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "endroid/installer": true
         }
     },
     "autoload": {
@@ -138,5 +139,13 @@
         }
     },
     "repositories": {
+        "api-grid": {
+            "type": "path",
+            "url": "../survos/packages/api-grid-bundle"
+        },
+        "bootstrap": {
+            "type": "path",
+            "url": "../survos/packages/bootstrap-bundle"
+        }
     }
 }

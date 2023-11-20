@@ -152,11 +152,15 @@ class AppService
         /** @var Xls $readerXlsx */
         $readerXlsx  = $this->spreadsheet->createReader('Xls');
         /** @var Spreadsheet $spreadsheet */
+        // @todo: dump to csv
         try {
             $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xls');
         } catch (\Exception $exception) {
             dd($exception);
         }
+
+        $q = $this->em->createQuery(sprintf('delete from %s', Song::class));
+        $numDeleted = $q->execute();
 
         /** @var Worksheet $sheet */
         $sheet = $spreadsheet->getActiveSheet();
@@ -247,6 +251,10 @@ class AppService
      */
     public function fetchYoutubeChannel($key, $channelId): array
     {
+        // because we check by id, we don't really need this.
+//        $q = $this->em->createQuery(sprintf('delete from %s', Video::class));
+//        $numDeleted = $q->execute();
+
         $videos = [];
         $next = '';
         $repo = $this->em->getRepository(Video::class);
@@ -256,7 +264,7 @@ class AppService
 
             $results = $this->scraperService->fetchUrl($url, key: $channelId . '-x' . $next);
 
-            $next = $results->nextPageToken ?? false;
+            $next = $results['data']['nextPageToken'] ?? false;
             foreach ($results['data']['items'] as $rawData) {
 //                dump(json_encode($rawData));
                 $item = (object) $rawData;
