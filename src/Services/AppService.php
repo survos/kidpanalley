@@ -292,7 +292,21 @@ class AppService
                         ->setYoutubeId($id);
                     $this->em->persist($video);
                 }
+
+
                 $snippet = (object)$item->snippet;
+                $title = $snippet->title;
+                // song needs to be school + title, as does the video
+                if (!$song = $this->songRepository->findOneBy(['title'=> $title])) {
+                    $song = (new Song())
+                        ->setTitle($title);
+                    // @todo: parse out stuff to get the title
+                    $this->em->persist($song);
+                }
+                $video
+                    ->setThumbnailUrl($snippet->thumbnails['default']['url'])
+                    ->setSong($song);
+
                 $raw = json_decode(json_encode($rawData), true);
                 assert($raw, "Raw is null");
 //                dd($raw, $snippet);

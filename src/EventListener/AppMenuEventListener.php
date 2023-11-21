@@ -89,27 +89,28 @@ final class AppMenuEventListener
         $menu = $event->getMenu();
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
-        $subMenu = $this->addSubmenu($menu, 'songs');
+//        $subMenu = $this->addSubmenu($menu, 'songs');
 //        $subMenu->setExtra('btn', 'btn btn-danger');
 //        dump($subMenu);
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');
 
-        $this->add($subMenu, 'song_index');
-        $this->add($subMenu, 'song_browse');
+        $this->add($menu, 'song_index');
+        $this->add($menu, 'video_index');
+//        $this->add($subMenu, 'song_browse');
 
-        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
-        $this->addMenuItem($menu, ['route' => 'video_browse', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
+//        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
+//        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
         if ($this->env === 'dev' && $this->security->isGranted('ROLE_ADMIN')) {
             $subMenu = $this->addSubmenu($menu, 'admin');
             $this->add($subMenu, 'survos_commands', label: "Commands");
         }
 
-        $nestedMenu = $this->addMenuItem($menu, ['label' => 'Credits']);
-        foreach (['bundles', 'javascript'] as $type) {
-            // $this->addMenuItem($nestedMenu, ['route' => 'survos_base_credits', 'rp' => ['type' => $type], 'label' => ucfirst($type)]);
-            $this->addMenuItem($nestedMenu, ['uri' => "#type" , 'label' => ucfirst($type)]);
-        }
+//        $nestedMenu = $this->addMenuItem($menu, ['label' => 'Credits']);
+//        foreach (['bundles', 'javascript'] as $type) {
+//            // $this->addMenuItem($nestedMenu, ['route' => 'survos_base_credits', 'rp' => ['type' => $type], 'label' => ucfirst($type)]);
+//            $this->addMenuItem($nestedMenu, ['uri' => "#type" , 'label' => ucfirst($type)]);
+//        }
     }
 
 }

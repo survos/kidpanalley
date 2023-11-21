@@ -4,14 +4,14 @@
 
 {% block body %}
     <h1>Song index api_grid</h1>
+{#    {name: '_actions', prefix: 'song_', actions: ['show']},#}
 {% set columns =         [
-    {name: '_actions', prefix: 'song_', actions: ['show']},
-    'id',
-    'youtubeId',
+    {name: 'videos'},
+    {name: 'title', searchable: true, sortable: true, block: 'title'},
+    'code',
     {name: 'year', browsable: true, sortable: true},
     {name: 'lyricsLength', sortable: true},
     {name: 'school', searchable: true, sortable: true},
-    {name: 'title', searchable: true, sortable: true, block: 'title'},
 ]
 %}
     <twig:api_grid
@@ -20,8 +20,17 @@
         :columns="columns"
     >
 
+        {% block videos %}
+            {% for video in row.videos %}
+                <a target="_blank" href="http://www.youtube.com/watch?v={{ video.youtubeId }}">
+                    <img src="{{ video.thumbnailUrl }}" height="60" />
+                </a>
+            {% endfor %}
+        {% endblock %}
         {% block title %}
+            <span class="d-inline-block text-truncate" style="max-width: 300px;" title="{{ row.title }}">
             <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+</span>
         {% endblock %}
         {% block youtubeId %}
             <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
