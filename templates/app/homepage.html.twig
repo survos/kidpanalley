@@ -41,7 +41,7 @@
                             {#                        {{ btn.link_button('Website', 'https://kidpanalley.com', 'floppy') }} #}
 
 
-                            <a href="{{ path('video_index') }}" class="btn btn-outline-primary">Go to {{ videoCount }}
+                            <a href="{{ path('video_browse') }}" class="btn btn-outline-primary">Go to {{ videoCount }}
                                 Videos</a>
                         </div>
                     {% endblock %}
@@ -49,22 +49,11 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="callout callout-info">
-                    Visitors should go to the KPA website or our Facebook page.
-                </div>
+    <twig:divider />
+    <div class="row">
+        {{ block('visitor_about_box') }}
+    </div>
 
-            </div>
-
-            <div class="col-md-6">
-                {% if is_granted('ROLE_ADMIN') %}
-                    Welcome, {{ app.user }}
-                {% else %}
-                    {{ block('visitor_about_box') }}
-                {% endif %}
-            </div>
-        </div>
 {% endblock %}
 
 {% block visitor_about_box %}
@@ -83,24 +72,20 @@
                 This website is for researchers and administrators to manage the schools, songs, concerts and videos
                 created over the past 20 years.
             </p>
-            <p>
-                If you create an account and log in, you can see most of the data. Only administrators will be able to
-                update the data.
-            </p>
         </div>
     {% endblock %}
 
     {% block box_footer %}
-        <div class="pull-right">
-            {% if app.user %}
-                {{ component('button', {label: "log out", icon: 'fas fa-logout', color: 'success', size: 'lg', a: {href: path('app_logout') }}) }}
-                {#                        {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }} #}
-            {% else %}
-                {{ component('button', {label: "Log In", icon: 'fas fa-login', color: 'success', size: 'lg', a: {href: path('app_login') }}) }}
-                {#                        {{ btn.link_button('login', path('app_login'), 'fas fa-login', 'success', 'lg') }} #}
-                {#                        {{ btn.link_button('register', path('app_register'), 'fas fa-login', 'primary', 'lg') }} #}
-            {% endif %}
-        </div>
+{#        <div class="pull-right">#}
+{#            {% if app.user %}#}
+{#                {{ component('button', {label: "log out", icon: 'fas fa-logout', color: 'success', size: 'lg', a: {href: path('app_logout') }}) }}#}
+{#                #}{#                        {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }} #}
+{#            {% else %}#}
+{#                {{ component('button', {label: "Log In", icon: 'fas fa-login', color: 'success', size: 'lg', a: {href: path('app_login') }}) }}#}
+{#                #}{#                        {{ btn.link_button('login', path('app_login'), 'fas fa-login', 'success', 'lg') }} #}
+{#                #}{#                        {{ btn.link_button('register', path('app_register'), 'fas fa-login', 'primary', 'lg') }} #}
+{#            {% endif %}#}
+{#        </div>#}
     {% endblock %}
 {% endblock %}
 
