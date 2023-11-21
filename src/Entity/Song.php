@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     normalizationContext: ['groups' => 'song.read', 'rp']
 )]
-#[ApiFilter(OrderFilter::class, properties: ['title','year','school'])]
+#[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ORM\Entity(repositoryClass: SongRepository::class)]
@@ -39,6 +39,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     openapiContext:  ["description" => 'meiliseach provider'],
 )]
 
+#[Groups(['song.read'])]
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
@@ -46,7 +47,6 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['song.read'])]
     private $id;
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable'])]

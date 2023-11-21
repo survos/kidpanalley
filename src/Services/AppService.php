@@ -14,12 +14,15 @@ use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBreak;
 use PhpOffice\PhpWord\Element\TextRun;
+use PhpOffice\PhpWord\Element\Title;
 use PhpOffice\PhpWord\IOFactory;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Survos\Scraper\Service\ScraperService;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Serializer\SerializerInterface;
 use Yectep\PhpSpreadsheetBundle\Factory;
 
@@ -28,6 +31,7 @@ class AppService
 
     public function __construct(private readonly EntityManagerInterface $em,
                                 private readonly SerializerInterface $serializer,
+                                private SongRepository $songRepository,
                                 private readonly Factory $spreadsheet,
                                 private ScraperService $scraperService,
                                 private readonly LoggerInterface $logger)
@@ -46,9 +50,24 @@ class AppService
                 case TextBreak::class:
                     $text .= "\n\n";
                     break;
+//                    $text = $element->getText();
+//                    $text = '??';
+                    break;
                 case TextRun::class:
                 case Text::class:
                     $text .= $element->getText();
+                    break;
+                case Title::class:
+                    $titleElementText = $element->getText();
+                    if (is_string($titleElementText)) {
+                        $text .= $titleElementText;
+                    } else {
+                        if ($titleElementText::class == TextRun::class) {
+//                            $text .= $this->getText($titleElementText->getElements());
+                        } else {
+                            dd($titleElementText);
+                        }
+                    }
                     break;
                 case Section::class:
                     $text .= $this->getText($element->getElements());
@@ -56,14 +75,15 @@ class AppService
                 default:
                     dd($elementClass);
             }
-            if (method_exists($element, 'getText')) {
-                $text .= $element->getText();
+
+            if (method_exists($element, 'getElements')) {
+                $text .= $this->getText($element->getElements());
             } else {
-                if (method_exists($element, 'getElements')) {
-                    $text .= $this->getText($element->getElements());
+                if (method_exists($element, 'getText')) {
+//                    $text .= $element->getText();
                 } else {
-                    // $text .= "-no-text\n";
                 }
+                // $text .= "-no-text\n";
             }
         }
         return $text;
@@ -73,77 +93,75 @@ class AppService
     public function loadLyrics(string $dir)
     {
         $finder = new Finder();
-        $finder->files()->in($dir);
+        $finder->files()->in($dir)->name('*.doc*');
 
         foreach ($finder as $file) {
-            dump($file->getFilename());
             $absoluteFilePath = $file->getRealPath();
             if (!file_exists($absoluteFilePath) || !is_readable($absoluteFilePath)) {
                 throw new \Exception($absoluteFilePath . ' is not readable');
             }
 
-            try {
-//                $reader = IOFactory::load($absoluteFilePath);
-//
-//                $fileNameWithExtension = $file->getRelativePathname();
+            if ($file->getExtension() == 'doc') {
+                $title = $file->getFilenameWithoutExtension();
+                // some songs are repeated by multiple schools, e.g. I used to know the names of all the stars
+                foreach ($this->songRepository->findBy(['title' => $title]) as $song) {
+                    // yay!
+                    $process = new Process(['catdoc', $file->getRealPath()]);
+                    $process->run();
+// executes after the command finishes
+                    if (!$process->isSuccessful()) {
+                        throw new ProcessFailedException($process);
+                    }
+                    $text = $process->getOutput();
+
+//                    $text = shell_exec($cmd = sprintf('catdoc "%s"', $absoluteFilePath));
+                    // split on formfeed
+                    $songs = preg_split("|\f|", $text);
+
+
+                    foreach ($songs as $songStr) {
+                        $lines = explode("\n", (string) $songStr);
+                        // remove all blank lines
+                        $lines = array_filter($lines, fn($str) => !empty(trim((string) $str)));
+                        // we could go through each line and see if a title matches.  For now, just use the first line as the title.
+                        //
+                        $title = array_shift($lines);
+                        $by = array_shift($lines);
+
+                        // find or create the song, by title
+                        /** @var SongRepository $repo */
+                        $repo = $this->em->getRepository(Song::class);
+                        if (!$song = $repo->findOneBy(['title'=>$title])) {
+                            $song = (new Song())
+                                ->setTitle($title);
+                            $this->em->persist($song);
+                        }
+                        $song->setLyrics(join("\n", $lines));
+//                        dd($song->getLyrics(), $song->getId());
+                    }
+                    $song->setLyrics($text);
+                }
+
+            } else {
                 $reader = IOFactory::createReader();
-                $phpWord = $reader->load($absoluteFilePath);
+                try {
+                    $phpWord = $reader->load($absoluteFilePath);
+                } catch (\Exception $exception) {
+                    dd($exception, $absoluteFilePath);
+                }
 
                 $sections = $phpWord->getSections();
                 $text = $this->getText($sections);
-
-
-                /*
-                $text = '';
-                foreach ($sections as $s) {
-                    $els = $s->getElements();
-                    foreach ($els as $e) {
-                        $class = get_class($e);
-                        if (method_exists($class, 'getText')) {
-                            $text .= $e->getText();
-                        } else {
-                            dd($text, $e, $class, get_class_methods($class));
-                            $text .= $e;
-                        }
-                    }
+                if (!$song = $this->songRepository->findOneBy(['title'=>$title])) {
+                    $song = (new Song())
+                        ->setTitle($title);
+                    $this->em->persist($song);
                 }
-                dd($text);
-                continue;
-                dd($absoluteFilePath, $phpWord);
-                */
-
-            } catch (\Exception) {
-                $text = shell_exec($cmd = sprintf('catdoc "%s"', $absoluteFilePath));
-                // split on formfeed
-                $songs = preg_split("|\f|", $text);
-
-
-                foreach ($songs as $songStr) {
-                    $lines = explode("\n", (string) $songStr);
-                    // remove all blank lines
-                    $lines = array_filter($lines, fn($str) => !empty(trim((string) $str)));
-                    // we could go through each line and see if a title matches.  For now, just use the first line as the title.
-                    //
-                    $title = array_shift($lines);
-                    $by = array_shift($lines);
-
-                    // find or create the song, by title
-                    /** @var SongRepository $repo */
-                    $repo = $this->em->getRepository(Song::class);
-                    if (!$song = $repo->findOneBy(['title'=>$title])) {
-                        $song = (new Song())
-                            ->setTitle($title);
-                        $this->em->persist($song);
-                    }
-                    $song->setLyrics(join("\n", $lines));
-                    $this->em->flush();
-                }
+                $song->setLyrics($text);
             }
 
-            // dd($text, $absoluteFilePath);
-
-            // ...
         }
+        $this->em->flush();
     }
 
     public function loadSongs()

@@ -6,22 +6,25 @@ use DOMDocument;
 use ZipArchive;
 
 class DocxConversion{
-    public function __construct(private $filename)
+    public function __construct(private string $filename)
     {
     }
 
-    private function read_doc() {
+    private function read_doc(string $delim="\n") {
         $fileHandle = fopen($this->filename, "r");
         $line = @fread($fileHandle, filesize($this->filename));
+        dd($line);
         $lines = explode(chr(0x0D),$line);
         $outtext = "";
         foreach($lines as $thisline)
         {
+
             $pos = strpos($thisline, chr(0x00));
             if (($pos !== FALSE)||(strlen($thisline)==0))
             {
+//                dd($thisline);
             } else {
-                $outtext .= $thisline." ";
+                $outtext .= $thisline. $delim;
             }
         }
         $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\-\n\r\t@\/\_\(\)]/","",$outtext);
@@ -113,10 +116,50 @@ class DocxConversion{
         $file_ext  = $fileArray['extension'];
         if($file_ext == "doc" || $file_ext == "docx" || $file_ext == "xlsx" || $file_ext == "pptx")
         {
+
+            $phpWord = new \PhpOffice\PhpWord\PhpWord();
             if($file_ext == "doc") {
+                $text = '';
+                $lines = [];
+                $phpWord = \PhpOffice\PhpWord\IOFactory::load($this->filename, 'MsDoc');
+                foreach ($phpWord->getSections() as $section) {
+                    foreach ($section->getElements() as $e) {
+                        $class = get_class($e);
+                        if (method_exists($class, 'getText')) {
+                            $text .= $e->getText();
+                            foreach (explode("\t", $e->getText()) as $item) {
+                                $lines[] = $item;
+                            }
+                        } else {
+                        }
+                        $text .= "\n";
+                    }
+                }
+                dd($lines, $text);
+                dd($phpWord);
                 return $this->read_doc();
             } elseif($file_ext == "docx") {
-                return $this->read_docx();
+                    $text = '';
+                    $lines = [];
+                    $phpWord = \PhpOffice\PhpWord\IOFactory::load($this->filename);
+                    foreach ($phpWord->getSections() as $section) {
+                        foreach ($section->getElements() as $e) {
+                            $class = get_class($e);
+                            if (method_exists($class, 'getText')) {
+                                dd($class, $e, $e->getText());
+                                $text .= $e->getText();
+                                foreach (explode("\t", $e->getText()) as $item) {
+                                    $lines[] = $item;
+                                }
+                            } else {
+                            }
+                            $text .= "\n";
+                        }
+                    }
+                    dd($lines, $text);
+
+
+                    return $this->read_docx();
             } elseif($file_ext == "xlsx") {
                 return $this->xlsx_to_text();
             }elseif($file_ext == "pptx") {
