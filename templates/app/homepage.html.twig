@@ -4,99 +4,103 @@
 {% block page_title %}Dashboard{% endblock %}
 {% block page_subtitle %}For KPA administration{% endblock %}
 
-{% block page_content %}
+{% block body %}
 
-    <div class="row">
-        <div class="col-md-6">
-            {% component card with {
-            }%}
-                {% block title 'Songs' %}
-                {% block text %}
-                    <span class="bi bi-music-note"></span>
-                    <div class="text-light small fw-semibold">Songs</div>
-                    Songs written by KPA kids
-                {% endblock %}
-                {% block links %}
-                    <div class="demo-inline-spacing">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                {% component card with {} %}
+                    {% block title 'Songs' %}
+                    {% block text %}
+                        <span class="bi bi-music-note"></span>
+                        <div class="text-light small fw-semibold">Songs</div>
+                        Songs written by KPA kids
+                    {% endblock %}
+                    {% block links %}
+                        <div class="demo-inline-spacing">
 
-                        <a href="{{ path('song_index') }}" class="btn btn-outline-primary">Go to {{ songCount }} Songs</a>
-                    </div>
-                {% endblock %}
-            {% endcomponent %}
+                            <a href="{{ path('song_index') }}" class="btn btn-outline-primary">Go to {{ songCount }}
+                                Songs</a>
+                        </div>
+                    {% endblock %}
+                {% endcomponent %}
 
+            </div>
+            <div class="col-md-6">
+
+                {% component card with {
+                } %}
+                    {% block title 'Videos' %}
+                    {% block text %}
+                        <span class="bi bi-youtube"></span>
+
+                        <div class="text-light small fw-semibold">Videos</div>
+                        From the KPA Youtube channel
+                    {% endblock %}
+                    {% block links %}
+                        <div class="demo-inline-spacing">
+                            {#                        {{ btn.link_button('Website', 'https://kidpanalley.com', 'floppy') }} #}
+
+
+                            <a href="{{ path('video_index') }}" class="btn btn-outline-primary">Go to {{ videoCount }}
+                                Videos</a>
+                        </div>
+                    {% endblock %}
+                {% endcomponent %}
+            </div>
         </div>
-        <div class="col-md-6">
 
-            {% component card with {
-            }%}
-                {% block title 'Videos' %}
-                {% block text %}
-                    <div class="text-light small fw-semibold">Videos</div>
-                    From the KPA Youtube channel
-                {% endblock %}
-                {% block links %}
-                    <div class="demo-inline-spacing">
-                        {#                        {{ btn.link_button('Website', 'https://kidpanalley.com', 'floppy') }}#}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="callout callout-info">
+                    Visitors should go to the KPA website or our Facebook page.
+                </div>
 
-
-                        <a href="{{ path('video_index') }}" class="btn btn-outline-primary">Go to {{ videoCount }} Videos</a>
-                    </div>
-                {% endblock %}
-            {% endcomponent %}
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="callout callout-info">
-                Visitors should go to the KPA website or our Facebook page.
             </div>
 
-        </div>
-
-        <div class="col-md-6">
-            {% if is_granted('ROLE_ADMIN') %}
-                Welcome, {{ app.user }}
+            <div class="col-md-6">
+                {% if is_granted('ROLE_ADMIN') %}
+                    Welcome, {{ app.user }}
                 {% else %}
-                {{ block('visitor_about_box') }}
-            {% endif %}
+                    {{ block('visitor_about_box') }}
+                {% endif %}
+            </div>
         </div>
-    </div>
 {% endblock %}
 
 {% block visitor_about_box %}
-            {# ... box widget with some options ... #}
-{#            {% embed '@SurvosBootstrap/Widgets/box-widget.html.twig' with {#}
-{#                'boxtype' : 'success',#}
-{#                'solid' : 0,#}
-{#                'collapsible' : 'widget-box.collapse'|trans ~ '... ',#}
-{#                'removable' : 'widget-box.remove'|trans ~ '...',#}
-{#            } %}#}
+    {# ... box widget with some options ... #}
+    {#            {% embed '@SurvosBootstrap/Widgets/box-widget.html.twig' with { #}
+    {#                'boxtype' : 'success', #}
+    {#                'solid' : 0, #}
+    {#                'collapsible' : 'widget-box.collapse'|trans ~ '... ', #}
+    {#                'removable' : 'widget-box.remove'|trans ~ '...', #}
+    {#            } %} #}
 
-                {% block box_title %}Adminstration{% endblock %}
-                {% block box_body %}
-                    <div class="callout callout-warning">
-                        <p>
-                            This website is for researchers and administrators to manage the schools, songs, concerts and videos
-                            created over the past 20 years.
-                        </p>
-                        <p>
-                            If you create an account and log in, you can see most of the data.  Only administrators will be able to update the data.
-                        </p>
-                    </div>
-                {% endblock %}
+    {% block box_title %}Adminstration{% endblock %}
+    {% block box_body %}
+        <div class="callout callout-warning">
+            <p>
+                This website is for researchers and administrators to manage the schools, songs, concerts and videos
+                created over the past 20 years.
+            </p>
+            <p>
+                If you create an account and log in, you can see most of the data. Only administrators will be able to
+                update the data.
+            </p>
+        </div>
+    {% endblock %}
 
-                {% block box_footer %}
-                    <div class="pull-right">
-                        {% if app.user %}
-                            {{ component('button', {label: "log out", icon: 'fas fa-logout', color: 'success', size: 'lg', a: {href: path('app_logout') }}) }}
-{#                        {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }}#}
-                        {% else %}
-                            {{ component('button', {label: "Log In", icon: 'fas fa-login', color: 'success', size: 'lg', a: {href: path('app_login') }}) }}
-{#                        {{ btn.link_button('login', path('app_login'), 'fas fa-login', 'success', 'lg') }}#}
-{#                        {{ btn.link_button('register', path('app_register'), 'fas fa-login', 'primary', 'lg') }}#}
-                        {% endif %}
-                    </div>
-                {% endblock %}
+    {% block box_footer %}
+        <div class="pull-right">
+            {% if app.user %}
+                {{ component('button', {label: "log out", icon: 'fas fa-logout', color: 'success', size: 'lg', a: {href: path('app_logout') }}) }}
+                {#                        {{ btn.link_button('log out', path('app_logout'), 'fas fa-logout', 'success', 'lg') }} #}
+            {% else %}
+                {{ component('button', {label: "Log In", icon: 'fas fa-login', color: 'success', size: 'lg', a: {href: path('app_login') }}) }}
+                {#                        {{ btn.link_button('login', path('app_login'), 'fas fa-login', 'success', 'lg') }} #}
+                {#                        {{ btn.link_button('register', path('app_register'), 'fas fa-login', 'primary', 'lg') }} #}
+            {% endif %}
+        </div>
+    {% endblock %}
 {% endblock %}
 

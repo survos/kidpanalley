@@ -21,14 +21,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[Groups(['video.read'])]
-class Video implements RouteParametersInterface
+class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups('song.read')]
     private $id;
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
+    #[Groups('song.read')]
     private $youtubeId;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $title;
@@ -39,6 +41,13 @@ class Video implements RouteParametersInterface
 
     #[ORM\Column(nullable: true)]
     private array $rawData = [];
+
+    #[ORM\ManyToOne(inversedBy: 'videos', targetEntity: Song::class)]
+    private ?Song $song = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('song.read')]
+    private ?string $thumbnailUrl = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +110,35 @@ class Video implements RouteParametersInterface
     public function setRawData(array $rawData): self
     {
         $this->rawData = $rawData;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getYoutubeId();
+    }
+
+    public function getSong(): ?Song
+    {
+        return $this->song;
+    }
+
+    public function setSong(?Song $song): static
+    {
+        $this->song = $song;
+
+        return $this;
+    }
+
+    public function getThumbnailUrl(): ?string
+    {
+        return $this->thumbnailUrl;
+    }
+
+    public function setThumbnailUrl(?string $thumbnailUrl): static
+    {
+        $this->thumbnailUrl = $thumbnailUrl;
 
         return $this;
     }

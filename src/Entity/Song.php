@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SongRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
 use Survos\ApiGrid\State\MeilliSearchStateProvider;
@@ -19,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     normalizationContext: ['groups' => 'song.read', 'rp']
 )]
-#[ApiFilter(OrderFilter::class, properties: ['title','year','school'])]
+#[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ORM\Entity(repositoryClass: SongRepository::class)]
@@ -39,6 +41,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     openapiContext:  ["description" => 'meiliseach provider'],
 )]
 
+#[Groups(['song.read'])]
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
@@ -46,7 +49,6 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['song.read'])]
     private $id;
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable'])]
@@ -83,6 +85,14 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['song.read'])]
     private $lyricsLength;
+
+    #[ORM\OneToMany(mappedBy: 'song', targetEntity: Video::class)]
+    private Collection $videos;
+
+    public function __construct()
+    {
+        $this->videos = new ArrayCollection();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -237,6 +247,56 @@ class Song implements RouteParametersInterface, \Stringable
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * @return Collection<int, Video>
+     */
+    #[Groups('song.read')]
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): static
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos->add($video);
+            $video->setSong($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): static
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getSong() === $this) {
+                $video->setSong(null);
+            }
+        }
+
+        return $this;
+    }
+
+    #[Groups('song.read')]
+    public function getCode()
+    {
+        $words = explode(" ", $this->getTitle());
+        $code = sprintf('%s-%d-%s',
+                self::initials($this->getSchool()??'no-school'), $this->getYear(),
+            join('-', array_slice($words, 0, 2)));
+        return substr($code, 0, 32);
+
+    }
+
+    static public function initials(?string $name):string  {
+        preg_match_all('#([A-Z]+)#', $name, $capitals);
+        if (count($capitals[1]) >= 2) {
+            return mb_substr(implode('', $capitals[1]), 0, 2, 'UTF-8');
+        }
+        return mb_strtoupper(mb_substr($name, 0, 2, 'UTF-8'), 'UTF-8');
     }
 
 

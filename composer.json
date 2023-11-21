@@ -29,7 +29,7 @@
         "meilisearch/search-bundle": "^0.11.0",
         "mindscreen/yarnlock": "^1.0.1",
         "nelmio/cors-bundle": "^2.3.1",
-        "phpoffice/phpword": "dev-master",
+        "phpoffice/phpword": "^1.1",
         "sentry/sentry-symfony": "^4.12",
         "survos/api-grid-bundle": "*",
         "survos/auth-bundle": "^1.5.55",
