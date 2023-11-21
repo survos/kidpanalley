@@ -54,7 +54,6 @@ class VideoController extends AbstractController
         ]);
     }
     #[Route(path: '/{videoId}', name: 'video_show', methods: ['GET'], options: ['expose' => true])]
-    #[IsGranted('ROLE_ADMIN')]
     public function show(Video $video) : Response
     {
         return $this->render('video/show.html.twig', [

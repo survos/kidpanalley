@@ -42,7 +42,7 @@ class Video implements RouteParametersInterface, \Stringable
     #[ORM\Column(nullable: true)]
     private array $rawData = [];
 
-    #[ORM\ManyToOne(inversedBy: 'videos', targetEntity: Song::class)]
+    #[ORM\ManyToOne(inversedBy: 'videos', targetEntity: Song::class, cascade: ['persist'], fetch: 'EAGER')]
     private ?Song $song = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -113,6 +113,7 @@ class AppService
                         throw new ProcessFailedException($process);
                     }
                     $text = $process->getOutput();
+                    $text = str_replace("\n\n", "\n", $text);
 
 //                    $text = shell_exec($cmd = sprintf('catdoc "%s"', $absoluteFilePath));
                     // split on formfeed
@@ -152,6 +153,7 @@ class AppService
 
                 $sections = $phpWord->getSections();
                 $text = $this->getText($sections);
+                $text = str_replace("\n\n", "\n", $text);
                 if (!$song = $this->songRepository->findOneBy(['title'=>$title])) {
                     $song = (new Song())
                         ->setTitle($title);
@@ -159,7 +161,6 @@ class AppService
                 }
                 $song->setLyrics($text);
             }
-
         }
         $this->em->flush();
     }
@@ -293,7 +294,6 @@ class AppService
                     $this->em->persist($video);
                 }
 
-
                 $snippet = (object)$item->snippet;
                 $title = $snippet->title;
                 // song needs to be school + title, as does the video
@@ -303,14 +303,14 @@ class AppService
                     // @todo: parse out stuff to get the title
                     $this->em->persist($song);
                 }
-                $video
-                    ->setThumbnailUrl($snippet->thumbnails['default']['url'])
-                    ->setSong($song);
+                $this->logger->warning("Adding video to song " . $song->getTitle(), ['id' => $video->getYoutubeId()]);
+                $song->addVideo($video);
 
                 $raw = json_decode(json_encode($rawData), true);
                 assert($raw, "Raw is null");
 //                dd($raw, $snippet);
                 $video
+                    ->setThumbnailUrl($snippet->thumbnails['default']['url'])
                     ->setRawData($raw)
                     ->setTitle($snippet->title)
                     ->setDescription($snippet->description);
@@ -318,8 +318,8 @@ class AppService
 
                 array_push($videos, $video);
             }
+            $this->em->flush();
         } while ($next);
-        $this->em->flush();
         // dd($list);
 
         return $videos;

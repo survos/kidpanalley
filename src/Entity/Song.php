@@ -57,10 +57,10 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read', 'searchable'])]
     private $date;
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['song.read', 'searchable'])]
+    #[Groups(['song.read', 'video.read', 'searchable'])]
     private $year;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['song.read', 'searchable'])]
+    #[Groups(['song.read', 'video.read', 'searchable'])]
     private $school;
     #[ORM\Column(type: 'text', nullable: true)]
     private $lyrics;

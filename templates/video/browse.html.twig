@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Video index{% endblock %}
+{% block title %}Video Browse{% endblock %}
+{% block page_title %}Video Browse{% endblock %}
 
 {% block body %}
+    <h1>Browse Youtube Videos (api_grid)</h1>
     {% set columns = [
         {name: '_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')},
-        'id',
         'youtubeId',
-        'title',
+        'id',
         {name: 'description', condition: false},
+        'school',
         'date'
     ] %}
 
@@ -17,12 +19,23 @@
         :columns="columns"
         :caller="_self"
         >
-        <twig:block name="id">
+        <twig:block name="youtubeId">
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">
-                <span class="bi bi-youtube"></span>
+            <img src="{{ row.thumbnailUrl }}" height="60px" />
             </a>
+        </twig:block>
+        <twig:block name="school">
+            {{ row.song.school|default() }}
+            <i>{{ row.song.year|default() }}</i>
+        </twig:block>
+        <twig:block name="id">
+{#            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">#}
+{#                <span class="bi bi-youtube"></span>#}
+{#            </a>#}
+            <span class="d-inline-block text-truncate" style="max-width: 300px;" title="{{ row.title }}">
             <a href="{{ path('video_show', row.uniqueIdentifiers) }}">
                 {{ row.title }}</a>
+            </span>
         </twig:block>
 
     {% block date %}

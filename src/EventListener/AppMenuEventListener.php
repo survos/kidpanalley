@@ -95,8 +95,9 @@ final class AppMenuEventListener
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');
 
-        $this->add($menu, 'song_index');
-        $this->add($menu, 'video_index');
+        $this->add($menu, 'song_index', label: 'Songs');
+        $this->add($menu, 'video_browse', label: 'Youtube Videos');
+//        $this->add($menu, 'video_index'); // in-memory
 //        $this->add($subMenu, 'song_browse');
 
 //        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);

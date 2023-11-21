@@ -45,7 +45,6 @@ class LoadDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-
         $this->bus->dispatch(new LoadSongsMessage());
         $io->success('Songs Load Requested');
 
@@ -80,8 +79,8 @@ class LoadDataCommand extends Command
                     throw new ProcessFailedException($process);
                 }
                 $text = $process->getOutput();
+                $text = str_replace("\n\n", "\n", $text);
                 $song->setLyrics($text);
-                dd($song);
             } else {
                 continue;
             }
