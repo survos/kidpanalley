@@ -3,7 +3,7 @@
 {% block title %}Song index{% endblock %}
 
 {% block body %}
-    <h1>Song index</h1>
+    <h1>Song (meili)</h1>
     <div class="dtsp-verticalContainer row">
         <div class="search-panes xxdtsp-verticalPanes col-3">
         </div>
@@ -16,29 +16,50 @@
 
 {% block gridTable %}
 
+{% set columns =         [
+    {name: '_actions', prefix: 'song_', actions: ['show']},
+    'id',
+    'youtubeId',
+    {name: 'year', browsable: true, sortable: true},
+    {name: 'school', browsable: true, searchable: true, sortable: true},
+    {name: 'title', searchable: true, sortable: true, block: 'title'},
+]
+%}
+<twig:api_grid
+        dom="P<'dtsp-dataTable'rQfti>l"
+        :class="class"
+        :caller="_self"
+        :columns="columns"
+>
+    {% block title %}
+        <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+    {% endblock %}
+    {% block youtubeId %}
+        <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
+    {% endblock %}
+</twig:api_grid>
 
-    apiGetCollectionUrl: "/api/meili",
-    {% component api_grid with {
-        class: class,
-        caller: _self,
-        dom: 'P<"dtsp-dataTable"rQfti>l',
-        columns: [
-            {name: '_actions', prefix: 'song_', actions: ['show']},
-            'id',
-            {name: 'year', browsable: true, searchable: true, sortable: true},
-            {name: 'school', browsable: true},
-            'school',
-            'title'
-        ]
-    } %}
-        {% block title %}
-            <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
-        {% endblock %}
-        {% block youtubeId %}
-            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
-        {% endblock %}
+{#apiGetCollectionUrl: "/api/meili",#}
+{#    {% component api_grid with {#}
+{#        class: class,#}
+{#        caller: _self,#}
+{#        columns: [#}
+{#            {name: '_actions', prefix: 'song_', actions: ['show']},#}
+{#            'id',#}
+{#            {name: 'year', browsable: true, searchable: true, sortable: true},#}
+{#            {name: 'school', browsable: true},#}
+{#            'school',#}
+{#            'title'#}
+{#        ]#}
+{#    } %}#}
+{#        {% block title %}#}
+{#            <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>#}
+{#        {% endblock %}#}
+{#        {% block youtubeId %}#}
+{#            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>#}
+{#        {% endblock %}#}
 
-    {% endcomponent %}
+{#    {% endcomponent %}#}
 
 
 

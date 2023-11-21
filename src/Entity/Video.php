@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[Groups(['video.read'])]
-class Video implements RouteParametersInterface
+class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
     #[ORM\Id]
@@ -103,5 +103,10 @@ class Video implements RouteParametersInterface
         $this->rawData = $rawData;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getYoutubeId();
     }
 }

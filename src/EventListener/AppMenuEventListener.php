@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[AsEventListener(event: KnpMenuEvent::NAVBAR_MENU, method: 'navbarMenu')]
 #[AsEventListener(event: KnpMenuEvent::FOOTER_MENU, method: 'footerMenu')]
 #[AsEventListener(event: KnpMenuEvent::AUTH_MENU, method: 'ourAuthMenu')]
+#[AsEventListener(event: KnpMenuEvent::PAGE_MENU, method: 'pageMenu')]
 //#[AsEventListener(event: KnpMenuEvent::PAGE_MENU_EVENT, method: 'coreMenu')]
 final class AppMenuEventListener
 {
@@ -43,6 +44,19 @@ final class AppMenuEventListener
         }
         $menu = $event->getMenu();
         $this->authMenu($this->authorizationChecker, $this->security, $menu);
+    }
+
+    public function pageMenu(KnpMenuEvent $event): void
+    {
+        if (!$this->supports($event)) {
+            return;
+        }
+        $menu = $event->getMenu();
+        $video = $event->getOption('video');
+        if ($video) {
+            $this->add($menu, 'video_show', $video);
+            $this->add($menu, 'video_edit', $video);
+        }
     }
 
         public function footerMenu(KnpMenuEvent $event): void
@@ -76,7 +90,7 @@ final class AppMenuEventListener
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
         $subMenu = $this->addSubmenu($menu, 'songs');
-        $subMenu->setExtra('btn', 'btn btn-danger');
+//        $subMenu->setExtra('btn', 'btn btn-danger');
 //        dump($subMenu);
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');

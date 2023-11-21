@@ -1,5 +1,6 @@
 import 'bootstrap';
 
+import './styles/app.css';
 // start the Stimulus application
 console.log('stimulus...');
 import './bootstrap.js';

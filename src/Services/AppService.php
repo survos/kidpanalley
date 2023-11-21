@@ -150,11 +150,11 @@ class AppService
     {
         $em = null;
         /** @var Xls $readerXlsx */
-        $readerXlsx  = $this->spreadsheet->createReader('Xls');
+        $readerXlsx  = $this->spreadsheet->createReader('Xlsx');
         /** @var Spreadsheet $spreadsheet */
         // @todo: dump to csv
         try {
-            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xls');
+            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xlsx');
         } catch (\Exception $exception) {
             dd($exception);
         }

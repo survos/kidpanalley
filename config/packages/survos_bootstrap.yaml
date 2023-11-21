@@ -17,6 +17,6 @@ survos_bootstrap:
       abbr: <b>kpa</b>Archive
 
   menu_options:
-    project: null
+    video: null
     frontPage: false
     showAppMenu: true

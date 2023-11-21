@@ -4,18 +4,21 @@
 
 {% block body %}
     <h1>Song index api_grid</h1>
-    {% component api_grid with {
-        class: class,
-        caller: _self,
-        columns: [
-            {name: '_actions', prefix: 'song_', actions: ['show']},
-            'id',
-            'youtubeId',
-            {name: 'year', browsable: true, sortable: true},
-            {name: 'school', searchable: true, sortable: true},
-            {name: 'title', searchable: true, sortable: true, block: 'title'},
-        ]
-    } %}
+{% set columns =         [
+    {name: '_actions', prefix: 'song_', actions: ['show']},
+    'id',
+    'youtubeId',
+    {name: 'year', browsable: true, sortable: true},
+    {name: 'school', searchable: true, sortable: true},
+    {name: 'title', searchable: true, sortable: true, block: 'title'},
+]
+%}
+    <twig:api_grid
+        :class="class"
+        :caller="_self"
+        :columns="columns"
+    >
+
         {% block title %}
             <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
         {% endblock %}
@@ -26,7 +29,7 @@
             {% endif %}
         {% endblock %}
 
-    {% endcomponent %}
+    </twig:api_grid>
 
 
 

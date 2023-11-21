@@ -1,3 +1,7 @@
 body {
     background-color: skyblue;
 }
+
+.current {
+    text-decoration: underline;
+}

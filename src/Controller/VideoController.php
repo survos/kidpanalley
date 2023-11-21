@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/video')]
 class VideoController extends AbstractController
@@ -53,6 +54,7 @@ class VideoController extends AbstractController
         ]);
     }
     #[Route(path: '/{videoId}', name: 'video_show', methods: ['GET'], options: ['expose' => true])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(Video $video) : Response
     {
         return $this->render('video/show.html.twig', [
@@ -60,6 +62,7 @@ class VideoController extends AbstractController
         ]);
     }
     #[Route(path: '/{videoId}/edit', name: 'video_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Video $video) : Response
     {
         $form = $this->createForm(VideoType::class, $video);
