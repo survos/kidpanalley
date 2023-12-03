@@ -16,6 +16,10 @@ song_credits:
 app_load_youtube_channel:
     description: Loads the KPA youtube channel to Videos
 
+song_index:
+    title: Browse our Songs
+    description: All the songs we've created over the years.
+
 menu.login: Log In
 menu.logout: Log Out
 menu.register: Register
