@@ -14,7 +14,7 @@ use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    normalizationContext: ['groups' => 'video.read', 'rp']
+    normalizationContext: ['groups' => ['video.read', 'rp']]
 )]
 #[ApiFilter(OrderFilter::class, properties: ['title'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]

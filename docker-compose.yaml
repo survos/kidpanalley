@@ -13,37 +13,18 @@ services:
             # See https://docs.docker.com/compose/compose-file/compose-file-v3/#ports for more information.
             - '5432:5432'
 
-    rabbitmq:
-        image: rabbitmq:3-management-alpine
-        container_name: 'rabbitmq'
-        ports:
-            - 5672:5672
-            - 15672:15672
-        volumes:
-            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-        networks:
-            - rabbitmq_go_net
-
-
-###> meilisearch/search-bundle ###
-    meilisearch:
-      container_name: 'meilisearch'
-      image: getmeili/meilisearch:${MEILISEARCH_VERSION:-v1.5}
-      ports:
-        - 7700:7700
-      environment:
-        # You should definitely change the master key in production
-        MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-!ChangeMe!}
-      volumes:
-        - ./.docker/meili/:/meili_data/
-###< meilisearch/search-bundle ###
-
-networks:
-    rabbitmq_go_net:
-        driver: bridge
-
-volumes:
-###> meilisearch/search-bundle ###
-  meilisearch_data:
-###< meilisearch/search-bundle ###
+#    rabbitmq:
+#        image: rabbitmq:3-management-alpine
+#        container_name: 'rabbitmq'
+#        ports:
+#            - 5672:5672
+#            - 15672:15672
+#        volumes:
+#            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+#            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+#        networks:
+#            - rabbitmq_go_net
+#
+#networks:
+#    rabbitmq_go_net:
+#        driver: bridge

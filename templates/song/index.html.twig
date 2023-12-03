@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Song index api_grid</h1>
 {#    {name: '_actions', prefix: 'song_', actions: ['show']},#}
-{% set columns =         [
+{% set columns = [
     {name: 'videos'},
     {name: 'title', searchable: true, sortable: true, block: 'title'},
     'code',
@@ -15,10 +15,12 @@
 ]
 %}
     <twig:api_grid
+        facets="true"
         :class="class"
         :caller="_self"
         :columns="columns"
     >
+
 
         {% block videos %}
             {% for video in row.videos %}

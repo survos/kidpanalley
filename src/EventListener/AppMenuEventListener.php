@@ -73,6 +73,7 @@ final class AppMenuEventListener
 
         $theme = $this->contextService->getOption('theme');
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'survos_commands');
         $this->add($menu, uri: '#', label: 'theme: ' . $theme);
         // it should be possible to do this in twig, not here.
         $this->add($menu, id: 'copyright',

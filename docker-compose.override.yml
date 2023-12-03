@@ -7,8 +7,3 @@ services:
     ports: [1025, 1080]
 ###< symfony/mailer ###
 
-###> meilisearch/search-bundle ###
-  meilisearch:
-    ports:
-      - "7700"
-###< meilisearch/search-bundle ###

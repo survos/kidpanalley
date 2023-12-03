@@ -2,7 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Put;
 use App\Repository\SongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,28 +22,33 @@ use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => 'song.read', 'rp']
+    operations: [new Get(),
+        new GetCollection(
+            provider: MeilliSearchStateProvider::class,
+        )],
+    normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
+
 #[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
-#[ORM\Entity(repositoryClass: SongRepository::class)]
-
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["school","year"], arguments: [
-    "searchParameterName" => "facet_filter",
-])]
 
 #[ApiResource(
     operations: [
         new GetCollection(
 //            uriTemplate: '/meili',
-            provider: MeilliSearchStateProvider::class, # MeilisearchProvider
-            normalizationContext: ['movie.read', 'rp', 'searchable']
+//            provider: MeilliSearchStateProvider::class, # MeilisearchProvider
+            normalizationContext: ['groups' => 'song.read', 'rp']
         )
     ],
     openapiContext:  ["description" => 'meiliseach provider'],
 )]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["school","year"], arguments: [
+    "searchParameterName" => "facet_filter",
+])]
+
 
 #[Groups(['song.read'])]
 class Song implements RouteParametersInterface, \Stringable

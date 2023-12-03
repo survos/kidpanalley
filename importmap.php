@@ -52,7 +52,7 @@ return [
         'version' => '2.0.16',
     ],
     'axios' => [
-        'version' => '1.6.1',
+        'version' => '1.6.2',
     ],
     'fos-routing' => [
         'version' => '0.0.6',
@@ -147,5 +147,12 @@ return [
     ],
     '@kanety/stimulus-static-actions' => [
         'version' => '1.0.1',
+    ],
+    'perfect-scrollbar' => [
+        'version' => '1.5.5',
+    ],
+    'perfect-scrollbar/css/perfect-scrollbar.min.css' => [
+        'version' => '1.5.5',
+        'type' => 'css',
     ],
 ];
