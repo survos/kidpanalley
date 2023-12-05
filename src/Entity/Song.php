@@ -21,8 +21,11 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: SongRepository::class)]
+#[ORM\UniqueConstraint('song_code', ['code'])]
 #[ApiResource(
     operations: [new Get(),
         new GetCollection(
@@ -51,6 +54,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[Groups(['song.read'])]
+#[Assert\EnableAutoMapping]
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
@@ -98,8 +102,13 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\OneToMany(mappedBy: 'song', targetEntity: Video::class)]
     private Collection $videos;
 
-    public function __construct()
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
+
+    public function __construct(?string $code=null)
     {
+        assert($code, "missing code");
+        $this->code = $code;
         $this->videos = new ArrayCollection();
     }
     public function getId(): ?int
@@ -289,13 +298,11 @@ class Song implements RouteParametersInterface, \Stringable
         return $this;
     }
 
-    #[Groups('song.read')]
-    public function getCode()
+    public static function createCode(string $title, ?string $school=null, string|int|null $year=null): string
     {
-        $words = explode(" ", $this->getTitle());
+        $words = explode(" ", $title);
         $code = sprintf('%s-%d-%s',
-                self::initials($this->getSchool()??'no-school'), $this->getYear(),
-            join('-', array_slice($words, 0, 2)));
+                self::initials($school??'no-school'), $year, join('-', array_slice($words, 0, 2)));
         return substr($code, 0, 32);
 
     }
@@ -306,6 +313,18 @@ class Song implements RouteParametersInterface, \Stringable
             return mb_substr(implode('', $capitals[1]), 0, 2, 'UTF-8');
         }
         return mb_strtoupper(mb_substr($name, 0, 2, 'UTF-8'), 'UTF-8');
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
 

@@ -18,9 +18,10 @@ final class LoadSongsMessageHandler implements MessageHandlerInterface
 
     public function __invoke(LoadSongsMessage $message)
     {
+        $this->appService->loadExistingSongs();
         $this->appService->loadSongs();
 
-        $dir = $this->projectDir . '/../data/kpa/Lyrics individual songs';
+        $dir = $this->projectDir . '/../../survos/data/kpa/Lyrics individual songs';
         $this->appService->loadLyrics($dir);
 
 

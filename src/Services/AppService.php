@@ -6,9 +6,7 @@ use App\Entity\Song;
 use App\Entity\Video;
 use App\Repository\SongRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use League\Csv\Reader;
 use PhpOffice\PhpWord\Element\PageBreak;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Text;
@@ -17,23 +15,26 @@ use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Title;
 use PhpOffice\PhpWord\IOFactory;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Survos\Scraper\Service\ScraperService;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Serializer\SerializerInterface;
-use Yectep\PhpSpreadsheetBundle\Factory;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AppService
 {
 
     public function __construct(private readonly EntityManagerInterface $em,
-                                private readonly SerializerInterface $serializer,
-                                private SongRepository $songRepository,
-                                private ScraperService $scraperService,
-                                private readonly LoggerInterface $logger)
+                                private readonly SerializerInterface    $serializer,
+                                private SongRepository                  $songRepository,
+                                private ScraperService                  $scraperService,
+                                private ValidatorInterface $validator,
+                                private readonly LoggerInterface        $logger,
+                                private array $songs = [],
+
+    )
     {
     }
 
@@ -41,7 +42,7 @@ class AppService
     {
         $text = '';
         foreach ($elements as $element) {
-            $elementClass =  $element::class;
+            $elementClass = $element::class;
             switch ($elementClass) {
                 case PageBreak::class:
                     $text .= "\f";
@@ -89,12 +90,13 @@ class AppService
         dd($text);
 
     }
+
     public function loadLyrics(string $dir)
     {
         $finder = new Finder();
         $finder->files()->in($dir)->name('*.doc*');
 
-        foreach ($finder as $file) {
+        foreach ($finder as $idx => $file) {
             $absoluteFilePath = $file->getRealPath();
             if (!file_exists($absoluteFilePath) || !is_readable($absoluteFilePath)) {
                 throw new \Exception($absoluteFilePath . ' is not readable');
@@ -116,13 +118,13 @@ class AppService
 
 //                    $text = shell_exec($cmd = sprintf('catdoc "%s"', $absoluteFilePath));
                     // split on formfeed
-                    $songs = preg_split("|\f|", $text);
+                    $theseSongs = preg_split("|\f|", $text);
 
 
-                    foreach ($songs as $songStr) {
-                        $lines = explode("\n", (string) $songStr);
+                    foreach ($theseSongs as $songStr) {
+                        $lines = explode("\n", (string)$songStr);
                         // remove all blank lines
-                        $lines = array_filter($lines, fn($str) => !empty(trim((string) $str)));
+                        $lines = array_filter($lines, fn($str) => !empty(trim((string)$str)));
                         // we could go through each line and see if a title matches.  For now, just use the first line as the title.
                         //
                         $title = array_shift($lines);
@@ -131,8 +133,16 @@ class AppService
                         // find or create the song, by title
                         /** @var SongRepository $repo */
                         $repo = $this->em->getRepository(Song::class);
-                        if (!$song = $repo->findOneBy(['title'=>$title])) {
-                            $song = (new Song())
+                        if (!$title) {
+                            continue;
+                        }
+                        if (!$song = $repo->findOneBy(['title' => $title])) {
+                            $code = Song::createCode($title);
+                            assert($code, $title);
+                                $song = (new Song($code));
+                                $this->em->persist($song);
+                                $songs[$code] = $song;
+                            $song
                                 ->setTitle($title);
                             $this->em->persist($song);
                         }
@@ -140,6 +150,10 @@ class AppService
 //                        dd($song->getLyrics(), $song->getId());
                     }
                     $song->setLyrics($text);
+                    if ($errors = $this->validator->validate($song)->count()) {
+                        assert(false, (string)$errors);
+                    }
+
                 }
 
             } else {
@@ -153,10 +167,14 @@ class AppService
                 $sections = $phpWord->getSections();
                 $text = $this->getText($sections);
                 $text = str_replace("\n\n", "\n", $text);
-                if (!$song = $this->songRepository->findOneBy(['title'=>$title])) {
-                    $song = (new Song())
-                        ->setTitle($title);
-                    $this->em->persist($song);
+                if (!$song = $this->songRepository->findOneBy(['title' => $title])) {
+                    $code = 'file_' . md5($title);
+                    if (!$song = $this->songs[$code]??null) {
+                        $song = (new Song($code))
+                            ->setTitle($title);
+                        $this->em->persist($song);
+                    }
+                    $this->songs[$code] = $song;
                 }
                 $song->setLyrics($text);
             }
@@ -164,70 +182,64 @@ class AppService
         $this->em->flush();
     }
 
-    public function loadSongs()
+    public function loadExistingSongs()
     {
-        $em = null;
-        /** @var Xls $readerXlsx */
-        $readerXlsx  = $this->spreadsheet->createReader('Xlsx');
-        /** @var Spreadsheet $spreadsheet */
-        // @todo: dump to csv
-        try {
-            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xlsx');
-        } catch (\Exception $exception) {
-            dd($exception);
+        foreach ($this->songRepository->findAll() as $song) {
+            $this->songs[$song->getCode()] = $song;
         }
 
-        $q = $this->em->createQuery(sprintf('delete from %s', Song::class));
-        $numDeleted = $q->execute();
+    }
+    public function loadSongs()
+    {
+        // in2csv kpa-songs.xlsx  > kpa-songs.csv
+        $songsCsv = __DIR__ . '/../../data/kpa-songs.csv';
+        $reader = Reader::createFromPath($songsCsv, 'r');
+        $reader->setHeaderOffset(0);
+        $records = $reader->getRecords();
 
-        /** @var Worksheet $sheet */
-        $sheet = $spreadsheet->getActiveSheet();
-        $songs = [];
-        $lyrics = [];
-        $header = [];
-        // use csvReader
 
-        foreach ($sheet->toArray() as $idx=>$row) {
-            if ($idx === 0) {
-                $header = $row;
-            } else {
-                $data = array_combine($header, $row);
-                if (!$data['Instrumentals']) {
-                    continue;
-                }
-                $song = (new Song())
-                    ->setTitle($data['Instrumentals'])
-                    ->setSchool($data['school'])
-                    ->setWriters($data['writer']);
+//        $q = $this->em->createQuery(sprintf('delete from %s', Song::class));
+//        $numDeleted = $q->execute();
 
-                $em = $this->em;
-                $logger = $this->logger;
-                $em->persist($song);
-                if ($data['date']) {
-                    try {
-                        $song
-                            ->setDate(new \DateTimeImmutable($data['date']));
-                        $song->setYear((int)$song->getDate()->format('Y'));
-                    } catch (\Exception) {
-                        $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
-                    }
-                }
-                if ($data['year']) {
-                    $song
-                        ->setYear((int)$data['year']);
-                }
-
-                $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
-                array_push($songs, $song);
-                // dump($data);
+        foreach ($records as $idx => $data) {
+            if (!$data['Instrumentals']) {
+                continue;
             }
+
+            $code = Song::createCode($title = $data['Instrumentals'], $school = $data['school'], $year = $data['year']);
+//            $songDate = new \DateTimeImmutable($data['date']);
+            $year =  $data['year']??null;
+
+            if (!$song = $this->songs[$code]??null) {
+                $song = (new Song($code));
+                $this->em->persist($song);
+                $this->songs[$code] = $song;
+            }
+            $song
+                ->setTitle($title)
+                ->setSchool($school)
+                ->setWriters($data['writer']);
+
+//            if ($song->getDate()) {
+//                try {
+//                    $song->setYear((int)$song->getDate()->format('Y'));
+//                } catch (\Exception) {
+//                    $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
+//                }
+//            }
+            if ($data['year']) {
+                $song
+                    ->setYear((int)$year);
+            }
+
+            $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
             if ($idx == 45) {
                 // dd($data, $song);
                 // break;
             }
         }
 
-        $em->flush();
+        $this->em->flush();
     }
 
     #[Cache(expires: 'tomorrow', public: true)]
@@ -265,6 +277,7 @@ class AppService
             echo $item['volumeInfo']['title'], "<br /> \n";
         }
     }
+
     /**
      * @return \App\Entity\Video[]
      */
@@ -286,7 +299,7 @@ class AppService
             $next = $results['data']['nextPageToken'] ?? false;
             foreach ($results['data']['items'] as $rawData) {
 //                dump(json_encode($rawData));
-                $item = (object) $rawData;
+                $item = (object)$rawData;
                 $id = $item->id['videoId'];
                 if (!$video = $repo->findOneBy(['youtubeId' => $id])) {
                     $video = (new Video())
@@ -297,8 +310,8 @@ class AppService
                 $snippet = (object)$item->snippet;
                 $title = $snippet->title;
                 // song needs to be school + title, as does the video
-                if (!$song = $this->songRepository->findOneBy(['title'=> $title])) {
-                    $song = (new Song())
+                if (!$song = $this->songRepository->findOneBy(['title' => $title])) {
+                    $song = (new Song($id))
                         ->setTitle($title);
                     // @todo: parse out stuff to get the title
                     $this->em->persist($song);

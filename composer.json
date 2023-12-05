@@ -23,6 +23,7 @@
         "easycorp/easyadmin-bundle": "*",
         "friendsofsymfony/jsrouting-bundle": "^3.3",
         "google/apiclient": "^2.15.1",
+        "league/csv": "^9.12",
         "league/oauth2-facebook": "^2.2",
         "league/oauth2-github": "^3.1",
         "league/oauth2-google": "^4.0.1",
@@ -72,6 +73,7 @@
         "twig/twig": "^3.8.0"
     },
     "require-dev": {
+        "behat/behat": "^3.13",
         "phpunit/phpunit": "^9.6.15",
         "rector/rector": "^0.16.0",
         "survos/command-bundle": "^1.5.100",
