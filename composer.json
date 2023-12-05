@@ -20,7 +20,6 @@
         "doctrine/doctrine-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "*",
         "doctrine/orm": "*",
-        "easycorp/easyadmin-bundle": "*",
         "friendsofsymfony/jsrouting-bundle": "^3.3",
         "google/apiclient": "^2.15.1",
         "league/csv": "^9.12",
