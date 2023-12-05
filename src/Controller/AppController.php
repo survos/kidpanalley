@@ -32,9 +32,9 @@ class AppController extends AbstractController
 
     final const ENDPOINT = 'https://www.kidpanalley.org/wp-json/wp/v2/pages';
 
-    public function __construct(private readonly Factory $spreadsheet, private readonly Environment $twig, private readonly EntityManagerInterface $em)
+    public function __construct(
+                                private readonly Environment $twig, private readonly EntityManagerInterface $em)
     {
-        $this->factory = $spreadsheet;
     }
 
     private function getAuth()

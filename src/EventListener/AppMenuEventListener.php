@@ -52,6 +52,13 @@ final class AppMenuEventListener
             return;
         }
         $menu = $event->getMenu();
+
+        if ($columnsJson = $event->getOption('columns')) {
+            $columns = json_decode($columnsJson);
+            foreach ($columns as $column) {
+                $this->add($menu, 'app_homepage', ['field' => $column->name], label: $column->name);
+            }
+        }
         $video = $event->getOption('video');
         if ($video) {
             $this->add($menu, 'video_show', $video);

@@ -155,4 +155,8 @@ return [
         'version' => '1.5.5',
         'type' => 'css',
     ],
+    'bootstrap-icons/font/bootstrap-icons.min.css' => [
+        'version' => '1.11.2',
+        'type' => 'css',
+    ],
 ];

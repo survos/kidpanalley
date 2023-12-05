@@ -1,6 +1,6 @@
 <?php
 
-// castor version: v0.8.0
+// castor version: v0.10.0
 namespace Castor\Attribute;
 
 #[\Attribute(\Attribute::TARGET_PARAMETER)]
@@ -114,6 +114,25 @@ class Context implements \ArrayAccess
     {
     }
 }
+namespace Castor\Fingerprint;
+
+enum FileHashStrategy
+{
+    case Content;
+    case MTimes;
+}
+namespace Castor\Fingerprint;
+
+class FingerprintHelper
+{
+    private const SUFFIX = '.fingerprint';
+    public static function verifyFingerprintFromHash(string $fingerprint) : bool
+    {
+    }
+    public static function postProcessFingerprintForHash(string $hash) : void
+    {
+    }
+}
 namespace Castor;
 
 class GlobalHelper
@@ -215,6 +234,42 @@ class GlobalHelper
     {
     }
 }
+namespace Castor;
+
+class HasherHelper
+{
+    private \HashContext $hashContext;
+    /**
+     * @see https://www.php.net/manual/en/function.hash-algos.php
+     */
+    public function __construct(string $algo = 'xxh128')
+    {
+    }
+    public function write(string $value) : self
+    {
+    }
+    public function writeFile(string $path, \Castor\Fingerprint\FileHashStrategy $strategy = \Castor\Fingerprint\FileHashStrategy::MTimes) : self
+    {
+    }
+    public function writeWithFinder(\Symfony\Component\Finder\Finder $finder, \Castor\Fingerprint\FileHashStrategy $strategy = \Castor\Fingerprint\FileHashStrategy::MTimes) : self
+    {
+    }
+    public function writeGlob(string $pattern, \Castor\Fingerprint\FileHashStrategy $strategy = \Castor\Fingerprint\FileHashStrategy::MTimes) : self
+    {
+    }
+    public function writeTaskName() : self
+    {
+    }
+    public function writeTaskArgs(string ...$args) : self
+    {
+    }
+    public function writeTask() : self
+    {
+    }
+    public function finish() : string
+    {
+    }
+}
 namespace Castor\Monolog\Processor;
 
 class ProcessProcessor implements \Monolog\Processor\ProcessorInterface
@@ -237,6 +292,28 @@ class PathHelper
     {
     }
     public static function realpath(string $path) : string
+    {
+    }
+}
+namespace Castor;
+
+class PlatformUtil extends \Joli\JoliNotif\Util\OsHelper
+{
+    public static function getEnv(string $name) : string|false
+    {
+    }
+    /**
+     * @throws \RuntimeException If the user home could not reliably be determined
+     */
+    public static function getUserDirectory() : string
+    {
+    }
+}
+namespace Castor;
+
+class SectionDetails
+{
+    public function __construct(public \Symfony\Component\Console\Output\ConsoleSectionOutput $section, public \Symfony\Component\Console\Output\ConsoleSectionOutput $progressBarSection, public float $start, public string $index)
     {
     }
 }
@@ -315,7 +392,42 @@ function get_exit_code(...$args) : int
  *     'password_authentication'?: bool,
  * } $sshOptions
  */
-function ssh(string $command, string $host, string $user, array $sshOptions = [], string $path = null, bool $quiet = null, bool $allowFailure = null, bool $notify = null, float $timeout = null) : \Symfony\Component\Process\Process
+function ssh_run(string $command, string $host, string $user, array $sshOptions = [], string $path = null, bool $quiet = null, bool $allowFailure = null, bool $notify = null, float $timeout = null) : \Symfony\Component\Process\Process
+{
+}
+function ssh(...$args) : \Symfony\Component\Process\Process
+{
+}
+/**
+ * This function is considered experimental and may change in the future.
+ *
+ * @param array{
+ *     'port'?: int,
+ *     'path_private_key'?: string,
+ *     'jump_host'?: string,
+ *     'multiplexing_control_path'?: string,
+ *     'multiplexing_control_persist'?: string,
+ *     'enable_strict_check'?: bool,
+ *     'password_authentication'?: bool,
+ * } $sshOptions
+ */
+function ssh_upload(string $sourcePath, string $destinationPath, string $host, string $user, array $sshOptions = [], bool $quiet = null, bool $allowFailure = null, bool $notify = null, float $timeout = null) : \Symfony\Component\Process\Process
+{
+}
+/**
+ * This function is considered experimental and may change in the future.
+ *
+ * @param array{
+ *     'port'?: int,
+ *     'path_private_key'?: string,
+ *     'jump_host'?: string,
+ *     'multiplexing_control_path'?: string,
+ *     'multiplexing_control_persist'?: string,
+ *     'enable_strict_check'?: bool,
+ *     'password_authentication'?: bool,
+ * } $sshOptions
+ */
+function ssh_download(string $sourcePath, string $destinationPath, string $host, string $user, array $sshOptions = [], bool $quiet = null, bool $allowFailure = null, bool $notify = null, float $timeout = null) : \Symfony\Component\Process\Process
 {
 }
 function notify(string $message) : void
@@ -391,14 +503,14 @@ function finder() : \Symfony\Component\Finder\Finder
 {
 }
 /**
- * @see CacheInterface::get()
- *
- * @template T
- *
  * @param string                                                                                      $key The key of the item to retrieve from the cache
  * @param (callable(CacheItemInterface,bool):T)|(callable(ItemInterface,bool):T)|CallbackInterface<T> $or  Use this callback to compute the value
  *
  * @return T
+ *
+ * @see CacheInterface::get()
+ *
+ * @template T
  */
 function cache(string $key, callable $or) : mixed
 {
@@ -407,9 +519,9 @@ function get_cache() : \Psr\Cache\CacheItemPoolInterface&\Symfony\Contracts\Cach
 {
 }
 /**
- * @see HttpClientInterface::OPTIONS_DEFAULTS
- *
  * @param array<string, mixed> $options
+ *
+ * @see HttpClientInterface::OPTIONS_DEFAULTS
  */
 function request(string $method, string $url, array $options = []) : \Symfony\Contracts\HttpClient\ResponseInterface
 {
@@ -437,6 +549,21 @@ function load_dot_env(string $path = null) : array
  * @param array<string, string|\Stringable|int>|null $environment
  */
 function with(callable $callback, array $data = null, array $environment = null, string $path = null, bool $tty = null, bool $pty = null, float $timeout = null, bool $quiet = null, bool $allowFailure = null, bool $notify = null, Context|string $context = null) : mixed
+{
+}
+/**
+ * @see https://www.php.net/manual/en/function.hash-algos.php
+ */
+function hasher(string $algo = 'xxh128') : HasherHelper
+{
+}
+function fingerprint_exists(string $fingerprint) : bool
+{
+}
+function fingerprint_save(string $fingerprint) : void
+{
+}
+function fingerprint(callable $callback, string $fingerprint) : void
 {
 }
 namespace Symfony\Component\Console;

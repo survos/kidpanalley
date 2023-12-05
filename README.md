@@ -1,5 +1,11 @@
 # kidpanalley
 
+## Setup
+
+install csvkit (sudo apt install csvkit)
+convert the excel files to csv (in2csv kpa-songs.xlsx > songs.csv)
+so we don't need spreadsheet kit.
+
 
 ```bash
 git clone git@github.com:survos/kidpanalley.git kpa && cd kpa

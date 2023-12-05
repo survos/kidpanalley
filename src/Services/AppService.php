@@ -32,7 +32,6 @@ class AppService
     public function __construct(private readonly EntityManagerInterface $em,
                                 private readonly SerializerInterface $serializer,
                                 private SongRepository $songRepository,
-                                private readonly Factory $spreadsheet,
                                 private ScraperService $scraperService,
                                 private readonly LoggerInterface $logger)
     {
@@ -186,6 +185,7 @@ class AppService
         $songs = [];
         $lyrics = [];
         $header = [];
+        // use csvReader
 
         foreach ($sheet->toArray() as $idx=>$row) {
             if ($idx === 0) {

@@ -110,9 +110,6 @@
             "config/routes/easy_admin.yaml"
         ]
     },
-    "ezyang/htmlpurifier": {
-        "version": "v4.13.0"
-    },
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
@@ -200,15 +197,6 @@
     "league/oauth2-google": {
         "version": "3.0.3"
     },
-    "maennchen/zipstream-php": {
-        "version": "2.1.0"
-    },
-    "markbaker/complex": {
-        "version": "1.4.7"
-    },
-    "markbaker/matrix": {
-        "version": "1.2.0"
-    },
     "mindscreen/yarnlock": {
         "version": "v1.0.1"
     },
@@ -284,9 +272,6 @@
     "phpoffice/common": {
         "version": "0.2.9"
     },
-    "phpoffice/phpspreadsheet": {
-        "version": "1.9.0"
-    },
     "phpoffice/phpword": {
         "version": "dev-master"
     },
@@ -360,9 +345,6 @@
     },
     "psr/log": {
         "version": "1.1.x-dev"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.x-dev"
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
@@ -928,9 +910,6 @@
     },
     "willdurand/negotiation": {
         "version": "2.x-dev"
-    },
-    "yectep/phpspreadsheet-bundle": {
-        "version": "dev-master"
     },
     "zendframework/zend-code": {
         "version": "3.5.x-dev"

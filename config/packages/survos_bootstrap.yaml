@@ -18,5 +18,6 @@ survos_bootstrap:
 
   menu_options:
     video: null
+    columns: null
     frontPage: false
     showAppMenu: true

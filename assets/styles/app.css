@@ -5,3 +5,8 @@ body {
 .current {
     text-decoration: underline;
 }
+
+.icon {
+    font-size: 6rem;
+    background-color: yellow;
+}
