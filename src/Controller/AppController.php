@@ -26,8 +26,6 @@ use Yectep\PhpSpreadsheetBundle\Factory;
 
 class AppController extends AbstractController
 {
-    private readonly \Yectep\PhpSpreadsheetBundle\Factory $factory;
-
     private $auth;
 
     final const ENDPOINT = 'https://www.kidpanalley.org/wp-json/wp/v2/pages';

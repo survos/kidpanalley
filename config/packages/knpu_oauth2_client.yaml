@@ -1,3 +1,31 @@
 knpu_oauth2_client:
     clients:
         # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration
+        # will create service: "knpu.oauth2.client.dropbox"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DropboxClient
+
+        # composer require stevenmaguire/oauth2-dropbox
+        dropbox:
+            type: dropbox
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_DROPBOX_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_DROPBOX_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: oauth_connect_check
+            redirect_params: { clientKey: dropbox}  # MUST match the client key above
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        github:
+            # must be "github" - it activates that type!
+            type: github
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_GITHUB_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_GITHUB_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: oauth_connect_check
+            redirect_params: { clientKey: github }  # MUST match the client key above
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+

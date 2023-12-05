@@ -7,6 +7,7 @@ use App\Entity\Video;
 use App\Repository\SongRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
+use League\Flysystem\DirectoryListing;
 use PhpOffice\PhpWord\Element\PageBreak;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Text;
@@ -22,6 +23,10 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+use League\Flysystem\Filesystem;
+use Spatie\Dropbox\Client;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 
 class AppService
 {
@@ -93,6 +98,16 @@ class AppService
 
     public function loadLyrics(string $dir)
     {
+
+        $client = new Client($appSecret);
+
+        $adapter = new DropboxAdapter($client);
+
+        $filesystem = new Filesystem($adapter, ['case_sensitive' => false]);
+        $filesystem->write('/', );
+        dd ($filesystem->listContents('/', $filesystem::LIST_DEEP));
+
+
         $finder = new Finder();
         $finder->files()->in($dir)->name('*.doc*');
 
