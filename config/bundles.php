@@ -32,4 +32,5 @@ return [
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
+    Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
 ];

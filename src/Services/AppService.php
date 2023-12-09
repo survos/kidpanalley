@@ -19,6 +19,7 @@ use Psr\Log\LoggerInterface;
 use Survos\Scraper\Service\ScraperService;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -27,6 +28,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 use Spatie\FlysystemDropbox\DropboxAdapter;
+use Yectep\PhpSpreadsheetBundle\Factory;
 
 class AppService
 {
@@ -36,6 +38,7 @@ class AppService
                                 private SongRepository                  $songRepository,
                                 private ScraperService                  $scraperService,
                                 private ValidatorInterface $validator,
+                                private readonly Factory $spreadsheet,
                                 private readonly LoggerInterface        $logger,
                                 private array $songs = [],
 
@@ -162,23 +165,20 @@ class AppService
                         }
                         if (!$song = $repo->findOneBy(['title' => $title])) {
                             $code = Song::createCode($title);
-                            assert($code, $title);
-                                $song = (new Song($code));
-                                $this->em->persist($song);
-                                $songs[$code] = $song;
+                            $song = $this->getSong($code);
                             $song
                                 ->setTitle($title);
-                            $this->em->persist($song);
                         }
                         $song->setLyrics(join("\n", $lines));
 //                        dd($song->getLyrics(), $song->getId());
                     }
                     $song->setLyrics($text);
-                    if ($errors = $this->validator->validate($song)->count()) {
-                        assert(false, (string)$errors);
+                    $errors = $this->validator->validate($song);
+                    if ($errors->count()) {
+                        foreach ($errors as $error) {
+                            assert(false, (string)$error);
+                        }
                     }
-                    $this->em->flush();
-
                 }
 
             } else {
@@ -194,15 +194,11 @@ class AppService
                 $text = str_replace("\n\n", "\n", $text);
                 if (!$song = $this->songRepository->findOneBy(['title' => $title])) {
                     $code = 'file_' . md5($title);
-                    if (!$song = $this->songs[$code]??null) {
-                        $song = (new Song($code))
-                            ->setTitle($title);
-                        $this->em->persist($song);
-                        $this->songs[$code] = $song;
-                    }
+                    $song = $this->getSong($code);
+                    $song
+                        ->setTitle($title);
                 }
                 $song->setLyrics($text);
-                $this->em->flush();
             }
         }
         $this->em->flush();
@@ -215,7 +211,7 @@ class AppService
         }
 
     }
-    public function loadSongs()
+    public function loadSongsFromCsv()
     {
         // in2csv kpa-songs.xlsx  > kpa-songs.csv
         $songsCsv = __DIR__ . '/../../data/kpa-songs.csv';
@@ -359,7 +355,7 @@ class AppService
                     ->setRawData($raw)
                     ->setTitle($snippet->title)
                     ->setDescription($snippet->description);
-                $video->setDate(new \DateTimeImmutable($snippet->publishedAt));
+//                $video->setDate(new \DateTimeImmutable($snippet->publishedAt));
 
                 array_push($videos, $video);
             }
@@ -373,14 +369,27 @@ class AppService
 
     }
 
-    public function loadSongsFromSpreadsheet()
+    private function getSong(string $code): Song
     {
+        if (!$song = $this->songs[$code]??null) {
+            $song = new Song($code);
+            $this->em->persist($song);
+            $this->songs[$code] = $song;
+        }
+        return $song;
+
+    }
+
+    public function loadSongs()
+    {
+        $this->loadExistingSongs();
+
         $em = null;
         /** @var Xls $readerXlsx */
-        $readerXlsx  = $this->spreadsheet->createReader('Xls');
+        $readerXlsx  = $this->spreadsheet->createReader('Xlsx');
         /** @var Spreadsheet $spreadsheet */
         try {
-            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xls');
+            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xlsx');
         } catch (\Exception $exception) {
             dd($exception);
         }
@@ -396,12 +405,24 @@ class AppService
                 $header = $row;
             } else {
                 $data = array_combine($header, $row);
-                if (!$data['Instrumentals']) {
+                if (!$title = $data['Instrumentals']) {
                     continue;
                 }
-                $song = (new Song())
+                $school = $data['school'];
+
+                $year = null;
+                if ($date = $data['date']) {
+                    $year = date_parse($date)['year'];
+                }
+                $code = Song::createCode($title, $school, year: $year);
+
+//                if ($data['writer']) dd($data);
+                $song = $this->getSong($code)
+                    ->setYear($year)
+//                    ->setDate($date)
                     ->setTitle($data['Instrumentals'])
-                    ->setSchool($data['school'])
+                    ->setSchool($school)
+                    ->setPublisher($data['publisher'])
                     ->setWriters($data['writer']);
 
                 $em = $this->em;

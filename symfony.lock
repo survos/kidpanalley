@@ -889,6 +889,9 @@
     "willdurand/negotiation": {
         "version": "2.x-dev"
     },
+    "yectep/phpspreadsheet-bundle": {
+        "version": "v1.1.0"
+    },
     "zendframework/zend-code": {
         "version": "3.5.x-dev"
     },

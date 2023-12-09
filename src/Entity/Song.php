@@ -33,11 +33,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         )],
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
-
-#[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength','publisher','writer'])]
-#[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
+#[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'school', 'lyricsLength', 'publisher', 'writers'])]
+#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
-
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -46,13 +44,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: ['groups' => 'song.read', 'rp']
         )
     ],
-    openapiContext:  ["description" => 'meiliseach provider'],
+    openapiContext: ["description" => 'meiliseach provider'],
 )]
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["school","year",'publisher','writer'], arguments: [
-    "searchParameterName" => "facet_filter",
-])]
-
-
+#[ApiFilter(FacetsFieldSearchFilter::class,
+    properties: ["school", "year", 'publisher', 'writers','publishersArray'],
+    arguments: [ "searchParameterName" => "facet_filter"]
+)]
 #[Groups(['song.read'])]
 #[Assert\EnableAutoMapping]
 class Song implements RouteParametersInterface, \Stringable
@@ -105,20 +102,23 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
-    public function __construct(?string $code=null)
+    public function __construct(?string $code = null)
     {
         assert($code, "missing code");
         $this->code = $code;
         $this->videos = new ArrayCollection();
     }
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
     public function getTitle(): ?string
     {
         return $this->title;
     }
+
     public function setTitle(?string $title): self
     {
         assert(trim($title));
@@ -126,10 +126,12 @@ class Song implements RouteParametersInterface, \Stringable
 
         return $this;
     }
+
     public function getLyrics(): ?string
     {
         return $this->lyrics;
     }
+
     public function setLyrics(?string $lyrics): self
     {
         $this->lyrics = $lyrics;
@@ -137,126 +139,163 @@ class Song implements RouteParametersInterface, \Stringable
 
         return $this;
     }
+
     public function getFeaturedArtist(): ?string
     {
         return $this->featuredArtist;
     }
+
     public function setFeaturedArtist(?string $featuredArtist): self
     {
         $this->featuredArtist = $featuredArtist;
 
         return $this;
     }
+
     public function getRecordingCredits(): ?string
     {
         return $this->recordingCredits;
     }
+
     public function setRecordingCredits(?string $recordingCredits): self
     {
         $this->recordingCredits = $recordingCredits;
 
         return $this;
     }
+
     public function getMusicians(): ?string
     {
         return $this->musicians;
     }
+
     public function setMusicians(?string $musicians): self
     {
         $this->musicians = $musicians;
 
         return $this;
     }
+
     public function getWriters(): ?string
     {
         return $this->writers;
     }
+
+    #[Groups(['song.read'])]
+    public function getWritersArray(): array
+    {
+        return explode('/', $this->getWriters());
+    }
+
+    #[Groups(['song.read'])]
+    public function getPublishersArray(): array
+    {
+        return explode('/', $this->getPublisher());
+    }
+
     public function setWriters(?string $writers): self
     {
         $this->writers = $writers;
 
         return $this;
     }
+
     public function getWordpressPageId(): ?int
     {
         return $this->wordpressPageId;
     }
+
     public function setWordpressPageId(?int $wordpressPageId): self
     {
         $this->wordpressPageId = $wordpressPageId;
 
         return $this;
     }
+
     public function getRecording(): ?string
     {
         return $this->recording;
     }
+
     public function setRecording(?string $recording): self
     {
         $this->recording = $recording;
 
         return $this;
     }
+
     public function getPublisher(): ?string
     {
         return $this->publisher;
     }
+
     public function setPublisher(?string $publisher): self
     {
         $this->publisher = $publisher;
 
         return $this;
     }
+
     public function getYear(): ?int
     {
         return $this->year;
     }
+
     public function setYear(?int $year): self
     {
         $this->year = $year;
 
         return $this;
     }
+
     public function getNotes(): ?string
     {
         return $this->notes;
     }
+
     public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
 
         return $this;
     }
+
     public function getSchool(): ?string
     {
         return $this->school;
     }
+
     public function setSchool(?string $school): self
     {
         $this->school = $school;
 
         return $this;
     }
+
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
+
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
+
     public function getLyricsLength(): ?int
     {
         return $this->lyricsLength;
     }
+
     public function setLyricsLength(?int $lyricsLength): self
     {
         $this->lyricsLength = $lyricsLength;
 
         return $this;
     }
+
     #[Groups(['song.read'])]
     public function getUniqueIdentifiers(): array
     {
@@ -299,16 +338,17 @@ class Song implements RouteParametersInterface, \Stringable
         return $this;
     }
 
-    public static function createCode(string $title, ?string $school=null, string|int|null $year=null): string
+    public static function createCode(string $title, ?string $school = null, string|int|null $year = null): string
     {
         $words = explode(" ", $title);
         $code = sprintf('%s-%d-%s',
-                self::initials($school??'no-school'), $year, join('-', array_slice($words, 0, 2)));
+            self::initials($school ?? 'no-school'), $year, join('-', array_slice($words, 0, 2)));
         return substr($code, 0, 32);
 
     }
 
-    static public function initials(?string $name):string  {
+    static public function initials(?string $name): string
+    {
         preg_match_all('#([A-Z]+)#', $name, $capitals);
         if (count($capitals[1]) >= 2) {
             return mb_substr(implode('', $capitals[1]), 0, 2, 'UTF-8');

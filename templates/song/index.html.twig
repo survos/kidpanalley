@@ -10,10 +10,10 @@
     {name: 'videos'},
     {name: 'title', searchable: true, sortable: true, block: 'title'},
     'code',
-    {name: 'year', browsable: true, sortable: true},
+    {name: 'year', sortable: true},
     {name: 'lyricsLength', sortable: true},
-    {name: 'publisher', sortable: true},
-    {name: 'writer', sortable: true},
+    {name: 'publishersArray', title: 'publishers'},
+    {name: 'writers'},
     {name: 'school', searchable: true, sortable: true},
 ]
 %}
@@ -24,7 +24,12 @@
         :columns="columns"
     >
 
-
+        {% block writersArray %}
+            {{ row.writersArray|join('|') }}
+        {% endblock %}
+        {% block publishersArray %}
+            {{ row.publishersArray|join('<br />')|raw }}
+        {% endblock %}
         {% block videos %}
             {% for video in row.videos %}
                 <a target="_blank" href="http://www.youtube.com/watch?v={{ video.youtubeId }}">

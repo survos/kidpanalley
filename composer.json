@@ -72,7 +72,8 @@
         "symfonycasts/verify-email-bundle": "^1.15",
         "twig/extra-bundle": "^3.8.0",
         "twig/intl-extra": "^3.8",
-        "twig/twig": "^3.8.0"
+        "twig/twig": "^3.8.0",
+        "yectep/phpspreadsheet-bundle": "^1.1"
     },
     "require-dev": {
         "behat/behat": "^3.13",
