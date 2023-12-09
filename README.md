@@ -14,6 +14,7 @@ composer install
 bin/console doctrine:schema:update --force --complete
 bin/console app:load-data
 bin/console grid:index
+symfony server:start -d
 symfony open:local 
 ```
 
