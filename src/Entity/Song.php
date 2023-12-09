@@ -29,23 +29,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [new Get(),
         new GetCollection(
-            provider: MeilliSearchStateProvider::class,
+//            provider: MeilliSearchStateProvider::class,
         )],
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'school', 'lyricsLength', 'publisher', 'writers'])]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
-#[ApiResource(
-    operations: [
-        new GetCollection(
-//            uriTemplate: '/meili',
-//            provider: MeilliSearchStateProvider::class, # MeilisearchProvider
-            normalizationContext: ['groups' => 'song.read', 'rp']
-        )
-    ],
-    openapiContext: ["description" => 'meiliseach provider'],
-)]
 #[ApiFilter(FacetsFieldSearchFilter::class,
     properties: ["school", "year", 'publisher', 'writers','publishersArray'],
     arguments: [ "searchParameterName" => "facet_filter"]

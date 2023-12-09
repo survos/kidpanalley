@@ -9,12 +9,12 @@
 {% set columns = [
     {name: 'videos'},
     {name: 'title', searchable: true, sortable: true, block: 'title'},
-    'code',
+    {name: 'school', searchable: true, sortable: true},
     {name: 'year', sortable: true},
     {name: 'lyricsLength', sortable: true},
     {name: 'publishersArray', title: 'publishers'},
     {name: 'writers'},
-    {name: 'school', searchable: true, sortable: true},
+    'code',
 ]
 %}
     <twig:api_grid

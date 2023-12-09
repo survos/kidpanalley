@@ -431,7 +431,8 @@ class AppService
                 if ($data['date']) {
                     try {
                         $song
-                            ->setDate(new \DateTimeImmutable($data['date']));
+//                            ->setDate(new \DateTimeImmutable($data['date']))
+                        ;
                         $song->setYear((int)$song->getDate()->format('Y'));
                     } catch (\Exception) {
                         $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
