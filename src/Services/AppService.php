@@ -372,4 +372,66 @@ class AppService
         // return $response->getContent();
 
     }
+
+    public function loadSongsFromSpreadsheet()
+    {
+        $em = null;
+        /** @var Xls $readerXlsx */
+        $readerXlsx  = $this->spreadsheet->createReader('Xls');
+        /** @var Spreadsheet $spreadsheet */
+        try {
+            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xls');
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
+
+        /** @var Worksheet $sheet */
+        $sheet = $spreadsheet->getActiveSheet();
+        $songs = [];
+        $lyrics = [];
+        $header = [];
+
+        foreach ($sheet->toArray() as $idx=>$row) {
+            if ($idx === 0) {
+                $header = $row;
+            } else {
+                $data = array_combine($header, $row);
+                if (!$data['Instrumentals']) {
+                    continue;
+                }
+                $song = (new Song())
+                    ->setTitle($data['Instrumentals'])
+                    ->setSchool($data['school'])
+                    ->setWriters($data['writer']);
+
+                $em = $this->em;
+                $logger = $this->logger;
+                $em->persist($song);
+                if ($data['date']) {
+                    try {
+                        $song
+                            ->setDate(new \DateTimeImmutable($data['date']));
+                        $song->setYear((int)$song->getDate()->format('Y'));
+                    } catch (\Exception) {
+                        $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
+                    }
+                }
+                if ($data['year']) {
+                    $song
+                        ->setYear((int)$data['year']);
+                }
+
+                $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
+                array_push($songs, $song);
+                // dump($data);
+            }
+            if ($idx == 45) {
+                // dd($data, $song);
+                // break;
+            }
+        }
+
+        $em->flush();
+    }
+
 }
