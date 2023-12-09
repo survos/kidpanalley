@@ -433,7 +433,7 @@ class AppService
                         $song
 //                            ->setDate(new \DateTimeImmutable($data['date']))
                         ;
-                        $song->setYear((int)$song->getDate()->format('Y'));
+                        $song->setYear((int)$song->getDate()?->format('Y'));
                     } catch (\Exception) {
                         $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
                     }

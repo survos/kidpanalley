@@ -10,7 +10,7 @@ so we don't need spreadsheet kit.
 ```bash
 git clone git@github.com:survos/kidpanalley.git kpa && cd kpa
 git checkout tac
-bin/console d:database:create 
+composer install
 bin/console doctrine:schema:update --force --complete
 bin/console app:load-data
 bin/console grid:index
