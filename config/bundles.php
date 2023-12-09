@@ -31,4 +31,5 @@ return [
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
+    Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
 ];

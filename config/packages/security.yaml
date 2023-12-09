@@ -17,7 +17,10 @@ security:
         main:
             logout:
                 path: app_logout
-            custom_authenticator: App\Security\AppEmailAuthenticator
+            entry_point: App\Security\AppEmailAuthenticator # Survos\AuthBundle\Security\Authenticator
+            custom_authenticators:
+                - App\Security\AppEmailAuthenticator
+                - Survos\AuthBundle\Security\Authenticator
                 # where to redirect after logout
                 # target: app_any_route
 

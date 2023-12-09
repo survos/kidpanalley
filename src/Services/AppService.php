@@ -96,16 +96,24 @@ class AppService
 
     }
 
-    public function loadLyrics(string $dir)
+    public function loadLyricsViaDropbox(string $dir)
     {
-
+        $appSecret = '6vhzz4dk8l9e3q2';
         $client = new Client($appSecret);
 
         $adapter = new DropboxAdapter($client);
 
         $filesystem = new Filesystem($adapter, ['case_sensitive' => false]);
-        $filesystem->write('/', );
-        dd ($filesystem->listContents('/', $filesystem::LIST_DEEP));
+//        $filesystem->write('/', );
+        foreach ($filesystem->listContents('/', $filesystem::LIST_DEEP) as $content) {
+            dd($content);
+        }
+        dd('stopped');
+
+
+    }
+    public function loadLyrics(string $dir)
+    {
 
 
         $finder = new Finder();
@@ -117,8 +125,9 @@ class AppService
                 throw new \Exception($absoluteFilePath . ' is not readable');
             }
 
+            $title = $file->getFilenameWithoutExtension();
             if ($file->getExtension() == 'doc') {
-                $title = $file->getFilenameWithoutExtension();
+                assert($title, $file->getRealPath());
                 // some songs are repeated by multiple schools, e.g. I used to know the names of all the stars
                 foreach ($this->songRepository->findBy(['title' => $title]) as $song) {
                     // yay!
@@ -168,6 +177,7 @@ class AppService
                     if ($errors = $this->validator->validate($song)->count()) {
                         assert(false, (string)$errors);
                     }
+                    $this->em->flush();
 
                 }
 
@@ -188,10 +198,11 @@ class AppService
                         $song = (new Song($code))
                             ->setTitle($title);
                         $this->em->persist($song);
+                        $this->songs[$code] = $song;
                     }
-                    $this->songs[$code] = $song;
                 }
                 $song->setLyrics($text);
+                $this->em->flush();
             }
         }
         $this->em->flush();
@@ -231,9 +242,14 @@ class AppService
                 $this->songs[$code] = $song;
             }
             $song
+                ->setPublisher($data['publisher'])
+                ->setWriters($data['writer'])
                 ->setTitle($title)
                 ->setSchool($school)
                 ->setWriters($data['writer']);
+
+            if ($data['date'])
+//            dd($song->getDate(), $data);
 
 //            if ($song->getDate()) {
 //                try {
@@ -330,6 +346,7 @@ class AppService
                         ->setTitle($title);
                     // @todo: parse out stuff to get the title
                     $this->em->persist($song);
+                    $songs[$id] = $song;
                 }
                 $this->logger->warning("Adding video to song " . $song->getTitle(), ['id' => $video->getYoutubeId()]);
                 $song->addVideo($video);

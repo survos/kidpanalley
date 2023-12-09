@@ -5,6 +5,7 @@ namespace App\EventListener;
 use Knp\Menu\ItemInterface;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\ContextService;
+use Survos\BootstrapBundle\Service\MenuService;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -26,6 +27,7 @@ final class AppMenuEventListener
         #[Autowire('%kernel.environment%')] private string $env,
         private ContextService $contextService,
         private Security $security,
+        private MenuService $menuService,
         private ?AuthorizationCheckerInterface $authorizationChecker=null
     )
     {
@@ -39,11 +41,8 @@ final class AppMenuEventListener
 
     public function ourAuthMenu(KnpMenuEvent $event): void
     {
-        if (!$this->supports($event)) {
-            return;
-        }
         $menu = $event->getMenu();
-        $this->authMenu($this->authorizationChecker, $this->security, $menu);
+        $this->menuService->addAuthMenu($menu);
     }
 
     public function pageMenu(KnpMenuEvent $event): void

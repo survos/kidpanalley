@@ -37,6 +37,7 @@
         "survos/auth-bundle": "^1.5",
         "survos/bootstrap-bundle": "*",
         "survos/deployment-bundle": "^1.5.100",
+        "survos/grid-group-bundle": "^1.5",
         "survos/inspection-bundle": "^1.5.100",
         "survos/scraper-bundle": "^1.5.100",
         "survos/workflow-helper-bundle": "^1.5.100",

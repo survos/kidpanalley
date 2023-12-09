@@ -2,16 +2,20 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\AuthBundle\Traits\OAuthIdentifiersInterface;
+use Survos\AuthBundle\Traits\OAuthIdentifiersTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Table(name: 'users')]
-#[ORM\Entity(repositoryClass: \App\Repository\UserRepository::class)]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable, OAuthIdentifiersInterface
 {
+    use OAuthIdentifiersTrait;
 //    use \Survos\BaseBundle\Traits\GithubTrait;
 //    use \Survos\BaseBundle\Traits\FacebookTrait;
 //    use \Survos\BaseBundle\Traits\GoogleTrait;
@@ -20,14 +24,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\Column(type: 'integer')]
     private $id;
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $email;
+    private ?string $email;
     #[ORM\Column(type: 'json')]
     private array $roles = [];
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column(type: 'string')]
-    private ?string $password = null;
+    private ?string $password = null; // the hashed password
     public function getId(): ?int
     {
         return $this->id;

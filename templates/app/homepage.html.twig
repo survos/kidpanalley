@@ -6,6 +6,12 @@
 
 {% block body %}
 
+    {% if app.user %}
+        {% for key, value in app.user.identifiers %}
+            {{ key }}
+            {{ value|json_encode }}
+        {% endfor %}
+    {% endif %}
 
 
         <div class="row mt-4">

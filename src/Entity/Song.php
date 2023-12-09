@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
 
-#[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength'])]
+#[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength','publisher','writer'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 
@@ -48,7 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     openapiContext:  ["description" => 'meiliseach provider'],
 )]
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["school","year"], arguments: [
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["school","year",'publisher','writer'], arguments: [
     "searchParameterName" => "facet_filter",
 ])]
 
@@ -121,6 +121,7 @@ class Song implements RouteParametersInterface, \Stringable
     }
     public function setTitle(?string $title): self
     {
+        assert(trim($title));
         $this->title = $title;
 
         return $this;

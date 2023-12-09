@@ -420,6 +420,9 @@
     "survos/grid-bundle": {
         "version": "1.5.89"
     },
+    "survos/grid-group-bundle": {
+        "version": "1.5.107"
+    },
     "survos/inspection-bundle": {
         "version": "1.1.x-dev"
     },

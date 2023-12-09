@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24cf8d11ab2ca912d2f4189e27ec5ffd",
+    "content-hash": "b99357dd755f829c3fa0fc61aec13dd7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2746,6 +2746,201 @@
             "time": "2021-07-21T13:50:14+00:00"
         },
         {
+            "name": "illuminate/collections",
+            "version": "v10.35.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/collections.git",
+                "reference": "8e4c4f97ea066cd6aec962ef8a6abc09dfd5e754"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/8e4c4f97ea066cd6aec962ef8a6abc09dfd5e754",
+                "reference": "8e4c4f97ea066cd6aec962ef8a6abc09dfd5e754",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/conditionable": "^10.0",
+                "illuminate/contracts": "^10.0",
+                "illuminate/macroable": "^10.0",
+                "php": "^8.1"
+            },
+            "suggest": {
+                "symfony/var-dumper": "Required to use the dump method (^6.2)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "10.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "Illuminate\\Support\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Collections package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2023-11-27T14:46:52+00:00"
+        },
+        {
+            "name": "illuminate/conditionable",
+            "version": "v10.35.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/conditionable.git",
+                "reference": "d0958e4741fc9d6f516a552060fd1b829a85e009"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/conditionable/zipball/d0958e4741fc9d6f516a552060fd1b829a85e009",
+                "reference": "d0958e4741fc9d6f516a552060fd1b829a85e009",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Support\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Conditionable package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2023-02-03T08:06:17+00:00"
+        },
+        {
+            "name": "illuminate/contracts",
+            "version": "v10.35.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/contracts.git",
+                "reference": "f6bf37a272fda164f6c451407c99f820eb1eb95b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/f6bf37a272fda164f6c451407c99f820eb1eb95b",
+                "reference": "f6bf37a272fda164f6c451407c99f820eb1eb95b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "psr/container": "^1.1.1|^2.0.1",
+                "psr/simple-cache": "^1.0|^2.0|^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Contracts\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Contracts package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2023-10-30T00:59:22+00:00"
+        },
+        {
+            "name": "illuminate/macroable",
+            "version": "v10.35.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/macroable.git",
+                "reference": "dff667a46ac37b634dcf68909d9d41e94dc97c27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/macroable/zipball/dff667a46ac37b634dcf68909d9d41e94dc97c27",
+                "reference": "dff667a46ac37b634dcf68909d9d41e94dc97c27",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Support\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Macroable package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2023-06-05T12:46:42+00:00"
+        },
+        {
             "name": "jean85/pretty-package-versions",
             "version": "2.0.5",
             "source": {
@@ -5139,6 +5334,57 @@
             "time": "2021-07-14T16:46:02+00:00"
         },
         {
+            "name": "psr/simple-cache",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
+            },
+            "time": "2021-10-29T13:26:27+00:00"
+        },
+        {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -5341,16 +5587,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.13.0",
+            "version": "4.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "0e923858d6adc147bdf529fab3934c7abdf5d7a7"
+                "reference": "e8102da84841b33c0237b81479377d1cbaea9aa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/0e923858d6adc147bdf529fab3934c7abdf5d7a7",
-                "reference": "0e923858d6adc147bdf529fab3934c7abdf5d7a7",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/e8102da84841b33c0237b81479377d1cbaea9aa4",
+                "reference": "e8102da84841b33c0237b81479377d1cbaea9aa4",
                 "shasum": ""
             },
             "require": {
@@ -5439,7 +5685,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.13.0"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.13.1"
             },
             "funding": [
                 {
@@ -5451,7 +5697,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-12-05T13:01:15+00:00"
+            "time": "2023-12-06T16:02:30+00:00"
         },
         {
             "name": "spatie/dropbox-api",
@@ -5656,16 +5902,16 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "270f41b0734fb338162a7a3def6f04114c762b68"
+                "reference": "7b93f81912ebb95731f08cf5d7b73c0ebcb6d768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/270f41b0734fb338162a7a3def6f04114c762b68",
-                "reference": "270f41b0734fb338162a7a3def6f04114c762b68",
+                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/7b93f81912ebb95731f08cf5d7b73c0ebcb6d768",
+                "reference": "7b93f81912ebb95731f08cf5d7b73c0ebcb6d768",
                 "shasum": ""
             },
             "require": {
@@ -5673,7 +5919,7 @@
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/inspection-bundle": "^1.5.106",
+                "survos/inspection-bundle": "^1.5.107",
                 "symfony/config": "^6.3 || ^7.0",
                 "symfony/dependency-injection": "^6.3 || ^7.0",
                 "symfony/dom-crawler": "^6.3 || ^7.0",
@@ -5728,26 +5974,27 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.5.107"
             },
-            "time": "2023-12-05T19:33:41+00:00"
+            "time": "2023-12-06T15:18:23+00:00"
         },
         {
             "name": "survos/auth-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosAuthBundle.git",
-                "reference": "61d04c377623be64b1097e139ff8238af0416800"
+                "reference": "289abab4f29354bd66d4f627f96f1e49ec6e5c0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosAuthBundle/zipball/61d04c377623be64b1097e139ff8238af0416800",
-                "reference": "61d04c377623be64b1097e139ff8238af0416800",
+                "url": "https://api.github.com/repos/survos/SurvosAuthBundle/zipball/289abab4f29354bd66d4f627f96f1e49ec6e5c0f",
+                "reference": "289abab4f29354bd66d4f627f96f1e49ec6e5c0f",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.12",
+                "endroid/installer": "^1.4",
                 "knpuniversity/oauth2-client-bundle": "^2.10",
                 "php": "^8.1",
                 "symfony/config": "^6.3 || ^7.0",
@@ -5813,29 +6060,29 @@
             "description": "Helper commands and classes for symfony security",
             "support": {
                 "issues": "https://github.com/survos/SurvosAuthBundle/issues",
-                "source": "https://github.com/survos/SurvosAuthBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosAuthBundle/tree/1.5.107"
             },
-            "time": "2023-12-03T12:38:50+00:00"
+            "time": "2023-12-06T15:18:12+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
-                "reference": "890e90433216b318560e60aa2485e75bec8dc97b"
+                "reference": "ac63f69768aff18eb48135e61ff13d786a0854e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/890e90433216b318560e60aa2485e75bec8dc97b",
-                "reference": "890e90433216b318560e60aa2485e75bec8dc97b",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/ac63f69768aff18eb48135e61ff13d786a0854e9",
+                "reference": "ac63f69768aff18eb48135e61ff13d786a0854e9",
                 "shasum": ""
             },
             "require": {
                 "endroid/installer": "^1.4",
                 "knplabs/knp-menu-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.106",
+                "survos/core-bundle": "^1.5.107",
                 "symfony/config": "^6.4 | ^7.0",
                 "symfony/dependency-injection": "^6.4 | ^7.0",
                 "symfony/http-kernel": "^6.4 | ^7.0",
@@ -5900,13 +6147,13 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
-                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.106"
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.107"
             },
-            "time": "2023-12-05T19:33:43+00:00"
+            "time": "2023-12-06T15:18:22+00:00"
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -5982,13 +6229,13 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.107"
             },
             "time": "2023-11-26T12:38:06+00:00"
         },
         {
             "name": "survos/deployment-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosDeploymentBundle.git",
@@ -6034,27 +6281,118 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosDeploymentBundle/issues",
-                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.107"
             },
             "time": "2023-11-17T13:24:30+00:00"
         },
         {
-            "name": "survos/inspection-bundle",
-            "version": "1.5.106",
+            "name": "survos/grid-group-bundle",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
-                "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "aaaf24549bd0604ac15ee263b5e528e93e2388ce"
+                "url": "https://github.com/survos/SurvosGridGroupBundle.git",
+                "reference": "ee25722d981556689598a4cdb0989ddb14a157ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/aaaf24549bd0604ac15ee263b5e528e93e2388ce",
-                "reference": "aaaf24549bd0604ac15ee263b5e528e93e2388ce",
+                "url": "https://api.github.com/repos/survos/SurvosGridGroupBundle/zipball/ee25722d981556689598a4cdb0989ddb14a157ce",
+                "reference": "ee25722d981556689598a4cdb0989ddb14a157ce",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/collections": "^10.9",
+                "league/csv": "^9.9",
+                "php": "^8.1",
+                "symfony/config": "^6.3 || ^7.0",
+                "symfony/dependency-injection": "^6.3 || ^7.0",
+                "symfony/dotenv": "^6.3 || ^7.0",
+                "symfony/form": "^6.3 || ^7.0",
+                "symfony/http-kernel": "^6.3 || ^7.0",
+                "symfony/string": "^6.3 || ^7.0",
+                "twig/twig": "^3.4"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/core-bundle": "<1.2.57",
+                "survos/crawler-bundle": "<1.2.57",
+                "survos/doc-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-parallel-lint": "^1.3",
+                "phpro/grumphp": "^1.16",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-symfony": "^1.3",
+                "phpunit/phpunit": "^9.5",
+                "spaze/phpstan-disallowed-calls": "^2.14",
+                "symfony/browser-kit": "^6.3 || ^7.0",
+                "symfony/framework-bundle": "^6.3 || ^7.0",
+                "symfony/phpunit-bridge": "^6.3 || ^7.0",
+                "symfony/twig-bundle": "^6.3 || ^7.0",
+                "symfony/var-dumper": "^6.3 || ^7.0",
+                "symfony/yaml": "^6.3 || ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "allow-contrib": "true",
+                    "require": "^6.3"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\GridGroupBundle\\": "src/",
+                    "Survos\\GridGroupBundle\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Handle groups of CSV as a spreadsheet",
+            "keywords": [
+                "symfony-ux",
+                "symfony6"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/SurvosGridGroupBundle/issues",
+                "source": "https://github.com/survos/SurvosGridGroupBundle/tree/1.5.107"
+            },
+            "time": "2023-11-01T18:34:14+00:00"
+        },
+        {
+            "name": "survos/inspection-bundle",
+            "version": "1.5.107",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosInspectionBundle.git",
+                "reference": "5dabee4bff5e28b0744b237f5b2c018685201c7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/5dabee4bff5e28b0744b237f5b2c018685201c7b",
+                "reference": "5dabee4bff5e28b0744b237f5b2c018685201c7b",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.2",
-                "survos/core-bundle": "^1.5.106",
+                "survos/core-bundle": "^1.5.107",
                 "symfony/config": "^6.3 || ^7.0",
                 "symfony/dependency-injection": "^6.3 || ^7.0",
                 "symfony/http-kernel": "^6.3 || ^7.0",
@@ -6115,13 +6453,13 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.5.107"
             },
-            "time": "2023-12-05T19:33:44+00:00"
+            "time": "2023-12-06T15:18:24+00:00"
         },
         {
             "name": "survos/scraper-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosScraperBundle.git",
@@ -6170,28 +6508,28 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosScraperBundle/issues",
-                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.5.107"
             },
             "time": "2023-12-04T18:37:36+00:00"
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "62be0b45a3435cd72826c0998aea13839e544c71"
+                "reference": "707a351efd0b31bc8b2d484119ec6e924f68f296"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/62be0b45a3435cd72826c0998aea13839e544c71",
-                "reference": "62be0b45a3435cd72826c0998aea13839e544c71",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/707a351efd0b31bc8b2d484119ec6e924f68f296",
+                "reference": "707a351efd0b31bc8b2d484119ec6e924f68f296",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.12",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.5.106",
+                "survos/core-bundle": "^1.5.107",
                 "symfony/console": "^6.3 || ^7.0.0",
                 "symfony/http-kernel": "^6.3 || ^7.0.0",
                 "symfony/messenger": "^6.3 || ^7.0.0",
@@ -6267,9 +6605,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.107"
             },
-            "time": "2023-12-05T19:33:43+00:00"
+            "time": "2023-12-06T15:18:27+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -13026,16 +13364,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.47",
+            "version": "1.10.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "84dbb33b520ea28b6cf5676a3941f4bae1c1ff39"
+                "reference": "087ed4b5f4a7a6e8f3bbdfbfe98ce5c181380bc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/84dbb33b520ea28b6cf5676a3941f4bae1c1ff39",
-                "reference": "84dbb33b520ea28b6cf5676a3941f4bae1c1ff39",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/087ed4b5f4a7a6e8f3bbdfbfe98ce5c181380bc6",
+                "reference": "087ed4b5f4a7a6e8f3bbdfbfe98ce5c181380bc6",
                 "shasum": ""
             },
             "require": {
@@ -13084,7 +13422,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-01T15:19:17+00:00"
+            "time": "2023-12-08T14:34:28+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -13571,16 +13909,16 @@
         },
         {
             "name": "roave/better-reflection",
-            "version": "6.18.0",
+            "version": "6.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/BetterReflection.git",
-                "reference": "91015e0941b7caf8b4004697f2c19d92771312fb"
+                "reference": "92e9cbd9ccfea0924135a29f4be3959cd59cf54c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/91015e0941b7caf8b4004697f2c19d92771312fb",
-                "reference": "91015e0941b7caf8b4004697f2c19d92771312fb",
+                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/92e9cbd9ccfea0924135a29f4be3959cd59cf54c",
+                "reference": "92e9cbd9ccfea0924135a29f4be3959cd59cf54c",
                 "shasum": ""
             },
             "require": {
@@ -13588,18 +13926,18 @@
                 "jetbrains/phpstorm-stubs": "2023.2",
                 "nikic/php-parser": "^4.17.1",
                 "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-                "roave/signature": "^1.7"
+                "roave/signature": "^1.8.0"
             },
             "conflict": {
                 "thecodingmachine/safe": "<1.1.3"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^12.0.0",
-                "phpstan/phpstan": "^1.10.41",
+                "phpstan/phpstan": "^1.10.47",
                 "phpstan/phpstan-phpunit": "^1.3.15",
-                "phpunit/phpunit": "^10.4.2",
-                "roave/infection-static-analysis-plugin": "^1.33.0",
-                "vimeo/psalm": "5.15.0"
+                "phpunit/phpunit": "^10.5.2",
+                "roave/infection-static-analysis-plugin": "^1.34.0",
+                "vimeo/psalm": "5.17.0"
             },
             "suggest": {
                 "composer/composer": "Required to use the ComposerSourceLocator"
@@ -13639,9 +13977,9 @@
             "description": "Better Reflection - an improved code reflection API",
             "support": {
                 "issues": "https://github.com/Roave/BetterReflection/issues",
-                "source": "https://github.com/Roave/BetterReflection/tree/6.18.0"
+                "source": "https://github.com/Roave/BetterReflection/tree/6.19.0"
             },
-            "time": "2023-11-24T18:31:06+00:00"
+            "time": "2023-12-07T10:58:42+00:00"
         },
         {
             "name": "roave/signature",
@@ -14649,7 +14987,7 @@
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -14694,13 +15032,13 @@
             "description": "Run Symfony console commands from a web interface",
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.107"
             },
             "time": "2023-11-12T17:04:59+00:00"
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCrawlerBundle.git",
@@ -14769,13 +15107,13 @@
             "description": "Provides a way to create tests that crawl a site",
             "support": {
                 "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.107"
             },
             "time": "2023-12-01T14:00:18+00:00"
         },
         {
             "name": "survos/maker-bundle",
-            "version": "1.5.106",
+            "version": "1.5.107",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosMakerBundle.git",
@@ -14878,7 +15216,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosMakerBundle/issues",
-                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.106"
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.107"
             },
             "time": "2023-12-04T18:37:39+00:00"
         },
