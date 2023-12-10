@@ -2,7 +2,34 @@
 
 {% block title %}Song{% endblock %}
 
+{% block profile %}
+abc profile content
+{% endblock %}
+
+
 {% block body %}
+
+<div class="row">
+    <div class="col-md-6">
+        {% for video in song.videos %}
+            <object width="420" height="315"
+                    data="https://www.youtube.com/embed/{{ video.youtubeId }}">
+            </object>
+        {% endfor %}
+    </div>
+    <div class="col-md-6">
+        {# reused accordion? #}
+        {{ component('tabs', { active: 'profile',
+            tabs: [
+                tab('profile', block('profile'), translationDomain='fosUserBundle'),
+                tab('school', content=song.school),
+            ] }) }}
+    </div>
+</div>
+
+
+    <twig:divider />
+
     <h1>{{ song.title }} ({{ song.school }}, {{ song.year }})</h1>
     <table class="table">
         <tbody>
@@ -17,11 +44,6 @@
             <tr>
                 <th>Youtube Videos</th>
                 <td>
-                    {% for video in song.videos %}
-                    <object width="420" height="315"
-                            data="https://www.youtube.com/embed/{{ video.youtubeId }}">
-                    </object>
-                    {% endfor %}
 
                 </td>
             </tr>

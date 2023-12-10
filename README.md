@@ -15,7 +15,7 @@ bin/console doctrine:schema:update --force --complete
 bin/console app:load-data
 bin/console grid:index
 symfony server:start -d
-symfony open:local 
+symfony open:local --path=/song
 ```
 
 
@@ -34,3 +34,7 @@ Database Tables
 * Schools: residencies
 * Songs: 5K from the spreadsheet.  Talented Clementine and Best Friends _could_ be added.
 * User: for permissions
+
+## Other projects
+
+// https://www.youtube.com/watch?v=NeRjdX06_n8&t=186s if it were a generalized video / transcript research site
