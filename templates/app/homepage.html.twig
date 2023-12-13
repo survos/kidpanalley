@@ -4,6 +4,12 @@
 {% block page_title %}Dashboard{% endblock %}
 {% block page_subtitle %}For KPA administration{% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script type="module" src="{{ asset('js/pwa-main.js') }}"></script>
+{% endblock %}
+
+
 {% block body %}
 
     {% if app.user %}
@@ -13,6 +19,7 @@
         {% endfor %}
     {% endif %}
 
+    <h1>PWA!</h1>
 
         <div class="row mt-4">
             <div class="col-md-6">

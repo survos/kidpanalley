@@ -159,4 +159,97 @@ return [
         'version' => '1.11.2',
         'type' => 'css',
     ],
+    'idb' => [
+        'version' => '7.1.1',
+    ],
+    'workbox' => [
+        'version' => '0.0.0',
+    ],
+    'babel-runtime/core-js/promise' => [
+        'version' => '6.26.0',
+    ],
+    'core-js/library/fn/promise' => [
+        'version' => '2.6.12',
+    ],
+    'workbox-recipes' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-routing/registerRoute.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-strategies/StaleWhileRevalidate.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-strategies/CacheFirst.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-cacheable-response/CacheableResponsePlugin.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-expiration/ExpirationPlugin.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-strategies/NetworkFirst.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-routing/setCatchHandler.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-precaching/matchPrecache.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/logger.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/WorkboxError.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/assert.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/getFriendlyURL.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/cacheNames.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/cacheMatchIgnoreParams.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/Deferred.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/executeQuotaErrorCallbacks.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/timeout.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/dontWaitFor.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/registerQuotaErrorCallback.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/_private/waitUntil.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-core/copyResponse.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-strategies/Strategy.js' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-strategies' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-routing' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-cacheable-response' => [
+        'version' => '7.0.0',
+    ],
+    'workbox-expiration' => [
+        'version' => '7.0.0',
+    ],
 ];
