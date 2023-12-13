@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
+use Survos\ApiGrid\Attribute\Facet;
+use Survos\ApiGrid\Attribute\Facets;
 use Survos\ApiGrid\State\MeilliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
@@ -33,14 +35,17 @@ use Symfony\Component\Validator\Constraints as Assert;
         )],
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
-#[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'school', 'lyricsLength', 'publisher', 'writers'])]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
+#[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ApiFilter(FacetsFieldSearchFilter::class,
-    properties: ["school", "year", 'publisher', 'writers','publishersArray'],
+    properties: ['school'],
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
 #[Groups(['song.read'])]
+// brainstorming...
+#[Facets(groups: ['song.facet'], properties: ['publisher', 'writers','publishersArray'])]
 #[Assert\EnableAutoMapping]
 class Song implements RouteParametersInterface, \Stringable
 {
@@ -58,9 +63,11 @@ class Song implements RouteParametersInterface, \Stringable
     private $date;
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Facet()]
     private $year;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Facet()]
     private $school;
     #[ORM\Column(type: 'text', nullable: true)]
     private $lyrics;
