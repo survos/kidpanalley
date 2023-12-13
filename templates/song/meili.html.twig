@@ -3,18 +3,6 @@
 {% block title %}Song index{% endblock %}
 
 {% block body %}
-    <h1>Song (meili)</h1>
-    <div class="dtsp-verticalContainer row">
-        <div class="search-panes xxdtsp-verticalPanes col-3">
-        </div>
-        <div class="xxcontainer col-9">
-            {{ block('gridTable') }}
-        </div>
-    </div>
-
-{% endblock %}
-
-{% block gridTable %}
 
 {% set columns =         [
     {name: '_actions', prefix: 'song_', actions: ['show']},
@@ -23,6 +11,7 @@
     {name: 'year', browsable: true, sortable: true},
     {name: 'school', browsable: true, searchable: true, sortable: true},
     {name: 'title', searchable: true, sortable: true, block: 'title'},
+    'writers'
 ]
 %}
 <twig:api_grid
