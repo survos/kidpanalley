@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [new Get(),
         new GetCollection(
-//            provider: MeilliSearchStateProvider::class,
+            provider: MeilliSearchStateProvider::class,
         )],
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]

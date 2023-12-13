@@ -17,6 +17,7 @@ survos_bootstrap:
       abbr: <b>kpa</b>Archive
 
   menu_options:
+    entityClass: null
     video: null
     columns: null
     frontPage: false

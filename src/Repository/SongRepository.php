@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Survos\CoreBundle\Traits\QueryBuilderHelperInterface;
 use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
 
 /**
@@ -13,7 +14,7 @@ use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
  * @method Song[]    findAll()
  * @method Song[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SongRepository extends ServiceEntityRepository
+class SongRepository extends ServiceEntityRepository implements QueryBuilderHelperInterface
 {
     use QueryBuilderHelperTrait;
 
