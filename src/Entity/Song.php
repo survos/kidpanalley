@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
+use Survos\ApiGrid\Attribute\Facet;
 use Survos\ApiGrid\State\MeilliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
@@ -34,8 +35,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
 
-#[ApiFilter(OrderFilter::class, properties: ['title','year','school','lyricsLength'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
+#[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 
 #[ApiResource(
@@ -74,6 +75,7 @@ class Song implements RouteParametersInterface, \Stringable
     private $year;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Facet()]
     private $school;
     #[ORM\Column(type: 'text', nullable: true)]
     private $lyrics;
