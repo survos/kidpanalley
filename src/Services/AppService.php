@@ -119,6 +119,10 @@ class AppService
     {
 
 
+        if (!file_exists($dir)) {
+            $this->logger->warning("Warning, cannot load lyrics from $dir");
+            return;
+        }
         $finder = new Finder();
         $finder->files()->in($dir)->name('*.doc*');
 
