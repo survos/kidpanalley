@@ -8,9 +8,9 @@
     {% set columns = [
         {name: '_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')},
         'youtubeId',
-        'id',
-        {name: 'description', condition: false},
         'school',
+        {name: 'id', title: 'Song'},
+        {name: 'description', condition: false},
         'date'
     ] %}
 
@@ -21,7 +21,7 @@
         >
         <twig:block name="youtubeId">
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">
-            <img src="{{ row.thumbnailUrl }}" height="60px" />
+            <img src="{{ row.thumbnailUrl }}" height="60px"  alt="{{ row.youtubeId }}"/>
             </a>
         </twig:block>
         <twig:block name="school">

@@ -6,15 +6,23 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
 use Survos\ApiGrid\Attribute\MeiliId;
+use Survos\ApiGrid\State\MeilliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
+    operations: [new Get(),
+        new GetCollection(
+            provider: MeilliSearchStateProvider::class,
+        )],
     normalizationContext: ['groups' => ['video.read', 'rp']]
 )]
 #[ApiFilter(OrderFilter::class, properties: ['title'])]
@@ -22,6 +30,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[Groups(['video.read'])]
+
+#[ApiFilter(FacetsFieldSearchFilter::class,
+    properties: ['school'],
+    arguments: [ "searchParameterName" => "facet_filter"]
+)]
+
 class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
@@ -131,6 +145,12 @@ class Video implements RouteParametersInterface, \Stringable
         $this->song = $song;
 
         return $this;
+    }
+
+    #[Groups(['video.read'])]
+    public function getSchool(): ?string
+    {
+        return $this->getSong()?->getSchool();
     }
 
     public function getThumbnailUrl(): ?string

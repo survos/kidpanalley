@@ -3,8 +3,8 @@
 
 {% block body %}
     <h1>{{ video.title }}</h1>
+    <h3 class="text-muted">{{ video.school}} </h3>
 
-{#    {{ dump(video.rawData) }}#}
 
     <div class="row">
 
@@ -18,7 +18,9 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ video.id }}</td>
+                <td>{{ video.id }}
+                {{ video.school }}
+                </td>
             </tr>
             <tr>
                 <th>YoutubeId</th>
