@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ApiFilter(FacetsFieldSearchFilter::class,
-    properties: ['school'],
+    properties: ['school', 'publisher', 'writers','publishersArray','year'],
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
 #[Groups(['song.read'])]
@@ -296,7 +296,7 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read'])]
     public function getUniqueIdentifiers(): array
     {
-        return ['id' => $this->getId()];
+        return ['songId' => $this->getId()];
     }
 
     public function __toString()

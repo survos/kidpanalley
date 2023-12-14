@@ -2,6 +2,7 @@
 
 namespace App\Request\ParamConverter;
 
+use App\Entity\Song;
 use App\Entity\Video;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,13 +10,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
-class VideoParamConverter implements ValueResolverInterface
+class ParamConverter implements ValueResolverInterface
 {
     public function resolve(Request $request, ArgumentMetadata $argument): array
     {
         // get the argument type (e.g. BookingId)
         $argumentType = $argument->getType();
         switch ($argumentType) {
+            case Song::class:
+                $repository = $this->entityManager->getRepository($argumentType);
+                $value = $request->attributes->get('songId');
+                $song = $repository->findOneBy(['id' => $value]);
+                return [$song];
             case Video::class:
                 $repository = $this->entityManager->getRepository($argumentType);
                 $value = $request->attributes->get('videoId');

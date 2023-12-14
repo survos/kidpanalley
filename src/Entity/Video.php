@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Attribute\MeiliId;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
@@ -31,6 +32,7 @@ class Video implements RouteParametersInterface, \Stringable
     private $id;
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     #[Groups('song.read')]
+    #[MeiliId]
     private $youtubeId;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $title;
