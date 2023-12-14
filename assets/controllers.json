@@ -31,6 +31,12 @@
                 "enabled": true,
                 "fetch": "eager"
             }
+        },
+        "@symfony/ux-chartjs": {
+            "chart": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []

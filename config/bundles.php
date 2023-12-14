@@ -33,4 +33,5 @@ return [
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
     Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
+    Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
 ];

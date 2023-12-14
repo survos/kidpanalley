@@ -3,6 +3,8 @@
 namespace App\EventListener;
 
 use Knp\Menu\ItemInterface;
+use Survos\ApiGrid\Service\DatatableService;
+use Survos\ApiGrid\State\MeilliSearchStateProvider;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -28,6 +30,7 @@ final class AppMenuEventListener
         private ContextService $contextService,
         private Security $security,
         private MenuService $menuService,
+        private DatatableService $datatableService,
         private ?AuthorizationCheckerInterface $authorizationChecker=null
     )
     {
@@ -51,6 +54,15 @@ final class AppMenuEventListener
             return;
         }
         $menu = $event->getMenu();
+
+        if ($entityClass = $event->getOption('entityClass')) {
+            $settings = $this->datatableService->getSettingsFromAttributes($entityClass);
+            foreach ($settings as $fieldName => $setting) {
+                if ($setting['browsable']) {
+                    $this->add($menu, 'survos_facet_show', ['indexName' => MeilliSearchStateProvider::getSearchIndexObject($entityClass), 'fieldName' => $fieldName], label: $fieldName);
+                }
+            }
+        }
 
         if ($columnsJson = $event->getOption('columns')) {
             $columns = json_decode($columnsJson);

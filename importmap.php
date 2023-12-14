@@ -252,4 +252,7 @@ return [
     'workbox-expiration' => [
         'version' => '7.0.0',
     ],
+    'chart.js/auto' => [
+        'version' => '3.9.1',
+    ],
 ];

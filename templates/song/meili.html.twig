@@ -2,6 +2,16 @@
 
 {% block title %}Song index{% endblock %}
 
+{% block PAGE_MENU %}
+    {% set options = {
+        entityClass: class
+    } %}
+
+    <twig:menu :type="PAGE_MENU" :caller="_self" :options="options">
+    </twig:menu>
+
+{% endblock %}
+
 {% block body %}
 
 {% set columns =         [
