@@ -1,9 +1,4 @@
 survos_api_grid:
   resource: '@SurvosApiGridBundle/src/Controller/'
-#  resource: 'Survos\ApiGrid\Controller/GridController.php'
-#  resource: '@SurvosApiGridBundle/Controller/GridController.php'
-  prefix: /admin
+  prefix: /facets
   type: attribute
-#  resource:
-#    path: ../../vendor/survos/api-grid-bundle/src/Controller/
-#    namespace: Survos\ApiGrid\Controller

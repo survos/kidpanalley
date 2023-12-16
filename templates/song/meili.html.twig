@@ -14,6 +14,12 @@
 
 {% block body %}
 
+    <h1>{{ useMeili ? 'Meili' : 'doctrine' }}</h1>
+    {% if useMeili %}
+        what is the meili route?
+    {% else %}
+        {{ api_route(class) }}
+    {% endif %}
 {% set columns =         [
     {name: '_actions', prefix: 'song_', actions: ['show']},
     'id',

@@ -28,12 +28,16 @@ class SongCollectionController extends AbstractController
 
     // browse with meili
     #[Route(path: '/meili', name: 'song_browse', methods: ['GET'])]
-    public function browse(SongRepository $songRepository) : Response
+    #[Route(path: '/doctrine', name: 'song_browse_with_doctrine', methods: ['GET'])]
+    public function browse(Request $request) : Response
     {
         return $this->render('song/meili.html.twig', [
+            'useMeili' => $request->get('_route') == 'song_browse',
             'class' => Song::class,
         ]);
     }
+
+
 
     #[Route(path: '/new', name: 'song_new', methods: ['GET', 'POST'])]
     public function new(Request $request) : Response

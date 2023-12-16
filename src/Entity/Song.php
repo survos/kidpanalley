@@ -29,12 +29,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ORM\UniqueConstraint('song_code', ['code'])]
 #[ApiResource(
+    // normal get is the database
     operations: [new Get(),
         new GetCollection(
-            provider: MeilliSearchStateProvider::class,
+//            provider: MeilliSearchStateProvider::class,
         )],
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
+#[GetCollection(
+    uriTemplate: "meili/{indexName}",
+    uriVariables: ["indexName"],
+//    requirements: ['core' => '\d+'],
+    provider: MeilliSearchStateProvider::class,
+//    denormalizationContext: ['groups' => ['instance.write', 'tree'],],
+    normalizationContext: [
+        'groups' => ['instance.read', 'tree', 'rp'],
+    ]
+)]
+
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
@@ -187,7 +199,7 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read'])]
     public function getPublishersArray(): array
     {
-        return explode('/', $this->getPublisher());
+        return explode('/', $this->getPublisher()??'');
     }
 
     public function setWriters(?string $writers): self

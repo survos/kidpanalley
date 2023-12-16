@@ -115,8 +115,9 @@ final class AppMenuEventListener
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');
 
-        $this->add($menu, 'song_index', label: 'Songs');
+        $this->add($menu, 'song_index', label: 'Songs (html)');
         $this->add($menu, 'song_browse', label: 'Songs-Meili');
+        $this->add($menu, 'song_browse_with_doctrine', label: 'Songs-Doctine');
         $this->add($menu, 'video_browse', label: 'Youtube Videos');
 //        $this->add($menu, 'video_index'); // in-memory
 //        $this->add($subMenu, 'song_browse');
