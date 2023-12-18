@@ -14,9 +14,9 @@
 
 {% block body %}
 
-    {% set apiCall = useMeili ? '/api/meili/Song' : api_route(class)  %}
+{#    {% set apiCall = useMeili ? '/api/meili/Song' : api_route(class)  %}#}
     <h1>{{ useMeili ? 'Meili' : 'doctrine' }} {{ apiCall }}</h1>
-{% set columns =         [
+{% set xcolumns =         [
     {name: '_actions', prefix: 'song_', actions: ['show']},
     'id',
     'youtubeId',
@@ -35,8 +35,16 @@
         :columns="columns"
         :apiGetCollectionUrl="apiCall"
 >
-    {% block title %}
+    {% block x %}
+        x
+    {% endblock %}
+    {% block SongTitle %}
         <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+    {% endblock %}
+    {% block VideoTitle %}
+        {% set song = row.song %}
+{#        {{ song|keys|join(',') }}#}
+        <a href="{{ path('song_show', song.rp)}}">{{ song.title }}</a>
     {% endblock %}
     {% block youtubeId %}
         <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>

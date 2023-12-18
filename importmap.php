@@ -255,4 +255,7 @@ return [
     'chart.js/auto' => [
         'version' => '3.9.1',
     ],
+    'js-logger' => [
+        'version' => '1.6.1',
+    ],
 ];

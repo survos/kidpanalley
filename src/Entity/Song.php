@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
 use Survos\ApiGrid\Attribute\Facet;
 use Survos\ApiGrid\Attribute\Facets;
-use Survos\ApiGrid\State\MeilliSearchStateProvider;
+use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
@@ -32,16 +32,14 @@ use Symfony\Component\Validator\Constraints as Assert;
     // normal get is the database
     operations: [new Get(),
         new GetCollection(
-//            provider: MeilliSearchStateProvider::class,
+//            provider: MeiliSearchStateProvider::class,
         )],
     normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
 #[GetCollection(
     uriTemplate: "meili/{indexName}",
     uriVariables: ["indexName"],
-//    requirements: ['core' => '\d+'],
-    provider: MeilliSearchStateProvider::class,
-//    denormalizationContext: ['groups' => ['instance.write', 'tree'],],
+    provider: MeiliSearchStateProvider::class,
     normalizationContext: [
         'groups' => ['instance.read', 'tree', 'rp'],
     ]
@@ -68,7 +66,7 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'integer')]
     private $id;
     #[ORM\Column(type: 'text')]
-    #[Groups(['song.read', 'searchable'])]
+    #[Groups(['song.read', 'searchable','video.read'])]
     private $title;
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['song.read', 'searchable'])]
@@ -305,7 +303,7 @@ class Song implements RouteParametersInterface, \Stringable
         return $this;
     }
 
-    #[Groups(['song.read'])]
+    #[Groups(['song.read','video.read'])]
     public function getUniqueIdentifiers(): array
     {
         return ['songId' => $this->getId()];

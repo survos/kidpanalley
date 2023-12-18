@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\IriConverterInterface;
 use App\Entity\Song;
+use App\Entity\Video;
 use App\Repository\SongRepository;
 use App\Repository\VideoRepository;
 use App\Services\AppService;
@@ -19,6 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
@@ -33,6 +38,40 @@ class AppController extends AbstractController
     public function __construct(
                                 private readonly Environment $twig, private readonly EntityManagerInterface $em)
     {
+    }
+
+    // browse with meili
+    #[Route(path: '/meili/{shortClass}', name: 'app_browse', methods: ['GET'])]
+    #[Route(path: '/doctrine/{shortClass}', name: 'app_browse_with_doctrine', methods: ['GET'])]
+    public function browse(Request $request, IriConverterInterface $iriConverter, string $shortClass) : Response
+    {
+
+        // get the columns based on the type
+        $columns = [];
+        $columns = [
+            ['name' => 'title', 'block' => $shortClass . 'Title', 'order' => 2],
+            ['name' => 'year'],
+            'school',
+            'id'
+        ];
+
+        $useMeili = $request->get('_route') == 'app_browse';
+        $class = match ($shortClass) {
+            'Song' => Song::class,
+            'Video' => Video::class
+        };
+        $apiCall = $useMeili
+            ? '/api/meili/' . $shortClass
+            : $iriConverter->getIriFromResource($class, operation: new GetCollection(),
+                context: $context??[])
+            ;
+
+        return $this->render('app/meili.html.twig', [
+            'apiCall' => $apiCall,
+            'useMeili' => $useMeili,
+            'columns' => $columns,
+            'class' => $class
+        ]);
     }
 
     private function getAuth()
@@ -121,6 +160,10 @@ class AppController extends AbstractController
     }
 
 
+    /**
+     * Publish a song on the KPA wordpress site
+     *
+     */
     #[Route(path: '/publish', name: 'app_publish')]
     public function publish(array $options)
     {

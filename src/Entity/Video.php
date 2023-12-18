@@ -12,7 +12,7 @@ use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
 use Survos\ApiGrid\Attribute\MeiliId;
-use Survos\ApiGrid\State\MeilliSearchStateProvider;
+use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
@@ -20,11 +20,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     operations: [new Get(),
+
         new GetCollection(
-            provider: MeilliSearchStateProvider::class,
+//            provider: MeiliSearchStateProvider::class,
         )],
     normalizationContext: ['groups' => ['video.read', 'rp']]
 )]
+#[GetCollection(
+    uriTemplate: "meili/{indexName}",
+    uriVariables: ["indexName"],
+    provider: MeiliSearchStateProvider::class,
+    normalizationContext: [
+        'groups' => ['video.read', 'rp'],
+    ]
+)]
+
 #[ApiFilter(OrderFilter::class, properties: ['title'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
@@ -59,6 +69,7 @@ class Video implements RouteParametersInterface, \Stringable
     private array $rawData = [];
 
     #[ORM\ManyToOne(inversedBy: 'videos', targetEntity: Song::class, cascade: ['persist'], fetch: 'EAGER')]
+    #[Groups(['video.read'])]
     private ?Song $song = null;
 
     #[ORM\Column(length: 255, nullable: true)]

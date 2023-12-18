@@ -4,7 +4,8 @@ namespace App\EventListener;
 
 use Knp\Menu\ItemInterface;
 use Survos\ApiGrid\Service\DatatableService;
-use Survos\ApiGrid\State\MeilliSearchStateProvider;
+use Survos\ApiGrid\Service\MeiliService;
+use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -31,6 +32,8 @@ final class AppMenuEventListener
         private Security $security,
         private MenuService $menuService,
         private DatatableService $datatableService,
+        // why is autowire required?
+        #[Autowire(service: 'api_meili_service')]  private MeiliService $meiliService,
         private ?AuthorizationCheckerInterface $authorizationChecker=null
     )
     {
@@ -58,8 +61,8 @@ final class AppMenuEventListener
         if ($entityClass = $event->getOption('entityClass')) {
             $settings = $this->datatableService->getSettingsFromAttributes($entityClass);
             foreach ($settings as $fieldName => $setting) {
-                if ($setting['browsable']) {
-                    $this->add($menu, 'survos_facet_show', ['indexName' => MeilliSearchStateProvider::getSearchIndexObject($entityClass), 'fieldName' => $fieldName], label: $fieldName);
+                if ($setting['browsable']??false) {
+                    $this->add($menu, 'survos_facet_show', ['indexName' => MeiliSearchStateProvider::getSearchIndexObject($entityClass), 'fieldName' => $fieldName], label: $fieldName);
                 }
             }
         }
@@ -115,10 +118,15 @@ final class AppMenuEventListener
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');
 
-        $this->add($menu, 'song_index', label: 'Songs (html)');
-        $this->add($menu, 'song_browse', label: 'Songs-Meili');
-        $this->add($menu, 'song_browse_with_doctrine', label: 'Songs-Doctine');
-        $this->add($menu, 'video_browse', label: 'Youtube Videos');
+        foreach (['Song','Video'] as $shortClass) {
+            $this->add($menu, 'app_browse_with_doctrine', ['shortClass' => $shortClass], label: '@sql ' . $shortClass);
+            $this->add($menu, 'app_browse', ['shortClass' => $shortClass], label: '@meili ' . $shortClass);
+        }
+        $subMenu = $this->addSubmenu($menu, '@old');
+        $this->add($subMenu, 'song_index', label: 'Songs (html)');
+        $this->add($subMenu, 'song_browse', label: 'Songs-Meili');
+        $this->add($subMenu, 'song_browse_with_doctrine', label: 'Songs-Doctine');
+        $this->add($subMenu, 'video_browse', label: 'Youtube Videos');
 //        $this->add($menu, 'video_index'); // in-memory
 //        $this->add($subMenu, 'song_browse');
 
