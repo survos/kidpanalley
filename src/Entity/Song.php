@@ -44,7 +44,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         'groups' => ['instance.read', 'tree', 'rp'],
     ]
 )]
-
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]

@@ -40,7 +40,7 @@ class AppController extends AbstractController
     {
     }
 
-    // browse with meili
+    // browse with meili or doctrine
     #[Route(path: '/meili/{shortClass}', name: 'app_browse', methods: ['GET'])]
     #[Route(path: '/doctrine/{shortClass}', name: 'app_browse_with_doctrine', methods: ['GET'])]
     public function browse(Request $request, IriConverterInterface $iriConverter, string $shortClass) : Response
