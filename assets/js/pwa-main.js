@@ -56,7 +56,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   },
  });
 
+
  return;
+
+
  // Set up the editor
  const { Editor } = await import('./app/editor.js');
  const editor = new Editor(document.body);
