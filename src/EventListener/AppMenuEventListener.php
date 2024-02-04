@@ -2,6 +2,8 @@
 
 namespace App\EventListener;
 
+use App\Entity\Song;
+use App\Entity\Video;
 use Knp\Menu\ItemInterface;
 use Survos\ApiGrid\Service\DatatableService;
 use Survos\ApiGrid\Service\MeiliService;
@@ -122,6 +124,18 @@ final class AppMenuEventListener
             $this->add($menu, 'app_browse_with_doctrine', ['shortClass' => $shortClass], label: '@sql ' . $shortClass);
             $this->add($menu, 'app_browse', ['shortClass' => $shortClass], label: '@meili ' . $shortClass);
         }
+
+        $subMenu = $this->addSubmenu($menu, '@commands');
+        foreach ([Song::class, Video::class] as $class) {
+            $this->add($subMenu, 'survos_command', [
+                'commandName'=>'grid:index',
+                'class' => $class
+            ],
+                label: 'grid:index ' .  $class
+            );
+        }
+        $this->add($subMenu, 'survos_commands');
+
         $subMenu = $this->addSubmenu($menu, '@old');
         $this->add($subMenu, 'song_index', label: 'Songs (html)');
         $this->add($subMenu, 'song_browse', label: 'Songs-Meili');
