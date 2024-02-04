@@ -6,9 +6,11 @@ use App\Message\FetchYoutubeChannelMessage;
 use App\Services\AppService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class FetchYoutubeChannelMessageHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class FetchYoutubeChannelMessageHandler
 {
 
     public function __construct(

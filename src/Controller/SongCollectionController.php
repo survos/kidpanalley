@@ -17,7 +17,7 @@ class SongCollectionController extends AbstractController
     {
 
     }
-    #[Route(path: '/{apiRoute}', name: 'song_index', methods: ['GET'])]
+    #[Route(path: '/browse/{apiRoute}', name: 'song_index', methods: ['GET'])]
     public function index(string $apiRoute=null) : Response
     {
         return $this->render('song/index.html.twig', get_defined_vars() + [
