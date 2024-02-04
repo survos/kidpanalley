@@ -125,6 +125,7 @@ final class AppMenuEventListener
             $this->add($menu, 'app_browse', ['shortClass' => $shortClass], label: '@meili ' . $shortClass);
         }
 
+        //
         $subMenu = $this->addSubmenu($menu, '@commands');
         foreach ([Song::class, Video::class] as $class) {
             $this->add($subMenu, 'survos_command', [

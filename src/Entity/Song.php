@@ -28,21 +28,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ORM\UniqueConstraint('song_code', ['code'])]
-#[ApiResource(
-    // normal get is the database
-    operations: [new Get(),
-        new GetCollection(
-//            provider: MeiliSearchStateProvider::class,
-        )],
-    normalizationContext: ['groups' => ['song.read', 'rp']]
-)]
 #[GetCollection(
-    uriTemplate: "meili/{indexName}",
-    uriVariables: ["indexName"],
+    name: 'meili_songs',
+    uriTemplate: "meili/Song",
+//    uriVariables: ["indexName"],
     provider: MeiliSearchStateProvider::class,
     normalizationContext: [
         'groups' => ['instance.read', 'tree', 'rp'],
     ]
+)]
+#[ApiResource(
+    // normal get is the database
+    operations: [new Get(),
+        new GetCollection(name: 'doctrine_songs',
+//            provider: MeiliSearchStateProvider::class,
+        )],
+    normalizationContext: ['groups' => ['song.read', 'rp']]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
