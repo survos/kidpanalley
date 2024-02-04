@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Survos\CoreBundle\Traits\QueryBuilderHelperInterface;
 use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
 
 /**
@@ -13,7 +14,7 @@ use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
  * @method Video[]    findAll()
  * @method Video[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VideoRepository extends ServiceEntityRepository
+class VideoRepository extends ServiceEntityRepository implements QueryBuilderHelperInterface
 {
     use QueryBuilderHelperTrait;
     public function __construct(ManagerRegistry $registry)
