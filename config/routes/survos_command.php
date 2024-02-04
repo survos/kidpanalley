@@ -1,19 +1,9 @@
 <?php
-
-// config/routes.php
-use Survos\CommandBundle\Controller\CommandController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-
-return function (RoutingConfigurator $routes) {
-//    $routes->add('survos_commands', '/admin/commands')
-//        // the controller value has the format [controller_class, method_name]
-//        ->controller([CommandController::class, 'commands'])
-//    ;
-//
-//    $routes->add('survos_command', '/admin/run-command/{commandName}')
-//        // the controller value has the format [controller_class, method_name]
-//        ->controller([CommandController::class, 'runCommand'])
-//    ;
-
+return static function (RoutingConfigurator $routes): void {
+    $routes->import('@SurvosCommandBundle/config/routes.php')
+        ->prefix('/admin') // consider adding this path to the access_control key in security
+    ;
 };
+

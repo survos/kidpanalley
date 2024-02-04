@@ -404,7 +404,17 @@
         "version": "dev-master"
     },
     "survos/command-bundle": {
-        "version": "1.4.44"
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "31483097a99800fa6b049af3c61ad0ebf5727751"
+        },
+        "files": [
+            "config/packages/survos_command.yaml",
+            "config/routes/survos_command.php"
+        ]
     },
     "survos/core-bundle": {
         "version": "1.0.7"
