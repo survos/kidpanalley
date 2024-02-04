@@ -9,8 +9,7 @@
     {% endblock %}
 
     {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
-        {{ importmap('app') }}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
         {{ parent() }}
     {% endblock %}
 
@@ -25,22 +24,21 @@
 {#        {% include '@SurvosBootstrapBundle/Partials/_footer.html.twig' %} #}
 {# #}
 
-{# {% block footer %}#}
-{#     This is in the body, not the footer.#}
-{# <footer class="main-footer">#}
-{#    <!-- To the right -->#}
-{#    <div class="pull-right hidden-xs">#}
+{# {% block footer %} #}
+{#     This is in the body, not the footer. #}
+{# <footer class="main-footer"> #}
+{#    <!-- To the right --> #}
+{#    <div class="pull-right hidden-xs"> #}
 
-{#    </div>#}
-{#    <!-- Default to the left -->#}
-{#    <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved.#}
-{#    <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved.#}
-{# </footer>#}
-{# {% endblock %}#}
+{#    </div> #}
+{#    <!-- Default to the left --> #}
+{#    <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved. #}
+{#    <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved. #}
+{# </footer> #}
+{# {% endblock %} #}
 
 {% block page_content %}
     <div class="container mb-4">
         {{ block('body') }}
     </div>
 {% endblock %}
-
