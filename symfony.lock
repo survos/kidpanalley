@@ -440,12 +440,12 @@
         "version": "4.4.x-dev"
     },
     "symfony/asset-mapper": {
-        "version": "6.4",
+        "version": "7.0",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "6.4",
-            "ref": "040e08b268490e84a8e05652d6e9d3d49576f1c6"
+            "ref": "4ff49f66191ce9356098e588684c27b935958b33"
         },
         "files": [
             "assets/app.js",
