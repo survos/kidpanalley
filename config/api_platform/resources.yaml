@@ -1,12 +1,12 @@
-# api/config/api_platform/resources.yaml
-App\Entity\User: ~
-App\Entity\Song: ~
-App\Entity\Video:
-  shortName: 'Video'                   # optional
-  description: 'A video on youtube' # optional
-  attributes:                          # optional
-    pagination_items_per_page: 30   # optional
-    normalization_context:
-      groups: ['Default']
-    denormalization_context:
-      groups: ['Default']
+## api/config/api_platform/resources.yaml
+#App\Entity\User: ~
+#App\Entity\Song: ~
+#App\Entity\Video:
+#  shortName: 'Video'                   # optional
+#  description: 'A video on youtube' # optional
+#  attributes:                          # optional
+#    pagination_items_per_page: 30   # optional
+#    normalization_context:
+#      groups: ['Default']
+#    denormalization_context:
+#      groups: ['Default']
