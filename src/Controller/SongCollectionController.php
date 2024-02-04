@@ -17,12 +17,11 @@ class SongCollectionController extends AbstractController
     {
 
     }
-    #[Route(path: '/', name: 'song_index', methods: ['GET'])]
-    public function index(SongRepository $songRepository) : Response
+    #[Route(path: '/{apiRoute}', name: 'song_index', methods: ['GET'])]
+    public function index(string $apiRoute=null) : Response
     {
-        return $this->render('song/index.html.twig', [
+        return $this->render('song/index.html.twig', get_defined_vars() + [
             'class' => Song::class,
-            'data' => $songRepository->findBy([], ['id' => 'DESC'], 20),
         ]);
     }
 
