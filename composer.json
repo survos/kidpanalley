@@ -18,7 +18,7 @@
         "doctrine/annotations": "^2.0.1",
         "doctrine/doctrine-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "*",
-        "doctrine/orm": "*",
+        "doctrine/orm": "^2.18",
         "friendsofsymfony/jsrouting-bundle": "^3.3",
         "google/apiclient": "^2.15.1",
         "league/csv": "^9.12",
@@ -87,7 +87,7 @@
         "symfony/css-selector": "^6.4 || ^7.0",
         "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/maker-bundle": "^1.52.0",
-        "symfony/phpunit-bridge": "^6.4 || ^7.0",
+        "symfony/phpunit-bridge": "^7.0",
         "symfony/stopwatch": "^6.4",
         "symfony/web-profiler-bundle": "^6.4 || ^7.0"
     },
@@ -103,7 +103,7 @@
         "symfony/symfony": "*"
     },
     "repositories": {},
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {

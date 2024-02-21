@@ -245,15 +245,6 @@
             "config/packages/http_discovery.yaml"
         ]
     },
-    "phpdocumentor/reflection-common": {
-        "version": "2.x-dev"
-    },
-    "phpdocumentor/reflection-docblock": {
-        "version": "4.3.2"
-    },
-    "phpdocumentor/type-resolver": {
-        "version": "1.x-dev"
-    },
     "phpoffice/common": {
         "version": "0.2.9"
     },
@@ -896,9 +887,6 @@
     },
     "webimpress/safe-writer": {
         "version": "2.1.x-dev"
-    },
-    "webmozart/assert": {
-        "version": "1.5.0"
     },
     "willdurand/negotiation": {
         "version": "2.x-dev"

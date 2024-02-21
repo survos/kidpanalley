@@ -29,6 +29,7 @@ class VideoController extends AbstractController
     public function browse(VideoRepository $videoRepository) : Response
     {
         return $this->render('video/browse.html.twig', [
+            'apiRoute' => Video::MEILI_ROUTE,
             'class' => Video::class,
             'videos' => $videoRepository->findBy([], ['id' => 'DESC'], 30),
             'videoCount' => $videoRepository->count([])

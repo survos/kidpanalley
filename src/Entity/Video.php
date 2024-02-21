@@ -27,8 +27,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['video.read', 'rp']]
 )]
 #[GetCollection(
-    uriTemplate: "meili/{indexName}",
-    uriVariables: ["indexName"],
+    name: self::MEILI_ROUTE,
+    uriTemplate: "meili-videos", // was {indexName}
+//    uriVariables: ["indexName"],
     provider: MeiliSearchStateProvider::class,
     normalizationContext: [
         'groups' => ['video.read', 'rp'],
@@ -49,6 +50,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
+
+    const MEILI_ROUTE='meili-video';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
