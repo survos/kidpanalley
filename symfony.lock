@@ -431,6 +431,9 @@
     "survos/scraper-bundle": {
         "version": "1.4.44"
     },
+    "survos/seo-bundle": {
+        "version": "1.5.168"
+    },
     "survos/workflow-helper-bundle": {
         "version": "2.0.1"
     },

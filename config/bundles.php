@@ -34,4 +34,5 @@ return [
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
     Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
+    Survos\SeoBundle\SurvosSeoBundle::class => ['dev' => true, 'test' => true],
 ];

@@ -1,0 +1,9 @@
+# Default configuration for extension with alias: "survos_seo"
+survos_seo:
+    branding:             'Kid Pan Alley'
+    minTitleLength:       20
+    maxTitleLength:       150
+    minDescriptionLength: 15
+    maxDescriptionLength: 255
+    enabled:              true
+

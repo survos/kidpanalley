@@ -83,6 +83,7 @@
         "survos/command-bundle": "^1.5.100",
         "survos/crawler-bundle": "^1.5.100",
         "survos/maker-bundle": "^1.5.100",
+        "survos/seo-bundle": "^1.5",
         "symfony/browser-kit": "^6.4 || ^7.0",
         "symfony/css-selector": "^6.4 || ^7.0",
         "symfony/debug-bundle": "^6.4 || ^7.0",
