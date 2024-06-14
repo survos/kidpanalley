@@ -26,7 +26,7 @@ return [
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
     Survos\CrawlerBundle\SurvosCrawlerBundle::class => ['dev' => true, 'test' => true],
     Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
-    Survos\CommandBundle\SurvosCommandBundle::class => ['dev' => true, 'test' => true],
+    Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true, 'test' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
@@ -34,5 +34,5 @@ return [
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
     Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
-    Survos\SeoBundle\SurvosSeoBundle::class => ['dev' => true, 'test' => true],
+    Survos\SeoBundle\SurvosSeoBundle::class => ['all' => true, 'test' => true],
 ];
