@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Entity\Song;
 use App\Entity\Video;
+use App\Message\FetchYoutubeChannelMessage;
+use App\Message\LoadSongsMessage;
 use App\Repository\SongRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
@@ -17,9 +19,12 @@ use PhpOffice\PhpWord\Element\Title;
 use PhpOffice\PhpWord\IOFactory;
 use Psr\Log\LoggerInterface;
 use Survos\Scraper\Service\ScraperService;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Attribute\Cache;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -40,6 +45,8 @@ class AppService
                                 private ValidatorInterface $validator,
                                 private readonly Factory $spreadsheet,
                                 private readonly LoggerInterface        $logger,
+                                private ParameterBagInterface $bag,
+                                #[Autowire('%kernel.project_dir%')] private string $projectDir,
                                 private array $songs = [],
 
     )
@@ -309,6 +316,17 @@ class AppService
         }
     }
 
+    #[AsMessageHandler]
+    public function fetchYoutubeMessageHandler(FetchYoutubeChannelMessage $message): void
+    {
+        // there must be a bundle for this somewhere to inject the API keys
+        $key = $this->bag->get('youtube_api_key');
+        $channel = $this->bag->get('youtube_channel');
+
+        $this->logger->warning("Fetching...");
+        $this->fetchYoutubeChannel($key, $channel);
+    }
+
     /**
      * @return \App\Entity\Video[]
      */
@@ -382,6 +400,15 @@ class AppService
         }
         return $song;
 
+    }
+
+    #[AsMessageHandler]
+    public function loadSongsHandler(LoadSongsMessage $loadSongsMessage): void
+    {
+        $this->loadSongs();
+        // terrible spot!
+        $dir = $this->projectDir . '/../../survos/data/kpa/Lyrics individual songs';
+        $this->loadLyrics($dir);
     }
 
     public function loadSongs()
