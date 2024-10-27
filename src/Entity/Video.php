@@ -51,6 +51,7 @@ class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
 
+    const UNIQUE_PARAMETERS=['videoId' => 'youtubeId'];
     const MEILI_ROUTE='meili-video';
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -125,11 +126,6 @@ class Video implements RouteParametersInterface, \Stringable
         $this->date = $date;
 
         return $this;
-    }
-    #[Groups(['rp','video.read'])]
-    public function getUniqueIdentifiers(): array
-    {
-        return ['videoId' => $this->getYoutubeId()];
     }
 
     public function getRawData(): array|object|null

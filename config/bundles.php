@@ -35,4 +35,6 @@ return [
     Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Survos\SeoBundle\SurvosSeoBundle::class => ['all' => true, 'test' => true],
+    Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
+    Survos\MeiliAdminBundle\SurvosMeiliAdminBundle::class => ['all' => true],
 ];

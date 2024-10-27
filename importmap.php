@@ -50,7 +50,7 @@ return [
         'version' => '2.0.16',
     ],
     'axios' => [
-        'version' => '1.6.7',
+        'version' => '1.7.7',
     ],
     'fos-routing' => [
         'version' => '0.0.6',
@@ -271,5 +271,11 @@ return [
     ],
     'chart.js' => [
         'version' => '3.9.1',
+    ],
+    'datatables.net-plugins/i18n/es-ES.mjs' => [
+        'version' => '2.1.7',
+    ],
+    'datatables.net-plugins/i18n/de-DE.mjs' => [
+        'version' => '2.1.7',
     ],
 ];

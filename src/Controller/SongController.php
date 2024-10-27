@@ -8,7 +8,7 @@ use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/song/{songId}')]
 class SongController extends AbstractController
@@ -21,6 +21,7 @@ class SongController extends AbstractController
     #[Route(path: '/', name: 'song_show', methods: ['GET'], options: ['expose' => true])]
     public function show(Song $song) : Response
     {
+//        return new Response("<html><body></body></html>");
         return $this->render('song/show.html.twig', [
             'song' => $song,
         ]);

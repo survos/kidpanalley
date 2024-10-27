@@ -60,6 +60,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
+    const UNIQUE_PARAMETERS=['songId' => 'id'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -301,12 +302,6 @@ class Song implements RouteParametersInterface, \Stringable
         $this->lyricsLength = $lyricsLength;
 
         return $this;
-    }
-
-    #[Groups(['song.read','video.read'])]
-    public function getUniqueIdentifiers(): array
-    {
-        return ['songId' => $this->getId()];
     }
 
     public function __toString()

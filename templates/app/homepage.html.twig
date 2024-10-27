@@ -23,24 +23,8 @@
 
         <div class="row mt-4">
             <div class="col-md-6">
-
-                <div class="card">
-                    <div class="card-stamp">
-                        <div class="card-stamp-icon bg-yellow">
-                            <span class="bi bi-music-note icon"></span>
-{#                            <!-- Download SVG icon from http://tabler-icons.io/i/bell -->#}
-{#                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>#}
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Card with icon bg</h3>
-                        <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at consectetur culpa ducimus eum fuga fugiat, ipsa iusto, modi nostrum recusandae reiciendis saepe.</p>
-                    </div>
-                </div>
-
-
-                {% component card with {} %}
-                    {% block text %}
+                {% component card  %}
+                    {% block card_body %}
                         <span class="bi bi-music-note"></span>
                         <div class="text-light small fw-semibold">
                             {% block title 'song_index.title'|trans %}
@@ -55,14 +39,13 @@
                         </div>
                     {% endblock %}
                 {% endcomponent %}
-
             </div>
             <div class="col-md-6">
 
                 {% component card with {
                 } %}
                     {% block title 'Videos' %}
-                    {% block text %}
+                    {% block card_body %}
                         <span class="bi bi-youtube"></span>
 
                         <div class="text-light small fw-semibold">Videos</div>

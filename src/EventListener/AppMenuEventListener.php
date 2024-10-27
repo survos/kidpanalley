@@ -29,7 +29,7 @@ final class AppMenuEventListener
     use KnpMenuHelperTrait;
 
     public function __construct(
-        #[Autowire('%kernel.environment%')] private string $env,
+        #[Autowire('%kernel.environment%')] protected string $env,
         private ContextService $contextService,
         private Security $security,
         private MenuService $menuService,
