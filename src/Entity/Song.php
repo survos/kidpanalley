@@ -29,8 +29,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ORM\UniqueConstraint('song_code', ['code'])]
 #[GetCollection(
-    name: 'meili_songs',
-    uriTemplate: "meili/Song",
+    name: self::MEILI_ROUTE,
+    uriTemplate: "/api/meili/Song",
 //    uriVariables: ["indexName"],
     provider: MeiliSearchStateProvider::class,
     normalizationContext: [
@@ -60,7 +60,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
-    const UNIQUE_PARAMETERS=['songId' => 'id'];
+    const array UNIQUE_PARAMETERS=['songId' => 'id'];
+    const MEILI_ROUTE='meili-song';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -68,7 +69,7 @@ class Song implements RouteParametersInterface, \Stringable
     private $id;
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable','video.read'])]
-    private $title;
+    private ?string $title;
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['song.read', 'searchable'])]
     private $date;

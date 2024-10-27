@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/song/{songId}')]
+#[Route(path: '/song/{songId}', priority: 10000)]
 class SongController extends AbstractController
 {
     public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
