@@ -98,9 +98,6 @@
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.1"
-    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "3.2",
         "recipe": {
@@ -157,9 +154,6 @@
         "files": [
             "config/packages/knpu_oauth2_client.yaml"
         ]
-    },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
     },
     "laminas/laminas-escaper": {
         "version": "2.7.0"
@@ -695,9 +689,6 @@
     },
     "symfony/property-info": {
         "version": "4.4.x-dev"
-    },
-    "symfony/proxy-manager-bridge": {
-        "version": "v5.2.1"
     },
     "symfony/routing": {
         "version": "7.0",

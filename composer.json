@@ -62,7 +62,6 @@
         "symfony/process": "^7.1",
         "symfony/property-access": "^7.1",
         "symfony/property-info": "^7.1",
-        "symfony/proxy-manager-bridge": "^7.1",
         "symfony/runtime": "^7.1",
         "symfony/security-bundle": "^7.1",
         "symfony/serializer": "^7.1",
@@ -134,7 +133,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": "true",
-            "require": "^7.1by"
+            "require": "^7.1"
         }
     },
     "scripts": {
