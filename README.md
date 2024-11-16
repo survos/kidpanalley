@@ -11,6 +11,9 @@ so we don't need spreadsheet kit.
 git clone git@github.com:survos/kidpanalley.git kpa && cd kpa
 git checkout tac
 composer install
+./c grid:index --reset
+
+
 bin/console d:d:drop --force
 bin/console d:d:create
 bin/console doctrine:schema:update --force --complete
