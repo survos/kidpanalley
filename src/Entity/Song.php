@@ -55,7 +55,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 #[Groups(['song.read'])]
 // brainstorming...
-#[Facets(groups: ['song.facet'], properties: ['publisher', 'writers','publishersArray'])]
+#[Facets(groups: ['song.facet'], properties: ['publisher', 'year', 'writers','publishersArray'])]
 #[Assert\EnableAutoMapping]
 class Song implements RouteParametersInterface, \Stringable
 {
@@ -64,7 +64,7 @@ class Song implements RouteParametersInterface, \Stringable
     const MEILI_ROUTE='meili-song';
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
     #[ORM\Column(type: 'integer')]
     private $id;
     #[ORM\Column(type: 'text')]

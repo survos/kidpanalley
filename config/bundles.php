@@ -32,7 +32,6 @@ return [
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
-    Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Survos\SeoBundle\SurvosSeoBundle::class => ['all' => true, 'test' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],

@@ -18,20 +18,25 @@
 {% set columns = [
     {name: 'videos'},
     {name: 'title'},
-    {name: 'school', searchable: true, sortable: true},
-    {name: 'year', sortable: true},
     {name: 'lyricsLength', sortable: true},
     {name: 'publishersArray', title: 'publishers'},
     {name: 'writers'},
     'code',
 ]
 %}
+
+    {% set facet_columns = [
+        {name: 'school', searchable: true, sortable: true, browsable: true},
+        {name: 'year', sortable: true, browsable: true},
+    ] %}
+
     <twig:api_grid
         facets="true"
         :class="class"
         :apiRoute="apiRoute"
         :caller="_self"
         :columns="columns"
+        :facet_columns="facet_columns"
     >
 
         {% block writersArray %}
@@ -49,11 +54,11 @@
         {% endblock %}
         {% block title %}
             <span class="d-inline-block text-truncate" style="max-width: 300px;" title="{{ row.title }}">
-            <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+            <a href="{{ path('song_show', row.rp)}}">{{ row.title }}</a>
 </span>
         {% endblock %}
         {% block youtubeId %}
-            <a href="{{ path('song_show', row.uniqueIdentifiers)}}">{{ row.title }}</a>
+            <a href="{{ path('song_show', row.rp)}}">{{ row.title }}</a>
             {% if row.youtubeId|default(false) %}
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
             {% endif %}

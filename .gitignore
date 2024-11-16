@@ -6,19 +6,11 @@
 /public/bundles/
 /var/
 /vendor/
-###< symfony/framework-bundle ###
 
-###> symfony/phpunit-bridge ###
-<<<<<<< ours
-.phpunit
-=======
->>>>>>> theirs
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
 ###> phpunit/phpunit ###
-/phpunit.xml
+.phpunit
 .phpunit.result.cache
+/phpunit.xml
 ###< phpunit/phpunit ###
 
 /public/js/fos_js_routes.json

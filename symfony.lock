@@ -16,24 +16,11 @@
             "src/ApiResource/.gitignore"
         ]
     },
-    "doctrine/annotations": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.10",
-            "ref": "64d8583af5ea57b7afa4aba4b159907f3a148b05"
-        },
-        "files": []
-    },
     "doctrine/cache": {
         "version": "1.9.x-dev"
     },
     "doctrine/collections": {
         "version": "1.6.x-dev"
-    },
-    "doctrine/common": {
-        "version": "2.11.x-dev"
     },
     "doctrine/dbal": {
         "version": "2.10.x-dev"
@@ -358,9 +345,6 @@
     "sebastian/recursion-context": {
         "version": "4.0.4"
     },
-    "sebastian/resource-operations": {
-        "version": "3.0.3"
-    },
     "sebastian/type": {
         "version": "2.3.4"
     },
@@ -666,9 +650,6 @@
     "symfony/polyfill-mbstring": {
         "version": "1.12-dev"
     },
-    "symfony/polyfill-php72": {
-        "version": "1.12-dev"
-    },
     "symfony/polyfill-php73": {
         "version": "1.12-dev"
     },
@@ -899,9 +880,6 @@
     },
     "willdurand/negotiation": {
         "version": "2.x-dev"
-    },
-    "yectep/phpspreadsheet-bundle": {
-        "version": "v1.1.0"
     },
     "zendframework/zend-code": {
         "version": "3.5.x-dev"

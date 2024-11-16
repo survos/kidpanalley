@@ -278,4 +278,11 @@ return [
     'datatables.net-plugins/i18n/de-DE.mjs' => [
         'version' => '2.1.7',
     ],
+    '@tabler/core' => [
+        'version' => '1.0.0-beta21',
+    ],
+    '@tabler/core/dist/css/tabler.min.css' => [
+        'version' => '1.0.0-beta21',
+        'type' => 'css',
+    ],
 ];

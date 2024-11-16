@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 //#[AsEventListener(event: KnpMenuEvent::SIDEBAR_MENU, method: 'appSidebarMenu')]
-#[AsEventListener(event: KnpMenuEvent::NAVBAR_MENU, method: 'navbarMenu')]
 #[AsEventListener(event: KnpMenuEvent::FOOTER_MENU, method: 'footerMenu')]
 #[AsEventListener(event: KnpMenuEvent::AUTH_MENU, method: 'ourAuthMenu')]
 #[AsEventListener(event: KnpMenuEvent::PAGE_MENU, method: 'pageMenu')]
@@ -106,12 +105,14 @@ final class AppMenuEventListener
     }
 
 
+    #[AsEventListener(event: KnpMenuEvent::NAVBAR_MENU)]
     public function navbarMenu(KnpMenuEvent $event): void
     {
         if (!$this->supports($event)) {
             return;
         }
         $menu = $event->getMenu();
+        $this->add($menu, 'app_homepage');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
 //        $subMenu = $this->addSubmenu($menu, 'songs');

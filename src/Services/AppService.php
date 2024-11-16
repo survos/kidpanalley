@@ -10,6 +10,7 @@ use App\Repository\SongRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Flysystem\DirectoryListing;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpWord\Element\PageBreak;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Text;
@@ -43,7 +44,6 @@ class AppService
                                 private SongRepository                  $songRepository,
                                 private ScraperService                  $scraperService,
                                 private ValidatorInterface $validator,
-                                private readonly Factory $spreadsheet,
                                 private readonly LoggerInterface        $logger,
                                 private ParameterBagInterface $bag,
                                 #[Autowire('%kernel.project_dir%')] private string $projectDir,
@@ -378,6 +378,7 @@ class AppService
                     ->setTitle($snippet->title)
                     ->setDescription($snippet->description);
 //                $video->setDate(new \DateTimeImmutable($snippet->publishedAt));
+                $this->em->flush();
 
                 array_push($videos, $video);
             }
@@ -416,13 +417,13 @@ class AppService
         $this->loadExistingSongs();
 
         $em = null;
-        /** @var Xls $readerXlsx */
-        $readerXlsx  = $this->spreadsheet->createReader('Xlsx');
-        /** @var Spreadsheet $spreadsheet */
+        $excelPath = $this->projectDir . '/data/kpa-songs.xlsx';
         try {
-            $spreadsheet = $readerXlsx->load(__DIR__ . '/../../data/kpa-songs.xlsx');
+            $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
+            $spreadsheet = $reader->load($excelPath);
         } catch (\Exception $exception) {
-            dd($exception);
+            $this->logger->error($exception->getMessage());
+            throw new \Exception("Problem loading $excelPath");
         }
 
         /** @var Worksheet $sheet */
@@ -475,6 +476,7 @@ class AppService
                 }
 
                 $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
+                $this->em->flush();
                 array_push($songs, $song);
                 // dump($data);
             }
@@ -482,9 +484,10 @@ class AppService
                 // dd($data, $song);
                 // break;
             }
+            $this->em->flush();
         }
 
-        $em->flush();
+        $this->em->flush();
     }
 
 }
