@@ -7,4 +7,4 @@ import './bootstrap.js'; // stimulus
 // import 'bootstrap-icons/font/bootstrap-icons.min.css'
 
 import '@tabler/core';
-import '@tabler/core/dist/css/tabler.min.css';
+// import '@tabler/core/dist/css/tabler.min.css';

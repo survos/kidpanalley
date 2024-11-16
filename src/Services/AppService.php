@@ -484,7 +484,7 @@ class AppService
                 // dd($data, $song);
                 // break;
             }
-            $this->em->flush();
+            $this->logger->warning("Saving $idx");
         }
 
         $this->em->flush();

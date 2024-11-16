@@ -54,7 +54,7 @@ class Video implements RouteParametersInterface, \Stringable
     const UNIQUE_PARAMETERS=['videoId' => 'youtubeId'];
     const MEILI_ROUTE='meili-video';
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: 'integer')]
     #[Groups('song.read')]
     private $id;

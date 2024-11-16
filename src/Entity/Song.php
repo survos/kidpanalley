@@ -64,7 +64,7 @@ class Song implements RouteParametersInterface, \Stringable
     const MEILI_ROUTE='meili-song';
 
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: 'integer')]
     private $id;
     #[ORM\Column(type: 'text')]
@@ -74,7 +74,7 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read', 'searchable'])]
     private $date;
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Groups(['song.facet', 'song.read', 'video.read', 'searchable'])]
     #[Facet()]
     private $year;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
