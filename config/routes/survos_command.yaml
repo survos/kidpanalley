@@ -1,4 +1,4 @@
 survos_command:
   resource: '@SurvosCommandBundle/config/routes.yaml'
-  prefix: '/command'
+  prefix: '/admin/commands'
 

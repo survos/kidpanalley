@@ -95,9 +95,11 @@ final class AppMenuEventListener
 
         $theme = $this->contextService->getOption('theme');
         $this->add($menu, 'app_homepage');
-        $this->add($menu, 'app_load_lyrics');
-        $this->add($menu, 'survos_commands');
-        $this->add($menu, uri: '#', label: 'theme: ' . $theme);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $this->add($menu, 'app_load_lyrics');
+            $this->add($menu, 'survos_commands');
+
+        }
         // it should be possible to do this in twig, not here.
         $this->add($menu, id: 'copyright',
 
@@ -127,16 +129,18 @@ final class AppMenuEventListener
         }
 
         //
-        $subMenu = $this->addSubmenu($menu, '@commands');
-        foreach ([Song::class, Video::class] as $class) {
-            $this->add($subMenu, 'survos_command', [
-                'commandName'=>'grid:index',
-                'class' => $class
-            ],
-                label: 'grid:index ' .  $class
-            );
+        if ($this->isEnv('dev') || $this->isGranted('ROLE_ADMIN')) {
+            $subMenu = $this->addSubmenu($menu, '@commands');
+            foreach ([Song::class, Video::class] as $class) {
+                $this->add($subMenu, 'survos_command', [
+                    'commandName'=>'grid:index',
+                    'class' => $class
+                ],
+                    label: 'grid:index ' .  $class
+                );
+            }
+            $this->add($subMenu, 'survos_commands');
         }
-        $this->add($subMenu, 'survos_commands');
 
         $subMenu = $this->addSubmenu($menu, '@old');
         $this->add($subMenu, 'song_index', label: 'Songs (html)');
