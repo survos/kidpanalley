@@ -193,7 +193,7 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read'])]
     public function getWritersArray(): array
     {
-        return explode('/', $this->getWriters());
+        return explode('/', $this->getWriters()??'');
     }
 
     #[Groups(['song.read'])]
