@@ -3,7 +3,7 @@
 bizkit_versioning:
 
     # Prefix added to version parameters.
-    parameter_prefix: kpa
+    parameter_prefix: app
 
     # Strategy used for managing version updates.
     # Options:

@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +79,9 @@ class AppController extends AbstractController
 
     #[Route(path: '/welcome', name: 'adminlte_welcome', methods: ['GET'])]
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
-    public function homepage(SongRepository $songRepository, VideoRepository $videoRepository)
+    public function homepage(SongRepository $songRepository, VideoRepository $videoRepository,
+    #[Autowire('%kpa.version%')] string $applicationVersion
+    )
     {
         $user = $this->getUser();
         return $this->render('app/homepage.html.twig', [

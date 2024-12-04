@@ -4,7 +4,7 @@
     "keywords": ["symfony","pwa"],
     "license": "proprietary",
     "type": "project",
-    "minimum-stability": "RC",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": "^8.3",
