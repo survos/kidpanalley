@@ -5,5 +5,3 @@ parameters:
         - ./src
 
     excludePaths:
-      - 'src/Resources/skeleton'
-      - */cache/*
