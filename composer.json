@@ -29,6 +29,7 @@
         "meilisearch/meilisearch-php": "^1.11",
         "mindscreen/yarnlock": "^1.1.1",
         "nelmio/cors-bundle": "^2.5.0",
+        "paragonie/sodium_compat": "^2.1",
         "phpoffice/phpspreadsheet": "^3.4",
         "phpoffice/phpword": "^1.3",
         "sentry/sentry-symfony": "^5.0.1",

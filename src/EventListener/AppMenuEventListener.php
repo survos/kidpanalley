@@ -77,7 +77,6 @@ final class AppMenuEventListener
         $video = $event->getOption('video');
         if ($video) {
             $this->add($menu, 'video_show', $video);
-            $this->add($menu, 'video_edit', $video);
         }
     }
 
@@ -115,6 +114,7 @@ final class AppMenuEventListener
         }
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'survos_meili_admin');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
 //        $subMenu = $this->addSubmenu($menu, 'songs');
@@ -122,6 +122,7 @@ final class AppMenuEventListener
 //        dump($subMenu);
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');
+        $this->add($menu, 'app_publish');
 
         foreach (['Song','Video'] as $shortClass) {
             $this->add($menu, 'app_browse_with_doctrine', ['shortClass' => $shortClass], label: '@sql ' . $shortClass);

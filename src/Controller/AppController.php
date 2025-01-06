@@ -163,8 +163,13 @@ class AppController extends AbstractController
      *
      */
     #[Route(path: '/publish', name: 'app_publish')]
-    public function publish(array $options)
+    public function publish(array $options=[])
     {
+        [$u, $p] = $this->getAuth();
+        $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
+            'https://www.kidpanalley.org', $u, $p);
+        dd($command);
+
         $song = null;
         $wordpressPagePayload = (new OptionsResolver())
             ->setDefaults(
@@ -200,13 +205,11 @@ class AppController extends AbstractController
             'auth_basic' => $this->getAuth(),
             'json' => $wordpressPagePayload
         ]);
-        /*
         $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
            'https://www.kidpanalley.org', $u, $p);
-        dump($command);
+        dd($command);
 
         $results = exec($command);
-        */
         $response = json_decode($results->getContent(), null, 512, JSON_THROW_ON_ERROR);
         $id = $response->id;
         $song->setWordpressPageId($id);

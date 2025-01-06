@@ -8,7 +8,7 @@ use App\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/video')]
@@ -60,31 +60,5 @@ class VideoController extends AbstractController
         return $this->render('video/show.html.twig', [
             'video' => $video,
         ]);
-    }
-    #[Route(path: '/{videoId}/edit', name: 'video_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function edit(Request $request, Video $video) : Response
-    {
-        $form = $this->createForm(VideoType::class, $video);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
-
-            return $this->redirectToRoute('video_index');
-        }
-        return $this->render('video/edit.html.twig', [
-            'video' => $video,
-            'form' => $form->createView(),
-        ]);
-    }
-    #[Route(path: '/{videoId}', name: 'video_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Video $video) : Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$video->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($video);
-            $entityManager->flush();
-        }
-        return $this->redirectToRoute('video_index');
     }
 }
