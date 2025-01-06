@@ -13,58 +13,51 @@
 
 
 {% block body %}
-    <h1>Songs</h1>
-{#    {name: '_actions', prefix: 'song_', actions: ['show']},#}
-{% set columns = [
-    {name: 'videos'},
-    {name: 'title'},
-    {name: 'lyricsLength', sortable: true},
-    {name: 'publishersArray', title: 'publishers'},
-    {name: 'writers'},
-    {name: 'school', searchable: true, sortable: true, browsable: true},
-    {name: 'year', sortable: true, browsable: true},
-    'code',
-]
-%}
-
-    {% set facet_columns = [
-        {name: 'school', searchable: true, sortable: true, browsable: true},
-        {name: 'year', sortable: true, browsable: true},
+    {% set columns = [
+        col('title'),
+        col('videos'),
+        col(name: 'publishersArray', title: 'publishers'),
+        col('writers'),
+        col(name: 'school', searchable: true, sortable: true, browsable: true),
+        col('code'),
     ] %}
 
     <twig:api_grid
-        facets="true"
-        :class="class"
-        :apiRoute="apiRoute"
-        :caller="_self"
-        :columns="columns"
-        :facet_columns="facet_columns"
+            facets="true"
+            :class="class"
+            :apiRoute="apiRoute"
+            :caller="_self"
+            :columns="columns"
     >
 
-        {% block writersArray %}
+        <twig:block name="writersArray">
             {{ row.writersArray|join('|') }}
-        {% endblock %}
-        {% block publishersArray %}
+        </twig:block>
+
+        <twig:block name="publishersArray">
             {{ row.publishersArray|join('<br />')|raw }}
-        {% endblock %}
-        {% block videos %}
+        </twig:block>
+
+        <twig:block name="videos">
             {% for video in row.videos %}
                 <a target="_blank" href="http://www.youtube.com/watch?v={{ video.youtubeId }}">
-                    <img src="{{ video.thumbnailUrl }}" height="60" />
+                    <img src="{{ video.thumbnailUrl }}" height="60"/>
                 </a>
             {% endfor %}
-        {% endblock %}
-        {% block title %}
+        </twig:block>
+
+        <twig:block name="title">
             <span class="d-inline-block text-truncate" style="max-width: 300px;" title="{{ row.title }}">
-            <a href="{{ path('song_show', row.rp)}}">{{ row.title }}</a>
-</span>
-        {% endblock %}
-        {% block youtubeId %}
-            <a href="{{ path('song_show', row.rp)}}">{{ row.title }}</a>
+                <a href="{{ path('song_show', row.rp) }}">{{ row.title }}</a>
+            </span>
+        </twig:block>
+        <twig:block name="youtubeId">
+
+            <a href="{{ path('song_show', row.rp) }}">{{ row.title }}</a>
             {% if row.youtubeId|default(false) %}
-            <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
+                <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">{{ row.youtubeId }}</a>
             {% endif %}
-        {% endblock %}
+        </twig:block>
 
     </twig:api_grid>
 

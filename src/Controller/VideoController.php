@@ -17,7 +17,7 @@ class VideoController extends AbstractController
     public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
     }
-    #[Route(path: '/', name: 'video_index', methods: ['GET'])]
+    #[Route(path: '/index', name: 'video_index', methods: ['GET'])]
     public function index(VideoRepository $videoRepository) : Response
     {
         return $this->render('video/index.html.twig', [

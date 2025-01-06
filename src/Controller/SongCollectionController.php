@@ -28,15 +28,15 @@ class SongCollectionController extends AbstractController
     }
 
     // browse with meili
-    #[Route(path: '/meili', name: 'song_browse', methods: ['GET'])]
-    #[Route(path: '/doctrine', name: 'song_browse_with_doctrine', methods: ['GET'])]
-    public function browse(Request $request) : Response
-    {
-        return $this->render('song/meili.html.twig', [
-            'useMeili' => $request->get('_route') == 'song_browse',
-            'class' => Song::class,
-        ]);
-    }
+//    #[Route(path: '/meili', name: 'song_browse', methods: ['GET'])]
+//    #[Route(path: '/doctrine', name: 'song_browse_with_doctrine', methods: ['GET'])]
+//    public function browse(Request $request) : Response
+//    {
+//        return $this->render('song/meili.html.twig', [
+//            'useMeili' => $request->get('_route') == 'song_browse',
+//            'class' => Song::class,
+//        ]);
+//    }
 
 
 
