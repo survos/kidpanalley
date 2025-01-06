@@ -471,7 +471,6 @@ class AppService
                         $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
                     }
                 }
-                dd($data);
                 if ($data['year']) {
                     $song
                         ->setYear((int)$data['year']);
