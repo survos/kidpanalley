@@ -17,7 +17,7 @@ api_platform:
         pagination_partial: false
         pagination_items_per_page: 40
 
-        stateless: true
+        stateless: false
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:

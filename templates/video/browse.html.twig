@@ -4,18 +4,21 @@
 {% block page_title %}Video Browse{% endblock %}
 
 {% block body %}
-    <h1>Browse Youtube Videos (api_grid)</h1>
     {% set columns = [
-        {name: '_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')},
-        'youtubeId',
-        'school',
-        {name: 'id', title: 'Song'},
-        {name: 'description', condition: false},
-        'date'
+        col('youtubeId'),
+        col('_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')),
+        col(name: 'year', sortable: true, browsable: true),
+        col(name: 'id', title: 'Song'),
+        col('description'),
+        col('school'),
+        col('date'),
     ] %}
 
+
+{#    {{ dump(columns, facet_columns) }}#}
+
     <twig:api_grid
-        class="App\\Entity\\Video"
+        :class="class"
         :apiRoute="apiRoute"
         :columns="columns"
         :caller="_self"
@@ -34,7 +37,7 @@
 {#                <span class="bi bi-youtube"></span>#}
 {#            </a>#}
             <span class="d-inline-block text-truncate" style="max-width: 300px;" title="{{ row.title }}">
-            <a href="{{ path('video_show', row.uniqueIdentifiers) }}">
+            <a href="{{ path('video_show', row.rp) }}">
                 {{ row.title }}</a>
             </span>
         </twig:block>

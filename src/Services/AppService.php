@@ -347,7 +347,6 @@ class AppService
 
             $next = $results['data']['nextPageToken'] ?? false;
             foreach ($results['data']['items'] as $rawData) {
-//                dump(json_encode($rawData));
                 $item = (object)$rawData;
                 $id = $item->id['videoId'];
                 if (!$video = $repo->findOneBy(['youtubeId' => $id])) {
@@ -377,7 +376,9 @@ class AppService
                     ->setRawData($raw)
                     ->setTitle($snippet->title)
                     ->setDescription($snippet->description);
-//                $video->setDate(new \DateTimeImmutable($snippet->publishedAt));
+                if ($snippet->publishedAt) {
+                    $video->setDate(new \DateTime($snippet->publishedAt));
+                }
                 $this->em->flush();
 
                 array_push($videos, $video);

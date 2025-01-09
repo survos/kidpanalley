@@ -36,14 +36,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ]
 )]
 
-#[ApiFilter(OrderFilter::class, properties: ['title'])]
+#[ApiFilter(OrderFilter::class, properties: ['title','year'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[Groups(['video.read'])]
 
 #[ApiFilter(FacetsFieldSearchFilter::class,
-    properties: ['school'],
+    properties: ['school','year'],
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
 
@@ -79,6 +79,10 @@ class Video implements RouteParametersInterface, \Stringable
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups('song.read')]
     private ?string $thumbnailUrl = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['video.read'])]
+    private ?int $year = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -121,9 +125,15 @@ class Video implements RouteParametersInterface, \Stringable
     {
         return $this->date;
     }
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(null|\DateTimeInterface|\DateTime|string $date): self
     {
+        if (is_string($date)) {
+            $date = strtotime($date);
+        }
         $this->date = $date;
+        if ($date->format('Y')) {
+            $this->year = (int)$date->format('Y');
+        }
 
         return $this;
     }
@@ -171,6 +181,18 @@ class Video implements RouteParametersInterface, \Stringable
     public function setThumbnailUrl(?string $thumbnailUrl): static
     {
         $this->thumbnailUrl = $thumbnailUrl;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(?int $year): static
+    {
+        $this->year = $year;
 
         return $this;
     }

@@ -37,4 +37,5 @@ return [
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
     Survos\MeiliAdminBundle\SurvosMeiliAdminBundle::class => ['all' => true],
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
+    Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
 ];

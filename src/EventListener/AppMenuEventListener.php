@@ -77,7 +77,6 @@ final class AppMenuEventListener
         $video = $event->getOption('video');
         if ($video) {
             $this->add($menu, 'video_show', $video);
-            $this->add($menu, 'video_edit', $video);
         }
     }
 
@@ -115,6 +114,8 @@ final class AppMenuEventListener
         }
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'song_index', label: 'Songs');
+        $this->add($menu, 'video_browse', label: 'Videos');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
 //        $subMenu = $this->addSubmenu($menu, 'songs');
@@ -123,13 +124,17 @@ final class AppMenuEventListener
 //        // either a button on a navlink
 //        $subMenu->setLinkAttribute('class', 'nav-link');
 
-        foreach (['Song','Video'] as $shortClass) {
-            $this->add($menu, 'app_browse_with_doctrine', ['shortClass' => $shortClass], label: '@sql ' . $shortClass);
-            $this->add($menu, 'app_browse', ['shortClass' => $shortClass], label: '@meili ' . $shortClass);
-        }
+//        foreach (['Song','Video'] as $shortClass) {
+//            $this->add($menu, 'app_browse_with_doctrine', ['shortClass' => $shortClass], label: '@sql ' . $shortClass);
+//            $this->add($menu, 'app_browse', ['shortClass' => $shortClass], label: '@meili ' . $shortClass);
+//        }
 
         //
-        if ($this->isEnv('dev') || $this->isGranted('ROLE_ADMIN')) {
+        if (
+//            $this->isEnv('dev') ||
+            $this->isGranted('ROLE_ADMIN')) {
+            $this->add($menu, 'survos_meili_admin', external: true);
+            $this->add($menu, 'app_publish');
             $subMenu = $this->addSubmenu($menu, '@commands');
             foreach ([Song::class, Video::class] as $class) {
                 $this->add($subMenu, 'survos_command', [
@@ -140,19 +145,21 @@ final class AppMenuEventListener
                 );
             }
             $this->add($subMenu, 'survos_commands');
-        }
 
         $subMenu = $this->addSubmenu($menu, '@old');
         $this->add($subMenu, 'song_index', label: 'Songs (html)');
-        $this->add($subMenu, 'song_browse', label: 'Songs-Meili');
-        $this->add($subMenu, 'song_browse_with_doctrine', label: 'Songs-Doctine');
+//        $this->add($subMenu, 'song_browse', label: 'Songs-Meili');
+//        $this->add($subMenu, 'song_browse_with_doctrine', label: 'Songs-Doctine');
         $this->add($subMenu, 'video_browse', label: 'Youtube Videos');
 //        $this->add($menu, 'video_index'); // in-memory
 //        $this->add($subMenu, 'song_browse');
 
 //        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
-        if ($this->env === 'dev' && $this->security->isGranted('ROLE_ADMIN')) {
+        }
+
+
+        if ($this->env === 'dev' || $this->security->isGranted('ROLE_ADMIN')) {
             $subMenu = $this->addSubmenu($menu, 'admin');
             $this->add($subMenu, 'survos_commands', label: "Commands");
         }
