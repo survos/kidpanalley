@@ -30,7 +30,7 @@ class LoadDataCommand extends Command
                                 private readonly AppService $appService,
                                 private SongRepository $songRepository,
 
-                                string $name = null)
+                                ?string $name = null)
     {
         parent::__construct($name);
     }
