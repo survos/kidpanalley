@@ -43,3 +43,7 @@ Database Tables
 ## Other projects
 
 // https://www.youtube.com/watch?v=NeRjdX06_n8&t=186s if it were a generalized video / transcript research site
+
+## Database
+
+![Database Diagram](assets/db.svg)

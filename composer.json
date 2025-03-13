@@ -13,6 +13,7 @@
         "ext-iconv": "*",
         "ext-xml": "*",
         "ext-zip": "*",
+        "alexandre-fernandez/json-translation-bundle": "^1.0",
         "api-platform/core": "^4.0.9",
         "bizkit/versioning-bundle": "^1.2",
         "composer/package-versions-deprecated": "^1.11.99.5",
@@ -22,6 +23,7 @@
         "friendsofsymfony/jsrouting-bundle": "^3.5",
         "google/apiclient": "^2.18.0",
         "inspector-apm/inspector-symfony": "^1.2.5",
+        "jawira/doctrine-diagram-bundle": "^0.8.0",
         "league/csv": "^9.18",
         "league/oauth2-facebook": "^2.2",
         "league/oauth2-github": "^3.1.1",
@@ -43,6 +45,7 @@
         "survos/deployment-bundle": "^1.5.385",
         "survos/grid-group-bundle": "^1.5.385",
         "survos/inspection-bundle": "^1.5.385",
+        "survos/libre-translate-bundle": "^1.5",
         "survos/meili-admin-bundle": "^1.5.384",
         "survos/scraper-bundle": "^1.5.385",
         "survos/seo-bundle": "^1.5.385",
@@ -80,7 +83,8 @@
         "symfonycasts/verify-email-bundle": "^1.17.2",
         "twig/extra-bundle": "^3.15.0",
         "twig/intl-extra": "^3.15",
-        "twig/twig": "^3.15.0"
+        "twig/twig": "^3.15.0",
+        "zenstruck/class-metadata": "^1.1"
     },
     "require-dev": {
         "behat/behat": "^3.16",
@@ -121,9 +125,10 @@
         "allow-plugins": {
             "endroid/installer": true,
             "php-http/discovery": true,
+            "survos/installer": true,
             "symfony/flex": true,
             "symfony/runtime": true,
-            "survos/installer": true
+            "zenstruck/class-metadata": true
         },
         "preferred-install": {
             "*": "dist"
@@ -149,6 +154,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
+        "diagram": "bin/console doctrine:diagram --filename=assets/images/db.svg --exclude=doctrine_migration_versions,messenger_messages",
         "index": [
             "php -d memory_limit=512M bin/console grid:index --reset"
         ]

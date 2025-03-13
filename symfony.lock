@@ -1,4 +1,10 @@
 {
+    "alexandre-fernandez/json-translation-bundle": {
+        "version": "1.0.3"
+    },
+    "alexandre-fernandez/key-value-form-bundle": {
+        "version": "1.1.4"
+    },
     "api-platform/api-pack": {
         "version": "dev-master"
     },
@@ -146,6 +152,18 @@
         },
         "files": [
             "config/packages/inspector.yaml"
+        ]
+    },
+    "jawira/doctrine-diagram-bundle": {
+        "version": "0.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.7",
+            "ref": "1c062f7d4e61eb3e7372c45d96d33358cccac15a"
+        },
+        "files": [
+            "config/packages/doctrine_diagram.yaml"
         ]
     },
     "kevinpapst/tabler-bundle": {
@@ -427,6 +445,9 @@
     "survos/inspection-bundle": {
         "version": "1.1.x-dev"
     },
+    "survos/libre-translate-bundle": {
+        "version": "1.5.500"
+    },
     "survos/maker-bundle": {
         "version": "1.0.2"
     },
@@ -679,9 +700,6 @@
     },
     "symfony/polyfill-php80": {
         "version": "1.15-dev"
-    },
-    "symfony/polyfill-php81": {
-        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "4.4.x-dev"
