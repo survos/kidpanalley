@@ -205,9 +205,6 @@
     "league/oauth2-google": {
         "version": "3.0.3"
     },
-    "mindscreen/yarnlock": {
-        "version": "v1.0.1"
-    },
     "monolog/monolog": {
         "version": "1.x-dev"
     },
