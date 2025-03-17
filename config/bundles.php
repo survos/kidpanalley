@@ -31,7 +31,6 @@ return [
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
-    Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Survos\SeoBundle\SurvosSeoBundle::class => ['all' => true, 'test' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
