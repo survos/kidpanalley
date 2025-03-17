@@ -8,6 +8,7 @@ use App\Repository\SongRepository;
 use App\Services\AppService;
 use App\Services\DocxConversion;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +22,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-#[\Symfony\Component\Console\Attribute\AsCommand('app:load-data', "Load the songs and videos")]
+#[AsCommand('app:load-data', "Load the songs and videos")]
 class LoadDataCommand extends Command
 {
     public function __construct(private readonly EntityManagerInterface $entityManager,
@@ -29,8 +30,7 @@ class LoadDataCommand extends Command
                                 private MessageBusInterface $bus,
                                 private readonly AppService $appService,
                                 private SongRepository $songRepository,
-
-                                string $name = null)
+                                ?string $name = null)
     {
         parent::__construct($name);
     }
