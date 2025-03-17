@@ -23,7 +23,9 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use Zenstruck\Metadata;
 
 
 #[ORM\Entity(repositoryClass: SongRepository::class)]
@@ -57,6 +59,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 // brainstorming...
 #[Facets(groups: ['song.facet'], properties: ['publisher', 'year', 'writers','publishersArray'])]
 #[Assert\EnableAutoMapping]
+// someday do this as attributes and set in the compiler pass
+#[Metadata('translatable', ['title'])]
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;
@@ -67,9 +71,12 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: 'integer')]
     private $id;
+
+
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable','video.read'])]
     private ?string $title;
+
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['song.read', 'searchable'])]
     private $date;
@@ -111,6 +118,10 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['song.read'])]
+    private ?array $translations = null;
+
     public function __construct(?string $code = null)
     {
         assert($code, "missing code");
@@ -130,6 +141,7 @@ class Song implements RouteParametersInterface, \Stringable
 
     public function setTitle(?string $title): self
     {
+        // move to translation bundle
         assert(trim($title));
         $this->title = $title;
 
@@ -371,5 +383,23 @@ class Song implements RouteParametersInterface, \Stringable
         return $this;
     }
 
+    #[Groups(['song.read'])]
+    #[SerializedName('locale')]
+    public function getLocale(): string
+    {
+        return 'en';
+    }
+
+    public function getTranslations(): ?array
+    {
+        return $this->translations;
+    }
+
+    public function setTranslations(?array $translations): static
+    {
+        $this->translations = $translations;
+
+        return $this;
+    }
 
 }

@@ -38,4 +38,8 @@ return [
     Survos\MeiliAdminBundle\SurvosMeiliAdminBundle::class => ['all' => true],
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
+    Survos\LibreTranslateBundle\SurvosLibreTranslateBundle::class => ['all' => true],
+    AlexandreFernandez\KeyValueFormBundle\KeyValueFormBundle::class => ['all' => true],
+    AlexandreFernandez\JsonTranslationBundle\JsonTranslationBundle::class => ['all' => true],
+    Jawira\DoctrineDiagramBundle\DoctrineDiagramBundle::class => ['all' => true],
 ];

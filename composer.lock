@@ -4,8 +4,115 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91369701e2b3f84c618ec26919db0416",
+    "content-hash": "042f1a5656dd3409cdef880d894afa4f",
     "packages": [
+        {
+            "name": "alexandre-fernandez/json-translation-bundle",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/alexandre-fernandez/json-translation-bundle.git",
+                "reference": "68807a36c98686fffab2c4d8f3bcc6c76d657ffc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/alexandre-fernandez%2Fjson-translation-bundle/repository/archive.zip?sha=68807a36c98686fffab2c4d8f3bcc6c76d657ffc",
+                "reference": "68807a36c98686fffab2c4d8f3bcc6c76d657ffc",
+                "shasum": ""
+            },
+            "require": {
+                "alexandre-fernandez/key-value-form-bundle": "^1.1",
+                "doctrine/doctrine-bundle": "^2.13",
+                "doctrine/orm": "^3.3",
+                "symfony/form": "^7.2",
+                "symfony/framework-bundle": "^7.2",
+                "symfony/translation": "^7.2",
+                "symfony/twig-bundle": "^7.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "AlexandreFernandez\\JsonTranslationBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Fernandez",
+                    "email": "contact.ocean431@passmail.net"
+                }
+            ],
+            "description": "Manage localized content in your Symfony applications.",
+            "homepage": "https://gitlab.com/alexandre-fernandez/json-translation-bundle",
+            "keywords": [
+                "doctrine",
+                "i18n",
+                "orm",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/alexandre-fernandez/json-translation-bundle/-/issues",
+                "source": "https://gitlab.com/alexandre-fernandez/json-translation-bundle/-/tree/1.0.5"
+            },
+            "time": "2025-03-12T01:14:14+00:00"
+        },
+        {
+            "name": "alexandre-fernandez/key-value-form-bundle",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/alexandre-fernandez/key-value-form-bundle.git",
+                "reference": "e3242f15490d967f8da8180778b07691d17581c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/alexandre-fernandez%2Fkey-value-form-bundle/repository/archive.zip?sha=e3242f15490d967f8da8180778b07691d17581c2",
+                "reference": "e3242f15490d967f8da8180778b07691d17581c2",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/form": "^7.2",
+                "symfony/framework-bundle": "^7.2",
+                "symfony/translation": "^7.2",
+                "symfony/twig-bundle": "^7.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "AlexandreFernandez\\KeyValueFormBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Fernandez",
+                    "email": "contact.ocean431@passmail.net"
+                }
+            ],
+            "description": "Symfony form type to manage associative array data.",
+            "homepage": "https://gitlab.com/alexandre-fernandez/key-value-form-bundle",
+            "keywords": [
+                "Associative",
+                "array",
+                "form",
+                "key",
+                "map",
+                "symfony",
+                "type",
+                "value"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/alexandre-fernandez/key-value-form-bundle/-/issues",
+                "source": "https://gitlab.com/alexandre-fernandez/key-value-form-bundle/-/tree/1.1.4"
+            },
+            "time": "2025-02-25T22:09:19+00:00"
+        },
         {
             "name": "api-platform/core",
             "version": "v4.1.1",
@@ -2943,6 +3050,340 @@
                 "source": "https://github.com/inspector-apm/inspector-symfony/tree/1.8.2"
             },
             "time": "2025-02-24T14:17:36+00:00"
+        },
+        {
+            "name": "jawira/db-draw",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jawira/db-draw.git",
+                "reference": "669ab1d795c489026dcef418647b0c6c93def43a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jawira/db-draw/zipball/669ab1d795c489026dcef418647b0c6c93def43a",
+                "reference": "669ab1d795c489026dcef418647b0c6c93def43a",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^3.3 || ^4.0",
+                "jawira/doctrine-diagram-contracts": "^0.1.0",
+                "jawira/the-lost-functions": "^1.1",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "ext-xml": "*",
+                "friendsofphp/php-cs-fixer": "^3.64",
+                "jawira/plantuml": "^1.2024.6",
+                "jawira/plantuml-client": "^1.0.3",
+                "jawira/skeleton": "^2.24.1",
+                "phpstan/phpstan": "^1.12.2",
+                "phpunit/phpunit": "^9.6.20"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jawira\\DbDraw\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jawira Portugal"
+                }
+            ],
+            "description": "📐 Takes a DoctrineORM connection and generates a database diagram in .puml format",
+            "homepage": "https://jawira.github.io/db-draw/",
+            "keywords": [
+                "database",
+                "db",
+                "dbal",
+                "diagram",
+                "doctrine",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/jawira/db-draw/issues",
+                "source": "https://github.com/jawira/db-draw/tree/v1.8.0"
+            },
+            "time": "2025-01-24T22:52:13+00:00"
+        },
+        {
+            "name": "jawira/doctrine-diagram-bundle",
+            "version": "v0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jawira/doctrine-diagram-bundle.git",
+                "reference": "7ae2817cd237610fd5487fcb1ffddc017dbfeda5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jawira/doctrine-diagram-bundle/zipball/7ae2817cd237610fd5487fcb1ffddc017dbfeda5",
+                "reference": "7ae2817cd237610fd5487fcb1ffddc017dbfeda5",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^2.5",
+                "doctrine/orm": "^2.9 || ^3.0",
+                "jawira/db-draw": "^1.6",
+                "jawira/plantuml-client": "^1.0",
+                "php": "^8.0",
+                "symfony/console": "^6.0 || ^7.0",
+                "symfony/filesystem": "^6.0 || ^7.0",
+                "symfony/framework-bundle": "^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.31",
+                "friendsofphp/php-cs-fixer": "^3.46",
+                "jawira/plantuml": "^1.2023",
+                "jawira/skeleton": "^2.22",
+                "phpstan/extension-installer": "^1.3.1",
+                "phpstan/phpstan": "^1.10.55",
+                "phpstan/phpstan-symfony": "^1.3.7"
+            },
+            "suggest": {
+                "jawira/plantuml": "Install PlantUML executable with Composer."
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Jawira\\DoctrineDiagramBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jawira Portugal",
+                    "homepage": "https://jawira.com"
+                }
+            ],
+            "description": "📐 Symfony Bundle to generate database diagrams",
+            "homepage": "https://github.com/jawira/doctrine-diagram-bundle",
+            "keywords": [
+                "database",
+                "diagram",
+                "doctrine",
+                "symfony-bundle"
+            ],
+            "support": {
+                "issues": "https://github.com/jawira/doctrine-diagram-bundle/issues",
+                "source": "https://github.com/jawira/doctrine-diagram-bundle/tree/v0.8.0"
+            },
+            "time": "2024-02-10T00:27:24+00:00"
+        },
+        {
+            "name": "jawira/doctrine-diagram-contracts",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jawira/doctrine-diagram-contracts.git",
+                "reference": "5f0903327c12c7df934b90f55e581f69bb2eb68d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jawira/doctrine-diagram-contracts/zipball/5f0903327c12c7df934b90f55e581f69bb2eb68d",
+                "reference": "5f0903327c12c7df934b90f55e581f69bb2eb68d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.68",
+                "jawira/skeleton": "^2.26"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jawira\\DoctrineDiagramContracts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jawira Portugal",
+                    "email": "dev@tugal.be"
+                }
+            ],
+            "description": "Generic abstractions related to Doctrine Diagram Bundle",
+            "support": {
+                "issues": "https://github.com/jawira/doctrine-diagram-contracts/issues",
+                "source": "https://github.com/jawira/doctrine-diagram-contracts/tree/v0.1.0"
+            },
+            "time": "2025-01-20T22:43:07+00:00"
+        },
+        {
+            "name": "jawira/plantuml-client",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jawira/plantuml-client.git",
+                "reference": "28ca92b4e0825bd7f3a82fed10c7f3dbe0657fd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jawira/plantuml-client/zipball/28ca92b4e0825bd7f3a82fed10c7f3dbe0657fd5",
+                "reference": "28ca92b4e0825bd7f3a82fed10c7f3dbe0657fd5",
+                "shasum": ""
+            },
+            "require": {
+                "jawira/plantuml-encoding": "^1.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.13",
+                "ext-fileinfo": "*",
+                "jawira/skeleton": "^2.16",
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5"
+            },
+            "suggest": {
+                "pds/skeleton": "Standard PHP package skeleton."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jawira\\PlantUmlClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jawira Portugal",
+                    "email": "dev@tugal.be"
+                }
+            ],
+            "description": "Convert PlantUML diagrams into images.",
+            "keywords": [
+                "diagram",
+                "image",
+                "plantuml",
+                "uml"
+            ],
+            "support": {
+                "issues": "https://github.com/jawira/plantuml-client/issues",
+                "source": "https://github.com/jawira/plantuml-client/tree/v1.0.3"
+            },
+            "time": "2022-11-08T23:48:25+00:00"
+        },
+        {
+            "name": "jawira/plantuml-encoding",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jawira/plantuml-encoding.git",
+                "reference": "fe8bce2d7ff5bb5cccf374349999cef7d6246a32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jawira/plantuml-encoding/zipball/fe8bce2d7ff5bb5cccf374349999cef7d6246a32",
+                "reference": "fe8bce2d7ff5bb5cccf374349999cef7d6246a32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/plantuml_functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jawira Portugal",
+                    "homepage": "https://jawira.com"
+                }
+            ],
+            "description": "PlantUML encoding functions",
+            "keywords": [
+                "encodep",
+                "encoding",
+                "functions",
+                "plantuml",
+                "uml"
+            ],
+            "support": {
+                "issues": "https://github.com/jawira/plantuml-encoding/issues",
+                "source": "https://github.com/jawira/plantuml-encoding/tree/v1.1.1"
+            },
+            "time": "2024-12-22T17:49:30+00:00"
+        },
+        {
+            "name": "jawira/the-lost-functions",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/jawira/the-lost-functions.git",
+                "reference": "bcdb3065549870cde26fdc4b1e72337c2913e562"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/jawira%2Fthe-lost-functions/repository/archive.zip?sha=bcdb3065549870cde26fdc4b1e72337c2913e562",
+                "reference": "bcdb3065549870cde26fdc4b1e72337c2913e562",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2",
+                "ext-mbstring": "*",
+                "friendsofphp/php-cs-fixer": "^3",
+                "jawira/skeleton": "^2",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jawira Portugal",
+                    "email": "dev@tugal.be"
+                }
+            ],
+            "description": "Collection of convenience functions.",
+            "keywords": [
+                "Year",
+                "array",
+                "function",
+                "get_class",
+                "is_initialized"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/jawira/the-lost-functions/-/issues",
+                "source": "https://gitlab.com/jawira/the-lost-functions/-/tree/v1.7.0"
+            },
+            "time": "2024-03-12T20:44:01+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -6559,6 +7000,66 @@
                 }
             ],
             "time": "2024-12-09T14:44:56+00:00"
+        },
+        {
+            "name": "survos/libre-translate-bundle",
+            "version": "1.5.529",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/LibreTranslateBundle.git",
+                "reference": "3bcabe8989e177cdecdb4dacfbd45dc526aee705"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/LibreTranslateBundle/zipball/3bcabe8989e177cdecdb4dacfbd45dc526aee705",
+                "reference": "3bcabe8989e177cdecdb4dacfbd45dc526aee705",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3",
+                "symfony/config": "^6.4 || ^7.1",
+                "symfony/dependency-injection": "^6.4 || ^7.1",
+                "symfony/http-client": "^7.2",
+                "symfony/http-kernel": "^6.4 || ^7.1",
+                "symfony/string": "^7.2",
+                "symfony/validator": "^7.2",
+                "tacman/libretranslate": "^2.0",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "symfony/browser-kit": "^6.4 || ^7.1",
+                "symfony/framework-bundle": "^6.4 || ^7.1",
+                "symfony/phpunit-bridge": "^6.4 || ^7.1",
+                "symfony/twig-bundle": "^6.4 || ^7.1",
+                "symfony/var-dumper": "^6.4 || ^7.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\LibreTranslateBundle\\": "src/",
+                    "Surovs\\LibreTranslateBundle\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "keywords": [
+                "symfony-ux",
+                "symfony6"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/LibreTranslateBundle/issues",
+                "source": "https://github.com/survos/LibreTranslateBundle/tree/1.5.529"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-06T17:14:50+00:00"
         },
         {
             "name": "survos/meili-admin-bundle",
@@ -12638,6 +13139,64 @@
             "time": "2024-12-09T18:44:25+00:00"
         },
         {
+            "name": "tacman/libretranslate",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tacman/libretranslate.git",
+                "reference": "84c3c76c7e3e4005804995e0009157b38e7c84db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tacman/libretranslate/zipball/84c3c76c7e3e4005804995e0009157b38e7c84db",
+                "reference": "84c3c76c7e3e4005804995e0009157b38e7c84db",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^8.3",
+                "symfony/http-client": "^7.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^11.4",
+                "rector/rector": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jefs42\\": "src",
+                    "Jefs42\\Tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Shilt",
+                    "email": "dev@fortytwo-it.com",
+                    "homepage": "https://fortytwo-it.com"
+                },
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "PHP interface for the open source LibreTranslate project",
+            "keywords": [
+                "libretranslate",
+                "php",
+                "translate"
+            ],
+            "support": {
+                "source": "https://github.com/tacman/libretranslate/tree/2.0.2"
+            },
+            "time": "2025-01-24T08:47:25+00:00"
+        },
+        {
             "name": "twig/extra-bundle",
             "version": "v3.20.0",
             "source": {
@@ -13075,6 +13634,70 @@
                 }
             ],
             "time": "2022-08-31T14:56:15+00:00"
+        },
+        {
+            "name": "zenstruck/class-metadata",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zenstruck/class-metadata.git",
+                "reference": "f270bf620cc898dfe97ba6cd2baa24a74c56366f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zenstruck/class-metadata/zipball/f270bf620cc898dfe97ba6cd2baa24a74c56366f",
+                "reference": "f270bf620cc898dfe97ba6cd2baa24a74c56366f",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.0"
+            },
+            "conflict": {
+                "composer": "<2.4"
+            },
+            "require-dev": {
+                "composer/composer": "^2.4",
+                "doctrine/persistence": "^1.0|^2.0|^3.0",
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^9.6.21",
+                "symfony/phpunit-bridge": "^6.0"
+            },
+            "suggest": {
+                "doctrine/persistence": "To use the AliasManagerRegistry decorator"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Zenstruck\\Metadata\\Composer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zenstruck\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Bond",
+                    "email": "kevinbond@gmail.com"
+                }
+            ],
+            "description": "Add human readable class aliases & metadata with efficient lookups.",
+            "homepage": "https://github.com/zenstruck/class-metadata",
+            "support": {
+                "issues": "https://github.com/zenstruck/class-metadata/issues",
+                "source": "https://github.com/zenstruck/class-metadata/tree/v1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-11-14T20:34:23+00:00"
         },
         {
             "name": "zenstruck/console-extra",
