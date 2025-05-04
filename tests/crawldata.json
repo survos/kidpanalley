@@ -1,0 +1,176 @@
+{
+    "|App\\Entity\\User|https://kpa.wip/": {
+        "/": {
+            "path": "/",
+            "seen": true,
+            "depth": 0,
+            "linkStatus": null,
+            "username": null,
+            "route": "app_homepage",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": null,
+            "memory": null
+        },
+        "/login": {
+            "path": "/login",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": null,
+            "route": "app_login",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/register": {
+            "path": "/register",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": null,
+            "route": "app_register",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/songs/browse": {
+            "path": "/songs/browse",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": null,
+            "route": "song_index",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/video/browse": {
+            "path": "/video/browse",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": null,
+            "route": "video_browse",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/song/1209/": {
+            "path": "/song/1209/",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": null,
+            "route": "song_show",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/video/wQrG1R0xmTw": {
+            "path": "/video/wQrG1R0xmTw",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": null,
+            "route": "video_show",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        }
+    },
+    "tacman@gmail.com|App\\Entity\\User|https://kpa.wip/": {
+        "/": {
+            "path": "/",
+            "seen": true,
+            "depth": 0,
+            "linkStatus": null,
+            "username": "tacman@gmail.com",
+            "route": "app_homepage",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": null,
+            "memory": null
+        },
+        "/auth/profile": {
+            "path": "/auth/profile",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": "tacman@gmail.com",
+            "route": "oauth_profile",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/songs/browse": {
+            "path": "/songs/browse",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": "tacman@gmail.com",
+            "route": "song_index",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/video/browse": {
+            "path": "/video/browse",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": "tacman@gmail.com",
+            "route": "video_browse",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/song/1209/": {
+            "path": "/song/1209/",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": "tacman@gmail.com",
+            "route": "song_show",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        },
+        "/video/wQrG1R0xmTw": {
+            "path": "/video/wQrG1R0xmTw",
+            "seen": true,
+            "depth": 1,
+            "linkStatus": null,
+            "username": "tacman@gmail.com",
+            "route": "video_show",
+            "rp": null,
+            "statusCode": 200,
+            "foundOn": "/",
+            "memory": null
+        }
+    },
+    "tt@survos.com|App\\Entity\\User|https://kpa.wip/": {
+        "/": {
+            "path": "/",
+            "seen": true,
+            "depth": 0,
+            "linkStatus": null,
+            "username": "tt@survos.com",
+            "route": "app_homepage",
+            "rp": null,
+            "statusCode": null,
+            "foundOn": null,
+            "memory": null
+        }
+    }
+}
