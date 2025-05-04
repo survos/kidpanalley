@@ -36,24 +36,6 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/new', name: 'video_new', methods: ['GET', 'POST'])]
-    public function new(Request $request) : Response
-    {
-        $video = new Video();
-        $form = $this->createForm(VideoType::class, $video);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($video);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('video_index');
-        }
-        return $this->render('video/new.html.twig', [
-            'video' => $video,
-            'form' => $form->createView(),
-        ]);
-    }
     #[Route(path: '/{videoId}', name: 'video_show', methods: ['GET'], options: ['expose' => true])]
     public function show(Video $video) : Response
     {

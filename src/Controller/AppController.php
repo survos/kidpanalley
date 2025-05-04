@@ -86,6 +86,8 @@ class AppController extends AbstractController
         $user = $this->getUser();
         return $this->render('app/homepage.html.twig', [
             'user' => $user,
+            'featured' => $songRepository->findBy([], ['id' => 'DESC'], 1),
+            'featuredVideo' => $videoRepository->findBy([], ['id' => 'DESC'], 1),
             'songCount' => $songRepository->count([]),
             'videoCount' => $videoRepository->count([])
         ]);

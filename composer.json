@@ -98,7 +98,9 @@
         "symfony/maker-bundle": "^1.61.0",
         "symfony/phpunit-bridge": "^7.1.6",
         "symfony/stopwatch": "^7.1",
-        "symfony/web-profiler-bundle": "^7.1"
+        "symfony/web-profiler-bundle": "^7.1",
+        "zenstruck/browser": "^1.9",
+        "zenstruck/console-test": "^1.7"
     },
     "replace": {
         "paragonie/random_compat": "^2.0",
@@ -154,6 +156,8 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
+        "coverage": "rm products-test.db -f && bin/console d:sc:update --force --env=test && php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage",
+
         "diagram": "bin/console doctrine:diagram --filename=assets/images/db.svg --exclude=doctrine_migration_versions,messenger_messages",
         "index": [
             "php -d memory_limit=512M bin/console grid:index --reset"
