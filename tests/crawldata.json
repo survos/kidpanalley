@@ -1,5 +1,5 @@
 {
-    "|App\\Entity\\User|https://kpa.wip/": {
+    "|https://kpa.wip/": {
         "/": {
             "path": "/",
             "seen": true,
@@ -59,33 +59,9 @@
             "statusCode": 200,
             "foundOn": "/",
             "memory": null
-        },
-        "/song/1209/": {
-            "path": "/song/1209/",
-            "seen": true,
-            "depth": 1,
-            "linkStatus": null,
-            "username": null,
-            "route": "song_show",
-            "rp": null,
-            "statusCode": 200,
-            "foundOn": "/",
-            "memory": null
-        },
-        "/video/wQrG1R0xmTw": {
-            "path": "/video/wQrG1R0xmTw",
-            "seen": true,
-            "depth": 1,
-            "linkStatus": null,
-            "username": null,
-            "route": "video_show",
-            "rp": null,
-            "statusCode": 200,
-            "foundOn": "/",
-            "memory": null
         }
     },
-    "tacman@gmail.com|App\\Entity\\User|https://kpa.wip/": {
+    "tacman@gmail.com|https://kpa.wip/": {
         "/": {
             "path": "/",
             "seen": true,
@@ -133,33 +109,9 @@
             "statusCode": 200,
             "foundOn": "/",
             "memory": null
-        },
-        "/song/1209/": {
-            "path": "/song/1209/",
-            "seen": true,
-            "depth": 1,
-            "linkStatus": null,
-            "username": "tacman@gmail.com",
-            "route": "song_show",
-            "rp": null,
-            "statusCode": 200,
-            "foundOn": "/",
-            "memory": null
-        },
-        "/video/wQrG1R0xmTw": {
-            "path": "/video/wQrG1R0xmTw",
-            "seen": true,
-            "depth": 1,
-            "linkStatus": null,
-            "username": "tacman@gmail.com",
-            "route": "video_show",
-            "rp": null,
-            "statusCode": 200,
-            "foundOn": "/",
-            "memory": null
         }
     },
-    "tt@survos.com|App\\Entity\\User|https://kpa.wip/": {
+    "tt@survos.com|https://kpa.wip/": {
         "/": {
             "path": "/",
             "seen": true,

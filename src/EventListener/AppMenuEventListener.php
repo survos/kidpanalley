@@ -28,14 +28,14 @@ final class AppMenuEventListener
     use KnpMenuHelperTrait;
 
     public function __construct(
-        #[Autowire('%kernel.environment%')] protected string $env,
-        private ContextService $contextService,
-        private Security $security,
-        private MenuService $menuService,
-        private DatatableService $datatableService,
+        #[Autowire('%kernel.environment%')] protected string           $env,
+        private ContextService                                         $contextService,
+        private Security                                               $security,
+        private MenuService                                            $menuService,
+        private DatatableService                                       $datatableService,
         // why is autowire required?
-        #[Autowire(service: 'api_meili_service')]  private MeiliService $meiliService,
-        private ?AuthorizationCheckerInterface $authorizationChecker=null
+        #[Autowire(service: 'api_meili_service')] private MeiliService $meiliService,
+        private ?AuthorizationCheckerInterface                         $authorizationChecker = null
     )
     {
 //        $this->setAuthorizationChecker($this->authorizationChecker);
@@ -62,7 +62,7 @@ final class AppMenuEventListener
         if ($entityClass = $event->getOption('entityClass')) {
             $settings = $this->datatableService->getSettingsFromAttributes($entityClass);
             foreach ($settings as $fieldName => $setting) {
-                if ($setting['browsable']??false) {
+                if ($setting['browsable'] ?? false) {
                     $this->add($menu, 'survos_facet_show', ['indexName' => MeiliSearchStateProvider::getSearchIndexObject($entityClass), 'fieldName' => $fieldName], label: $fieldName);
                 }
             }
@@ -80,7 +80,7 @@ final class AppMenuEventListener
         }
     }
 
-        public function footerMenu(KnpMenuEvent $event): void
+    public function footerMenu(KnpMenuEvent $event): void
     {
         if (!$this->supports($event)) {
             return;
@@ -132,25 +132,25 @@ final class AppMenuEventListener
         //
         if (
 //            $this->isEnv('dev') ||
-            $this->isGranted('ROLE_ADMIN')) {
+        $this->isGranted('ROLE_ADMIN')) {
             $this->add($menu, 'survos_meili_admin', external: true);
             $this->add($menu, 'app_publish');
             $subMenu = $this->addSubmenu($menu, '@commands');
             foreach ([Song::class, Video::class] as $class) {
                 $this->add($subMenu, 'survos_command', [
-                    'commandName'=>'grid:index',
+                    'commandName' => 'grid:index',
                     'class' => $class
                 ],
-                    label: 'grid:index ' .  $class
+                    label: 'grid:index ' . $class
                 );
             }
             $this->add($subMenu, 'survos_commands');
 
-        $subMenu = $this->addSubmenu($menu, '@old');
-        $this->add($subMenu, 'song_index', label: 'Songs (html)');
+            $subMenu = $this->addSubmenu($menu, '@old');
+            $this->add($subMenu, 'song_index', label: 'Songs (html)');
 //        $this->add($subMenu, 'song_browse', label: 'Songs-Meili');
 //        $this->add($subMenu, 'song_browse_with_doctrine', label: 'Songs-Doctine');
-        $this->add($subMenu, 'video_browse', label: 'Youtube Videos');
+            $this->add($subMenu, 'video_browse', label: 'Youtube Videos');
 //        $this->add($menu, 'video_index'); // in-memory
 //        $this->add($subMenu, 'song_browse');
 

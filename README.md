@@ -1,4 +1,38 @@
-# kidpanalley
+# # ~~
+
+Archives for Kid Pan Alley
+
+
+## Installation
+
+```bash
+git clone git@github.com:tacman/kpa kpa && cd kpa
+echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" > .env.local
+echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data_test.db" > .env.test
+composer install
+bin/console doctrine:schema:update --force
+symfony server:start -d
+symfony open:local
+```
+
+
+
+## Running tests
+
+```bash
+bin/console doctrine:schema:update --force --env=test
+bin/console doctrine:fixtures:load -n --env=test
+vendor/bin/phpunit
+```
+
+
+    usage here.
+
+## Database
+
+![Database Diagram](assets/db.svg)
+
+
 
 ## Setup
 
@@ -31,7 +65,7 @@ Load the exists assets (youtube and songs) via
 ```bash
 bin/console app:load-data
 ```
-    
+
 Database Tables
 
 * Videos: from youtube now, eventually from Dropbox too.
@@ -44,6 +78,5 @@ Database Tables
 
 // https://www.youtube.com/watch?v=NeRjdX06_n8&t=186s if it were a generalized video / transcript research site
 
-## Database
 
-![Database Diagram](assets/db.svg)
+*build with survos/doc-bundle*

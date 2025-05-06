@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class CrawlAsTtTest extends BaseVisitLinksTest
 {
 	#[TestDox('/$method $url ($route)')]
-	#[TestWith(['tt@survos.com', 'App\Entity\User', '/', 200])]
-	public function testRoute(string $username, string $userClassName, string $url, string|int|null $expected): void
+	#[TestWith(['tt@survos.com', '/', 200])]
+	public function testRoute(string $username, string $url, string|int|null $expected): void
 	{
-		parent::testWithLogin($username, $userClassName, $url, (int)$expected);
+		parent::testWithLogin($username, $url, (int)$expected);
 	}
 }
