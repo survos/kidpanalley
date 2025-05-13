@@ -29,7 +29,8 @@
 
   <testsuites>
     <testsuite name="all">
-      <directory>tests</directory>
+          <directory>tests/Load</directory>
+          <directory>tests/Crawl</directory>
     </testsuite>
   </testsuites>
 

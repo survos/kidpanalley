@@ -22,7 +22,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-#[AsCommand('app:load-data', "Load the songs and videos")]
+#[AsCommand('app:load', "Load the songs and videos")]
 class LoadDataCommand extends Command
 {
     public function __construct(private readonly EntityManagerInterface $entityManager,
