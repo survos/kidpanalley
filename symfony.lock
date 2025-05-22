@@ -427,6 +427,9 @@
     "survos/deployment-bundle": {
         "version": "1.5.81"
     },
+    "survos/doc-bundle": {
+        "version": "1.5.529"
+    },
     "survos/grid-bundle": {
         "version": "1.5.89"
     },

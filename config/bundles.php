@@ -41,4 +41,5 @@ return [
     AlexandreFernandez\KeyValueFormBundle\KeyValueFormBundle::class => ['all' => true],
     AlexandreFernandez\JsonTranslationBundle\JsonTranslationBundle::class => ['all' => true],
     Jawira\DoctrineDiagramBundle\DoctrineDiagramBundle::class => ['all' => true],
+    Survos\DocBundle\SurvosDocBundle::class => ['dev' => true, 'test' => true],
 ];

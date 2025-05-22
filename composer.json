@@ -4,7 +4,7 @@
     "keywords": ["symfony","pwa"],
     "license": "proprietary",
     "type": "project",
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "require": {
         "php": "^8.3",
@@ -91,6 +91,7 @@
         "phpunit/phpunit": "^12.0",
         "rector/rector": "^2.0",
         "survos/crawler-bundle": "^1.5.385",
+        "survos/doc-bundle": "dev-main",
         "survos/maker-bundle": "^1.5.385",
         "symfony/browser-kit": "^7.1",
         "symfony/css-selector": "^7.1",
@@ -140,7 +141,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": "true",
-            "require": "^7.2"
+            "require": "^7.3"
         }
     },
     "scripts": {
@@ -156,7 +157,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
-        "coverage": "rm products-test.db -f && bin/console d:sc:update --force --env=test && php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage",
+        "coverage": "php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage",
 
         "diagram": "bin/console doctrine:diagram --filename=assets/images/db.svg --exclude=doctrine_migration_versions,messenger_messages",
         "index": [
