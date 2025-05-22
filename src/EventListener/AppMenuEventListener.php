@@ -94,8 +94,8 @@ final class AppMenuEventListener
 
         $theme = $this->contextService->getOption('theme');
         $this->add($menu, 'app_homepage');
-        if ($this->isGranted('ROLE_ADMIN')) {
             $this->add($menu, 'app_load_lyrics');
+        if ($this->isGranted('ROLE_ADMIN')) {
             $this->add($menu, 'survos_commands');
 
         }
