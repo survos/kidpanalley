@@ -32,7 +32,9 @@ class AppController extends AbstractController
     final const ENDPOINT = 'https://www.kidpanalley.org/wp-json/wp/v2/pages';
 
     public function __construct(
-                                private readonly Environment $twig, private readonly EntityManagerInterface $em)
+        private AppService $appService,
+                                private readonly Environment $twig,
+                                private readonly EntityManagerInterface $em)
     {
     }
 
@@ -95,7 +97,7 @@ class AppController extends AbstractController
 
     private function loadLyrics($songs)
     {
-
+        $this->appService->loadLyricsViaDropbox('/');
         // @todo: fetch lyrics from Dropbox
     }
 
@@ -250,6 +252,8 @@ class AppController extends AbstractController
     #[Route(path: '/load-lyrics-from-files', name: 'app_load_lyrics')]
     public function index(AppService $appService, EntityManagerInterface $em)
     {
+        $this->appService->loadLyricsViaDropbox('/');
+
         $dir = __DIR__ . '/../../data/lyrics';
         $appService->loadLyrics($dir);
         return $this->redirectToRoute('song_index', ['lyrics_only' => true]);
