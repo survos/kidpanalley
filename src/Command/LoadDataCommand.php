@@ -23,17 +23,19 @@ use Symfony\Component\Process\Process;
 #[AsCommand('app:load', "Load the songs and videos")]
 class LoadDataCommand
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private readonly ParameterBagInterface $bag,
-                                private MessageBusInterface $bus,
-                                private readonly AppService $appService,
-                                private SongRepository $songRepository,
-    #[Autowire('%kernel.project_dir%')] private string $projectDir,
+    public function __construct(
+        private readonly EntityManagerInterface            $entityManager,
+        private readonly ParameterBagInterface             $bag,
+        private MessageBusInterface                        $bus,
+        private readonly AppService                        $appService,
+        private SongRepository                             $songRepository,
+        #[Autowire('%kernel.project_dir%')] private string $projectDir,
     )
     {
     }
+
     public function __invoke(
-        SymfonyStyle $io,
+        SymfonyStyle    $io,
         #[Option] ?bool $video = null,
         #[Option] ?bool $songs = null,
     ): int
@@ -84,7 +86,6 @@ class LoadDataCommand
             } else {
                 continue;
             }
-
 
 
             dd($filename, $text, $file->getRealPath());

@@ -8,9 +8,14 @@
 /vendor/
 
 ###> phpunit/phpunit ###
+<<<<<<< ours
 .phpunit
 .phpunit.result.cache
 .phpunit.cache/
+=======
+/phpunit.xml
+/.phpunit.cache/
+>>>>>>> theirs
 ###< phpunit/phpunit ###
 
 /public/js/fos_js_routes.json

@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -34,7 +35,9 @@ class AppController extends AbstractController
     public function __construct(
         private AppService $appService,
                                 private readonly Environment $twig,
-                                private readonly EntityManagerInterface $em)
+                                private readonly EntityManagerInterface $em,
+        #[Autowire('%kernel.environment%')] private string $env,
+    )
     {
     }
 
@@ -166,12 +169,16 @@ class AppController extends AbstractController
      *
      */
     #[Route(path: '/publish', name: 'app_publish')]
+    #[Template('app/publish.html.twig')]
     public function publish(array $options=[])
     {
         [$u, $p] = $this->getAuth();
         $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
             'https://www.kidpanalley.org', $u, $p);
-        dd($command);
+//        if ($this->env=='dev') {
+//            dd($command);
+//        }
+        return ['command' => $command];
 
         $song = null;
         $wordpressPagePayload = (new OptionsResolver())
