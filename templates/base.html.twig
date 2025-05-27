@@ -2,15 +2,13 @@
 {% set appShortName = 'KPA' %}
 {% block logo_mini 'KPA' %}
 
-
     {% block stylesheets %}
-
         {{ parent() }}
     {% endblock %}
 
     {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-                {{ parent() }}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {{ parent() }}
     {% endblock %}
 
 
