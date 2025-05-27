@@ -1,8 +1,10 @@
 api_platform:
     title: KPA API
     version: 1.0.0
-    formats:
-        jsonld: ['application/ld+json']
+
+#    formats:
+#        jsonld: ['application/ld+json']
+
     docs_formats:
         jsonld: ['application/ld+json']
         jsonopenapi: ['application/vnd.openapi+json']
@@ -20,6 +22,7 @@ api_platform:
         stateless: false
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+
         extra_properties:
             standard_put: true
             rfc_7807_compliant_errors: true
