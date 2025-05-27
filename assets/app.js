@@ -1,4 +1,5 @@
-import './bootstrap.js'; // stimulus
+import './bootstrap.js';
+ // stimulus
 
 // import './styles/app.css';
 
