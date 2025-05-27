@@ -422,7 +422,17 @@
         "version": "1.0.7"
     },
     "survos/crawler-bundle": {
-        "version": "1.4.44"
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "d16db1be85e21925f873d8099ca9ae7c4d50a208"
+        },
+        "files": [
+            "config/packages/survos_crawler.yaml",
+            "config/routes/survos_crawler.yaml"
+        ]
     },
     "survos/deployment-bundle": {
         "version": "1.5.81"
