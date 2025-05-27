@@ -4,7 +4,7 @@
     "keywords": ["symfony","pwa"],
     "license": "proprietary",
     "type": "project",
-    "minimum-stability": "beta",
+    "minimum-stability": "RC",
     "prefer-stable": true,
     "require": {
         "php": "^8.3",
@@ -59,6 +59,7 @@
         "symfony/framework-bundle": "^7.1",
         "symfony/http-client": "^7.1",
         "symfony/intl": "^7.1",
+        "symfony/lock": "^7.3",
         "symfony/mailer": "^7.1",
         "symfony/messenger": "^7.1",
         "symfony/monolog-bundle": "^3.10",

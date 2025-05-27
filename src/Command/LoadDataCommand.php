@@ -34,14 +34,16 @@ class LoadDataCommand
     }
     public function __invoke(
         SymfonyStyle $io,
-        #[Option] bool $video = true,
-        #[Option] bool $songs = true,
+        #[Option] ?bool $video = null,
+        #[Option] ?bool $songs = null,
     ): int
     {
+        $video ??= true;
+        $songs ??= false;
 
         if ($video) {
             $this->bus->dispatch(new FetchYoutubeChannelMessage(), [
-                new DeduplicateStamp('video-lock'),
+//                new DeduplicateStamp('video-lock'),
             ]);
             $io->success('Videos Load Requested');
         }
