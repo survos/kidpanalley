@@ -20,7 +20,7 @@ class CrawlAsTtTest extends BaseVisitLinksTest
 	#[TestWith(['tt@survos.com', '/js/routing', 200])]
 	#[TestWith(['tt@survos.com', '/auth/profile', 200])]
 	#[TestWith(['tt@survos.com', '/auth/providers', 200])]
-	#[TestWith(['tt@survos.com', '/admin/commands/admin/commands/', 200])]
+	#[TestWith(['tt@survos.com', '/admin/commands/', 200])]
 	#[TestWith(['tt@survos.com', '/meiliAdmin/meiliAdmin/meili/admin', 200])]
 	#[TestWith(['tt@survos.com', '/meiliAdmin/meiliAdmin/riccox', 200])]
 	#[TestWith(['tt@survos.com', '/workflow/', 200])]

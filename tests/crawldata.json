@@ -108,8 +108,8 @@
             "foundOn": null,
             "memory": null
         },
-        "/admin/commands/admin/commands/": {
-            "path": "/admin/commands/admin/commands/",
+        "/admin/commands/": {
+            "path": "/admin/commands/",
             "seen": true,
             "depth": 0,
             "linkStatus": null,
@@ -434,8 +434,8 @@
             "foundOn": null,
             "memory": null
         },
-        "/admin/commands/admin/commands/": {
-            "path": "/admin/commands/admin/commands/",
+        "/admin/commands/": {
+            "path": "/admin/commands/",
             "seen": true,
             "depth": 0,
             "linkStatus": null,
@@ -760,8 +760,8 @@
             "foundOn": null,
             "memory": null
         },
-        "/admin/commands/admin/commands/": {
-            "path": "/admin/commands/admin/commands/",
+        "/admin/commands/": {
+            "path": "/admin/commands/",
             "seen": true,
             "depth": 0,
             "linkStatus": null,

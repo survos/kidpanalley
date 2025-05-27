@@ -20,7 +20,7 @@ class CrawlAsTacmanTest extends BaseVisitLinksTest
 	#[TestWith(['tacman@gmail.com', '/js/routing', 200])]
 	#[TestWith(['tacman@gmail.com', '/auth/profile', 200])]
 	#[TestWith(['tacman@gmail.com', '/auth/providers', 200])]
-	#[TestWith(['tacman@gmail.com', '/admin/commands/admin/commands/', 200])]
+	#[TestWith(['tacman@gmail.com', '/admin/commands/', 200])]
 	#[TestWith(['tacman@gmail.com', '/meiliAdmin/meiliAdmin/meili/admin', 200])]
 	#[TestWith(['tacman@gmail.com', '/meiliAdmin/meiliAdmin/riccox', 200])]
 	#[TestWith(['tacman@gmail.com', '/workflow/', 200])]

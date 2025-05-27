@@ -20,7 +20,7 @@ class CrawlAsVisitorTest extends BaseVisitLinksTest
 	#[TestWith(['', '/js/routing', 200])]
 	#[TestWith(['', '/auth/profile', 200])]
 	#[TestWith(['', '/auth/providers', 200])]
-	#[TestWith(['', '/admin/commands/admin/commands/', 200])]
+	#[TestWith(['', '/admin/commands/', 200])]
 	#[TestWith(['', '/meiliAdmin/meiliAdmin/meili/admin', 200])]
 	#[TestWith(['', '/meiliAdmin/meiliAdmin/riccox', 200])]
 	#[TestWith(['', '/workflow/', 200])]

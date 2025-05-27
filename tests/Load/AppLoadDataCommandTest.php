@@ -3,6 +3,7 @@
 namespace App\Tests\Load;
 
 use App\Command\LoadProductsCommand;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Console\Test\InteractsWithConsole;
 
@@ -10,6 +11,7 @@ class AppLoadDataCommandTest extends KernelTestCase
 {
     use InteractsWithConsole;
 
+    #[Test]
     public function load(): void
     {
         $this->executeConsoleCommand('app:load')

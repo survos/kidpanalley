@@ -6,6 +6,7 @@
          colors="true"
          failOnNotice="true"
          failOnWarning="true"
+         stopOnFailure="true"
          bootstrap="tests/bootstrap.php"
          cacheDirectory=".phpunit.cache"
          >
