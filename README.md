@@ -31,6 +31,7 @@ vendor/bin/phpunit
 ## Database
 
 ![Database Diagram](assets/db.svg)
+![Database Diagram](assets/er.svg)
 
 
 
