@@ -1,39 +1,5 @@
-# # ~~
-
-Archives for Kid Pan Alley
-
-
-## Installation
-
-```bash
-git clone git@github.com:tacman/kpa kpa && cd kpa
-echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" > .env.local
-echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data_test.db" > .env.test
-composer install
-bin/console doctrine:schema:update --force
-symfony server:start -d
-symfony open:local
-```
-
-
-
-## Running tests
-
-```bash
-bin/console doctrine:schema:update --force --env=test
-bin/console doctrine:fixtures:load -n --env=test
-vendor/bin/phpunit
-```
-
-
-    usage here.
-
-## Database
-
-![Database Diagram](assets/db.svg)
-![Database Diagram](assets/er.svg)
-
-
+{% extends "@SurvosDoc/readme_base.md.twig" %}
+{% block body %}
 
 ## Setup
 
@@ -79,5 +45,4 @@ Database Tables
 
 // https://www.youtube.com/watch?v=NeRjdX06_n8&t=186s if it were a generalized video / transcript research site
 
-
-*build with survos/doc-bundle*
+{% endblock %}

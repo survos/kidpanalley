@@ -9,51 +9,52 @@ use App\Services\AppService;
 use App\Services\DocxConversion;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Attribute\Option;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\DeduplicateStamp;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-#[AsCommand('app:load-data', "Load the songs and videos")]
-class LoadDataCommand extends Command
+#[AsCommand('app:load', "Load the songs and videos")]
+class LoadDataCommand
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private readonly ParameterBagInterface $bag,
-                                private MessageBusInterface $bus,
-                                private readonly AppService $appService,
-                                private SongRepository $songRepository,
-                                ?string $name = null)
+    public function __construct(
+        private readonly EntityManagerInterface            $entityManager,
+        private readonly ParameterBagInterface             $bag,
+        private MessageBusInterface                        $bus,
+        private readonly AppService                        $appService,
+        private SongRepository                             $songRepository,
+        #[Autowire('%kernel.project_dir%')] private string $projectDir,
+    )
     {
-        parent::__construct($name);
     }
-    protected function configure()
+
+    public function __invoke(
+        SymfonyStyle    $io,
+        #[Option] ?bool $video = null,
+        #[Option] ?bool $songs = null,
+    ): int
     {
-        $this
-//            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
-    }
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $io = new SymfonyStyle($input, $output);
+        $video ??= true;
+        $songs ??= false;
 
-        $this->bus->dispatch(new FetchYoutubeChannelMessage());
-        $io->success('Videos Load Requested');
+        if ($video) {
+            $this->bus->dispatch(new FetchYoutubeChannelMessage(), [
+//                new DeduplicateStamp('video-lock'),
+            ]);
+            $io->success('Videos Load Requested');
+        }
 
-        $this->bus->dispatch(new LoadSongsMessage());
-        $io->success('Songs Load Requested');
-
-
-
-        return self::SUCCESS;
+        if ($songs) {
+            $this->bus->dispatch(new LoadSongsMessage());
+            $io->success('Songs Load Requested');
+        }
+        return Command::SUCCESS;
     }
 
     private function loadLyricFiles()
@@ -85,7 +86,6 @@ class LoadDataCommand extends Command
             } else {
                 continue;
             }
-
 
 
             dd($filename, $text, $file->getRealPath());

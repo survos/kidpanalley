@@ -4,8 +4,8 @@ framework:
     #csrf_protection: true
     http_method_override: false
     handle_all_throwables: true
-    annotations:
-        enabled: false
+    property_info:
+        with_constructor_extractor: true
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true

@@ -379,8 +379,6 @@ class AppService
                 if ($snippet->publishedAt) {
                     $video->setDate(new \DateTime($snippet->publishedAt));
                 }
-                $this->em->flush();
-
                 array_push($videos, $video);
             }
             $this->em->flush();

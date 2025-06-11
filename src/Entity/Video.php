@@ -61,11 +61,11 @@ class Video implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     #[Groups('song.read')]
     #[MeiliId]
-    private $youtubeId;
+    private string $youtubeId;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $title;
+    private string $title;
     #[ORM\Column(type: 'text', nullable: true)]
-    private $description;
+    private ?string $description=null;
     #[ORM\Column(type: 'date', nullable: true)]
     private $date;
 
