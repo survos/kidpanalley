@@ -1,15 +1,15 @@
 {
     "name": "kpa",
-    "description": "A repo, maybe get this from github",
+    "description": "Archives for Kid Pan Alley",
     "keywords": [
         "php",
         "symfony"
     ],
-    "repository": "https:\/\/github.com\/survos-sites\/kpa",
+    "repository": "https://github.com/tacman/kpa",
     "scripts": {
         "dokku": {
-            "predeploy": "bin\/console importmap:install && bin\/console asset-map:compile",
-            "postdeploy": ""
+            "predeploy": "bin/console importmap:install && bin/console asset-map:compile && bin/console  secrets:decrypt-to-local --force && bin/console doctrine:migrations:migrate -n --allow-no-migration",
+            "postdeploy": "bin/console about"
         }
     },
     "env": {
@@ -22,14 +22,14 @@
             "generator": "echo 5"
         }
     },
-    "image": "gliderlabs\/herokuish",
+    "image": "gliderlabs/herokuish",
     "addons": [
         "dokku-postgres",
         "dokku-redis"
     ],
     "buildpacks": [
         {
-            "url": "https:\/\/github.com\/heroku\/heroku-buildpack-php.git"
+            "url": "https://github.com/heroku/heroku-buildpack-php.git"
         }
     ]
 }
