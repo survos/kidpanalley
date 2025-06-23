@@ -11,6 +11,7 @@ when@dev: &dev
         max_per_route: 2
         routes_to_ignore :
             - 'app_logout'
+            - 'survos_commands'
         paths_to_ignore:
             - /auth/social_login
 

@@ -108,13 +108,13 @@
             "foundOn": null,
             "memory": null
         },
-        "/admin/commands/": {
-            "path": "/admin/commands/",
+        "/meiliAdmin/meiliAdmin/docs": {
+            "path": "/meiliAdmin/meiliAdmin/docs",
             "seen": true,
             "depth": 0,
             "linkStatus": null,
             "username": null,
-            "route": "survos_commands",
+            "route": "meili_admin_docs",
             "rp": null,
             "statusCode": null,
             "foundOn": null,
@@ -434,13 +434,13 @@
             "foundOn": null,
             "memory": null
         },
-        "/admin/commands/": {
-            "path": "/admin/commands/",
+        "/meiliAdmin/meiliAdmin/docs": {
+            "path": "/meiliAdmin/meiliAdmin/docs",
             "seen": true,
             "depth": 0,
             "linkStatus": null,
             "username": "tacman@gmail.com",
-            "route": "survos_commands",
+            "route": "meili_admin_docs",
             "rp": null,
             "statusCode": null,
             "foundOn": null,
@@ -760,13 +760,13 @@
             "foundOn": null,
             "memory": null
         },
-        "/admin/commands/": {
-            "path": "/admin/commands/",
+        "/meiliAdmin/meiliAdmin/docs": {
+            "path": "/meiliAdmin/meiliAdmin/docs",
             "seen": true,
             "depth": 0,
             "linkStatus": null,
             "username": "tt@survos.com",
-            "route": "survos_commands",
+            "route": "meili_admin_docs",
             "rp": null,
             "statusCode": null,
             "foundOn": null,

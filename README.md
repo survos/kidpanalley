@@ -63,6 +63,12 @@ symfony open:local --path=/song
 ```bash
 bin/console d:sch:update --force --env=test
 APP_ENV=test bin/create-admins.sh
+bin/console app:load --songs --video --env=test
+
+bin/console survos:crawl --env=test
+survos:crawl:smoke
+  survos:make:crawl-tests                    [survos:make:crawl-tests] Generate crawler tests for a visitor and authenticated users
+
 vendor/bin/phpunit tests
 @todo: add survos_commands to survos_crawler.yaml ignore
 ```
