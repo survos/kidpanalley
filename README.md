@@ -58,7 +58,14 @@ symfony server:start -d
 symfony open:local --path=/song
 ```
 
+## Testing
 
+```bash
+bin/console d:sch:update --force --env=test
+APP_ENV=test bin/create-admins.sh
+vendor/bin/phpunit tests
+@todo: add survos_commands to survos_crawler.yaml ignore
+```
 Tools for KPA
 
 Load the exists assets (youtube and songs) via
