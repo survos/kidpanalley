@@ -42,7 +42,9 @@
         "survos/command-bundle": "^1.5.385",
         "survos/core-bundle": "^1.5.385",
         "survos/deployment-bundle": "^1.5.385",
+        "survos/flickr-bundle": "^1.5",
         "survos/inspection-bundle": "^1.5.385",
+        "survos/installer": "dev-main",
         "survos/libre-translate-bundle": "^1.5",
         "survos/meili-admin-bundle": "^1.5.384",
         "survos/scraper-bundle": "^1.5.385",
@@ -168,5 +170,11 @@
             "php -d memory_limit=512M bin/console grid:index --reset"
         ]
 
+    },
+    "repositories": {
+        "survos_installer": {
+            "type": "path",
+            "url": "/Applications/XAMPP/xamppfiles/htdocs/Michael T/installer"
+        }
     }
 }
