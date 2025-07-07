@@ -12,6 +12,8 @@ when@dev: &dev
         routes_to_ignore :
             - 'app_logout'
             - 'survos_commands'
+            - 'app_liform'
+            - 'app_load_lyrics'
         paths_to_ignore:
             - /auth/social_login
 
