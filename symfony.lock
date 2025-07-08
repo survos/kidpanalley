@@ -396,9 +396,6 @@
             "config/packages/sentry.yaml"
         ]
     },
-    "survos/api-grid-bundle": {
-        "version": "dev-main"
-    },
     "survos/auth-bundle": {
         "version": "dev-main"
     },

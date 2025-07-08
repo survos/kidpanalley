@@ -28,7 +28,6 @@ return [
     Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
     Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true, 'test' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
-    Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],

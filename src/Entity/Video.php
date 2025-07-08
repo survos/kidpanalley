@@ -10,12 +10,9 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
-use Survos\ApiGrid\Attribute\MeiliId;
-use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
-use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
+use Survos\MeiliAdminBundle\Api\Filter\FacetsFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
@@ -30,15 +27,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
     name: self::MEILI_ROUTE,
     uriTemplate: "meili-videos", // was {indexName}
 //    uriVariables: ["indexName"],
-    provider: MeiliSearchStateProvider::class,
+//    provider: MeiliSearchStateProvider::class,
     normalizationContext: [
         'groups' => ['video.read', 'rp'],
     ]
 )]
 
 #[ApiFilter(OrderFilter::class, properties: ['title','year'])]
-#[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'description'])]
+#[ApiFilter(SearchFilter::class, properties: ['title'=>'partial', 'description' => 'partial'])]
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[Groups(['video.read'])]
 

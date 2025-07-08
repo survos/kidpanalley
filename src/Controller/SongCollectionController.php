@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/songs')]
 class SongCollectionController extends AbstractController
 {
-    public function __construct(
-        private MeiliService $meiliService,
-        private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct()
     {
 
     }

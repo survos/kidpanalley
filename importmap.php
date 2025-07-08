@@ -19,10 +19,6 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
-    'survos-api-grid.css' => [
-        'path' => './vendor/survos/api-grid-bundle/public/style.css',
-        'type' => 'css',
-    ],
     'twig' => [
         'version' => '1.17.1',
     ],

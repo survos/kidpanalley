@@ -1,13 +1,9 @@
 <?php
 
-namespace App\EventListener;
+namespace App\Menu;
 
 use App\Entity\Song;
 use App\Entity\Video;
-use Knp\Menu\ItemInterface;
-use Survos\ApiGrid\Service\DatatableService;
-use Survos\ApiGrid\Service\MeiliService;
-use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -15,7 +11,6 @@ use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 //#[AsEventListener(event: KnpMenuEvent::SIDEBAR_MENU, method: 'appSidebarMenu')]
@@ -23,7 +18,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[AsEventListener(event: KnpMenuEvent::AUTH_MENU, method: 'ourAuthMenu')]
 #[AsEventListener(event: KnpMenuEvent::PAGE_MENU, method: 'pageMenu')]
 //#[AsEventListener(event: KnpMenuEvent::PAGE_MENU_EVENT, method: 'coreMenu')]
-final class AppMenuEventListener
+final class AppMenu
 {
     use KnpMenuHelperTrait;
 
@@ -32,9 +27,9 @@ final class AppMenuEventListener
         private ContextService                                         $contextService,
         private Security                                               $security,
         private MenuService                                            $menuService,
-        private DatatableService                                       $datatableService,
+//        private DatatableService                                       $datatableService,
         // why is autowire required?
-        #[Autowire(service: 'api_meili_service')] private MeiliService $meiliService,
+//        #[Autowire(service: 'api_meili_service')] private MeiliService $meiliService,
         private ?AuthorizationCheckerInterface                         $authorizationChecker = null
     )
     {

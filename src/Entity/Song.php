@@ -11,10 +11,6 @@ use App\Repository\SongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
-use Survos\ApiGrid\Attribute\Facet;
-use Survos\ApiGrid\Attribute\Facets;
-use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
@@ -22,6 +18,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
+use Survos\MeiliAdminBundle\Api\Filter\FacetsFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -32,9 +29,9 @@ use Zenstruck\Metadata;
 #[ORM\UniqueConstraint('song_code', ['code'])]
 #[GetCollection(
     name: self::MEILI_ROUTE,
-    uriTemplate: "/api/meili/Song",
-//    uriVariables: ["indexName"],
-    provider: MeiliSearchStateProvider::class,
+//    uriTemplate: "/api/meili/Song",
+////    uriVariables: ["indexName"],
+//    provider: MeiliSearchStateProvider::class,
     normalizationContext: [
         'groups' => ['instance.read', 'tree', 'rp'],
     ]
@@ -50,14 +47,13 @@ use Zenstruck\Metadata;
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title'])]
 #[ApiFilter(FacetsFieldSearchFilter::class,
     properties: ['school', 'publisher', 'writers','publishersArray','year'],
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
 #[Groups(['song.read'])]
 // brainstorming...
-#[Facets(groups: ['song.facet'], properties: ['publisher', 'year', 'writers','publishersArray'])]
+//#[Facets(groups: ['song.facet'], properties: ['publisher', 'year', 'writers','publishersArray'])]
 #[Assert\EnableAutoMapping]
 // someday do this as attributes and set in the compiler pass
 #[Metadata('translatable', ['title'])]
