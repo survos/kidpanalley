@@ -437,9 +437,6 @@
     "survos/doc-bundle": {
         "version": "1.5.529"
     },
-    "survos/flickr-bundle": {
-        "version": "1.5.529"
-    },
     "survos/grid-bundle": {
         "version": "1.5.89"
     },

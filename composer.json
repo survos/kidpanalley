@@ -41,11 +41,10 @@
         "survos/command-bundle": "^1.5.385",
         "survos/core-bundle": "^1.5.385",
         "survos/deployment-bundle": "^1.5.385",
-        "survos/flickr-bundle": "^1.5",
         "survos/inspection-bundle": "^1.5.385",
         "survos/installer": "dev-main",
         "survos/libre-translate-bundle": "^1.5",
-        "survos/meili-bundle": "*",
+        "survos/meili-bundle": "dev-main",
         "survos/scraper-bundle": "^1.5.385",
         "survos/seo-bundle": "^1.5.385",
         "survos/workflow-helper-bundle": "^1.5.385",
@@ -128,7 +127,6 @@
     },
     "config": {
         "allow-plugins": {
-            "endroid/installer": true,
             "php-http/discovery": true,
             "survos/installer": true,
             "symfony/flex": true,

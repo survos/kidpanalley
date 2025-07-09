@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "711d10d591609c6a056022f9ca7bbff3",
+    "content-hash": "c0696a08ad1bcddbf1d982cb8ba41725",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -440,77 +440,6 @@
                 "source": "https://github.com/HypeMC/versioning-bundle/tree/v1.2.1"
             },
             "time": "2024-12-02T23:50:39+00:00"
-        },
-        {
-            "name": "carlos-mg89/oauth",
-            "version": "0.8.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/carlos-mg89/PHPoAuthLib.git",
-                "reference": "7003d50bbb90383408abc1450d943657d087fc70"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/carlos-mg89/PHPoAuthLib/zipball/7003d50bbb90383408abc1450d943657d087fc70",
-                "reference": "7003d50bbb90383408abc1450d943657d087fc70",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "replace": {
-                "lusitanian/oauth": "~0.3"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "ext-dom": "*",
-                "ext-json": "*",
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpunit/phpunit": "^8.5",
-                "predis/predis": "0.8.*@dev",
-                "squizlabs/php_codesniffer": "^3.5",
-                "symfony/finder": "^5.1",
-                "symfony/http-foundation": "~2.1",
-                "symfony/var-dumper": "^5.1"
-            },
-            "suggest": {
-                "ext-openssl": "Allows for usage of secure connections with the stream-based HTTP client.",
-                "predis/predis": "Allows using the Redis storage backend.",
-                "symfony/http-foundation": "Allows using the Symfony Session storage backend."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OAuth\\": "src/OAuth"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Carlos Martínez Gadea",
-                    "email": "carlosmartinezgadea@gmail.com"
-                }
-            ],
-            "description": "PHP 7.2 oAuth 1/2 Library",
-            "keywords": [
-                "Authentication",
-                "authorization",
-                "oauth",
-                "security"
-            ],
-            "support": {
-                "issues": "https://github.com/carlos-mg89/PHPoAuthLib/issues",
-                "source": "https://github.com/carlos-mg89/PHPoAuthLib/tree/0.8.17"
-            },
-            "time": "2025-02-08T12:14:07+00:00"
         },
         {
             "name": "cebe/php-openapi",
@@ -2092,66 +2021,6 @@
             "time": "2025-03-06T22:45:56+00:00"
         },
         {
-            "name": "endroid/installer",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/endroid/installer.git",
-                "reference": "39109e825057b2e7436123d5ad5dc8c2467a4cf6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/endroid/installer/zipball/39109e825057b2e7436123d5ad5dc8c2467a4cf6",
-                "reference": "39109e825057b2e7436123d5ad5dc8c2467a4cf6",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^2.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "composer/composer": "^2.0",
-                "endroid/quality": "dev-main"
-            },
-            "suggest": {
-                "roave/security-advisories": "Avoids installation of package versions with vulnerabilities"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Endroid\\Installer\\Installer",
-                "branch-alias": {
-                    "dev-main": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Endroid\\Installer\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeroen van den Enden",
-                    "email": "info@endroid.nl"
-                }
-            ],
-            "description": "Composer plugin for installing configuration files",
-            "support": {
-                "issues": "https://github.com/endroid/installer/issues",
-                "source": "https://github.com/endroid/installer/tree/1.5.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/endroid",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-10-20T18:31:36+00:00"
-        },
-        {
             "name": "firebase/php-jwt",
             "version": "v6.11.1",
             "source": {
@@ -2395,16 +2264,16 @@
         },
         {
             "name": "google/auth",
-            "version": "v1.47.0",
+            "version": "v1.47.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-auth-library-php.git",
-                "reference": "d6389aae7c009daceaa8da9b7942d8df6969f6d9"
+                "reference": "d7a0a215ec42ca0c8cb40e9ae0c5960aa9a024b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/d6389aae7c009daceaa8da9b7942d8df6969f6d9",
-                "reference": "d6389aae7c009daceaa8da9b7942d8df6969f6d9",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/d7a0a215ec42ca0c8cb40e9ae0c5960aa9a024b7",
+                "reference": "d7a0a215ec42ca0c8cb40e9ae0c5960aa9a024b7",
                 "shasum": ""
             },
             "require": {
@@ -2450,9 +2319,9 @@
             "support": {
                 "docs": "https://cloud.google.com/php/docs/reference/auth/latest",
                 "issues": "https://github.com/googleapis/google-auth-library-php/issues",
-                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.47.0"
+                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.47.1"
             },
-            "time": "2025-04-15T21:47:20+00:00"
+            "time": "2025-07-09T15:26:02+00:00"
         },
         {
             "name": "graham-campbell/guzzle-factory",
@@ -2846,16 +2715,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.16.0",
+            "version": "3.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "5bb90a64cab9b9b902506c6c358b67478dea4a45"
+                "reference": "40c9e72f8f973bb5ca038135f1a0b78b91bc66af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/5bb90a64cab9b9b902506c6c358b67478dea4a45",
-                "reference": "5bb90a64cab9b9b902506c6c358b67478dea4a45",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/40c9e72f8f973bb5ca038135f1a0b78b91bc66af",
+                "reference": "40c9e72f8f973bb5ca038135f1a0b78b91bc66af",
                 "shasum": ""
             },
             "require": {
@@ -2896,9 +2765,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.0"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.1"
             },
-            "time": "2025-07-08T10:39:48+00:00"
+            "time": "2025-07-09T17:22:19+00:00"
         },
         {
             "name": "inspector-apm/inspector-symfony",
@@ -4758,6 +4627,84 @@
             "time": "2024-06-24T21:25:28+00:00"
         },
         {
+            "name": "nyholm/psr7",
+            "version": "1.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyholm/psr7.git",
+                "reference": "a71f2b11690f4b24d099d6b16690a90ae14fc6f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/a71f2b11690f4b24d099d6b16690a90ae14fc6f3",
+                "reference": "a71f2b11690f4b24d099d6b16690a90ae14fc6f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "provide": {
+                "php-http/message-factory-implementation": "1.0",
+                "psr/http-factory-implementation": "1.0",
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "http-interop/http-factory-tests": "^0.9",
+                "php-http/message-factory": "^1.0",
+                "php-http/psr7-integration-tests": "^1.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.4",
+                "symfony/error-handler": "^4.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nyholm\\Psr7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                },
+                {
+                    "name": "Martijn van der Ven",
+                    "email": "martijn@vanderven.se"
+                }
+            ],
+            "description": "A fast PHP7 implementation of PSR-7",
+            "homepage": "https://tnyholm.se",
+            "keywords": [
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "issues": "https://github.com/Nyholm/psr7/issues",
+                "source": "https://github.com/Nyholm/psr7/tree/1.8.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Zegnat",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nyholm",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-09-09T07:06:30+00:00"
+        },
+        {
             "name": "paragonie/constant_time_encoding",
             "version": "v3.0.0",
             "source": {
@@ -5932,55 +5879,6 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
-            "name": "samwilson/phpflickr",
-            "version": "6.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/samwilson/phpflickr.git",
-                "reference": "70f4ff951dd76964036f942ab61f238372347162"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/samwilson/phpflickr/zipball/70f4ff951dd76964036f942ab61f238372347162",
-                "reference": "70f4ff951dd76964036f942ab61f238372347162",
-                "shasum": ""
-            },
-            "require": {
-                "carlos-mg89/oauth": "^0.8",
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-libxml": "*",
-                "ext-simplexml": "*",
-                "php": "^8.2",
-                "psr/cache": "^1.0|^2.0|^3.0"
-            },
-            "require-dev": {
-                "mediawiki/minus-x": "^0.3 || ^1.0",
-                "phan/phan": "^5.4",
-                "php-parallel-lint/php-parallel-lint": "^1.3",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.0",
-                "symfony/cache": "^5.4|^6.4|^7.0",
-                "symfony/var-dumper": "^5.4|^6.4|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Samwilson\\PhpFlickr\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0-or-later"
-            ],
-            "description": "A PHP wrapper for the Flickr API, including Oauth.",
-            "support": {
-                "issues": "https://github.com/samwilson/phpflickr/issues",
-                "source": "https://github.com/samwilson/phpflickr/tree/6.0.1"
-            },
-            "time": "2024-12-16T01:50:41+00:00"
-        },
-        {
             "name": "sentry/sentry",
             "version": "4.14.1",
             "source": {
@@ -6778,76 +6676,17 @@
             "time": "2025-01-01T23:08:29+00:00"
         },
         {
-            "name": "survos/flickr-bundle",
-            "version": "1.5.529",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosFlickrBundle.git",
-                "reference": "ecdfcd6fbbf199d30e80750d8ded71423efb7d39"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosFlickrBundle/zipball/ecdfcd6fbbf199d30e80750d8ded71423efb7d39",
-                "reference": "ecdfcd6fbbf199d30e80750d8ded71423efb7d39",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3",
-                "samwilson/phpflickr": "^6.0",
-                "survos/installer": "*  ",
-                "symfony/config": "^6.4 || ^7.1",
-                "symfony/dependency-injection": "^6.4 || ^7.1",
-                "symfony/http-kernel": "^6.4 || ^7.1",
-                "twig/twig": "^3.4"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^2.0",
-                "symfony/browser-kit": "^6.4 || ^7.1",
-                "symfony/framework-bundle": "^6.4 || ^7.1",
-                "symfony/phpunit-bridge": "^6.4 || ^7.1",
-                "symfony/security-bundle": "^6.4 || ^7.1",
-                "symfony/twig-bundle": "^6.4 || ^7.1",
-                "symfony/var-dumper": "^6.4 || ^7.1"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Survos\\FlickrBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Symfony bundle that wraps samwilson/phpflickr library",
-            "keywords": [
-                "symfony-ux",
-                "symfony6"
-            ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosFlickrBundle/issues",
-                "source": "https://github.com/survos/SurvosFlickrBundle/tree/1.5.529"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/kbond",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-01-21T10:57:53+00:00"
-        },
-        {
             "name": "survos/inspection-bundle",
-            "version": "1.5.529",
+            "version": "1.5.600",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "8abf3df39d222a1c3cc35380e859287f3c43cdaa"
+                "reference": "930a59c1943309bb40aad06bc8e7d8650f8d1a02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/8abf3df39d222a1c3cc35380e859287f3c43cdaa",
-                "reference": "8abf3df39d222a1c3cc35380e859287f3c43cdaa",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/930a59c1943309bb40aad06bc8e7d8650f8d1a02",
+                "reference": "930a59c1943309bb40aad06bc8e7d8650f8d1a02",
                 "shasum": ""
             },
             "require": {
@@ -6915,7 +6754,7 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.5.529"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.5.600"
             },
             "funding": [
                 {
@@ -6923,7 +6762,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-06T23:05:11+00:00"
+            "time": "2025-07-09T11:39:02+00:00"
         },
         {
             "name": "survos/installer",
@@ -7050,22 +6889,23 @@
         },
         {
             "name": "survos/meili-bundle",
-            "version": "1.5.0",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/meili-bundle.git",
-                "reference": "23a70fcc7a4ec21691c430a5b375f39315ac11cb"
+                "reference": "618018b1be2317c1cd5c5f1bb085a78d1b892b53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/23a70fcc7a4ec21691c430a5b375f39315ac11cb",
-                "reference": "23a70fcc7a4ec21691c430a5b375f39315ac11cb",
+                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/618018b1be2317c1cd5c5f1bb085a78d1b892b53",
+                "reference": "618018b1be2317c1cd5c5f1bb085a78d1b892b53",
                 "shasum": ""
             },
             "require": {
                 "adbario/php-dot-notation": "^3.3",
                 "cebe/php-openapi": "^1.8",
                 "meilisearch/meilisearch-php": "^1.14",
+                "nyholm/psr7": "^1.8",
                 "php": "^8.3",
                 "survos/core-bundle": "^1.5",
                 "survos/inspection-bundle": "^1.5",
@@ -7091,6 +6931,7 @@
                 "symfony/ux-twig-component": "^2.27",
                 "symfony/var-dumper": "^6.4 || ^7.1"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -7107,7 +6948,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/meili-bundle/issues",
-                "source": "https://github.com/survos/meili-bundle/tree/1.5.0"
+                "source": "https://github.com/survos/meili-bundle/tree/main"
             },
             "funding": [
                 {
@@ -7115,7 +6956,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-09T14:19:39+00:00"
+            "time": "2025-07-09T20:51:58+00:00"
         },
         {
             "name": "survos/scraper-bundle",
@@ -7246,31 +7087,29 @@
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.5.600",
+            "version": "1.5.601",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "0f08b7d72d7f174f11303d73c01bee73cf90fbff"
+                "reference": "d7205277a239b91e155ffb0902476fb325389c89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/0f08b7d72d7f174f11303d73c01bee73cf90fbff",
-                "reference": "0f08b7d72d7f174f11303d73c01bee73cf90fbff",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/d7205277a239b91e155ffb0902476fb325389c89",
+                "reference": "d7205277a239b91e155ffb0902476fb325389c89",
                 "shasum": ""
             },
             "require": {
-                "doctrine/orm": "^2.12||^3.3",
-                "endroid/installer": "*",
+                "doctrine/orm": "^3.5",
                 "php": "^8.3",
-                "survos/core-bundle": "^1.5.396",
-                "symfony/console": "^6.4 || ^7.1",
-                "symfony/http-kernel": "^6.4 || ^7.1",
-                "symfony/messenger": "^6.4 || ^7.1",
-                "symfony/process": "^6.4 || ^7.1",
-                "symfony/string": "^7.2",
-                "symfony/workflow": "^6.4 || ^7.1",
-                "symfony/yaml": "^6.4 || ^7.1",
-                "zenstruck/console-extra": "^1.4"
+                "survos/core-bundle": "^1.5.529",
+                "symfony/console": "^7.3",
+                "symfony/http-kernel": "^7.3",
+                "symfony/messenger": "^7.3",
+                "symfony/process": "^7.3",
+                "symfony/string": "^7.3",
+                "symfony/workflow": "^7.3",
+                "symfony/yaml": "^7.3"
             },
             "conflict": {
                 "survos/api-grid-bundle": "<1.2.57",
@@ -7295,26 +7134,26 @@
                 "survos/wiki-bundle": "<1.2.57"
             },
             "require-dev": {
-                "nette/php-generator": "^4.1",
-                "phpstan/phpstan": "^2.0",
-                "phpunit/phpunit": "^11.5",
-                "psr/log": "^3.0",
-                "roave/better-reflection": "^6.57",
-                "survos/bootstrap-bundle": "^1.5",
-                "symfony/browser-kit": "^6.4 || ^7.1",
-                "symfony/config": "^6.4 || ^7.1",
-                "symfony/dependency-injection": "^6.4 || ^7.1",
-                "symfony/form": "^6.4 || ^7.1",
-                "symfony/framework-bundle": "^6.4 || ^7.1",
-                "symfony/maker-bundle": "^1.5",
-                "symfony/twig-bundle": "^6.4 || ^7.1",
-                "symfony/var-dumper": "^6.4 || ^7.1",
+                "nette/php-generator": "^4.1.8",
+                "phpstan/phpstan": "^2.1.17",
+                "phpunit/phpunit": "^12.2.6",
+                "psr/log": "^3.0.2",
+                "roave/better-reflection": "^6.59",
+                "survos/bootstrap-bundle": "^1.5.529",
+                "symfony/browser-kit": "^7.3",
+                "symfony/config": "^7.3",
+                "symfony/dependency-injection": "^7.3",
+                "symfony/form": "^7.3",
+                "symfony/framework-bundle": "^7.3",
+                "symfony/maker-bundle": "^1.64",
+                "symfony/twig-bundle": "^7.3",
+                "symfony/var-dumper": "^7.3",
                 "zenstruck/class-metadata": "^1.1"
             },
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
-                    "require": "^6.4 || ^7.1",
+                    "require": "^7.3",
                     "allow-contrib": "true"
                 },
                 "branch-alias": {
@@ -7343,7 +7182,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.600"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.601"
             },
             "funding": [
                 {
@@ -7351,7 +7190,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-03T15:15:31+00:00"
+            "time": "2025-07-07T12:09:47+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -17919,7 +17758,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "survos/doc-bundle": 20,
-        "survos/installer": 20
+        "survos/installer": 20,
+        "survos/meili-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

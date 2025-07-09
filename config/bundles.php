@@ -40,6 +40,5 @@ return [
     AlexandreFernandez\JsonTranslationBundle\JsonTranslationBundle::class => ['all' => true],
     Jawira\DoctrineDiagramBundle\DoctrineDiagramBundle::class => ['all' => true],
     Survos\DocBundle\SurvosDocBundle::class => ['dev' => true, 'test' => true],
-    Survos\FlickrBundle\SurvosFlickrBundle::class => ['all' => true],
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
 ];
