@@ -9,15 +9,13 @@ final class FetchYoutubeChannelMessage
      * to hold the data for this message class.
      */
 
-//     private $name;
 
-//     public function __construct(string $name)
-//     {
-//         $this->name = $name;
-//     }
+     public function __construct(public ?string $name=null)
+     {
+     }
 
-//    public function getName(): string
-//    {
-//        return $this->name;
-//    }
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

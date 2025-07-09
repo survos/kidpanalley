@@ -11,7 +11,7 @@ framework:
 
         routing:
             Symfony\Component\Console\Messenger\RunCommandMessage: async
-            App\Message\FetchYoutubeChannelMessage: async
+            App\Message\FetchYoutubeChannelMessage: sync
             App\Message\LoadSongsMessage: sync
             # Route your messages to the transports
             # 'App\Message\YourMessage': async

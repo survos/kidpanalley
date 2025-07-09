@@ -18,7 +18,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
-use Survos\MeiliAdminBundle\Api\Filter\FacetsFieldSearchFilter;
+use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;

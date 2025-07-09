@@ -45,7 +45,7 @@
         "survos/inspection-bundle": "^1.5.385",
         "survos/installer": "dev-main",
         "survos/libre-translate-bundle": "^1.5",
-        "survos/meili-admin-bundle": "^1.5.384",
+        "survos/meili-bundle": "*",
         "survos/scraper-bundle": "^1.5.385",
         "survos/seo-bundle": "^1.5.385",
         "survos/workflow-helper-bundle": "^1.5.385",
@@ -156,7 +156,7 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "assets:install %PUBLIC_DIR% --symlink": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
         "coverage": "php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage",
@@ -169,11 +169,5 @@
             "php -d memory_limit=512M bin/console grid:index --reset"
         ]
 
-    },
-    "repositories": {
-        "survos_installer": {
-            "type": "path",
-            "url": "/Applications/XAMPP/xamppfiles/htdocs/Michael T/installer"
-        }
     }
 }

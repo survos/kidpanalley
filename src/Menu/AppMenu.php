@@ -108,6 +108,7 @@ final class AppMenu
         }
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'meili_insta', ['indexName' => 'kpa_Video'], label: '@meili VIDEO');
         $this->add($menu, 'song_index', label: 'Songs');
         $this->add($menu, 'video_browse', label: 'Videos');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);

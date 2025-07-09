@@ -437,6 +437,9 @@
     "survos/doc-bundle": {
         "version": "1.5.529"
     },
+    "survos/flickr-bundle": {
+        "version": "1.5.529"
+    },
     "survos/grid-bundle": {
         "version": "1.5.89"
     },
@@ -449,8 +452,8 @@
     "survos/maker-bundle": {
         "version": "1.0.2"
     },
-    "survos/meili-admin-bundle": {
-        "version": "1.5.375"
+    "survos/meili-bundle": {
+        "version": "1.5.0"
     },
     "survos/scraper-bundle": {
         "version": "1.4.44"

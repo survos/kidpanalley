@@ -33,7 +33,6 @@ return [
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Survos\SeoBundle\SurvosSeoBundle::class => ['all' => true, 'test' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
-    Survos\MeiliAdminBundle\SurvosMeiliAdminBundle::class => ['all' => true],
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
     Survos\LibreTranslateBundle\SurvosLibreTranslateBundle::class => ['all' => true],
@@ -41,4 +40,6 @@ return [
     AlexandreFernandez\JsonTranslationBundle\JsonTranslationBundle::class => ['all' => true],
     Jawira\DoctrineDiagramBundle\DoctrineDiagramBundle::class => ['all' => true],
     Survos\DocBundle\SurvosDocBundle::class => ['dev' => true, 'test' => true],
+    Survos\FlickrBundle\SurvosFlickrBundle::class => ['all' => true],
+    Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
 ];

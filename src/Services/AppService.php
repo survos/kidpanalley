@@ -45,7 +45,9 @@ class AppService
                                 private ScraperService                  $scraperService,
                                 private ValidatorInterface $validator,
                                 private readonly LoggerInterface        $logger,
-                                private ParameterBagInterface $bag,
+                                #[Autowire('%env(YOUTUBE_API_KEY)%')] private string $youtubeApiKey,
+                                #[Autowire('%env(YOUTUBE_CHANNEL)%')] private string $youtubeChannel,
+
                                 #[Autowire('%kernel.project_dir%')] private string $projectDir,
                                 private array $songs = [],
 
@@ -319,22 +321,19 @@ class AppService
     #[AsMessageHandler]
     public function fetchYoutubeMessageHandler(FetchYoutubeChannelMessage $message): void
     {
-        // there must be a bundle for this somewhere to inject the API keys
-        $key = $this->bag->get('youtube_api_key');
-        $channel = $this->bag->get('youtube_channel');
-
-        $this->logger->warning("Fetching...");
-        $this->fetchYoutubeChannel($key, $channel);
+        $this->fetchYoutubeChannel($this->youtubeApiKey, $this->youtubeChannel);
     }
 
     /**
      * @return \App\Entity\Video[]
      */
-    public function fetchYoutubeChannel($key, $channelId): array
+    public function fetchYoutubeChannel(string $key, string $channelId): array
     {
         // because we check by id, we don't really need this.
 //        $q = $this->em->createQuery(sprintf('delete from %s', Video::class));
 //        $numDeleted = $q->execute();
+        assert($key, "Missing key");
+        assert($channelId, "Missing channel id");
 
         $videos = [];
         $next = '';
