@@ -127,6 +127,7 @@
     },
     "config": {
         "allow-plugins": {
+            "endroid/installer": false,
             "php-http/discovery": true,
             "survos/installer": true,
             "symfony/flex": true,
