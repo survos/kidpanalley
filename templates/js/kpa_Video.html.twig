@@ -30,10 +30,13 @@
                         score: {{ hit._rankingScore|number_format(2) }}
                 </span>
         {% endif %}
-
+{#        {{ _sc_modal }}#}
+{#        <pre>{{ stimulus_action(_sc_modal, 'modal') }}#}
+{#data-action="survos--meili-bundle--json#modal"#}
+{#        </pre>#}
+{#        <br />#}
         <button
-            data-action="survos--meili-bundle--json#modal"
-{#            {{ stimulus_action(_sc_modal, 'modal', 'click') }}#}
+            {{ stimulus_action(_sc_modal, 'modal') }}
             data-hit-id="{{ hit.id }}"
             class="float-end btn btn-sm btn-outline-primary">
             <span class="me-1 icon-wrapper">{{ icons.json|raw }}</span>

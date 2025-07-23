@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0696a08ad1bcddbf1d982cb8ba41725",
+    "content-hash": "26c163f11e446d39439269d25a6661c7",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -6529,16 +6529,16 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.5.529",
+            "version": "1.5.601",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
-                "reference": "468332bcb862b8943f9bb6d5f215939cdf5c5bbf"
+                "reference": "78afcb7ea0eed5e6b49db5a5be0d20478d3217b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/468332bcb862b8943f9bb6d5f215939cdf5c5bbf",
-                "reference": "468332bcb862b8943f9bb6d5f215939cdf5c5bbf",
+                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/78afcb7ea0eed5e6b49db5a5be0d20478d3217b5",
+                "reference": "78afcb7ea0eed5e6b49db5a5be0d20478d3217b5",
                 "shasum": ""
             },
             "require": {
@@ -6580,6 +6580,7 @@
                 "phpstan/phpstan": "^2.0",
                 "symfony/asset-mapper": "^6.4 || ^7.1",
                 "symfony/browser-kit": "^6.4 || ^7.1",
+                "symfony/console": "^7.2",
                 "symfony/framework-bundle": "^6.4 || ^7.1",
                 "symfony/phpunit-bridge": "^6.4 || ^7.1",
                 "symfony/twig-bundle": "^6.4 || ^7.1",
@@ -6606,7 +6607,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.529"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.601"
             },
             "funding": [
                 {
@@ -6614,7 +6615,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-20T13:35:55+00:00"
+            "time": "2025-07-10T01:43:38+00:00"
         },
         {
             "name": "survos/deployment-bundle",
@@ -6766,7 +6767,7 @@
         },
         {
             "name": "survos/installer",
-            "version": "dev-main",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/installer.git",
@@ -6817,7 +6818,7 @@
             ],
             "description": "Composer plugin for installing configuration files and updating .env and .gitignore, based on survos/installer",
             "support": {
-                "source": "https://github.com/survos/installer/tree/main"
+                "source": "https://github.com/survos/installer/tree/2.1.2"
             },
             "funding": [
                 {
@@ -6893,12 +6894,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/meili-bundle.git",
-                "reference": "618018b1be2317c1cd5c5f1bb085a78d1b892b53"
+                "reference": "38651dcdfb46f25d13d6363144f3c8402bd23701"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/618018b1be2317c1cd5c5f1bb085a78d1b892b53",
-                "reference": "618018b1be2317c1cd5c5f1bb085a78d1b892b53",
+                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/38651dcdfb46f25d13d6363144f3c8402bd23701",
+                "reference": "38651dcdfb46f25d13d6363144f3c8402bd23701",
                 "shasum": ""
             },
             "require": {
@@ -6906,14 +6907,14 @@
                 "cebe/php-openapi": "^1.8",
                 "meilisearch/meilisearch-php": "^1.14",
                 "nyholm/psr7": "^1.8",
-                "php": "^8.3",
+                "php": "^8.4",
                 "survos/core-bundle": "^1.5",
                 "survos/inspection-bundle": "^1.5",
-                "survos/installer": "^1.5 || ^2.0",
-                "symfony/config": "^6.4 || ^7.1",
+                "survos/installer": "^2.1.2",
+                "symfony/config": "^7.3",
                 "symfony/console": "^7.3",
-                "symfony/dependency-injection": "^6.4 || ^7.1",
-                "symfony/http-kernel": "^6.4 || ^7.1",
+                "symfony/dependency-injection": "^7.3",
+                "symfony/http-kernel": "^7.3",
                 "symfony/property-access": "^7.2",
                 "twig/twig": "^3.4"
             },
@@ -6921,15 +6922,15 @@
                 "api-platform/doctrine-orm": "^4.1",
                 "phpstan/phpstan": "^2.0",
                 "rector/rector": "^2.0",
-                "symfony/browser-kit": "^6.4 || ^7.1",
-                "symfony/framework-bundle": "^6.4 || ^7.1",
+                "symfony/browser-kit": "^7.3",
+                "symfony/framework-bundle": "^7.3",
                 "symfony/http-client": "^7.2",
                 "symfony/intl": "^7.3",
-                "symfony/phpunit-bridge": "^6.4 || ^7.1",
-                "symfony/twig-bundle": "^6.4 || ^7.1",
+                "symfony/phpunit-bridge": "^7.3",
+                "symfony/twig-bundle": "^7.3",
                 "symfony/ux-chartjs": "^2.23",
                 "symfony/ux-twig-component": "^2.27",
-                "symfony/var-dumper": "^6.4 || ^7.1"
+                "symfony/var-dumper": "^7.3"
             },
             "default-branch": true,
             "type": "symfony-bundle",
@@ -6942,7 +6943,7 @@
             "license": [
                 "MIT"
             ],
-            "description": "Utilies for managing a meilisearch indexes",
+            "description": "Utilities for managing a meilisearch indexes",
             "keywords": [
                 "symfony-ux"
             ],
@@ -6956,7 +6957,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-09T20:51:58+00:00"
+            "time": "2025-07-10T10:29:29+00:00"
         },
         {
             "name": "survos/scraper-bundle",
@@ -17758,7 +17759,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "survos/doc-bundle": 20,
-        "survos/installer": 20,
         "survos/meili-bundle": 20
     },
     "prefer-stable": true,

@@ -286,7 +286,7 @@ return [
         'version' => '2.6.12',
     ],
     'stimulus-attributes' => [
-        'version' => '1.0.1',
+        'version' => '1.0.2',
     ],
     'escape-html' => [
         'version' => '1.0.3',

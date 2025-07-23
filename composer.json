@@ -42,7 +42,7 @@
         "survos/core-bundle": "^1.5.385",
         "survos/deployment-bundle": "^1.5.385",
         "survos/inspection-bundle": "^1.5.385",
-        "survos/installer": "dev-main",
+        "survos/installer": "^2.1.2",
         "survos/libre-translate-bundle": "^1.5",
         "survos/meili-bundle": "dev-main",
         "survos/scraper-bundle": "^1.5.385",
