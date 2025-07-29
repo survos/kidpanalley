@@ -10,6 +10,7 @@ return static function (FrameworkConfig $framework) {
 
     if (class_exists(ConfigureFromAttributesService::class))
     foreach ([
+
              ] as $workflowClass) {
         ConfigureFromAttributesService::configureFramework($workflowClass, $framework, [$workflowClass]);
     }

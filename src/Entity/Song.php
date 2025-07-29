@@ -19,6 +19,7 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
+use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -57,6 +58,8 @@ use Zenstruck\Metadata;
 #[Assert\EnableAutoMapping]
 // someday do this as attributes and set in the compiler pass
 #[Metadata('translatable', ['title'])]
+#[MeiliIndex()]
+
 class Song implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;

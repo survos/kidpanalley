@@ -1,4 +1,6 @@
 import './bootstrap.js';
+import 'instantsearch.css/themes/algolia.min.css';
+
  // stimulus
 
 // import './styles/app.css';

@@ -40,9 +40,7 @@
                     {% endblock %}
                     {% block links %}
                         <div class="demo-inline-spacing">
-
-                            <a href="{{ path('song_index') }}" class="btn btn-outline-primary">Go to {{ songCount }}
-                                Songs</a>
+                            <a href="{{ path('meili_insta', {indexName:  'kpa_Song'}) }}" class="btn btn-outline-primary">Go to {{ songCount }} Songs</a>
                         </div>
                     {% endblock %}
                 {% endcomponent %}
@@ -66,9 +64,7 @@
                                     Featured Video: {{ feature.title }}
                                 </a>
                             {% endfor %}
-
-
-                            <a href="{{ path('video_browse') }}" class="btn btn-outline-primary">Go to {{ videoCount }}Videos</a>
+                            <a href="{{ path('meili_insta', {indexName:  'kpa_Video'}) }}" class="btn btn-outline-primary">Go to {{ videoCount }} Videos</a>
                             {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('video_index') }}" class="btn btn-outline-danger">Video Index</a>
                             {% endif %}

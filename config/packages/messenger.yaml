@@ -1,18 +1,39 @@
+parameters:
+    # Define the anchor with all shared Doctrine Messenger options
+    doctrine_messenger_options: &doctrine_common
+        table_name: messenger_messages
+        auto_setup: true  # optional, can be removed if not needed
+
 framework:
     messenger:
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
 
+        failure_transport: failed
+
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    <<: *doctrine_common
+                    queue_name: async
+
+            meili:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    <<: *doctrine_common
+                    queue_name: meili
+
+            failed: 'doctrine://default?queue_name=failed'
             sync: 'sync://'
 
         routing:
             Symfony\Component\Console\Messenger\RunCommandMessage: async
             App\Message\FetchYoutubeChannelMessage: async
             App\Message\LoadSongsMessage: async
+
+            Survos\WorkflowBundle\Message\TransitionMessage: async
+            Survos\MeiliBundle\Message\BatchIndexEntitiesMessage: meili
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 
