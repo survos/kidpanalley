@@ -1,8 +1,11 @@
 parameters:
-    # Define the anchor with all shared Doctrine Messenger options
-    doctrine_messenger_options: &doctrine_common
-        table_name: messenger_messages
-        auto_setup: true  # optional, can be removed if not needed
+    # Define the anchor with RabbitMQ options
+    rabbitmq_dsn: &rabbitmq_dsn
+        dsn: '%env(MESSENGER_TRANSPORT_DSN_RABBITMQ)%'
+
+    rabbitmq_retry: &rabbitmq_retry
+        max_retries: 3
+        multiplier: 2
 
 framework:
     messenger:
@@ -13,16 +16,26 @@ framework:
 
         transports:
             async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                <<: *rabbitmq_dsn
                 options:
-                    <<: *doctrine_common
-                    queue_name: async
+                    exchange:
+                        name: async
+                        type: fanout
+                    queues:
+                        async:
+                            binding_keys: [async]
+                retry_strategy: *rabbitmq_retry
 
             meili:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                <<: *rabbitmq_dsn
                 options:
-                    <<: *doctrine_common
-                    queue_name: meili
+                    exchange:
+                        name: meili
+                        type: fanout
+                    queues:
+                        meili:
+                            binding_keys: [meili]
+                retry_strategy: *rabbitmq_retry
 
             failed: 'doctrine://default?queue_name=failed'
             sync: 'sync://'
@@ -37,10 +50,10 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 
-# when@test:
-#    framework:
-#        messenger:
-#            transports:
-#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'
+when@test:
+    framework:
+        messenger:
+            transports:
+                # Use in-memory transport for testing
+                async: 'in-memory://'
+                meili: 'in-memory://'
