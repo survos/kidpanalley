@@ -41,4 +41,5 @@ return [
     Jawira\DoctrineDiagramBundle\DoctrineDiagramBundle::class => ['all' => true],
     Survos\DocBundle\SurvosDocBundle::class => ['dev' => true, 'test' => true],
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
+    Jwage\PhpAmqpLibMessengerBundle\PhpAmqpLibMessengerBundle::class => ['all' => true],
 ];
