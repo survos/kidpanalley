@@ -104,7 +104,6 @@ class AppService
             }
         }
         return $text;
-        dd($text);
 
     }
 
@@ -250,11 +249,12 @@ class AppService
                 $this->em->persist($song);
                 $this->songs[$code] = $song;
             }
+            $song->school = $school;
+            $song->publisher = $data['publisher'];
+
             $song
-                ->setPublisher($data['publisher'])
                 ->setWriters($data['writer'])
                 ->setTitle($title)
-                ->setSchool($school)
                 ->setWriters($data['writer']);
 
             if ($data['date'])
@@ -268,11 +268,10 @@ class AppService
 //                }
 //            }
             if ($data['year']) {
-                $song
-                    ->setYear((int)$year);
+                $song->year = (int)$data['year'];
             }
 
-            $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
+//            $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
             if ($idx == 45) {
                 // dd($data, $song);
                 // break;
@@ -344,6 +343,7 @@ class AppService
 
             $results = $this->scraperService->fetchUrl($url, key: $channelId . '-x' . $next, asData: 'array');
 
+
             $next = $results['data']['nextPageToken'] ?? false;
             foreach ($results['data']['items'] as $rawData) {
                 $item = (object)$rawData;
@@ -364,17 +364,23 @@ class AppService
                     $this->em->persist($song);
                     $songs[$id] = $song;
                 }
+                // default to youtube description
+                if (!$song->description) {
+                    $song->description = ((object)$item->snippet)->description;
+                }
                 $this->logger->warning("Adding video to song " . $song->getTitle(), ['id' => $video->getYoutubeId()]);
                 $song->addVideo($video);
+                $video->thumbnails = $snippet->thumbnails;
 
                 $raw = json_decode(json_encode($rawData), true);
                 assert($raw, "Raw is null");
 //                dd($raw, $snippet);
+                $video->title = $snippet->title;
+                $video->description = $snippet->description;
                 $video
                     ->setThumbnailUrl($snippet->thumbnails['default']['url'])
-                    ->setRawData($raw)
-                    ->setTitle($snippet->title)
-                    ->setDescription($snippet->description);
+                    ->setRawData($raw);
+
                 if ($snippet->publishedAt) {
                     $video->setDate(new \DateTime($snippet->publishedAt));
                 }
@@ -446,14 +452,15 @@ class AppService
                 }
                 $code = Song::createCode($title, $school, year: $year);
 
-//                if ($data['writer']) dd($data);
-                $song = $this->getSong($code)
-                    ->setYear($year)
+                $song = $this->getSong($code);
+                $song->school = $school;
+                $song->publisher = $data['publisher'];
+                $song->year = $year;
+                $song
 //                    ->setDate($date)
                     ->setTitle($data['Instrumentals'])
-                    ->setSchool($school)
-                    ->setPublisher($data['publisher'])
                     ->setWriters($data['writer']);
+//                if ($data['writer']) dd($data, $song);
 
                 $em = $this->em;
                 $logger = $this->logger;
@@ -463,7 +470,7 @@ class AppService
                         $song
 //                            ->setDate(new \DateTimeImmutable($data['date']))
                         ;
-                        $song->setYear((int)$song->getDate()?->format('Y'));
+//                        $song->setYear((int)$song->getDate()?->format('Y'));
                     } catch (\Exception) {
                         $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
                     }
@@ -474,7 +481,10 @@ class AppService
                 }
 
                 $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
-                $this->em->flush();
+                if (count($songs) % 500 === 0) {
+                    $this->em->flush();
+                    $this->logger->warning("Saving, now at $idx");
+                }
                 array_push($songs, $song);
                 // dump($data);
             }
@@ -482,7 +492,6 @@ class AppService
                 // dd($data, $song);
                 // break;
             }
-            $this->logger->warning("Saving $idx");
         }
 
         $this->em->flush();

@@ -6,43 +6,156 @@
 
     {# Body #}
     <div class="card-body small">
-        {% if hit._highlightResult.description is defined %}
-            <div class="description-clamp mb-3">
-                {{ hit._highlightResult.description.value|raw }}
+
+        {# ---------- Videos (show up to 3) ---------- #}
+        {% set videos = hit.videos|default([]) %}
+        {% if videos|length > 0 %}
+            <div class="mb-3">
+                <div class="d-flex flex-wrap gap-2">
+                    {% for v in videos|slice(0,3) %}
+                        {# vid #}
+                        {% set vid = v.youtubeId %}
+                        {% if v.rp is defined and v.rp.videoId is defined and v.rp.videoId %}
+                            {% set vid = v.rp.videoId %}
+                        {% endif %}
+
+                        {# thumbnail: high -> medium -> default -> constructed fallback #}
+                        {# thumbnail: high -> medium -> default -> constructed fallback #}
+                        {% set ytThumb = v.thumbnails.high.url|default(
+                            v.thumbnails.medium.url|default(
+                                v.thumbnails.default.url|default(
+                                    v.thumbnailUrl|default('https://img.youtube.com/vi/' ~ vid ~ '/hqdefault.jpg')
+                                )
+                            )
+                        ) %}
+
+                        <a href="https://www.youtube.com/watch?v={{ vid }}" target="_blank" rel="noopener"
+                           class="text-decoration-none" style="width:180px;" title="Open on YouTube">
+                            <div class="ratio position-relative rounded overflow-hidden"
+                                 style="--bs-aspect-ratio:56.25%;">
+                                <img
+                                    src="{{ ytThumb }}"
+                                    alt="Video thumbnail"
+                                    class="position-absolute top-0 start-0 w-100 h-100 d-block"
+                                    style="object-fit:cover; background:transparent;"
+                                    onerror="this.onerror=null;this.src='https://img.youtube.com/vi/{{ vid }}/mqdefault.jpg';"
+                                />
+                                <span class="position-absolute top-50 start-50 translate-middle bg-dark bg-opacity-50 text-white px-2 py-1 rounded small">▶</span>
+                            </div>
+                        </a>
+
+
+                        <a href="https://www.youtube.com/watch?v={{ vid }}" target="_blank" rel="noopener"
+                           class="text-decoration-none" style="width:180px;" title="Open on YouTube">
+                            <div class="ratio ratio-16x9 position-relative rounded overflow-hidden">
+                                <img
+                                    src="{{ ytThumb }}"
+                                    alt="Video thumbnail"
+                                    class="w-100 h-100 d-block"
+                                    style="object-fit:cover;"
+{#                                    loading="lazy"#}
+                                    onerror="this.onerror=null;this.src='https://img.youtube.com/vi/{{ vid }}/mqdefault.jpg';"
+                                />
+                                <span
+                                    class="position-absolute top-50 start-50 translate-middle"
+                                    style="pointer-events:none; line-height:0;"
+                                >
+  <svg width="42" height="42" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+    <path d="M8 5v14l11-7z"></path>
+  </svg>
+</span>
+
+                                {#                                <span class="position-absolute top-50 start-50 translate-middle bg-dark bg-opacity-50 text-white px-2 py-1 rounded small">▶</span>#}
+                            </div>
+                        </a>
+                    {% endfor %}
+
+                    {% if videos|length > 3 %}
+                        <span class="badge bg-secondary align-self-center">+{{ videos|length - 3 }} more</span>
+                    {% endif %}
+                </div>
             </div>
         {% endif %}
 
+        {# ---------- Description ---------- #}
+        {% if hit.description %}
+            {{ hit._highlightResult.description.value|raw }}
+{#            <div class="description-clamp mb-3">#}
+{#            </div>#}
+        {% endif %}
+
+        {# ---------- Writers (array or string, skip empties) ---------- #}
+        {% set writersList = [] %}
+        {% if hit.writersArray is defined and hit.writersArray %}
+            {% for w in hit.writersArray %}
+                {% if w %}
+                    {% set writersList = writersList|merge([w]) %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if writersList is empty and hit.writers is defined and hit.writers|trim != '' %}
+            {% set writersList = [hit.writers] %}
+        {% endif %}
+
+        {# ---------- Publishers (array or string, skip empties) ---------- #}
+        {% set publishersList = [] %}
+        {% if hit.publishersArray is defined and hit.publishersArray %}
+            {% for p in hit.publishersArray %}
+                {% if p is defined and p is not empty and p|trim != '' %}
+                    {% set publishersList = publishersList|merge([p]) %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if publishersList is empty and hit.publisher is defined and hit.publisher|trim != '' %}
+            {% set publishersList = [hit.publisher] %}
+        {% endif %}
+
+        {# ---------- Year (hide 0/empty) ---------- #}
+        {% set yearVal = hit.year|default(null) %}
+        {% if yearVal == 0 %}{% set yearVal = null %}{% endif %}
+
+        {# ---------- Meta grid ---------- #}
         <div class="meta-grid">
-            {% if hit.school %}
+            {% if hit.school and hit.school|trim != '' %}
                 <div class="meta-key fw-semibold">School</div>
                 <div class="meta-val">{{ hit.school }}</div>
             {% endif %}
 
-            {% if hit.writers %}
-                <div class="meta-key fw-semibold">Writer{{ hit.writersArray|length > 1 ? 's' : '' }}</div>
-                <div class="meta-val">{{ hit.writers }}</div>
+            {% if writersList is not empty %}
+                <div class="meta-key fw-semibold">Writers</div>
+                <div class="meta-val">{{ writersList|join(', ') }}</div>
             {% endif %}
 
-            {% if hit.publisher %}
-                <div class="meta-key fw-semibold">Publisher{{ hit.publishersArray|length > 1 ? 's' : '' }}</div>
-                <div class="meta-val">{{ hit.publisher }}</div>
+            {% if publishersList is not empty %}
+                <div class="meta-key fw-semibold">Publishers</div>
+                <div class="meta-val">{{ publishersList|join(', ') }}</div>
             {% endif %}
 
-            {% if hit.year %}
+            {% if yearVal %}
                 <div class="meta-key fw-semibold">Year</div>
-                <div class="meta-val">{{ hit.year }}</div>
+                <div class="meta-val">{{ yearVal }}</div>
             {% endif %}
+
+{#            {% if hit.locale is defined and hit.locale|trim != '' %}#}
+{#                <div class="meta-key fw-semibold">Locale</div>#}
+{#                <div class="meta-val">{{ hit.locale }}</div>#}
+{#            {% endif %}#}
+
+{#            {% if hit.code is defined and hit.code|trim != '' %}#}
+{#                <div class="meta-key fw-semibold">Code</div>#}
+{#                <div class="meta-val">{{ hit.code }}</div>#}
+{#            {% endif %}#}
         </div>
     </div>
 
     {# Footer #}
     <div class="card-footer d-flex justify-content-between align-items-center small">
-        <span class="text-muted">
-            {{ hit._highlightResult.type.value|default(hit.type) }}
-            {% if hit._rankingScore != 1 %}
-                • score: {{ hit._rankingScore|number_format(2) }}
-            {% endif %}
-        </span>
+    <span class="text-muted">
+      {{ hit._highlightResult.type.value|default(hit.type) }}
+        {% if hit._rankingScore != 1 %}
+            • score: {{ hit._rankingScore|number_format(2) }}
+        {% endif %}
+    </span>
 
         <button
             class="btn btn-sm btn-outline-primary"

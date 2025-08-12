@@ -60,10 +60,13 @@ class Video implements RouteParametersInterface, \Stringable
     #[MeiliId]
     private string $youtubeId;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $title;
+    #[Groups(['video.read'])]
+    public string $title;
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $description=null;
+    #[Groups(['video.read'])]
+    public ?string $description=null;
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['video.read'])]
     private $date;
 
     #[ORM\Column(nullable: true)]
@@ -76,6 +79,10 @@ class Video implements RouteParametersInterface, \Stringable
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups('song.read')]
     private ?string $thumbnailUrl = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups('song.read')]
+    public ?array $thumbnails = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['video.read'])]
@@ -98,23 +105,9 @@ class Video implements RouteParametersInterface, \Stringable
     {
         return sprintf('https://www.youtube.com/watch?v=' . $this->getYoutubeId());
     }
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
     public function setTitle(?string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -167,7 +160,7 @@ class Video implements RouteParametersInterface, \Stringable
     #[Groups(['video.read'])]
     public function getSchool(): ?string
     {
-        return $this->getSong()?->getSchool();
+        return $this->getSong()?->school;
     }
 
     public function getThumbnailUrl(): ?string

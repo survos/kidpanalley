@@ -10,3 +10,5 @@ body {
     font-size: 6rem;
     background-color: yellow;
 }
+
+.ratio { background-color: transparent !important; }

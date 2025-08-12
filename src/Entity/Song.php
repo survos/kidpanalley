@@ -49,7 +49,7 @@ use Zenstruck\Metadata;
 #[ApiFilter(SearchFilter::class, properties: ['title'=>'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
 #[ApiFilter(FacetsFieldSearchFilter::class,
-    properties: ['school', 'publisher', 'writers','publishersArray','year'],
+    properties: ['school', 'writersArray','publishersArray','year'],
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
 #[Groups(['song.read'])]
@@ -74,7 +74,11 @@ class Song implements RouteParametersInterface, \Stringable
 
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable','video.read'])]
-    private ?string $title;
+    public ?string $title;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.read', 'searchable','video.read'])]
+    public ?string $description=null; // could be from youtube
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['song.read', 'searchable'])]
@@ -82,11 +86,11 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['song.facet', 'song.read', 'video.read', 'searchable'])]
     #[Facet()]
-    private $year;
+    public ?int $year=null;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['song.read', 'video.read', 'searchable'])]
     #[Facet()]
-    private $school;
+    public ?string $school=null;
     #[ORM\Column(type: 'text', nullable: true)]
     private $lyrics;
     #[ORM\Column(type: 'text', nullable: true)]
@@ -102,8 +106,10 @@ class Song implements RouteParametersInterface, \Stringable
     private $wordpressPageId;
     #[ORM\Column(type: 'text', nullable: true)]
     private $recording;
+
     #[ORM\Column(type: 'text', nullable: true)]
-    private $publisher;
+    #[Groups(['song.read', 'video.read', 'searchable'])]
+    public ?string $publisher=null;
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read'])]
     private $notes;
@@ -204,13 +210,23 @@ class Song implements RouteParametersInterface, \Stringable
     #[Groups(['song.read'])]
     public function getWritersArray(): array
     {
-        return explode('/', $this->getWriters()??'');
+        return array_values(array_filter(array_map('trim', explode('/', (string) $this->getWriters())), 'strlen'));
+//
+//        $x = [];
+//        foreach (explode('/', $this->getWriters()??'') as $writer) {
+//            $writer = trim($writer);
+//            if ($writer <> '') {
+//                $x[] =$writer;
+//            }
+//        }
+//        return $x;
     }
 
     #[Groups(['song.read'])]
     public function getPublishersArray(): array
     {
-        return explode('/', $this->getPublisher()??'');
+        return array_values(array_filter(array_map('trim', explode('/', $this->publisher)), 'strlen'));
+//        return explode('/', $this->getPublisher()??'');
     }
 
     public function setWriters(?string $writers): self
@@ -256,11 +272,6 @@ class Song implements RouteParametersInterface, \Stringable
         return $this;
     }
 
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
-
     public function setYear(?int $year): self
     {
         $this->year = $year;
@@ -283,13 +294,6 @@ class Song implements RouteParametersInterface, \Stringable
     public function getSchool(): ?string
     {
         return $this->school;
-    }
-
-    public function setSchool(?string $school): self
-    {
-        $this->school = $school;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface

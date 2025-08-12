@@ -42,8 +42,8 @@ framework:
 
         routing:
             Symfony\Component\Console\Messenger\RunCommandMessage: async
-            App\Message\FetchYoutubeChannelMessage: async
-            App\Message\LoadSongsMessage: async
+            App\Message\FetchYoutubeChannelMessage: sync
+            App\Message\LoadSongsMessage: sync
 
             Survos\WorkflowBundle\Message\TransitionMessage: async
             Survos\MeiliBundle\Message\BatchIndexEntitiesMessage: meili

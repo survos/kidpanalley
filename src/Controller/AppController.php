@@ -288,7 +288,7 @@ class AppController extends AbstractController
                     continue;
                 }
                 // look for the title
-                dump($data);
+//                dump($data);
                 if (!$song = $em->getRepository(Song::class)->findOneBy(['title' => $title])) {
                     $song = (new Song())
                         ->setTitle($title);
