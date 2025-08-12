@@ -27,10 +27,10 @@
 
     {# Body #}
     <div class="card-body small">
-        {% if hit._highlightResult.description is defined %}
-            <div class="description-clamp mb-3">
+        {% if hit.description is defined %}
                 {{ hit._highlightResult.description.value|raw }}
-            </div>
+{#            <div class="description-clamp mb-3">#}
+{#            </div>#}
         {% endif %}
 
         <div class="meta-grid">

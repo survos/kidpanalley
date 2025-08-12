@@ -41,7 +41,14 @@ class LoadDataCommand
     ): int
     {
         $video ??= true;
-        $songs ??= false;
+        $songs ??= true;
+
+        // should be first, so that video can look for it.
+        if ($songs) {
+            $this->appService->loadSongs();;
+//            $this->bus->dispatch(new LoadSongsMessage());
+//            $io->success('Songs Load Requested');
+        }
 
         if ($video) {
             $this->bus->dispatch(new FetchYoutubeChannelMessage(), [
@@ -50,10 +57,6 @@ class LoadDataCommand
             $io->success('Videos Load Requested');
         }
 
-        if ($songs) {
-            $this->bus->dispatch(new LoadSongsMessage());
-            $io->success('Songs Load Requested');
-        }
         return Command::SUCCESS;
     }
 

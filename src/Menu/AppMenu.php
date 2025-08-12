@@ -8,6 +8,7 @@ use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
+use Survos\MeiliBundle\Service\MeiliService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -27,6 +28,7 @@ final class AppMenu
         private ContextService                                         $contextService,
         private Security                                               $security,
         private MenuService                                            $menuService,
+private MeiliService $meiliService,
 //        private DatatableService                                       $datatableService,
         // why is autowire required?
 //        #[Autowire(service: 'api_meili_service')] private MeiliService $meiliService,
@@ -108,8 +110,12 @@ final class AppMenu
         }
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
-        $this->add($menu, 'meili_insta', ['indexName' => 'kpa_Video'], label: '@meili VIDEO');
-        $this->add($menu, 'meili_insta', ['indexName' => 'kpa_Song'], label: 'Songs');
+        foreach ($this->meiliService->indexedEntities as $entity) {
+            $shortName = new \ReflectionClass($entity)->getShortName();
+            $this->add($menu, 'meili_insta', ['indexName' => $shortName],
+                label: $shortName);
+        }
+//        $this->add($menu, 'meili_insta', ['indexName' => 'kpa_Song'], label: 'Songs');
 //        $this->add($menu, 'song_index', label: 'Songs');
 //        $this->add($menu, 'video_browse', label: 'Videos');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
