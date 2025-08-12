@@ -1,48 +1,69 @@
-{# <div class="hit-category">{{ hit._highlightResult.category.value }} #}
-{#    <span class="hit-value">for ${{ hit.value }}</span> #}
-{# </div> #}
-
-{# <div class="hit-question">{{ hit._highlightResult.question.value }}</div> #}
-
-{% set _sc = 'reveal' %}
-
-{# <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"> #}
-{#    <div class="col"> #}
-<div class="card h-100">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <span class="fw-bold">{{ hit._highlightResult.title.value }}</span>
+<div class="card h-100 shadow-sm">
+    {# Header #}
+    <div class="card-header fw-bold text-truncate" title="{{ hit.title }}">
+        {{ hit._highlightResult.title.value|default(hit.title) }}
     </div>
 
-    <img src="{{ hit.thumbnailUrl }}" />
+    {% set ytThumb = hit.rawData.snippet.thumbnails.high.url
+        ?? hit.rawData.snippet.thumbnails.medium.url
+        ?? hit.thumbnailUrl
+    %}
 
-    <div class="card-body">
-        <div class="blockquote">
-            {{ hit._highlightResult.description.value }}
+    <a href="https://www.youtube.com/watch?v={{ hit.rp.videoId|default(hit.youtubeId) }}" target="_blank" rel="noopener">
+        <div class="ratio ratio-16x9">
+            <img
+                src="{{ ytThumb }}"
+                alt="{{ hit.title }}"
+                class="w-100 h-100 object-fit-cover rounded-0"
+                loading="lazy"
+                srcset="
+        {{ hit.rawData.snippet.thumbnails.default.url ?? hit.thumbnailUrl }} 120w,
+        {{ hit.rawData.snippet.thumbnails.medium.url  ?? ytThumb }} 320w,
+        {{ hit.rawData.snippet.thumbnails.high.url    ?? ytThumb }} 480w"
+                sizes="(min-width: 992px) 320px, 100vw"
+            />
         </div>
-    </div>
+    </a>
 
-    <div class="card-footer clearfix xxd-flex float-end xjustify-content-end">
-        <div class="float-start">
-            {{ hit._highlightResult.type.value }}
-        </div>
-        {% if hit._rankingScore != 1 %}
-            <span class="m-4">
-                        score: {{ hit._rankingScore|number_format(2) }}
-                </span>
+    {# Body #}
+    <div class="card-body small">
+        {% if hit._highlightResult.description is defined %}
+            <div class="description-clamp mb-3">
+                {{ hit._highlightResult.description.value|raw }}
+            </div>
         {% endif %}
-{#        {{ _sc_modal }}#}
-{#        <pre>{{ stimulus_action(_sc_modal, 'modal') }}#}
-{#data-action="survos--meili-bundle--json#modal"#}
-{#        </pre>#}
-{#        <br />#}
+
+        <div class="meta-grid">
+            {% if hit.rawData.snippet.channelTitle %}
+                <div class="meta-key fw-semibold">Channel</div>
+                <div class="meta-val">{{ hit.rawData.snippet.channelTitle }}</div>
+            {% endif %}
+            {% if hit.date %}
+                <div class="meta-key fw-semibold">Published</div>
+                <div class="meta-val">{{ hit.date|date('Y-m-d') }}</div>
+            {% endif %}
+            {% if hit.year %}
+                <div class="meta-key fw-semibold">Year</div>
+                <div class="meta-val">{{ hit.year }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Footer #}
+    <div class="card-footer d-flex justify-content-between align-items-center small">
+        <span class="text-muted">
+            {{ hit._highlightResult.type.value|default(hit.type) }}
+            {% if hit._rankingScore != 1 %}
+                • score: {{ hit._rankingScore|number_format(2) }}
+            {% endif %}
+        </span>
+
         <button
+            class="btn btn-sm btn-outline-primary"
             {{ stimulus_action(_sc_modal, 'modal') }}
             data-hit-id="{{ hit.id }}"
-            class="float-end btn btn-sm btn-outline-primary">
-            <span class="me-1 icon-wrapper">{{ icons.json|raw }}</span>
+        >
+            <span class="me-1 icon-wrapper">{{ icons.json|raw }}</span> JSON
         </button>
-
     </div>
 </div>
-
-

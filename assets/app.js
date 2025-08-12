@@ -9,10 +9,11 @@ import 'instantsearch.css/themes/algolia.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'bootstrap-icons/font/bootstrap-icons.min.css'
 
-import '@tabler/core';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '@tabler/core/dist/css/tabler.min.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
+import '@tabler/core';
 // import "@andypf/json-viewer"
 
 
