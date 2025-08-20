@@ -2,14 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Translations\SongTranslationsTrait;
-use Survos\BabelBundle\Entity\Traits\TranslatableHooksTrait;
-use Survos\BabelBundle\Contract\TranslatableResolvedInterface;
-use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Put;
 use App\Repository\SongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +15,6 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
-use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -44,10 +37,8 @@ use Zenstruck\Metadata;
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
 #[MeiliIndex]
-class Song implements RouteParametersInterface, \Stringable, Survos\BabelBundle\Contract\TranslatableResolvedInterface
+class Song implements RouteParametersInterface, \Stringable
 {
-    use App\Entity\Translations\SongTranslationsTrait;
-    use Survos\BabelBundle\Entity\Traits\TranslatableHooksTrait;
     use RouteParametersTrait;
     public const array UNIQUE_PARAMETERS = ['songId' => 'id'];
     public const MEILI_ROUTE = 'meili-song';
