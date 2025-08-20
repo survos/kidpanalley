@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45be41cacb3095eaf360b10c7fcec1b7",
+    "content-hash": "263cf9dcb8bc81cec937920199f9d2f0",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -6498,6 +6498,63 @@
                 }
             ],
             "time": "2025-07-26T14:04:29+00:00"
+        },
+        {
+            "name": "survos/babel-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/babel-bundle.git",
+                "reference": "8897a6748a8ec9d9ac7691ae131a0c1410987e25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/babel-bundle/zipball/8897a6748a8ec9d9ac7691ae131a0c1410987e25",
+                "reference": "8897a6748a8ec9d9ac7691ae131a0c1410987e25",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^2.15",
+                "doctrine/orm": "^3.5",
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "php": "^8.4",
+                "symfony/dependency-injection": "^7.3",
+                "symfony/http-kernel": "^7.3",
+                "symfony/property-access": "^7.3",
+                "symfony/translation": "^7.3"
+            },
+            "require-dev": {
+                "survos/libre-translate-bundle": "^1.6"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\BabelBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Lightweight translation base (Str/StrTranslation) + Translatable attribute & subscriber",
+            "support": {
+                "issues": "https://github.com/survos/babel-bundle/issues",
+                "source": "https://github.com/survos/babel-bundle/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-08-19T23:36:45+00:00"
         },
         {
             "name": "survos/bootstrap-bundle",
@@ -14661,6 +14718,74 @@
             "time": "2024-12-14T08:03:12+00:00"
         },
         {
+            "name": "kdyby/parse-use-statements",
+            "version": "v0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/ParseUseStatements.git",
+                "reference": "2754bde98d919a2158951d8f84350685f8fd9efc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/ParseUseStatements/zipball/2754bde98d919a2158951d8f84350685f8fd9efc",
+                "reference": "2754bde98d919a2158951d8f84350685f8fd9efc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "nette/tester": "~1.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kdyby\\ParseUseStatements\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "email": "filip@prochazka.su",
+                    "homepage": "http://filip-prochazka.com"
+                },
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "https://nette.org/contributors"
+                }
+            ],
+            "description": "Parse use statements for a reflection object",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "class",
+                "expand",
+                "import",
+                "kdyby",
+                "parse",
+                "reflection",
+                "statement",
+                "usages",
+                "use",
+                "uses"
+            ],
+            "support": {
+                "email": "filip@prochazka.su",
+                "issues": "https://github.com/Kdyby/ParseUseStatements/issues",
+                "source": "https://github.com/Kdyby/ParseUseStatements/tree/master"
+            },
+            "time": "2016-09-07T21:22:38+00:00"
+        },
+        {
             "name": "masterminds/html5",
             "version": "2.10.0",
             "source": {
@@ -14997,16 +15122,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.6.0",
+            "version": "v5.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56"
+                "reference": "f103601b29efebd7ff4a1ca7b3eeea9e3336a2a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/221b0d0fdf1369c71047ad1d18bb5880017bbc56",
-                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f103601b29efebd7ff4a1ca7b3eeea9e3336a2a2",
+                "reference": "f103601b29efebd7ff4a1ca7b3eeea9e3336a2a2",
                 "shasum": ""
             },
             "require": {
@@ -15025,7 +15150,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0-dev"
+                    "dev-master": "5.x-dev"
                 }
             },
             "autoload": {
@@ -15049,9 +15174,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.1"
             },
-            "time": "2025-07-27T20:03:57+00:00"
+            "time": "2025-08-13T20:13:15+00:00"
         },
         {
             "name": "ondram/ci-detector",
@@ -16894,6 +17019,74 @@
             "time": "2024-10-20T05:08:20+00:00"
         },
         {
+            "name": "survos/code-bundle",
+            "version": "1.5.602",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosCodeBundle.git",
+                "reference": "46c4d3d2b48fa2ffc11306626f6d9bc2f181cf37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosCodeBundle/zipball/46c4d3d2b48fa2ffc11306626f6d9bc2f181cf37",
+                "reference": "46c4d3d2b48fa2ffc11306626f6d9bc2f181cf37",
+                "shasum": ""
+            },
+            "require": {
+                "kdyby/parse-use-statements": "^0.2.0",
+                "nette/php-generator": "^4.1",
+                "php": "^8.4",
+                "roave/better-reflection": "^6.57",
+                "symfony/config": "^7.3",
+                "symfony/dependency-injection": "^7.3",
+                "symfony/http-kernel": "^7.3",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "doctrine/orm": "^3.3",
+                "halaxa/json-machine": "^1.2",
+                "league/csv": "^9.23",
+                "phpstan/phpstan": "^2.0",
+                "survos/workflow-helper-bundle": "^1.5",
+                "symfony/browser-kit": "^7.2",
+                "symfony/console": "^7.3",
+                "symfony/framework-bundle": "^7.2",
+                "symfony/phpunit-bridge": "^7.2",
+                "symfony/routing": "^7.2",
+                "symfony/security-bundle": "^7.3",
+                "symfony/twig-bundle": "^7.2",
+                "symfony/var-dumper": "^7.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\CodeBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "generate code for Symfony applications",
+            "keywords": [
+                "code",
+                "dev",
+                "generator",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/SurvosCodeBundle/issues",
+                "source": "https://github.com/survos/SurvosCodeBundle/tree/1.5.602"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-07-15T11:36:08+00:00"
+        },
+        {
             "name": "survos/crawler-bundle",
             "version": "1.6.41",
             "source": {
@@ -18300,6 +18493,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "survos/babel-bundle": 20,
         "survos/doc-bundle": 20,
         "survos/meili-bundle": 20
     },

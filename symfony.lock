@@ -402,8 +402,14 @@
     "survos/auth-bundle": {
         "version": "dev-main"
     },
+    "survos/babel-bundle": {
+        "version": "dev-main"
+    },
     "survos/bootstrap-bundle": {
         "version": "dev-master"
+    },
+    "survos/code-bundle": {
+        "version": "1.5.602"
     },
     "survos/command-bundle": {
         "version": "1.5",

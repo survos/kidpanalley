@@ -42,4 +42,6 @@ return [
     Survos\DocBundle\SurvosDocBundle::class => ['dev' => true, 'test' => true],
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
     Jwage\PhpAmqpLibMessengerBundle\PhpAmqpLibMessengerBundle::class => ['all' => true],
+    Survos\BabelBundle\SurvosBabelBundle::class => ['all' => true],
+    Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
 ];
