@@ -55,13 +55,11 @@ class Song implements RouteParametersInterface, \Stringable, Survos\BabelBundle\
     #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: 'integer')]
     private $id;
-    /* Translated field 'title' moved to *TranslationsTrait.
-       To revert: remove the trait and uncomment below.
-       #[Translatable]
+    #[Translatable]
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable', 'video.read'])]
     public ?string $title;
-    */
+
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read', 'searchable', 'video.read'])]
     public ?string $description = null;

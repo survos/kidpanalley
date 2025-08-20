@@ -27,3 +27,5 @@
 ###< symfony/asset-mapper ###
 
 coverage
+
+.php-cs-fixer.cache
