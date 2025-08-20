@@ -11,6 +11,7 @@ use App\Repository\SongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\BabelBundle\Attribute\Translatable;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
@@ -71,7 +72,7 @@ class Song implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'integer')]
     private $id;
 
-
+    #[Translatable()]
     #[ORM\Column(type: 'text')]
     #[Groups(['song.read', 'searchable','video.read'])]
     public ?string $title;
