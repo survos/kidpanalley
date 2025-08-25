@@ -20,8 +20,8 @@ use Symfony\Component\Messenger\Stamp\DeduplicateStamp;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-#[AsCommand('app:load', "Load the songs and videos")]
-class LoadDataCommand
+#[AsCommand('load:Song', "Load the songs and videos")]
+class LoadLongsCommand
 {
     public function __construct(
         private readonly EntityManagerInterface            $entityManager,
@@ -36,19 +36,16 @@ class LoadDataCommand
 
     public function __invoke(
         SymfonyStyle    $io,
-        #[Option("default: true")] ?bool $video = null,
-        #[Option("default: true")] ?bool $songs = null,
-        #[Option] int $limit = 3,
     ): int
     {
-        $video ??= false;
+        $video ??= true;
         $songs ??= true;
 
         // should be first, so that video can look for it.
         if ($songs) {
-            $this->appService->loadSongs($limit);;
+            $this->appService->loadSongs();;
 //            $this->bus->dispatch(new LoadSongsMessage());
-            $io->success('Songs Loaded ' . $this->songRepository->count() . ' songs');
+//            $io->success('Songs Load Requested');
         }
 
         if ($video) {
@@ -57,7 +54,6 @@ class LoadDataCommand
             ]);
             $io->success('Videos Load Requested');
         }
-
 
         return Command::SUCCESS;
     }

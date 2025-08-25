@@ -40,7 +40,6 @@ class AppService
 {
 
     public function __construct(private readonly EntityManagerInterface $em,
-                                private readonly SerializerInterface    $serializer,
                                 private SongRepository                  $songRepository,
                                 private ScraperService                  $scraperService,
                                 private ValidatorInterface $validator,
@@ -178,8 +177,7 @@ class AppService
                         if (!$song = $repo->findOneBy(['title' => $title])) {
                             $code = Song::createCode($title);
                             $song = $this->getSong($code);
-                            $song
-                                ->setTitle($title);
+                            $song->title = $title;
                         }
                         $song->setLyrics(join("\n", $lines));
 //                        dd($song->getLyrics(), $song->getId());
@@ -207,8 +205,7 @@ class AppService
                 if (!$song = $this->songRepository->findOneBy(['title' => $title])) {
                     $code = 'file_' . md5($title);
                     $song = $this->getSong($code);
-                    $song
-                        ->setTitle($title);
+                    $song->title = $title;
                 }
                 $song->setLyrics($text);
             }
@@ -219,7 +216,7 @@ class AppService
     public function loadExistingSongs()
     {
         foreach ($this->songRepository->findAll() as $song) {
-            $this->songs[$song->getCode()] = $song;
+            $this->songs[$song->code] = $song;
         }
 
     }
@@ -416,7 +413,7 @@ class AppService
         $this->loadLyrics($dir);
     }
 
-    public function loadSongs()
+    public function loadSongs(?int $limit = null)
     {
         $this->loadExistingSongs();
 
@@ -456,9 +453,8 @@ class AppService
                 $song->school = $school;
                 $song->publisher = $data['publisher'];
                 $song->year = $year;
+                $song->title = $title;
                 $song
-//                    ->setDate($date)
-                    ->setTitle($data['Instrumentals'])
                     ->setWriters($data['writer']);
 //                if ($data['writer']) dd($data, $song);
 
@@ -487,6 +483,12 @@ class AppService
                 }
                 array_push($songs, $song);
                 // dump($data);
+
+                if ($limit && ($idx >= $limit)) {
+                    break;
+                }
+//                dd($song, $song->title);
+
             }
             if ($idx == 45) {
                 // dd($data, $song);
