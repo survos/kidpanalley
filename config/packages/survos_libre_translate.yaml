@@ -1,9 +1,9 @@
-survos_libre_translate:
-#  host: '%env(LIBRE_URL)%'
-#  port: 5000
-#  apikey: 'MasterKey'
-#  sourceLanguage: 'en'
-#  targetLanguage: 'es'
-#  server: https://trans.wip
-  server: '%env(TRANSLATOR_ENDPOINT)%'
-#  proxy: '%env(PROXY)%'
+#survos_libre_translate:
+##  host: '%env(LIBRE_URL)%'
+##  port: 5000
+##  apikey: 'MasterKey'
+##  sourceLanguage: 'en'
+##  targetLanguage: 'es'
+##  server: https://trans.wip
+#  server: '%env(TRANSLATOR_ENDPOINT)%'
+##  proxy: '%env(PROXY)%'

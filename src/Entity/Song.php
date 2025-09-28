@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Entity\Translations\SongTranslationsTrait;
-use Survos\BabelBundle\Entity\Traits\TranslatableHooksTrait;
-use Survos\BabelBundle\Contract\TranslatableResolvedInterface;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SongRepository;
@@ -12,6 +10,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\BabelBundle\Attribute\Translatable;
+use Survos\BabelBundle\Contract\BabelHooksInterface;
+use Survos\BabelBundle\Entity\Traits\BabelHooksTrait;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
@@ -24,6 +24,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zenstruck\Metadata;
+
+use Doctrine\ORM\Mapping\Column;
+
+use Doctrine\DBAL\Types\Types;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ORM\UniqueConstraint('song_code', ['code'])]
 #[GetCollection(name: self::MEILI_ROUTE, normalizationContext: ['groups' => ['instance.read', 'tree', 'rp']])]
@@ -36,11 +40,12 @@ use Zenstruck\Metadata;
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
 #[MeiliIndex]
-class Song implements RouteParametersInterface, \Stringable, TranslatableResolvedInterface
+class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 {
-    use SongTranslationsTrait;
-    use TranslatableHooksTrait;
+//    use SongTranslationsTrait;
+//    use TranslatableHooksTrait;
     use RouteParametersTrait;
+    use BabelHooksTrait;
 
     public const array UNIQUE_PARAMETERS = ['songId' => 'id'];
     public const MEILI_ROUTE = 'meili-song';
@@ -49,15 +54,6 @@ class Song implements RouteParametersInterface, \Stringable, TranslatableResolve
     #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: 'integer')]
     public readonly ?int $id;
-
-    /**
-     * @property string|null $title [translatable via SongTranslationsTrait]
-     * To revert: remove the trait and uncomment below.
-    #[Translatable]
-    #[ORM\Column(type: 'text')]
-    #[Groups(['song.read', 'searchable', 'video.read'])]
-    public ?string $title;
-    */
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read', 'searchable', 'video.read'])]
@@ -413,4 +409,15 @@ class Song implements RouteParametersInterface, \Stringable, TranslatableResolve
     }
 
 
+
+        // <BABEL:TRANSLATABLE:START title>
+        #[Column(type: Types::TEXT, nullable: true)]
+        private ?string $titleBacking = null;
+
+        #[Translatable(context: NULL)]
+        public ?string $title {
+            get => $this->resolveTranslatable('title', $this->titleBacking, NULL);
+            set => $this->titleBacking = $value;
+        }
+        // <BABEL:TRANSLATABLE:END title>
 }

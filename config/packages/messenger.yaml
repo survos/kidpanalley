@@ -45,7 +45,6 @@ framework:
             App\Message\FetchYoutubeChannelMessage: sync
             App\Message\LoadSongsMessage: sync
 
-            Survos\WorkflowBundle\Message\TransitionMessage: async
             Survos\MeiliBundle\Message\BatchIndexEntitiesMessage: meili
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
