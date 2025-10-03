@@ -1,11 +1,11 @@
 parameters:
     # Define the anchor with RabbitMQ options
-    rabbitmq_dsn: &rabbitmq_dsn
-        dsn: '%env(MESSENGER_TRANSPORT_DSN_RABBITMQ)%'
-
-    rabbitmq_retry: &rabbitmq_retry
-        max_retries: 3
-        multiplier: 2
+#    rabbitmq_dsn: &rabbitmq_dsn
+#        dsn: '%env(MESSENGER_TRANSPORT_DSN_RABBITMQ)%'
+#
+#    rabbitmq_retry: &rabbitmq_retry
+#        max_retries: 3
+#        multiplier: 2
 
 framework:
     messenger:
@@ -15,33 +15,24 @@ framework:
         failure_transport: failed
 
         transports:
-            async:
-                <<: *rabbitmq_dsn
-                options:
-                    exchange:
-                        name: async
-                        type: fanout
-                    queues:
-                        async:
-                            binding_keys: [async]
-                retry_strategy: *rabbitmq_retry
-
+#            async:
+#                <<: *rabbitmq_dsn
+#                options:
+#                    exchange:
+#                        name: async
+#                        type: fanout
+#                    queues:
+#                        async:
+#                            binding_keys: [async]
+#                retry_strategy: *rabbitmq_retry
+#
             meili:
-                <<: *rabbitmq_dsn
-                options:
-                    exchange:
-                        name: meili
-                        type: fanout
-                    queues:
-                        meili:
-                            binding_keys: [meili]
-                retry_strategy: *rabbitmq_retry
-
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
             failed: 'doctrine://default?queue_name=failed'
             sync: 'sync://'
 
         routing:
-            Symfony\Component\Console\Messenger\RunCommandMessage: async
+#            Symfony\Component\Console\Messenger\RunCommandMessage: async
             App\Message\FetchYoutubeChannelMessage: sync
             App\Message\LoadSongsMessage: sync
 

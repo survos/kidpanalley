@@ -20,7 +20,6 @@ return [
     Survos\InspectionBundle\SurvosInspectionBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Survos\BootstrapBundle\SurvosBootstrapBundle::class => ['all' => true],
-    Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['dev' => true, 'test' => true],
     Survos\AuthBundle\SurvosAuthBundle::class => ['all' => true],
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
     Survos\CrawlerBundle\SurvosCrawlerBundle::class => ['dev' => true, 'test' => true],
@@ -41,4 +40,5 @@ return [
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
     Survos\BabelBundle\SurvosBabelBundle::class => ['all' => true],
     Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
+    Jwage\PhpAmqpLibMessengerBundle\PhpAmqpLibMessengerBundle::class => ['all' => true],
 ];
