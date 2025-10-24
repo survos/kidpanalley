@@ -387,6 +387,18 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
+    "sensiolabs/ansi-to-html": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.2",
+            "ref": "d58d11d5b998f39260d387d3a0b50adc342db7e4"
+        },
+        "files": [
+            "config/packages/ansi_to_html.yaml"
+        ]
+    },
     "sentry/sentry-symfony": {
         "version": "5.2",
         "recipe": {
@@ -407,6 +419,9 @@
     },
     "survos/bootstrap-bundle": {
         "version": "dev-master"
+    },
+    "survos/ciine-bundle": {
+        "version": "dev-main"
     },
     "survos/code-bundle": {
         "version": "1.5.602"
@@ -685,6 +700,15 @@
     },
     "symfony/orm-pack": {
         "version": "dev-master"
+    },
+    "symfony/panther": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "4380502301e68b744b21d2a0c917693676a72f33"
+        }
     },
     "symfony/password-hasher": {
         "version": "v6.0.1"

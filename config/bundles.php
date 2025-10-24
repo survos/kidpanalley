@@ -41,4 +41,5 @@ return [
     Survos\BabelBundle\SurvosBabelBundle::class => ['all' => true],
     Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
     Jwage\PhpAmqpLibMessengerBundle\PhpAmqpLibMessengerBundle::class => ['all' => true],
+    Survos\CiineBundle\SurvosCiineBundle::class => ['all' => true],
 ];
