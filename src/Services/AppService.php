@@ -125,7 +125,6 @@ class AppService
     public function loadLyrics(string $dir)
     {
 
-
         if (!file_exists($dir)) {
             $this->logger->warning("Warning, cannot load lyrics from $dir");
             return;
@@ -207,7 +206,7 @@ class AppService
                     $song = $this->getSong($code);
                     $song->title = $title;
                 }
-                $song->setLyrics($text);
+                $song->lyrics=$text;
             }
         }
         $this->em->flush();
