@@ -39,7 +39,11 @@ use Doctrine\DBAL\Types\Types;
 #[Groups(['song.read'])]
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
-#[MeiliIndex]
+#[MeiliIndex(
+    searchable: ['lyrics','title'],
+    filterable: ['writersArray', 'publishersArray', 'year'],
+    embedders: ['small']
+)]
 class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 {
 //    use SongTranslationsTrait;
@@ -410,14 +414,8 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 
 
 
-        // <BABEL:TRANSLATABLE:START title>
-        #[Column(type: Types::TEXT, nullable: true)]
-        private ?string $titleBacking = null;
+    // <BABEL:TRANSLATABLE:START title>
+    #[Column(type: Types::TEXT, nullable: true)]
+    public ?string $title = null;
 
-        #[Translatable(context: NULL)]
-        public ?string $title {
-            get => $this->resolveTranslatable('title', $this->titleBacking, NULL);
-            set => $this->titleBacking = $value;
-        }
-        // <BABEL:TRANSLATABLE:END title>
 }

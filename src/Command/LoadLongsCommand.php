@@ -54,6 +54,7 @@ class LoadLongsCommand
             ]);
             $io->success('Videos Load Requested');
         }
+        $this->loadLyricFiles();
 
         return Command::SUCCESS;
     }

@@ -86,16 +86,17 @@
 
         {# ---------- Writers (array or string, skip empties) ---------- #}
         {% set writersList = [] %}
-        {% if hit.writersArray is defined and hit.writersArray %}
+        {% if  hit.writersArray %}
             {% for w in hit.writersArray %}
                 {% if w %}
+                    {{ w|json_encode }}
                     {% set writersList = writersList|merge([w]) %}
                 {% endif %}
             {% endfor %}
         {% endif %}
-        {% if writersList is empty and hit.writers is defined and hit.writers|trim != '' %}
-            {% set writersList = [hit.writers] %}
-        {% endif %}
+{#        {% if writersList is empty and hit.writers is defined and hit.writers|trim != '' %}#}
+{#            {% set writersList = [hit.writers] %}#}
+{#        {% endif %}#}
 
         {# ---------- Publishers (array or string, skip empties) ---------- #}
         {% set publishersList = [] %}
@@ -106,9 +107,12 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
-        {% if publishersList is empty and hit.publisher is defined and hit.publisher|trim != '' %}
-            {% set publishersList = [hit.publisher] %}
-        {% endif %}
+{#        {% if publishersList is empty and hit.publisher is defined and hit.publisher|trim != '' %}#}
+{#            {% set publishersList = [hit.publisher] %}#}
+{#        {% endif %}#}
+
+{#        {{ hit._highlightResult.lyrics.value|raw }}#}
+        {{ hit.lyrics|slice(0, 500)|raw }}
 
         {# ---------- Year (hide 0/empty) ---------- #}
         {% set yearVal = hit.year|default(null) %}
@@ -120,6 +124,8 @@
                 <div class="meta-key fw-semibold">School</div>
                 <div class="meta-val">{{ hit.school }}</div>
             {% endif %}
+
+            <code>Lneght {{ writersList|length }}</code>
 
             {% if writersList is not empty %}
                 <div class="meta-key fw-semibold">Writers</div>

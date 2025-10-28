@@ -2,5 +2,15 @@ survos_meili:
     host: '%env(MEILI_SERVER)%'
     apiKey: '%env(MEILI_API_KEY)%'
     searchKey: '%env(MEILI_SEARCH_KEY)%'
+    embedders:
+        small: # for testing, as cheap as possible
+            source: 'openAi'
+            model: 'text-embedding-3-small' # 2 cents/million tokens
+            apiKey: '%env(OPENAI_API_KEY)%'
+            template: 'templates/liquid/song.liquid'
 
-
+        best: # for production if budget allows
+            source: 'openAi'
+            model: 'text-embedding-3-large' # 13 cents/million tokens
+            apiKey: '%env(OPENAI_API_KEY)%'
+            template: 'templates/liquid/song.liquid'

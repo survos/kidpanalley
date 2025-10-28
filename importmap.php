@@ -366,4 +366,10 @@ return [
     '@andypf/json-viewer' => [
         'version' => '2.1.10',
     ],
+    'loglevel' => [
+        'version' => '1.9.2',
+    ],
+    'loglevel-plugin-prefix' => [
+        'version' => '0.8.4',
+    ],
 ];

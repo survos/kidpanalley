@@ -44,6 +44,8 @@ class LoadDataCommand
         $video ??= false;
         $songs ??= true;
 
+        $this->loadLyricFiles();
+
         // should be first, so that video can look for it.
         if ($songs) {
             $this->appService->loadSongs($limit);;

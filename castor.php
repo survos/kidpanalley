@@ -2,10 +2,8 @@
 
 use Castor\Attribute\AsTask;
 
-use function Castor\io;
-use function Castor\capture;
-use function Castor\load_dot_env;
-use function Castor\run;
+use function Castor\{import, io, fs, capture, run, load_dot_env};
+import('.castor/vendor/tacman/castor-tools/castor.php');
 
 #[AsTask(description: 'Welcome to Castor!')]
 function hello(): void
@@ -21,25 +19,23 @@ function start_services()
     run('sudo docker run --rm --name meili -d -p 7700:7700 -v $(pwd)/../meili_data:/meili_data getmeili/meilisearch:latest meilisearch');
 
 }
-
-
-
 #[AsTask(description: 'Purge and re-create the database')]
 function reset_database()
 {
+    // this is only true if sqlite!
     $database = 'kpa';
-    $process = run([...get_console(), 'doctrine:database:drop', '--force'], allowFailure: true);
-    io()->info($process->getOutput());
-
-    $process = run([...get_console(), 'doctrine:schema:update', '--force', '--complete'], allowFailure: true);
-    io()->info($process->getOutput());
-
-    $process = run([...get_console(), 'app:load-data', '-v'], allowFailure: true);
-    io()->info($process->getOutput());
-
-    //    $process = run(join(' ', get_console()) .  ' doctrine:database:drop --force', allowFailure: true);
+//    $process = run([...get_console(), 'doctrine:database:drop', '--force']);
 //    io()->info($process->getOutput());
-    run(join(' ', get_console()) .  ' doctrine:database:create');
+//    run(join(' ', get_console()) .  ' doctrine:database:create');
+
+    $process = run([...get_console(), 'doctrine:schema:update', '--force', '--complete']);
+    io()->info($process->getOutput());
+
+    $process = run([...get_console(), 'app:load', '-v']);
+    io()->info($process->getOutput());
+
+    //    $process = run(join(' ', get_console()) .  ' doctrine:database:drop --force');
+//    io()->info($process->getOutput());
 //symfony console doctrine:database:drop --force && symfony console doctrine:database:create
 //symfony console doctrine:migrations:migrate -n
 //#symfony console d:schema:update --force --complete

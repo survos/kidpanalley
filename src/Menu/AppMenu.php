@@ -110,6 +110,7 @@ private MeiliService $meiliService,
         }
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'admin');
         foreach ($this->meiliService->indexedEntities as $entity) {
             $shortName = new \ReflectionClass($entity)->getShortName();
             $this->add($menu, 'meili_insta', ['indexName' => $shortName],

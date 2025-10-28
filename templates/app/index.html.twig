@@ -1,47 +1,16 @@
-{% extends 'base.html.twig' %}
+{#{% extends '@EasyAdmin/page/content.html.twig' %}#}
 
-{% block title %}Hello AppController!{% endblock %}
+{% extends '@SurvosMeili/ez/dashboard.html.twig' %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block title %}Search Dashboard{% endblock %}
 
-<div class="example-wrapper">
+{% block page_content %}
 
-{#    {{ dump(lyrics) }}#}
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>School</th>
-            <th>Artist</th>
-            <th>Writers</th>
-            <th>Musicians</th>
-            <th>Credits</th>
-            <th>Lyrics</th>
-            <th>Notes</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for song in songs %}
-            <tr>
-                <td>{{ song.title }}</td>
-                <td>{{ song.date ? song.date|date('Y-m') }}</td>
-                <td>{{ song.school }}</td>
-                <td>{{ song.featuredArtist }}</td>
-                <td>{{ song.writers }}</td>
-                <td>{{ song.musicians }}</td>
-                <td>{{ song.recordingCredits }}</td>
-                <td>{{ song.lyrics }}</td>
-                <td>{{ song.notes }}</td>
-            </tr>
 
-        {% endfor %}
 
-        </tbody>
-    </table>
-</div>
+    <h1>
+        Welcome to the KPA Search System!  We need a cool home page.
+    </h1>
+
+    {{ parent() }}
 {% endblock %}

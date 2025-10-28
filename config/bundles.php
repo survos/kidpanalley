@@ -33,8 +33,6 @@ return [
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
-    AlexandreFernandez\KeyValueFormBundle\KeyValueFormBundle::class => ['all' => true],
-    AlexandreFernandez\JsonTranslationBundle\JsonTranslationBundle::class => ['all' => true],
     Jawira\DoctrineDiagramBundle\DoctrineDiagramBundle::class => ['all' => true],
     Survos\DocBundle\SurvosDocBundle::class => ['dev' => true, 'test' => true],
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
@@ -42,4 +40,5 @@ return [
     Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
     Jwage\PhpAmqpLibMessengerBundle\PhpAmqpLibMessengerBundle::class => ['all' => true],
     Survos\CiineBundle\SurvosCiineBundle::class => ['all' => true],
+    EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
 ];
