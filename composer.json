@@ -159,7 +159,6 @@
             "@auto-scripts"
         ],
         "auto-scripts": {
-            "cache:warmup": "symfony-cmd",
             "cache:clear --no-warmup": "symfony-cmd",
             "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
