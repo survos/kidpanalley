@@ -39,14 +39,16 @@ class LoadDataCommand
         #[Option()] ?bool $video = null,
         #[Option()] ?bool $songs = null,
         #[Option()] ?bool $lyrics = null,
+        #[Option()] bool $reset = false,
         #[Option] int $limit = 3,
     ): int
     {
         $video ??= false;
-        $songs ??= true;
+        $songs ??= false;
+        $lyrics ??= true;
 
         if ($lyrics) {
-            $this->loadLyricFiles();
+            $this->loadLyricFiles($reset);
         }
 
         // should be first, so that video can look for it.
@@ -67,11 +69,21 @@ class LoadDataCommand
         return Command::SUCCESS;
     }
 
-    private function loadLyricFiles()
+    private function loadLyricFiles(bool $reset)
     {
 
-        $dir = $this->projectDir . '/../data/kpa/Lyrics individual songs';
-        $this->appService->loadLyrics($dir);
+        $dir = $this->projectDir . '/../data/kpa/individual';
+        $jsonLPath = 'data/lyrics.jsonl';
+        if ($reset && file_exists($jsonLPath)) {
+            unlink($jsonLPath);
+        }
+        if (!file_exists($jsonLPath)) {
+            $this->appService->loadLyrics($dir, $jsonLPath);
+        }
+        foreach ($this->appService->eachLyricsFromJsonl($jsonLPath) as $lyrics) {
+            dump($lyrics);
+            break;
+        }
 
         // get the collections with sqlite files
         $finder = new Finder();
