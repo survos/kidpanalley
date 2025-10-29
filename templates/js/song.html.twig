@@ -10,6 +10,7 @@
         {# ---------- Videos (show up to 3) ---------- #}
         {% set videos = hit.videos|default([]) %}
         {% if videos|length > 0 %}
+            {{ videos|json_encode }}
             <div class="mb-3">
                 <div class="d-flex flex-wrap gap-2">
                     {% for v in videos|slice(0,3) %}

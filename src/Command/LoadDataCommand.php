@@ -38,13 +38,16 @@ class LoadDataCommand
         SymfonyStyle    $io,
         #[Option()] ?bool $video = null,
         #[Option()] ?bool $songs = null,
+        #[Option()] ?bool $lyrics = null,
         #[Option] int $limit = 3,
     ): int
     {
         $video ??= false;
         $songs ??= true;
 
-        $this->loadLyricFiles();
+        if ($lyrics) {
+            $this->loadLyricFiles();
+        }
 
         // should be first, so that video can look for it.
         if ($songs) {
