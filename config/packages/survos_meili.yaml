@@ -11,9 +11,19 @@ survos_meili:
             model: 'text-embedding-3-small' # 2 cents/million tokens
             apiKey: '%env(OPENAI_API_KEY)%'
             template: 'templates/liquid/song.liquid'
+        small_lyrics: # for testing, as cheap as possible
+            source: 'openAi'
+            model: 'text-embedding-3-small' # 2 cents/million tokens
+            apiKey: '%env(OPENAI_API_KEY)%'
+            template: 'templates/liquid/lyrics.liquid'
 
         best: # for production if budget allows
             source: 'openAi'
             model: 'text-embedding-3-large' # 13 cents/million tokens
             apiKey: '%env(OPENAI_API_KEY)%'
             template: 'templates/liquid/song.liquid'
+        best_lyrics: # for production if budget allows
+            source: 'openAi'
+            model: 'text-embedding-3-large' # 13 cents/million tokens
+            apiKey: '%env(OPENAI_API_KEY)%'
+            template: 'templates/liquid/lyrics.liquid'

@@ -1,6 +1,3 @@
 
-{% if doc.title %} A song with the title {{ doc.title }} {% endif %}
-written in {{ doc.year }}.
-
-{% if doc.lyrics %} Lyrics: {{ doc.lyrics }} {% endif %}
+{% if doc.lyrics %} Lyrics: {{ doc.lyrics | join: " "  }} {% endif %}
 
