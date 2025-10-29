@@ -206,7 +206,7 @@ class AppService
                     $song = $this->getSong($code);
                     $song->title = $title;
                 }
-                $song->lyrics=$text;
+                $song->lyrics=mb_substr($text, 0, 200);
             }
         }
         $this->em->flush();

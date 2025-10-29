@@ -12,3 +12,5 @@ app.debug = false; // process.env.NODE_ENV === 'development'
 app.register('content-loader', ContentLoader);
 app.register('reveal', Reveal)
 app.register('zoom-image', ZoomImageController);
+
+localStorage.debug = 'insta:*,wire:*,hl:*'

@@ -1,0 +1,79 @@
+{# Neutral card (no Bootstrap classes) #}
+<div class="meili-card shadow">
+    <div class="meili-card-header" title="{{ hit.title|default('') }}">
+        {{ hit._highlightResult.title.value|default(hit.title)|raw }}
+    </div>
+
+    <div class="meili-card-body">
+        {# Videos (up to 3) #}
+        {% set videos = hit.videos|default([]) %}
+        {% if videos|length > 0 %}
+            <div class="mb-3">
+                <div class="flex flex-wrap gap-2">
+                    {% for v in videos|slice(0,3) %}
+                        {% set vid = v.rp.videoId|default(v.youtubeId) %}
+                        {% set ytThumb = v.thumbnails.high.url|default(
+                            v.thumbnails.medium.url|default(
+                                v.thumbnails.default.url|default(
+                                    v.thumbnailUrl|default('https://img.youtube.com/vi/' ~ vid ~ '/hqdefault.jpg')
+                                )
+                            )
+                        ) %}
+
+                        <a href="https://www.youtube.com/watch?v={{ vid }}" target="_blank" rel="noopener" title="Open on YouTube" style="width: 260px; display:block; text-decoration:none;">
+                            <div class="ratio ratio-16x9 rounded" style="background:#000;">
+                                <img src="{{ ytThumb }}" alt="Video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/{{ vid }}/mqdefault.jpg';">
+                                <span class="center-middle" aria-hidden="true">
+                  <svg width="42" height="42" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% if videos|length > 3 %}
+                        <span class="meili-badge">+{{ videos|length - 3 }} more</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {# Description #}
+        {% if hit._highlightResult.description.value is defined %}
+            {{ hit._highlightResult.description.value|raw }}
+        {% elseif hit.description is defined %}
+            {{ hit.description }}
+        {% endif %}
+
+{#        #}{# Writers (array) #}
+{#        {% set writersList = (hit.writersArray|default([]))|filter(v => v) %}#}
+{#        #}{# Publishers (array) #}
+{#        {% set publishersList = (hit.publishersArray|default([]))|filter(v => v is not empty and v|trim != '') %}#}
+
+        {# Meta grid #}
+        <div style="display:grid; grid-template-columns: max-content 1fr; gap:.25rem .75rem; margin-top:.75rem;">
+            {% if hit.school is defined and hit.school|trim %}
+                <div class="text-muted">School</div><div>{{ hit.school }}</div>
+            {% endif %}
+            {% if writersList is not empty %}
+                <div class="text-muted">Writers</div><div>{{ writersList|join(', ') }}</div>
+            {% endif %}
+            {% if publishersList is not empty %}
+                <div class="text-muted">Publishers</div><div>{{ publishersList|join(', ') }}</div>
+            {% endif %}
+            {% if hit.year is defined and hit.year %}
+                <div class="text-muted">Year</div><div>{{ hit.year }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="meili-card-footer">
+    <span class="text-muted">
+      {{ hit._highlightResult.type.value|default(hit.type|default(''))|raw }}
+        {% if hit._rankingScore is defined and hit._rankingScore != 1 %}
+            • score: {{ hit._rankingScore|number_format(2) }}
+        {% endif %}
+    </span>
+        <button class="meili-btn" data-action="survos--meili-bundle--json#modal" data-hit-id="{{ hit.id }}">
+            {{ icons.json|raw }} JSON
+        </button>
+    </div>
+</div>

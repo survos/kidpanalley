@@ -93,6 +93,9 @@ class MeiliDashboardController extends AbstractDashboardController
 
         // Optional: Add a tools/utilities section at the bottom
         yield MenuItem::section('Tools', 'fas fa-wrench');
+        foreach ($this->meiliService->tools as $tool) {
+            yield MenuItem::linkToUrl($tool['label'], 'fas fa-chart-line', $tool['url']);
+        }
 
         yield MenuItem::linkToUrl('Search Analytics', 'fas fa-chart-line', '#')
             ->setPermission('ROLE_ADMIN');

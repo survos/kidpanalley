@@ -46,6 +46,7 @@ private MeiliService $meiliService,
     public function ourAuthMenu(KnpMenuEvent $event): void
     {
         $menu = $event->getMenu();
+        $this->add($menu, 'admin', label: "Dashboard");
         $this->menuService->addAuthMenu($menu);
     }
 
@@ -109,8 +110,9 @@ private MeiliService $meiliService,
             return;
         }
         $menu = $event->getMenu();
-        $this->add($menu, 'app_homepage');
-        $this->add($menu, 'admin');
+        $this->add($menu, 'app_homepage',label: "Dashboard");
+//        $this->add($menu, 'admin', label: 'ez');
+        return;
         foreach ($this->meiliService->indexedEntities as $entity) {
             $shortName = new \ReflectionClass($entity)->getShortName();
             $this->add($menu, 'meili_insta', ['indexName' => $shortName],

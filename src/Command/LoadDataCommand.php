@@ -36,8 +36,8 @@ class LoadDataCommand
 
     public function __invoke(
         SymfonyStyle    $io,
-        #[Option("default: true")] ?bool $video = null,
-        #[Option("default: true")] ?bool $songs = null,
+        #[Option()] ?bool $video = null,
+        #[Option()] ?bool $songs = null,
         #[Option] int $limit = 3,
     ): int
     {

@@ -2,6 +2,9 @@ survos_meili:
     host: '%env(MEILI_SERVER)%'
     apiKey: '%env(MEILI_API_KEY)%'
     searchKey: '%env(MEILI_SEARCH_KEY)%'
+    tools:
+        - label: riccox
+          url:  http://localhost:24900/
     embedders:
         small: # for testing, as cheap as possible
             source: 'openAi'
