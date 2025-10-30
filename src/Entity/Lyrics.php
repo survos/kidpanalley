@@ -18,8 +18,9 @@ use Survos\MeiliBundle\Metadata\MeiliIndex;
  */
 #[Entity(repositoryClass: LyricsRepository::class)]
 #[MeiliIndex(
-    persisted: ['code','parent','file','lyrics'],
-    searchable: ['lyrics'],
+    primaryKey: 'code',
+    persisted: ['code','parent','file','lyricsAsString','lyrics'],
+    searchable: ['lyricsAsString'],
     embedders: ['small_lyrics','best_lyrics'],
 )]
 final class Lyrics
@@ -29,7 +30,7 @@ final class Lyrics
 	public ?string $code = null;
 
 	#[Column(length: 255, nullable: true)]
-    #[Facet()]
+//    #[Facet()]
 	public ?string $parent = null;
 
 	#[Column(length: 255, nullable: true)]
@@ -38,5 +39,5 @@ final class Lyrics
 	#[Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
 	public ?array $lyrics = null;
 
-//    public string $lyricsAsString { get => join("\n", $this->lyrics); }
+    public string $lyricsAsString { get => join("\n", $this->lyrics); }
 }

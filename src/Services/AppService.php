@@ -78,8 +78,10 @@ class AppService
 //                    $text = '??';
                     break;
                 case TextRun::class:
+                    break;
                 case Text::class:
-                    $text .= $element->getText();
+//                    dump($element::class, $element->getText());
+                    $text .= "\n" . $element->getText();
                     break;
                 case Title::class:
                     $titleElementText = $element->getText();
@@ -94,7 +96,7 @@ class AppService
                     }
                     break;
                 case Section::class:
-                    $text .= $this->getText($element->getElements());
+//                    $text .= $this->getText($element->getElements());
                     break;
                 case ListItemRun::class:
                 case PreserveText::class:
@@ -238,6 +240,7 @@ class AppService
                 $text     = preg_replace("/\n{2,}/", "\n", $text) ?? $text;
 
                 $lines = preg_split("/\n/u", $text) ?: [];
+//                dump($lines, $file->getRealPath());
 //                $lines = array_values(array_filter(array_map(fn($s) => trim((string)$s), $lines), fn($s) => $s !== ''));
 
                 if ($lines) {
@@ -245,7 +248,7 @@ class AppService
                         'code' => $this->createCode($parentDir . $baseName),
                         'parent' => $parentDir,
                         'file'   => $baseName,
-                        'lyrics' => $lines,
+                        'lyrics' => array_values($lines),
                     ];
 //                    $this->logger->warning(json_encode($record, JSON_UNESCAPED_UNICODE, JSON_PRETTY_PRINT) . "\n");
                 }
