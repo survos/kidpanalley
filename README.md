@@ -15,6 +15,15 @@ symfony server:start -d
 symfony open:local
 ```
 
+```bash
+curl -k -s 'https://127.0.0.1:8010//meili/meiliAdmin/meili/indexes/kpa_song/search' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{
+    "q":"gratitude",
+    "hybrid":{"embedder":"small","semanticRatio":0.3}
+  }' | jq '{estimatedTotalHits, hitsCount: (.hits|length)}'
+
+```
 
 
 ## Running tests

@@ -1,7 +1,7 @@
 <div class="card h-100 shadow-sm">
     {# Header #}
     <div class="card-header fw-bold text-truncate" title="{{ hit.title }}">
-        {{ hit._highlightResult.title.value|default(hit.title) }}
+        {{ hit._highlightResult.title.value|raw }}
     </div>
 
     {# Body #}
@@ -10,6 +10,7 @@
         {# ---------- Videos (show up to 3) ---------- #}
         {% set videos = hit.videos|default([]) %}
         {% if videos|length > 0 %}
+            {{ videos|json_encode }}
             <div class="mb-3">
                 <div class="d-flex flex-wrap gap-2">
                     {% for v in videos|slice(0,3) %}
@@ -111,8 +112,8 @@
 {#            {% set publishersList = [hit.publisher] %}#}
 {#        {% endif %}#}
 
-{#        {{ hit._highlightResult.lyrics.value|raw }}#}
-        {{ hit.lyrics|slice(0, 500)|raw }}
+        {{ hit._highlightResult.lyrics.value|raw }}
+{#        {{ hit.lyrics|slice(0, 500)|raw }}#}
 
         {# ---------- Year (hide 0/empty) ---------- #}
         {% set yearVal = hit.year|default(null) %}
@@ -124,8 +125,6 @@
                 <div class="meta-key fw-semibold">School</div>
                 <div class="meta-val">{{ hit.school }}</div>
             {% endif %}
-
-            <code>Lneght {{ writersList|length }}</code>
 
             {% if writersList is not empty %}
                 <div class="meta-key fw-semibold">Writers</div>

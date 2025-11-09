@@ -42,7 +42,7 @@ use Doctrine\DBAL\Types\Types;
 #[MeiliIndex(
     searchable: ['lyrics','title'],
     filterable: ['writersArray', 'publishersArray', 'year'],
-    embedders: ['small']
+    embedders: ['small', 'best']
 )]
 class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 {

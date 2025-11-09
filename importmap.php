@@ -372,4 +372,10 @@ return [
     'loglevel-plugin-prefix' => [
         'version' => '0.8.4',
     ],
+    'debug' => [
+        'version' => '4.4.3',
+    ],
+    'ms' => [
+        'version' => '2.1.3',
+    ],
 ];

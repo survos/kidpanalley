@@ -11,13 +11,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Flysystem\DirectoryListing;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpWord\Element\FormField;
+use PhpOffice\PhpWord\Element\Image;
+use PhpOffice\PhpWord\Element\Link;
+use PhpOffice\PhpWord\Element\ListItemRun;
 use PhpOffice\PhpWord\Element\PageBreak;
+use PhpOffice\PhpWord\Element\PreserveText;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBreak;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Title;
 use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Style\Table;
 use Psr\Log\LoggerInterface;
 use Survos\Scraper\Service\ScraperService;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -35,6 +41,8 @@ use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 use Spatie\FlysystemDropbox\DropboxAdapter;
 use Yectep\PhpSpreadsheetBundle\Factory;
+
+use function Symfony\Component\String\u;
 
 class AppService
 {
@@ -70,8 +78,10 @@ class AppService
 //                    $text = '??';
                     break;
                 case TextRun::class:
+                    break;
                 case Text::class:
-                    $text .= $element->getText();
+//                    dump($element::class, $element->getText());
+                    $text .= "\n" . $element->getText();
                     break;
                 case Title::class:
                     $titleElementText = $element->getText();
@@ -86,10 +96,17 @@ class AppService
                     }
                     break;
                 case Section::class:
-                    $text .= $this->getText($element->getElements());
+//                    $text .= $this->getText($element->getElements());
                     break;
+                case ListItemRun::class:
+                case PreserveText::class:
+                case Link::class:
+                case Image::class:
+                case FormField::class:
+                case Table::class:
+                    break; // ignore for now
                 default:
-                    dd($elementClass);
+                    dump($elementClass);
             }
 
             if (method_exists($element, 'getElements')) {
@@ -105,6 +122,30 @@ class AppService
         return $text;
 
     }
+
+    /**
+     * Iterate lyrics JSONL rows as associative arrays:
+     *   ['parent' => string, 'file' => string, 'lyrics' => string[]]
+     *
+     * @return \Generator<int,array{parent:string,file:string,lyrics:array}>
+     */
+    public function eachLyricsFromJsonl(string $jsonlPath): \Generator
+    {
+        if (!is_file($jsonlPath) || !is_readable($jsonlPath)) {
+            throw new \RuntimeException("Cannot read JSONL at $jsonlPath");
+        }
+        $fh = new \SplFileObject($jsonlPath, 'r');
+        while (!$fh->eof()) {
+            $line = trim((string)$fh->fgets());
+            if ($line === '') {
+                continue;
+            }
+            /** @var array{parent:string,file:string,lyrics:array} $row */
+            $row = json_decode($line, true, 512, JSON_THROW_ON_ERROR);
+            yield $row;
+        }
+    }
+
 
     public function loadLyricsViaDropbox(string $dir)
     {
@@ -122,94 +163,105 @@ class AppService
 
 
     }
-    public function loadLyrics(string $dir)
+    public function loadLyrics(string $dir, string $jsonlPath): void
     {
-
         if (!file_exists($dir)) {
             $this->logger->warning("Warning, cannot load lyrics from $dir");
             return;
         }
+
+        // Default output location if not provided
+//        $jsonlPath ??= $this->projectDir . '/var/lyrics.jsonl';
+        if (!is_dir(dirname($jsonlPath))) {
+            @mkdir(dirname($jsonlPath), 0777, true);
+        }
+
+        // Open once, write many
+        $out = new \SplFileObject($jsonlPath, 'w');
+
         $finder = new Finder();
         $finder->files()->in($dir)->name('*.doc*');
+        $count = 0;
 
-        foreach ($finder as $idx => $file) {
+        foreach ($finder as $file) {
             $absoluteFilePath = $file->getRealPath();
             if (!file_exists($absoluteFilePath) || !is_readable($absoluteFilePath)) {
-                throw new \Exception($absoluteFilePath . ' is not readable');
+                throw new \RuntimeException($absoluteFilePath . ' is not readable');
             }
 
-            $title = $file->getFilenameWithoutExtension();
-            if ($file->getExtension() == 'doc') {
-                assert($title, $file->getRealPath());
-                // some songs are repeated by multiple schools, e.g. I used to know the names of all the stars
-                foreach ($this->songRepository->findBy(['title' => $title]) as $song) {
-                    // yay!
-                    $process = new Process(['catdoc', $file->getRealPath()]);
-                    $process->run();
-// executes after the command finishes
-                    if (!$process->isSuccessful()) {
-                        throw new ProcessFailedException($process);
-                    }
-                    $text = $process->getOutput();
-                    $text = str_replace("\n\n", "\n", $text);
+            // Required JSONL fields
+            $parentDir  = basename($file->getPath());             // immediate parent folder name
+            $baseName   = $file->getFilenameWithoutExtension();   // filename w/o extension
 
-//                    $text = shell_exec($cmd = sprintf('catdoc "%s"', $absoluteFilePath));
-                    // split on formfeed
-                    $theseSongs = preg_split("|\f|", $text);
-
-
-                    foreach ($theseSongs as $songStr) {
-                        $lines = explode("\n", (string)$songStr);
-                        // remove all blank lines
-                        $lines = array_filter($lines, fn($str) => !empty(trim((string)$str)));
-                        // we could go through each line and see if a title matches.  For now, just use the first line as the title.
-                        //
-                        $title = array_shift($lines);
-                        $by = array_shift($lines);
-
-                        // find or create the song, by title
-                        /** @var SongRepository $repo */
-                        $repo = $this->em->getRepository(Song::class);
-                        if (!$title) {
-                            continue;
-                        }
-                        if (!$song = $repo->findOneBy(['title' => $title])) {
-                            $code = Song::createCode($title);
-                            $song = $this->getSong($code);
-                            $song->title = $title;
-                        }
-                        $song->setLyrics(join("\n", $lines));
-//                        dd($song->getLyrics(), $song->getId());
-                    }
-                    $song->setLyrics($text);
-                    $errors = $this->validator->validate($song);
-                    if ($errors->count()) {
-                        foreach ($errors as $error) {
-                            assert(false, (string)$error);
-                        }
-                    }
+            if ($file->getExtension() === 'doc') {
+                // Legacy .doc — use catdoc, split on formfeeds, then line-split/trim
+                $process = new Process(['catdoc', $absoluteFilePath]);
+                $process->run();
+                if (!$process->isSuccessful()) {
+                    throw new ProcessFailedException($process);
                 }
 
+                $raw = str_replace("\r", "\n", $process->getOutput());
+                // Some .doc files pack multiple songs separated by formfeed (\f)
+                $chunks = preg_split("/\f/u", $raw) ?: [];
+
+                foreach ($chunks as $chunk) {
+                    $lines = preg_split("/\R/u", (string)$chunk) ?: [];
+                    // Normalize: trim, drop empties
+//                    $lines = array_values(array_filter(array_map(fn($s) => trim((string)$s), $lines), fn($s) => $s !== ''));
+
+                    if (!$lines) {
+                        continue;
+                    }
+
+                    // Write one JSON object per song
+                    $record = [
+                        'code' => $this->createCode($parentDir . $baseName),
+                        'parent'  => $parentDir,
+                        'file'    => $file->getBasename(),
+                        'lyrics'  => $lines,     // array of strings
+                    ];
+                }
             } else {
+                // .docx and friends — use PhpWord reader via IOFactory
                 $reader = IOFactory::createReader();
                 try {
                     $phpWord = $reader->load($absoluteFilePath);
-                } catch (\Exception $exception) {
-                    dd($exception, $absoluteFilePath);
+                } catch (\Throwable $e) {
+                    $this->logger->error(sprintf('Failed to read "%s": %s', $absoluteFilePath, $e->getMessage()));
+                    continue;
                 }
 
                 $sections = $phpWord->getSections();
-                $text = $this->getText($sections);
-                $text = str_replace("\n\n", "\n", $text);
-                if (!$song = $this->songRepository->findOneBy(['title' => $title])) {
-                    $code = 'file_' . md5($title);
-                    $song = $this->getSong($code);
-                    $song->title = $title;
+                $text     = $this->getText($sections);
+                // Normalize newlines
+                $text     = str_replace(["\r\n", "\r"], "\n", $text);
+                // Collapse double-blanks produced by layout elements
+                $text     = preg_replace("/\n{2,}/", "\n", $text) ?? $text;
+
+                $lines = preg_split("/\n/u", $text) ?: [];
+//                dump($lines, $file->getRealPath());
+//                $lines = array_values(array_filter(array_map(fn($s) => trim((string)$s), $lines), fn($s) => $s !== ''));
+
+                if ($lines) {
+                    $record = [
+                        'code' => $this->createCode($parentDir . $baseName),
+                        'parent' => $parentDir,
+                        'file'   => $baseName,
+                        'lyrics' => array_values($lines),
+                    ];
+//                    $this->logger->warning(json_encode($record, JSON_UNESCAPED_UNICODE, JSON_PRETTY_PRINT) . "\n");
                 }
-                $song->lyrics=$text;
+            }
+            $this->logger->info(json_encode($record, JSON_PRETTY_PRINT));
+            $out->fwrite(json_encode($record, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n");
+            $count++;
+            if ($count > 5) {
+//                break;
             }
         }
-        $this->em->flush();
+
+        $this->logger->info(sprintf('Wrote lyrics JSONL: %s', realpath($jsonlPath) ?: $jsonlPath));
     }
 
     public function loadExistingSongs()
@@ -217,13 +269,16 @@ class AppService
         foreach ($this->songRepository->findAll() as $song) {
             $this->songs[$song->code] = $song;
         }
+    }
 
+    private function createCode(string $s): string {
+        return u($s)->camel()->toString();
     }
     public function loadSongsFromCsv()
     {
         // in2csv kpa-songs.xlsx  > kpa-songs.csv
         $songsCsv = __DIR__ . '/../../data/kpa-songs.csv';
-        $reader = Reader::createFromPath($songsCsv, 'r');
+        $reader = Reader::from($songsCsv, 'r');
         $reader->setHeaderOffset(0);
         $records = $reader->getRecords();
 
