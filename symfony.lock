@@ -172,9 +172,6 @@
             "config/packages/doctrine_diagram.yaml"
         ]
     },
-    "jwage/phpamqplib-messenger": {
-        "version": "0.8.5"
-    },
     "kevinpapst/tabler-bundle": {
         "version": "dev-main"
     },

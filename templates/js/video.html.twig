@@ -57,10 +57,9 @@
                 • score: {{ hit._rankingScore|number_format(2) }}
             {% endif %}
         </span>
-
         <button
             class="btn btn-sm btn-outline-primary"
-            {{ stimulus_action(_sc_modal, 'modal') }}
+            {{ stimulus_action(globals._sc_modal, 'modal') }}
             data-hit-id="{{ hit.id }}"
         >
             <span class="me-1 icon-wrapper">{{ icons.json|raw }}</span> JSON
