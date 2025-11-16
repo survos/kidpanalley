@@ -43,7 +43,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     properties: ['school','year'],
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
-#[MeiliIndex()]
+#[MeiliIndex(
+    filterable: ['school','year'],
+)]
 class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;

@@ -409,8 +409,8 @@ class AppService
                 $title = $snippet->title;
                 // song needs to be school + title, as does the video
                 if (!$song = $this->songRepository->findOneBy(['title' => $title])) {
-                    $song = (new Song($id))
-                        ->setTitle($title);
+                    $song = (new Song($id));
+                    $song->title = $title;
                     // @todo: parse out stuff to get the title
                     $this->em->persist($song);
                     $songs[$id] = $song;
@@ -419,7 +419,7 @@ class AppService
                 if (!$song->description) {
                     $song->description = ((object)$item->snippet)->description;
                 }
-                $this->logger->warning("Adding video to song " . $song->getTitle(), ['id' => $video->getYoutubeId()]);
+                $this->logger->warning("Adding video to song " . $song->title, ['id' => $video->getYoutubeId()]);
                 $song->addVideo($video);
                 $video->thumbnails = $snippet->thumbnails;
 

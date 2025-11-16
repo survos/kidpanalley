@@ -4,7 +4,7 @@
     "keywords": ["symfony","pwa"],
     "license": "proprietary",
     "type": "project",
-    "minimum-stability": "stable",
+    "minimum-stability": "RC",
     "prefer-stable": true,
     "require": {
         "php": "^8.4",
@@ -24,7 +24,6 @@
         "google/apiclient": "^2.18.0",
         "inspector-apm/inspector-symfony": "^1.2.5",
         "jawira/doctrine-diagram-bundle": "^1.1",
-        "jwage/phpamqplib-messenger": "^0.8.5",
         "league/csv": "^9.18",
         "league/oauth2-facebook": "^2.2",
         "league/oauth2-github": "^3.1.1",
@@ -68,7 +67,7 @@
         "symfony/mailer": "^7.1",
         "symfony/messenger": "^7.1",
         "symfony/monolog-bundle": "^3.10",
-        "symfony/object-mapper": "^7.3",
+        "symfony/object-mapper": "^7.4",
         "symfony/process": "^7.1",
         "symfony/property-access": "^7.1",
         "symfony/property-info": "^7.1",
@@ -152,7 +151,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": "true",
-            "require": "^7.3"
+            "require": "^7.4"
         }
     },
     "scripts": {
