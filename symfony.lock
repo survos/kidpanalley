@@ -473,6 +473,9 @@
     "survos/inspection-bundle": {
         "version": "1.1.x-dev"
     },
+    "survos/jsonl-bundle": {
+        "version": "2.0.77"
+    },
     "survos/meili-bundle": {
         "version": "1.5.0"
     },
