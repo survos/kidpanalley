@@ -691,7 +691,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  * @psalm-type SecurityConfig = array{
  *     access_denied_url?: scalar|null, // Default: null
  *     session_fixation_strategy?: "none"|"migrate"|"invalidate", // Default: "migrate"
- *     hide_user_not_found?: bool, // Deprecated: The "hide_user_not_found" option is deprecated and will be removed in 8.0. Use the "expose_security_errors" option instead.
  *     expose_security_errors?: \Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::None|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::AccountStatus|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::All, // Default: "none"
  *     erase_credentials?: bool, // Default: true
  *     access_decision_manager?: array{
@@ -927,9 +926,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *                     claim?: scalar|null, // Claim which contains the user identifier (e.g.: sub, email..). // Default: "sub"
  *                     audience: scalar|null, // Audience set in the token, for validation purpose.
  *                     issuers: list<scalar|null>,
- *                     algorithm?: array<mixed>,
  *                     algorithms: list<scalar|null>,
- *                     key?: scalar|null, // Deprecated: The "key" option is deprecated and will be removed in 8.0. Use the "keyset" option instead. // JSON-encoded JWK used to sign the token (must contain a "kty" key).
  *                     keyset?: scalar|null, // JSON-encoded JWKSet used to sign the token (must contain a list of valid public keys).
  *                     encryption?: bool|array{
  *                         enabled?: bool, // Default: false
@@ -1011,7 +1008,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         bubble?: bool, // Default: true
  *         interactive_only?: bool, // Default: false
  *         app_name?: scalar|null, // Default: null
- *         fill_extra_context?: bool, // Default: false
  *         include_stacktraces?: bool, // Default: false
  *         process_psr_3_messages?: array{
  *             enabled?: bool|null, // Default: null
@@ -1031,7 +1027,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         activation_strategy?: scalar|null, // Default: null
  *         stop_buffering?: bool, // Default: true
  *         passthru_level?: scalar|null, // Default: null
- *         excluded_404s?: list<scalar|null>,
  *         excluded_http_codes?: list<array{ // Default: []
  *             code?: scalar|null,
  *             urls?: list<scalar|null>,
@@ -1045,9 +1040,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         url?: scalar|null,
  *         exchange?: scalar|null,
  *         exchange_name?: scalar|null, // Default: "log"
- *         room?: scalar|null,
- *         message_format?: scalar|null, // Default: "text"
- *         api_version?: scalar|null, // Default: null
  *         channel?: scalar|null, // Default: null
  *         bot_name?: scalar|null, // Default: "Monolog"
  *         use_attachment?: scalar|null, // Default: true
@@ -1056,9 +1048,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         icon_emoji?: scalar|null, // Default: null
  *         webhook_url?: scalar|null,
  *         exclude_fields?: list<scalar|null>,
- *         team?: scalar|null,
- *         notify?: scalar|null, // Default: false
- *         nickname?: scalar|null, // Default: "Monolog"
  *         token?: scalar|null,
  *         region?: scalar|null,
  *         source?: scalar|null,
@@ -1076,12 +1065,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         store?: scalar|null, // Default: null
  *         connection_timeout?: scalar|null,
  *         persistent?: bool,
- *         dsn?: scalar|null,
- *         hub_id?: scalar|null, // Default: null
- *         client_id?: scalar|null, // Default: null
- *         auto_log_stacks?: scalar|null, // Default: false
- *         release?: scalar|null, // Default: null
- *         environment?: scalar|null, // Default: null
  *         message_type?: scalar|null, // Default: 0
  *         parse_mode?: scalar|null, // Default: null
  *         disable_webpage_preview?: bool|null, // Default: null
@@ -1091,7 +1074,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         topic?: int, // Default: null
  *         factor?: int, // Default: 1
  *         tags?: list<scalar|null>,
- *         console_formater_options?: mixed, // Deprecated: "monolog.handlers..console_formater_options.console_formater_options" is deprecated, use "monolog.handlers..console_formater_options.console_formatter_options" instead.
  *         console_formatter_options?: mixed, // Default: []
  *         formatter?: scalar|null,
  *         nested?: bool, // Default: false
@@ -1101,15 +1083,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             port?: scalar|null, // Default: 12201
  *             chunk_size?: scalar|null, // Default: 1420
  *             encoder?: "json"|"compressed_json",
- *         },
- *         mongo?: string|array{
- *             id?: scalar|null,
- *             host?: scalar|null,
- *             port?: scalar|null, // Default: 27017
- *             user?: scalar|null,
- *             pass?: scalar|null,
- *             database?: scalar|null, // Default: "monolog"
- *             collection?: scalar|null, // Default: "logs"
  *         },
  *         mongodb?: string|array{
  *             id?: scalar|null, // ID of a MongoDB\Client service
@@ -1153,7 +1126,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             id: scalar|null,
  *             method?: scalar|null, // Default: null
  *         },
- *         lazy?: bool, // Default: true
  *         verbosity_levels?: array{
  *             VERBOSITY_QUIET?: scalar|null, // Default: "ERROR"
  *             VERBOSITY_NORMAL?: scalar|null, // Default: "WARNING"
@@ -1254,10 +1226,10 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  *     orm?: array{
  *         default_entity_manager?: scalar|null,
- *         enable_native_lazy_objects?: bool, // no-op, will be deprecated and removed in the future // Default: true
+ *         enable_native_lazy_objects?: bool, // Deprecated: The "enable_native_lazy_objects" option is deprecated and will be removed in DoctrineBundle 4.0, as native lazy objects are now always enabled. // Default: true
  *         controller_resolver?: bool|array{
  *             enabled?: bool, // Default: true
- *             auto_mapping?: bool, // Set to true to enable using route placeholders as lookup criteria when the primary key doesn't match the argument name // Default: false
+ *             auto_mapping?: bool, // Deprecated: The "auto_mapping" option is deprecated and will be removed in DoctrineBundle 4.0, as it only accepts `false` since 3.0. // Set to true to enable using route placeholders as lookup criteria when the primary key doesn't match the argument name // Default: false
  *             evict_cache?: bool, // Set to true to fetch the entity from the database instead of using the cache, if any // Default: false
  *         },
  *         entity_managers?: array<string, array{ // Default: []
@@ -1384,7 +1356,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     }>,
  *     autoescape_service?: scalar|null, // Default: null
  *     autoescape_service_method?: scalar|null, // Default: null
- *     base_template_class?: scalar|null, // Deprecated: The child node "base_template_class" at path "twig.base_template_class" is deprecated.
  *     cache?: scalar|null, // Default: true
  *     charset?: scalar|null, // Default: "%kernel.charset%"
  *     debug?: bool, // Default: "%kernel.debug%"
@@ -1966,6 +1937,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     searchKey?: scalar|null, // Default: "%env(default::MEILI_SEARCH_KEY)%"
  *     meiliPrefix?: scalar|null, // Default: "%env(default::MEILI_PREFIX)%"
  *     passLocale?: bool, // Default: false
+ *     multiLingual?: bool, // turn on multi-lingual indexing // Default: false
  *     maxValuesPerFacet?: int, // Default: 1000
  *     tools?: list<array{ // Default: []
  *         label: scalar|null,
@@ -2066,7 +2038,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         http_ssl_verify_peer?: bool,
  *         http_compression?: bool,
  *         capture_silenced_errors?: bool,
- *         max_request_body_size?: "none"|"small"|"medium"|"always",
+ *         max_request_body_size?: "none"|"never"|"small"|"medium"|"always",
  *         class_serializers?: array<string, scalar|null>,
  *     },
  *     messenger?: bool|array{

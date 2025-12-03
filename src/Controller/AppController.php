@@ -83,6 +83,7 @@ class AppController extends AbstractController
     }
 
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
+    #[Route(path: '/admin', name: 'admin', methods: ['GET'])]
     public function homepage(SongRepository $songRepository, VideoRepository $videoRepository,
     #[Autowire('%kpa.version%')] string $applicationVersion
     )

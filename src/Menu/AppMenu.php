@@ -2,6 +2,7 @@
 
 namespace App\Menu;
 
+use App\Controller\Admin\MeiliDashboardController;
 use App\Entity\Song;
 use App\Entity\Video;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
@@ -46,7 +47,7 @@ private MeiliService $meiliService,
     public function ourAuthMenu(KnpMenuEvent $event): void
     {
         $menu = $event->getMenu();
-        $this->add($menu, 'admin', label: "Dashboard");
+        $this->add($menu, MeiliDashboardController::DASHBOARD_ROUTE, label: "Dashboard");
         $this->menuService->addAuthMenu($menu);
     }
 

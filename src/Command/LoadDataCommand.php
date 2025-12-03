@@ -40,12 +40,12 @@ class LoadDataCommand
         #[Option()] ?bool $songs = null,
         #[Option()] ?bool $lyrics = null,
         #[Option()] bool $reset = false,
-        #[Option] int $limit = 3,
+        #[Option] ?int $limit = null,
     ): int
     {
         $video ??= false;
-        $songs ??= false;
-        $lyrics ??= true;
+        $songs ??= true;
+        $lyrics ??= false;
 
         if ($lyrics) {
             $this->loadLyricFiles($reset);
