@@ -7,6 +7,9 @@ parameters:
   # these are the wordpress API keys
   api_username: '%env(API_USERNAME)%'
   api_password: '%env(API_PASSWORD)%'
+  
+  aws_console: https://421043920805.signin.aws.amazon.com/console
+  aws_username: Tac_Tacelosky
 
 #  youtube_api_key: '%env(YOUTUBE_API_KEY)%'
 #  youtube_channel: UCt7IqS6nJWbJk6HByzJs5Tg # '%env(YOUTUBE_CHANNEL)%'

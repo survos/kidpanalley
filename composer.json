@@ -51,6 +51,7 @@
         "survos/meili-bundle": "^2.0",
         "survos/scraper-bundle": "^2.0",
         "survos/seo-bundle": "^2.0",
+        "survos/storage-bundle": "^2.0",
         "symfony/asset": "^7.4||^8.0",
         "symfony/asset-mapper": "^7.4||^8.0",
         "symfony/console": "^7.4||^8.0",

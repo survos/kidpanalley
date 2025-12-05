@@ -1989,6 +1989,24 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     dir?: scalar|null, // The default directory for data files // Default: "data"
  * }
  * @psalm-type SurvosJsonlConfig = array<mixed>
+ * @psalm-type FlysystemConfig = array{
+ *     storages?: array<string, array{ // Default: []
+ *         adapter: scalar|null,
+ *         options?: list<mixed>,
+ *         visibility?: scalar|null, // Default: null
+ *         directory_visibility?: scalar|null, // Default: null
+ *         case_sensitive?: bool, // Default: true
+ *         disable_asserts?: bool, // Default: false
+ *         public_url?: list<scalar|null>,
+ *         path_normalizer?: scalar|null, // Default: null
+ *         public_url_generator?: scalar|null, // Default: null
+ *         temporary_url_generator?: scalar|null, // Default: null
+ *         read_only?: bool, // Default: false
+ *     }>,
+ * }
+ * @psalm-type SurvosStorageConfig = array{
+ *     enabled?: bool, // Default: true
+ * }
  * @psalm-type SentryConfig = array{
  *     dsn?: scalar|null, // If this value is not provided, the SDK will try to read it from the SENTRY_DSN environment variable. If that variable also does not exist, the SDK will not send any events.
  *     register_error_listener?: bool, // Default: true
@@ -2104,6 +2122,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     survos_ciine?: SurvosCiineConfig,
  *     survos_import?: SurvosImportConfig,
  *     survos_jsonl?: SurvosJsonlConfig,
+ *     flysystem?: FlysystemConfig,
+ *     survos_storage?: SurvosStorageConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2146,6 +2166,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_ciine?: SurvosCiineConfig,
  *         survos_import?: SurvosImportConfig,
  *         survos_jsonl?: SurvosJsonlConfig,
+ *         flysystem?: FlysystemConfig,
+ *         survos_storage?: SurvosStorageConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2184,6 +2206,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_ciine?: SurvosCiineConfig,
  *         survos_import?: SurvosImportConfig,
  *         survos_jsonl?: SurvosJsonlConfig,
+ *         flysystem?: FlysystemConfig,
+ *         survos_storage?: SurvosStorageConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2225,6 +2249,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_ciine?: SurvosCiineConfig,
  *         survos_import?: SurvosImportConfig,
  *         survos_jsonl?: SurvosJsonlConfig,
+ *         flysystem?: FlysystemConfig,
+ *         survos_storage?: SurvosStorageConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
