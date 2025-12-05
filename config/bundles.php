@@ -44,4 +44,5 @@ return [
     Survos\JsonlBundle\SurvosJsonlBundle::class => ['all' => true],
     League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
     Survos\StorageBundle\SurvosStorageBundle::class => ['all' => true],
+    Survos\EzBundle\SurvosEzBundle::class => ['all' => true],
 ];

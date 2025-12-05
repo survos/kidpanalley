@@ -40,6 +40,7 @@ use Doctrine\DBAL\Types\Types;
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
 #[MeiliIndex(
+    ui: ['icon' => 'Song'],
     searchable: ['lyrics','title'],
     filterable: ['writersArray', 'publishersArray', 'year'],
     embedders: ['small', 'best']

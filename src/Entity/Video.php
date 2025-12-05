@@ -44,8 +44,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     arguments: [ "searchParameterName" => "facet_filter"]
 )]
 #[MeiliIndex(
+    ui: ['icon' => 'Video'],
     filterable: ['school','year'],
 )]
+
 class Video implements RouteParametersInterface, \Stringable
 {
     use RouteParametersTrait;

@@ -465,6 +465,9 @@
     "survos/doc-bundle": {
         "version": "1.5.529"
     },
+    "survos/ez-bundle": {
+        "version": "2.0.81"
+    },
     "survos/grid-bundle": {
         "version": "1.5.89"
     },

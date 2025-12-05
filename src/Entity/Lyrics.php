@@ -18,6 +18,7 @@ use Survos\MeiliBundle\Metadata\MeiliIndex;
  */
 #[Entity(repositoryClass: LyricsRepository::class)]
 #[MeiliIndex(
+    ui: ['icon' => 'Lyrics'],
     primaryKey: 'code',
     persisted: ['code','parent','file','lyricsAsString','lyrics'],
     searchable: ['lyricsAsString'],

@@ -1936,6 +1936,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     transport?: scalar|null, // Default: "%env(default::MEILI_TRANSPORT)%"
  *     searchKey?: scalar|null, // Default: "%env(default::MEILI_SEARCH_KEY)%"
  *     meiliPrefix?: scalar|null, // Default: "%env(default::MEILI_PREFIX)%"
+ *     translationStyle?: scalar|null, // Default: "simple"
  *     passLocale?: bool, // Default: false
  *     multiLingual?: bool, // turn on multi-lingual indexing // Default: false
  *     maxValuesPerFacet?: int, // Default: 1000
@@ -2005,6 +2006,9 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     }>,
  * }
  * @psalm-type SurvosStorageConfig = array{
+ *     enabled?: bool, // Default: true
+ * }
+ * @psalm-type SurvosEzConfig = array{
  *     enabled?: bool, // Default: true
  * }
  * @psalm-type SentryConfig = array{
@@ -2124,6 +2128,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     survos_jsonl?: SurvosJsonlConfig,
  *     flysystem?: FlysystemConfig,
  *     survos_storage?: SurvosStorageConfig,
+ *     survos_ez?: SurvosEzConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2168,6 +2173,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_jsonl?: SurvosJsonlConfig,
  *         flysystem?: FlysystemConfig,
  *         survos_storage?: SurvosStorageConfig,
+ *         survos_ez?: SurvosEzConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2208,6 +2214,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_jsonl?: SurvosJsonlConfig,
  *         flysystem?: FlysystemConfig,
  *         survos_storage?: SurvosStorageConfig,
+ *         survos_ez?: SurvosEzConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2251,6 +2258,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_jsonl?: SurvosJsonlConfig,
  *         flysystem?: FlysystemConfig,
  *         survos_storage?: SurvosStorageConfig,
+ *         survos_ez?: SurvosEzConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

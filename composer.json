@@ -45,6 +45,7 @@
         "survos/core-bundle": "^2.0",
         "survos/crawler-bundle": "^2.0",
         "survos/deployment-bundle": "^2.0",
+        "survos/ez-bundle": "^2.0",
         "survos/import-bundle": "^2.0",
         "survos/inspection-bundle": "^2.0",
         "survos/installer": "^2.1.2",

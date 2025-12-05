@@ -8,6 +8,10 @@ ux_icons:
     inst: material-symbols:museum-outline
     obj: material-symbols:wall-art-outline-rounded
     facebook: tabler:brand-facebook
+    # entity specific.  Use short Class Name to automate?
+    Song: tabler:music
+    Lyrics: material-symbols:lyrics-outline
+    Video: mdi:youtube
     'layout-grid': tabler:list
 
   default_icon_attributes:

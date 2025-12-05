@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87c254a607bdaae40b90d74cad9f0d1b",
+    "content-hash": "8e4f69709fa896459329e15193b457f2",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -7141,6 +7141,68 @@
                 }
             ],
             "time": "2025-11-19T01:40:39+00:00"
+        },
+        {
+            "name": "survos/ez-bundle",
+            "version": "2.0.81",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/ez-bundle.git",
+                "reference": "40043e859bbf234dbaaa658da22b9fa8b8c43995"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/ez-bundle/zipball/40043e859bbf234dbaaa658da22b9fa8b8c43995",
+                "reference": "40043e859bbf234dbaaa658da22b9fa8b8c43995",
+                "shasum": ""
+            },
+            "require": {
+                "easycorp/easyadmin-bundle": "^4.25",
+                "php": "^8.4",
+                "symfony/config": "^7.4||^8.0",
+                "symfony/console": "^7.4||^8.0",
+                "symfony/dependency-injection": "^7.4||^8.0",
+                "symfony/framework-bundle": "^7.4||^8.0",
+                "symfony/http-kernel": "^7.4||^8.0"
+            },
+            "require-dev": {
+                "nette/php-generator": "^4.2",
+                "phpstan/phpstan-symfony": "^2.0",
+                "roave/security-advisories": "dev-latest",
+                "symfony/phpunit-bridge": "^7.3||^8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\EzBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "configure EasyAdmin with attributes",
+            "keywords": [
+                "symfony",
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/ez-bundle/issues",
+                "source": "https://github.com/survos/ez-bundle/tree/2.0.81"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-11-30T12:03:02+00:00"
         },
         {
             "name": "survos/import-bundle",
