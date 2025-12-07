@@ -37,7 +37,7 @@ final class MeiliDashboardController extends AbstractDashboardController
     {
         return $this->dashboardHelper
             ->configureDashboard(Dashboard::new())
-            ->setTranslationDomain('amst');
+            ;
     }
 
     public function configureAssets(): Assets
