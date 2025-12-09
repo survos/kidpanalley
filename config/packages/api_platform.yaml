@@ -17,7 +17,7 @@ api_platform:
         # To allow partial pagination for all resource collections.
         # This improves performances by skipping the `COUNT` query.
         pagination_partial: false
-        pagination_items_per_page: 40
+        pagination_items_per_page: 10
 
         stateless: false
         cache_headers:

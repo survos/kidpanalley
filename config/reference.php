@@ -1601,6 +1601,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     elasticsearch?: bool|array{
  *         enabled?: bool, // Default: false
  *         hosts?: list<scalar|null>,
+ *         ssl_ca_bundle?: scalar|null, // Path to the SSL CA bundle file for Elasticsearch SSL verification. // Default: null
+ *         ssl_verification?: bool, // Enable or disable SSL verification for Elasticsearch connections. // Default: true
  *     },
  *     openapi?: array{
  *         contact?: array{
@@ -1625,6 +1627,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  *     maker?: bool|array{
  *         enabled?: bool, // Default: true
+ *         namespace_prefix?: scalar|null, // Add a prefix to all maker generated classes. e.g set it to "Api" to set the maker namespace to "App\Api\" (if the maker.root_namespace config is App). e.g. App\Api\State\MyStateProcessor // Default: ""
  *     },
  *     exception_to_status?: array<string, int>,
  *     formats?: array<string, array{ // Default: {"jsonld":{"mime_types":["application/ld+json"]}}
@@ -1885,22 +1888,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     ignore_commands?: list<scalar|null>,
  *     ignore_messages?: list<scalar|null>,
  * }
- * @psalm-type BizkitVersioningConfig = array{
- *     parameter_prefix?: scalar|null, // The prefix added to the version parameters. // Default: "application"
- *     strategy?: scalar|null, // The versioning strategy used. // Default: "incrementing"
- *     filename?: scalar|null, // The name of the file containing the version information. // Default: "version"
- *     filepath?: scalar|null, // The path to the file containing the version information. // Default: "%kernel.project_dir%/config"
- *     format?: "yaml"|"xml", // The format used for the version file. // Default: "yaml"
- *     vcs?: array{ // Configuration for the VCS integration, set to false to disable the integration.
- *         handler?: scalar|null, // The handler used for the VCS integration, set to null to disable the integration. // Default: "git"
- *         commit_message?: scalar|null, // The message to use for the VCS commit. // Default: "Update application version to %s"
- *         tagging_mode?: "always"|"never"|"ask", // The mode for applying tags to version commits: - 'always': automatically add a tag without prompting - 'never': do not add a tag - 'ask': prompt before tagging when incrementing versions // Default: "ask"
- *         tag_message?: scalar|null, // The message to use for the VCS tag. // Default: "Update application version to %s"
- *         name?: scalar|null, // The name used for the VCS commit information, set to null to use the default VCS configuration. // Default: null
- *         email?: scalar|null, // The email used for the VCS commit information, set to null to use the default VCS configuration. // Default: null
- *         path_to_executable?: scalar|null, // The path to the VCS executable, set to null for autodiscovery. // Default: null
- *     },
- * }
  * @psalm-type DoctrineDiagramConfig = array{
  *     er?: array{
  *         filename?: scalar|null, // Default: "%kernel.project_dir%/er"
@@ -2119,7 +2106,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     survos_seo?: SurvosSeoConfig,
  *     ux_icons?: UxIconsConfig,
  *     inspector?: InspectorConfig,
- *     bizkit_versioning?: BizkitVersioningConfig,
  *     doctrine_diagram?: DoctrineDiagramConfig,
  *     survos_meili?: SurvosMeiliConfig,
  *     survos_babel?: SurvosBabelConfig,
@@ -2162,7 +2148,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_seo?: SurvosSeoConfig,
  *         ux_icons?: UxIconsConfig,
  *         inspector?: InspectorConfig,
- *         bizkit_versioning?: BizkitVersioningConfig,
  *         doctrine_diagram?: DoctrineDiagramConfig,
  *         survos_doc?: SurvosDocConfig,
  *         survos_meili?: SurvosMeiliConfig,
@@ -2205,7 +2190,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_seo?: SurvosSeoConfig,
  *         ux_icons?: UxIconsConfig,
  *         inspector?: InspectorConfig,
- *         bizkit_versioning?: BizkitVersioningConfig,
  *         doctrine_diagram?: DoctrineDiagramConfig,
  *         survos_meili?: SurvosMeiliConfig,
  *         survos_babel?: SurvosBabelConfig,
@@ -2247,7 +2231,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         survos_seo?: SurvosSeoConfig,
  *         ux_icons?: UxIconsConfig,
  *         inspector?: InspectorConfig,
- *         bizkit_versioning?: BizkitVersioningConfig,
  *         doctrine_diagram?: DoctrineDiagramConfig,
  *         survos_doc?: SurvosDocConfig,
  *         survos_meili?: SurvosMeiliConfig,

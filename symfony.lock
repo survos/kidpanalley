@@ -16,18 +16,6 @@
             "src/ApiResource/.gitignore"
         ]
     },
-    "bizkit/versioning-bundle": {
-        "version": "1.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "ecb844d4e78c7e1834fb360fbb4d3846da02e581"
-        },
-        "files": [
-            "config/packages/bizkit_versioning.yaml"
-        ]
-    },
     "doctrine/cache": {
         "version": "1.9.x-dev"
     },

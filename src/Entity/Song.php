@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Translations\SongTranslationsTrait;
+use ApiPlatform\Doctrine\Orm\Filter\FreeTextQueryFilter;
+use ApiPlatform\Doctrine\Orm\Filter\PartialSearchFilter;
+use ApiPlatform\Metadata\QueryParameter;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SongRepository;
@@ -30,12 +32,20 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\DBAL\Types\Types;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ORM\UniqueConstraint('song_code', ['code'])]
-#[GetCollection(name: self::MEILI_ROUTE, normalizationContext: ['groups' => ['instance.read', 'tree', 'rp']])]
-#[ApiResource(operations: [new Get(), new GetCollection(name: 'doctrine_songs')], normalizationContext: ['groups' => ['song.read', 'rp']])]
+#[ApiResource(operations: [
+    new Get(),
+    new GetCollection(name: 'doctrine_songs')],
+    parameters: [
+        'q' => new QueryParameter(
+            filter: new FreeTextQueryFilter(new PartialSearchFilter()),
+            properties: ['title'],
+        ),
+    ],
+    normalizationContext: ['groups' => ['song.read', 'rp']])]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['school', 'writersArray', 'publishersArray', 'year'], arguments: ["searchParameterName" => "facet_filter"])]
+//#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['school', 'writersArray', 'publishersArray', 'year'], arguments: ["searchParameterName" => "facet_filter"])]
 #[Groups(['song.read'])]
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
