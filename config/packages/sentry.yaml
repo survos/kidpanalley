@@ -15,11 +15,11 @@ when@prod:
         register_error_handler: false
 
     monolog:
-        handlers:
-            sentry:
-                type: sentry
-                level: !php/const Monolog\Logger::ERROR
-                hub_id: Sentry\State\HubInterface
+#        handlers:
+#            sentry:
+#                type: sentry
+#                level: !php/const Monolog\Logger::ERROR
+#                hub_id: Sentry\State\HubInterface
 
 #        register_error_listener: false
 #        register_error_handler: false
