@@ -299,28 +299,28 @@ return [
         'type' => 'css',
     ],
     'instantsearch.js' => [
-        'version' => '4.79.1',
+        'version' => '4.85.2',
     ],
     '@algolia/events' => [
         'version' => '4.0.1',
     ],
     'algoliasearch-helper' => [
-        'version' => '3.26.0',
+        'version' => '3.26.1',
     ],
     'qs' => [
         'version' => '6.9.7',
     ],
     'algoliasearch-helper/types/algoliasearch.js' => [
-        'version' => '3.26.0',
+        'version' => '3.26.1',
     ],
     'instantsearch.js/es/widgets' => [
-        'version' => '4.79.1',
+        'version' => '4.85.2',
     ],
     'instantsearch-ui-components' => [
-        'version' => '0.11.2',
+        'version' => '0.15.2',
     ],
     'preact' => [
-        'version' => '10.26.9',
+        'version' => '10.28.0',
     ],
     'hogan.js' => [
         'version' => '3.0.2',
@@ -329,25 +329,25 @@ return [
         'version' => '3.1.1',
     ],
     'preact/hooks' => [
-        'version' => '10.26.9',
+        'version' => '10.28.0',
     ],
     '@babel/runtime/helpers/extends' => [
-        'version' => '7.27.6',
+        'version' => '7.28.4',
     ],
     '@babel/runtime/helpers/defineProperty' => [
-        'version' => '7.27.6',
+        'version' => '7.28.4',
     ],
     '@babel/runtime/helpers/objectWithoutProperties' => [
-        'version' => '7.27.6',
+        'version' => '7.28.4',
     ],
     'htm' => [
         'version' => '3.1.1',
     ],
     '@meilisearch/instant-meilisearch' => [
-        'version' => '0.27.0',
+        'version' => '0.29.0',
     ],
     'meilisearch' => [
-        'version' => '0.51.0',
+        'version' => '0.54.0',
     ],
     '@stimulus-components/dialog' => [
         'version' => '1.0.1',
@@ -377,5 +377,50 @@ return [
     ],
     'ms' => [
         'version' => '2.1.3',
+    ],
+    'ai' => [
+        'version' => '5.0.108',
+    ],
+    '@babel/runtime/helpers/typeof' => [
+        'version' => '7.28.4',
+    ],
+    '@babel/runtime/helpers/slicedToArray' => [
+        'version' => '7.28.4',
+    ],
+    '@babel/runtime/helpers/toConsumableArray' => [
+        'version' => '7.28.4',
+    ],
+    'markdown-to-jsx' => [
+        'version' => '7.7.17',
+    ],
+    '@ai-sdk/gateway' => [
+        'version' => '2.0.18',
+    ],
+    '@ai-sdk/provider-utils' => [
+        'version' => '3.0.18',
+    ],
+    '@ai-sdk/provider' => [
+        'version' => '2.0.0',
+    ],
+    'zod/v4' => [
+        'version' => '4.1.13',
+    ],
+    '@opentelemetry/api' => [
+        'version' => '1.9.0',
+    ],
+    'react' => [
+        'version' => '19.2.0',
+    ],
+    '@vercel/oidc' => [
+        'version' => '3.0.5',
+    ],
+    'eventsource-parser/stream' => [
+        'version' => '3.0.6',
+    ],
+    'zod/v3' => [
+        'version' => '4.1.13',
+    ],
+    '@standard-schema/spec' => [
+        'version' => '1.0.0',
     ],
 ];
