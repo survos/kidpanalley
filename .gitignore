@@ -26,3 +26,4 @@
 coverage
 
 .php-cs-fixer.cache
+/public/js
