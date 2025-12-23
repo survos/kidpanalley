@@ -1,7 +1,7 @@
 {
     "name": "tacman/kpa",
     "description": "Archives for Kid Pan Alley",
-    "keywords": ["symfony","pwa"],
+    "keywords": ["symfony"],
     "license": "proprietary",
     "type": "project",
     "minimum-stability": "RC",
