@@ -28,7 +28,7 @@ function reset_database()
 //    io()->info($process->getOutput());
 //    run(join(' ', get_console()) .  ' doctrine:database:create');
 
-    $process = run([...get_console(), 'doctrine:schema:update', '--force', '--complete']);
+    $process = run([...get_console(), 'doctrine:schema:update', '--force']);
     io()->info($process->getOutput());
 
     $process = run([...get_console(), 'app:load', '-v']);
