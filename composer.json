@@ -1,7 +1,7 @@
 {
     "name": "tacman/kpa",
     "description": "Archives for Kid Pan Alley",
-    "keywords": ["symfony","pwa"],
+    "keywords": ["symfony"],
     "license": "proprietary",
     "type": "project",
     "minimum-stability": "RC",
@@ -11,6 +11,7 @@
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-iconv": "*",
+        "ext-sqlite3": "*",
         "ext-xml": "*",
         "ext-zip": "*",
         "api-platform/core": "dev-main",
