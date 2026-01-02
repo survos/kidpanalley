@@ -1,15 +1,20 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}{{ song.title }}{% endblock %}
-
-{% block profile %}
-abc profile content
-{% endblock %}
-
-
-{% block body %}
-
-<div class="row">
+    {% set slotOptions = {
+        NAVBAR_MENU: {
+            x: null,
+            frontPage: true
+        },
+        PAGE_ACTIONS: {
+            song: song,
+        },
+        BREADCRUMBS: {
+            song: song
+        }
+    } %}
+    <twig:tabler:page :title="song.title"
+                      :slotOptions="slotOptions"
+    >
+    <div class="row">
     <div class="col-md-6">
         {% for video in song.videos %}
             <object width="420" height="315"
@@ -19,9 +24,9 @@ abc profile content
     </div>
     <div class="col-md-6">
         {# reused accordion? #}
-        {{ component('tabs', { active: 'profile',
+        {{ component('cards:tabs', { active: 'profile',
             tabs: [
-                tab('profile', block('profile'), translationDomain='fosUserBundle'),
+                tab('profile', '@profile data', translationDomain='fosUserBundle'),
                 tab('school', content=song.school),
             ] }) }}
     </div>
@@ -102,4 +107,4 @@ abc profile content
         </tbody>
     </table>
 
-{% endblock %}
+    </twig:tabler:page>

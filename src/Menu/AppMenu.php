@@ -5,67 +5,60 @@ namespace App\Menu;
 use App\Controller\Admin\MeiliDashboardController;
 use App\Entity\Song;
 use App\Entity\Video;
-use Survos\BootstrapBundle\Event\KnpMenuEvent;
-use Survos\BootstrapBundle\Service\ContextService;
-use Survos\BootstrapBundle\Service\MenuService;
-use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
+use Survos\MeiliBundle\Controller\MeiliAdminController;
 use Survos\MeiliBundle\Service\MeiliService;
+use Survos\TablerBundle\Event\MenuEvent;
+use Survos\TablerBundle\Menu\MenuBuilderTrait;
+use Survos\TablerBundle\Service\ContextService;
+use Survos\TablerBundle\Service\MenuService;
+use Survos\TablerBundle\Traits\KnpMenuHelperTrait;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 //#[AsEventListener(event: KnpMenuEvent::SIDEBAR_MENU, method: 'appSidebarMenu')]
-#[AsEventListener(event: KnpMenuEvent::FOOTER_MENU, method: 'footerMenu')]
-#[AsEventListener(event: KnpMenuEvent::AUTH_MENU, method: 'ourAuthMenu')]
-#[AsEventListener(event: KnpMenuEvent::PAGE_MENU, method: 'pageMenu')]
+//#[AsEventListener(event: KnpMenuEvent::FOOTER_MENU, method: 'footerMenu')]
+//#[AsEventListener(event: KnpMenuEvent::AUTH_MENU, method: 'ourAuthMenu')]
+//#[AsEventListener(event: KnpMenuEvent::PAGE_MENU, method: 'pageMenu')]
 //#[AsEventListener(event: KnpMenuEvent::PAGE_MENU_EVENT, method: 'coreMenu')]
 final class AppMenu
 {
-    use KnpMenuHelperTrait;
+    use MenuBuilderTrait;
 
     public function __construct(
-        #[Autowire('%kernel.environment%')] protected string           $env,
-        private ContextService                                         $contextService,
-        private Security                                               $security,
-        private MenuService                                            $menuService,
-private MeiliService $meiliService,
+        #[Autowire('%kernel.environment%')] protected string $env,
+        private ContextService                               $contextService,
+        private MenuService                                  $menuService,
+        private MeiliService                                 $meiliService,
 //        private DatatableService                                       $datatableService,
         // why is autowire required?
 //        #[Autowire(service: 'api_meili_service')] private MeiliService $meiliService,
-        private ?AuthorizationCheckerInterface                         $authorizationChecker = null
+        private ?AuthorizationCheckerInterface               $authorizationChecker = null,
+        private ?Security                                    $security=null,
     )
     {
 //        $this->setAuthorizationChecker($this->authorizationChecker);
     }
 
-    public function supports(KnpMenuEvent $event): bool
+    public function supports(MenuEvent $event): bool
     {
         return true;
     }
 
-    public function ourAuthMenu(KnpMenuEvent $event): void
+    public function ourAuthMenu(MenuEvent $event): void
     {
         $menu = $event->getMenu();
         $this->add($menu, MeiliDashboardController::DASHBOARD_ROUTE, label: "Dashboard");
         $this->menuService->addAuthMenu($menu);
     }
 
-    public function pageMenu(KnpMenuEvent $event): void
+    public function pageMenu(MenuEvent $event): void
     {
         if (!$this->supports($event)) {
             return;
         }
         $menu = $event->getMenu();
-
-        if ($entityClass = $event->getOption('entityClass')) {
-            $settings = $this->datatableService->getSettingsFromAttributes($entityClass);
-            foreach ($settings as $fieldName => $setting) {
-                if ($setting['browsable'] ?? false) {
-                    $this->add($menu, 'survos_facet_show', ['indexName' => MeiliSearchStateProvider::getSearchIndexObject($entityClass), 'fieldName' => $fieldName], label: $fieldName);
-                }
-            }
-        }
 
         if ($columnsJson = $event->getOption('columns')) {
             $columns = json_decode($columnsJson);
@@ -79,7 +72,7 @@ private MeiliService $meiliService,
         }
     }
 
-    public function footerMenu(KnpMenuEvent $event): void
+    public function footerMenu(MenuEvent $event): void
     {
         if (!$this->supports($event)) {
             return;
@@ -94,7 +87,7 @@ private MeiliService $meiliService,
         $theme = $this->contextService->getOption('theme');
         $this->add($menu, 'app_homepage');
             $this->add($menu, 'app_load_lyrics');
-        if ( ($this->env=='dev') && $this->isGranted('ROLE_ADMIN')) {
+        if ( ($this->env==='dev') && $this->security->isGranted('ROLE_ADMIN')) {
             $this->add($menu, 'survos_commands');
         }
         // it should be possible to do this in twig, not here.
@@ -104,23 +97,15 @@ private MeiliService $meiliService,
     }
 
 
-    #[AsEventListener(event: KnpMenuEvent::NAVBAR_MENU)]
-    public function navbarMenu(KnpMenuEvent $event): void
+    #[AsEventListener(event: MenuEvent::NAVBAR_MENU)]
+    public function navbarMenu(MenuEvent $event): void
     {
         if (!$this->supports($event)) {
             return;
         }
         $menu = $event->getMenu();
-        $this->add($menu, 'app_homepage',label: "Dashboard");
-//        $this->add($menu, 'admin', label: 'ez');
-        return;
-        foreach ($this->meiliService->indexedEntities as $entity) {
-            $shortName = new \ReflectionClass($entity)->getShortName();
-            $this->add($menu, 'meili_insta', ['indexName' => $shortName],
-                label: $shortName);
-        }
-//        $this->add($menu, 'meili_insta', ['indexName' => 'kpa_Song'], label: 'Songs');
-//        $this->add($menu, 'song_index', label: 'Songs');
+        $this->add($menu, 'app_homepage');
+        $this->add($menu, MeiliDashboardController::MEILI_ROUTE, label: "EZ");
 //        $this->add($menu, 'video_browse', label: 'Videos');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
@@ -166,6 +151,7 @@ private MeiliService $meiliService,
 //        $this->addMenuItem($menu, ['route' => 'video_index', 'label' => "Videos (API)", 'icon' => 'fas fa-sync']);
         }
 
+        $this->add($menu, 'survos_commands', label: "Commands");
 
         if ($this->env === 'dev' || $this->security->isGranted('ROLE_ADMIN')) {
             $subMenu = $this->addSubmenu($menu, 'admin');
@@ -177,6 +163,11 @@ private MeiliService $meiliService,
 //            // $this->addMenuItem($nestedMenu, ['route' => 'survos_base_credits', 'rp' => ['type' => $type], 'label' => ucfirst($type)]);
 //            $this->addMenuItem($nestedMenu, ['uri' => "#type" , 'label' => ucfirst($type)]);
 //        }
+    }
+
+    private function isGranted(string $role): bool
+    {
+        return $this->security->isGranted($role);
     }
 
 }

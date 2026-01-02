@@ -1,0 +1,93 @@
+    {% if app.user %}
+        <div class="mb-3">
+            <div class="text-muted small">Signed in as</div>
+            <div class="fw-semibold">{{ app.user.userIdentifier }}</div>
+
+            {# If you truly need all identifiers, make sure identifiers is iterable in your User implementation #}
+            {% if app.user.identifiers is defined %}
+                <pre class="mt-2 small text-muted">{{ app.user.identifiers|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <twig:card>
+                <twig:block name="card_body">
+                    <span class="bi bi-music-note"></span>
+
+                    <div class="text-light small fw-semibold">
+                        <twig:block name="title">
+                            {{ 'song_index.title'|trans }}
+                        </twig:block>
+                    </div>
+
+                    <div class="mt-2">
+                        {{ 'song_index.description'|trans }}
+                    </div>
+
+                    <h3 class="mt-3">Featured</h3>
+                    {% for feature in featured %}
+                        <div>
+                            <a href="{{ path('song_show', feature.rp) }}">
+                                Featured Song: {{ feature.title }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </twig:block>
+
+                <twig:block name="links">
+                    <div class="demo-inline-spacing">
+                        <a
+                            href="{{ path('meili_insta', { indexName: 'kpa_Song' }) }}"
+                            class="btn btn-outline-primary"
+                        >
+                            Go to {{ songCount }} Songs
+                        </a>
+                    </div>
+                </twig:block>
+            </twig:card>
+        </div>
+
+        <div class="col-md-6">
+            <twig:card>
+                <twig:block name="title">
+                    Videos
+                </twig:block>
+
+                <twig:block name="card_body">
+                    <span class="bi bi-youtube"></span>
+
+                    <div class="text-light small fw-semibold">Videos</div>
+                    <div class="mt-2">From the KPA Youtube channel</div>
+                </twig:block>
+
+                <twig:block name="links">
+                    <div class="demo-inline-spacing">
+                        {% for feature in featuredVideo %}
+                            <div>
+                                <a href="{{ path('video_show', feature.rp) }}">
+                                    Featured Video: {{ feature.title }}
+                                </a>
+                            </div>
+                        {% endfor %}
+
+                        <a
+                            href="{{ path('meili_insta', { indexName: 'kpa_Video' }) }}"
+                            class="btn btn-outline-primary"
+                        >
+                            Go to {{ videoCount }} Videos
+                        </a>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('video_index') }}" class="btn btn-outline-danger">
+                                Video Index
+                            </a>
+                        {% endif %}
+                    </div>
+                </twig:block>
+            </twig:card>
+        </div>
+
+    </div>

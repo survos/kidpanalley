@@ -1,15 +1,14 @@
-survos_bootstrap:
+survos_tabler:
   routes:
     login: app_login
     logout: app_logout
     home: app_homepage
     register: app_register
-    offcanvas: app_settings
   options:
     # consider https://startbootstrap.com/previews/simple-sidebar as another theme
     theme: tabler
-    layout_direction: horizontal
-    allow_login: true
+    layout: horizontal
+#    allow_login: true
   app:
       social:
         facebook: https://facebook.com/kidpanalley

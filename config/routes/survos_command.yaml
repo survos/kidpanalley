@@ -1,6 +1,6 @@
 survos_command:
 #  resource: '@SurvosCommandBundle/config/routes.yaml'
-  prefix: '/admin/commands'
+  prefix: '/commands'
   type: attribute
   resource:
         path: '@SurvosCommandBundle/src/Controller/'

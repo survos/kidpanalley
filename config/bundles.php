@@ -19,7 +19,6 @@ return [
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Survos\InspectionBundle\SurvosInspectionBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
-    Survos\BootstrapBundle\SurvosBootstrapBundle::class => ['all' => true],
     Survos\AuthBundle\SurvosAuthBundle::class => ['all' => true],
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
     Survos\CrawlerBundle\SurvosCrawlerBundle::class => ['dev' => true, 'test' => true],
@@ -44,4 +43,5 @@ return [
     League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
     Survos\StorageBundle\SurvosStorageBundle::class => ['all' => true],
     Survos\EzBundle\SurvosEzBundle::class => ['all' => true],
+    Survos\TablerBundle\SurvosTablerBundle::class => ['all' => true],
 ];

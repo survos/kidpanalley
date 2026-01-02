@@ -1,4 +1,5 @@
-{% extends "@SurvosBootstrap/%s/base.html.twig"|format(theme_option('theme')) %}
+{% extends "@SurvosTabler/layout/base.html.twig" %}
+{#{% extends "@SurvosTabler/components/page.html.twig" %}#}
 {#{% extends "@SurvosBootstrap/sneat/" ~ layout|default('base') ~ ".html.twig" %}#}
 {#{% extends "@SurvosBootstrap/tabler/layout-" ~ layout|default('vertical') ~ ".html.twig" %}#}
 
@@ -31,28 +32,3 @@
     {% block javascripts %}
         {{ parent() }}
     {% endblock %}
-
-
-{# could also overwrite template
-        {% include '@SurvosBootstrapBundle/Partials/_footer.html.twig' %}
-#}
-
-{#{% block footer %}#}
-{#    FOOTER {{ _self }}#}
-{#    <footer class="main-footer">#}
-{#        Theme: {{ theme_option('theme') }}#}
-{#        <!-- To the right -->#}
-{#        <div class="pull-right hidden-xs">#}
-
-{#        </div>#}
-{#        <!-- Default to the left -->#}
-{#        <strong>Data Copyright &copy; 2020 <a href="#">Kid Pan Alley</a>.</strong>  All rights reserved.#}
-{#        <strong>Code Copyright &copy; 2020 <a href="#">Survos</a>.</strong>  All rights reserved.#}
-{#    </footer>#}
-{#{% endblock %}#}
-
-{#{% block body %}#}
-{#    <h1>XX</h1>#}
-{#    {{ block('page_content') }}#}
-{#{% endblock %}#}
-

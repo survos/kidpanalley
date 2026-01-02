@@ -480,6 +480,9 @@
     "survos/storage-bundle": {
         "version": "2.0.81"
     },
+    "survos/tabler-bundle": {
+        "version": "2.0"
+    },
     "swiftmailer/swiftmailer": {
         "version": "6.2-dev"
     },
