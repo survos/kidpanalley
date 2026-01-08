@@ -40,5 +40,24 @@ final class Lyrics
 	#[Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
 	public ?array $lyrics = null;
 
-    public string $lyricsAsString { get => join("\n", $this->lyrics); }
+	#[Column(type: Types::TEXT, nullable: true)]
+	public ?string $text = null;
+
+	#[Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
+	public ?array $chordProData = null;
+
+    public string $lyricsAsString { get => join("\n", $this->lyrics ?? []); }
+
+    public function getChordPro(): ?\ChordPro\Song
+    {
+        if (!$this->chordProData || !$this->text) {
+            return null;
+        }
+
+        try {
+            return \ChordPro\Song::loadFromString($this->text);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
 }
