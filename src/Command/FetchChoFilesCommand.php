@@ -150,14 +150,11 @@ class FetchChoFilesCommand extends Command
                 
                 $lyrics->chordProData = $chordProData;
                 
-                // Also store basic lyrics array for backward compatibility
-                $lyricsArray = $this->parseChoFile($choContent);
-                $lyrics->lyrics = $lyricsArray;
+                // Lyrics are now computed from chordProData, no need to store separately
                 
             } catch (\Exception $e) {
-                // Fallback to basic parsing if ChordPro parser fails
-                $lyricsArray = $this->parseChoFile($choContent);
-                $lyrics->lyrics = $lyricsArray;
+                // ChordPro parsing failed, chordProData will remain null
+                // The lyrics property will compute empty array
             }
             
             $this->entityManager->persist($lyrics);
@@ -172,58 +169,5 @@ class FetchChoFilesCommand extends Command
         $io->success("Successfully processed $processedCount new .cho files from zip archive");
 
         return Command::SUCCESS;
-    }
-
-    private function parseChoFile(string $content): array
-    {
-        try {
-            // Use the real ChordPro parser
-            $parser = new \ChordPro\Parser();
-            $song = $parser->parse($content);
-            
-            $lyrics = [];
-            
-            // Extract lyrics from each line, removing chords
-            foreach ($song as $line) {
-                $lineText = '';
-                
-                if ($line instanceof \ChordPro\Lyrics) {
-                    foreach ($line->getBlocks() as $block) {
-                        if ($block->getText() !== null) {
-                            $lineText .= $block->getText();
-                        }
-                        // Ignore chord parts, we only want lyrics
-                    }
-                }
-                
-                $lineText = trim($lineText);
-                if (!empty($lineText)) {
-                    $lyrics[] = $lineText;
-                }
-            }
-            
-            return $lyrics;
-            
-        } catch (\Exception $e) {
-            // Fallback to basic parsing if ChordPro parser fails
-            $lines = explode("\n", $content);
-            $lyrics = [];
-            
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (!empty($line)) {
-                    // Remove chord notation [C], [Am], etc.
-                    $line = preg_replace('/\[[^\]]*\]/', '', $line);
-                    // Remove directives {title:}, {key:}, etc.
-                    $line = preg_replace('/\{[^}]*\}/', '', $line);
-                    $line = trim($line);
-                    if (!empty($line)) {
-                        $lyrics[] = $line;
-                    }
-                }
-            }
-            
-            return $lyrics;
-        }
     }
 }

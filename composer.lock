@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06b9b251b140dd49c17c3f86dac497d7",
+    "content-hash": "0d7a1324825cdb87c69eac21c86c9653",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -2792,6 +2792,62 @@
             "time": "2025-12-01T15:25:57+00:00"
         },
         {
+            "name": "intelektron/chordpro-php",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/intelektron/chordpro-php.git",
+                "reference": "f198a8a1820ffc6ee85c94f373f2c1048d583f41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/intelektron/chordpro-php/zipball/f198a8a1820ffc6ee85c94f373f2c1048d583f41",
+                "reference": "f198a8a1820ffc6ee85c94f373f2c1048d583f41",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "ekino/phpstan-banned-code": "^1.0",
+                "friendsofphp/php-cs-fixer": "^3.46",
+                "phpcompatibility/php-compatibility": "^9.3",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "phpunit/phpunit": "^10.0",
+                "thecodingmachine/phpstan-strict-rules": "^1.0",
+                "voku/phpstan-rules": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ChordPro\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Wurtz",
+                    "email": "git@nethenic.net"
+                },
+                {
+                    "name": "Grzegorz Pietrzak",
+                    "email": "grzegorz.pietrzak@gmail.com"
+                }
+            ],
+            "description": "Parse, transpose and format (html, json, plaintext) ChordPro format for songs lyrics with chords.",
+            "support": {
+                "issues": "https://github.com/intelektron/chordpro-php/issues",
+                "source": "https://github.com/intelektron/chordpro-php/tree/1.1.1"
+            },
+            "time": "2024-01-20T10:47:18+00:00"
+        },
+        {
             "name": "jawira/db-draw",
             "version": "v1.8.1",
             "source": {
@@ -4818,46 +4874,6 @@
                 "source": "https://github.com/nette/utils/tree/v4.1.1"
             },
             "time": "2025-12-22T12:14:32+00:00"
-        },
-        {
-            "name": "nicolaswurtz/chordpro-php",
-            "version": "v0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nicolaswurtz/chordpro-php.git",
-                "reference": "a1d304c166ebd616a0a3beff4473a0b68fdfdb23"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nicolaswurtz/chordpro-php/zipball/a1d304c166ebd616a0a3beff4473a0b68fdfdb23",
-                "reference": "a1d304c166ebd616a0a3beff4473a0b68fdfdb23",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "ChordPro\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Wurtz",
-                    "email": "git@nethenic.net"
-                }
-            ],
-            "description": "Parse, transpose and format (html,json,plaintext) ChordPro format for songs lyrics with chords.",
-            "support": {
-                "issues": "https://github.com/nicolaswurtz/chordpro-php/issues",
-                "source": "https://github.com/nicolaswurtz/chordpro-php/tree/master"
-            },
-            "time": "2019-02-17T14:41:26+00:00"
         },
         {
             "name": "nyholm/psr7",

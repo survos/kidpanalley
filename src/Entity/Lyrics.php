@@ -20,8 +20,8 @@ use Survos\MeiliBundle\Metadata\MeiliIndex;
 #[MeiliIndex(
     ui: ['icon' => 'Lyrics'],
     primaryKey: 'code',
-    persisted: ['code','parent','file','lyricsAsString','lyrics'],
-    searchable: ['lyricsAsString'],
+    persisted: ['code','parent','file','text','chordProData'],
+    searchable: ['lyricsAsString','title','artist'],
     embedders: ['small_lyrics','best_lyrics'],
 )]
 final class Lyrics
@@ -37,28 +37,176 @@ final class Lyrics
 	#[Column(length: 255, nullable: true)]
 	public ?string $file = null;
 
-	#[Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
-	public ?array $lyrics = null;
-
 	#[Column(type: Types::TEXT, nullable: true)]
-	public ?string $text = null;
+	public ?string $text { set {
+		$this->text = $value;
+		$this->parsedSong = null; // Reset to trigger re-parsing on next access
+	} }
 
 	#[Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
 	public ?array $chordProData = null;
 
-    public string $lyricsAsString { get => join("\n", $this->lyrics ?? []); }
+	private ?\ChordPro\Song $parsedSong = null;
+
+	private function parseChordPro(): void
+	{
+		if (!$this->text) {
+			return;
+		}
+
+		try {
+			$parser = new \ChordPro\Parser();
+			$this->parsedSong = $parser->parse($this->text);
+		} catch (\Exception $e) {
+			$this->parsedSong = null;
+		}
+	}
 
     public function getChordPro(): ?\ChordPro\Song
     {
-        if (!$this->chordProData || !$this->text) {
-            return null;
+        if ($this->parsedSong === null && $this->text) {
+            $this->parseChordPro();
         }
-
-        try {
-            $parser = new \ChordPro\Parser();
-            return $parser->parse($this->text);
-        } catch (\Exception $e) {
-            return null;
-        }
+        return $this->parsedSong;
     }
+
+	// Property hooks for common metadata derived from parsed Song
+	public ?string $title {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'title') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $artist {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'artist') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $key {
+		get {
+			$song = $this->getChordPro();
+			return $song?->getKey();
+		}
+	}
+
+	public ?string $album {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'album') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $year {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'year') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $subtitle {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'subtitle') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $composer {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'composer') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $lyricist {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'lyricist') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	public ?string $copyright {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return null;
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Metadata && $line->getName() === 'copyright') {
+					return $line->getValue();
+				}
+			}
+			return null;
+		}
+	}
+
+	// Computed lyrics from parsed Song
+	public array $lyrics {
+		get {
+			$song = $this->getChordPro();
+			if (!$song) return [];
+
+			$lyrics = [];
+			foreach ($song->getLines() as $line) {
+				if ($line instanceof \ChordPro\Line\Lyrics) {
+					$lineText = '';
+					foreach ($line->getBlocks() as $block) {
+						if ($block->getText() !== null) {
+							$lineText .= $block->getText();
+						}
+					}
+					$lineText = trim($lineText);
+					if (!empty($lineText)) {
+						$lyrics[] = $lineText;
+					}
+				}
+			}
+			return $lyrics;
+		}
+	}
+
+	public string $lyricsAsString { get => join("\n", $this->lyrics); }
+
 }

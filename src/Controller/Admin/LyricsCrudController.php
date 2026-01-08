@@ -14,53 +14,41 @@ class LyricsCrudController extends BaseCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('parent');
-        yield TextField::new('file');
+        // Index fields - show key metadata
+        yield TextField::new('code')->setLabel('Code');
+        yield TextField::new('title')->setLabel('Title');
+        yield TextField::new('artist')->setLabel('Artist');
+        yield TextField::new('key')->setLabel('Key');
+        yield TextField::new('parent')->setLabel('Parent');
+
+        // Detail fields
+        yield TextField::new('file')->onlyOnDetail();
+        yield TextField::new('title')->onlyOnDetail();
+        yield TextField::new('artist')->onlyOnDetail();
+        yield TextField::new('key')->onlyOnDetail();
+        yield TextField::new('album')->onlyOnDetail();
+        yield TextField::new('year')->onlyOnDetail();
+        yield TextField::new('subtitle')->onlyOnDetail();
+        yield TextField::new('composer')->onlyOnDetail();
+        yield TextField::new('lyricist')->onlyOnDetail();
+        yield TextField::new('copyright')->onlyOnDetail();
+
         yield TextareaField::new('text')->onlyOnDetail()->setLabel('ChordPro Content');
-        
-        // Show parsed metadata from ChordPro
-        yield Field::new('title', 'Title')->onlyOnDetail()->formatValue(function ($value, $entity) {
-            $song = $entity->getChordPro();
-            return $song?->meta['title'] ?? 'N/A';
+
+        // Show lyrics from chordProData
+        yield Field::new('lyricsAsString', 'Lyrics')->onlyOnDetail()->formatValue(function ($value) {
+            return '<pre>' . htmlspecialchars($value) . '</pre>';
         });
-        
-        yield Field::new('artist', 'Artist')->onlyOnDetail()->formatValue(function ($value, $entity) {
-            $song = $entity->getChordPro();
-            return $song?->meta['artist'] ?? 'N/A';
-        });
-        
-        yield Field::new('key', 'Key')->onlyOnDetail()->formatValue(function ($value, $entity) {
-            $song = $entity->getChordPro();
-            return $song?->meta['key'] ?? 'N/A';
-        });
-        
+
         // Show formatted lyrics with chords
-        yield Field::new('formattedLyrics', 'Formatted Lyrics')->onlyOnDetail()->formatValue(function ($value, $entity) {
+        yield Field::new('formattedLyrics', 'Formatted Lyrics with Chords')->onlyOnDetail()->formatValue(function ($value, $entity) {
             $song = $entity->getChordPro();
             if (!$song) {
                 return 'No ChordPro data available';
             }
-            
-            $output = [];
-            foreach ($song->lines as $line) {
-                $lineText = '';
-                foreach ($line->parts as $part) {
-                    if ($part->type === 'lyrics') {
-                        $lineText .= $part->text;
-                    } elseif ($part->type === 'chord') {
-                        $lineText .= '[' . $part->chord . ']';
-                    }
-                }
-                if (!empty(trim($lineText))) {
-                    $output[] = $lineText;
-                }
-            }
-            
-            return '<pre>' . htmlspecialchars(implode("\n", $output)) . '</pre>';
+
+            return (new \ChordPro\Formatter\HtmlFormatter())->format($song, []);
         });
-        
-        // Keep the old lyrics array for backward compatibility (hide by default)
-        yield ArrayField::new('lyrics')->onlyOnDetail()->setLabel('Legacy Lyrics Array');
     }
 
     public static function getEntityFqcn(): string
