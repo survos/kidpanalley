@@ -12,3 +12,15 @@ body {
 }
 
 .ratio { background-color: transparent !important; }
+
+/* ChordPro display styles */
+.chord-sheet .paragraph { margin-bottom: 1em; }
+.chord-sheet .row { display: flex; flex-wrap: wrap; }
+.chord-sheet .chord { color: #0066cc; font-weight: bold; font-size: 0.9em; }
+.chord-sheet .lyrics { white-space: pre-wrap; }
+
+.lyrics-mode .chord { display: none; }
+.lyrics-only p { margin: 0.25em 0; line-height: 1.6; }
+
+.song-title { margin-bottom: 0.25em; }
+.song-artist, .song-composer { margin: 0; color: #666; }

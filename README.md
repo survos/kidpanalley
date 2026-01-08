@@ -103,3 +103,13 @@ Database Tables
 
 
 *build with survos/doc-bundle*
+
+## Ideas
+
+use ChordPro as canonical format
+
+* https://github.com/pathawks/Christmas-Songs
+* https://github.com/joeycortez42/worship/tree/master/songs
+* https://github.com/mattgraham/worship (OnSong format)
+
+Move to huggingface?

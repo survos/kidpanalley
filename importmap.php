@@ -427,4 +427,28 @@ return [
     '@standard-schema/spec' => [
         'version' => '1.0.0',
     ],
+    'opensheetmusicdisplay' => [
+        'version' => '1.9.3',
+    ],
+    'vexflow' => [
+        'version' => '5.0.0',
+    ],
+    'chordsheetjs' => [
+        'version' => '13.0.0',
+    ],
+    'jspdf' => [
+        'version' => '3.0.4',
+    ],
+    'fflate' => [
+        'version' => '0.8.2',
+    ],
+    'fast-png' => [
+        'version' => '6.4.0',
+    ],
+    'iobuffer' => [
+        'version' => '5.4.0',
+    ],
+    'pako' => [
+        'version' => '2.1.0',
+    ],
 ];
