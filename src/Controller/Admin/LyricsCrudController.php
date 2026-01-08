@@ -42,11 +42,11 @@ class LyricsCrudController extends BaseCrudController
 
         // Show formatted lyrics with chords using stimulus controller
         yield Field::new('formattedLyrics', 'Formatted Lyrics with Chords')->onlyOnDetail()->formatValue(function ($value, $entity) {
-            if (!$entity->getText()) {
+            if (!$entity->text) {
                 return 'No ChordPro data available';
             }
 
-            $url = $this->generateUrl('lyrics_raw', ['code' => $entity->getCode()]);
+            $url = $this->generateUrl('lyrics_raw', ['code' => $entity->code]);
             return sprintf('
                 <div data-controller="music-display" 
                      data-music-display-url-value="%s" 
