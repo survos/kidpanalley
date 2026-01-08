@@ -31,6 +31,7 @@
         "liquid/liquid": "^1.4",
         "meilisearch/meilisearch-php": "dev-main",
         "nelmio/cors-bundle": "^2.5.0",
+        "nicolaswurtz/chordpro-php": "^0.1.0",
         "paragonie/sodium_compat": "^2.1",
         "phpoffice/phpspreadsheet": "^5.1",
         "phpoffice/phpword": "^1.3",

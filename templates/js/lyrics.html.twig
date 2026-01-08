@@ -7,25 +7,42 @@
     {# Body #}
     <div class="card-body small">
 
-{#        {% for line in hit.lyrics %}#}
-{#            <li>{{ line }}</li>#}
-{#        {% endfor %}#}
+{# Display ChordPro metadata if available #}
+        {% if hit.title %}
+            <div class="mb-2">
+                <strong>Title:</strong> {{ hit.title }}
+            </div>
+        {% endif %}
+        
+        {% if hit.artist %}
+            <div class="mb-2">
+                <strong>Artist:</strong> {{ hit.artist }}
+            </div>
+        {% endif %}
+        
+        {% if hit.key %}
+            <div class="mb-2">
+                <strong>Key:</strong> {{ hit.key }}
+            </div>
+        {% endif %}
 
-{#        {{ hit|json_encode }}#}
-        {% for line in hit._highlightResult.lyrics.value %}
-            <li>
-                {{ line }}
-            </li>
-        {% endfor %}
-        <ul>
-            {% for line in hit.lyrics %}
-                <li>
-                    {{ line }}
-                </li>
-            {% endfor %}
-        </ul>
+        {# Display formatted lyrics with chords #}
+        {% if hit.text %}
+            <div class="lyrics-display">
+                <pre class="lyrics-content">{{ hit.text|escape }}</pre>
+            </div>
+        {% endif %}
 
-        {#        <pre>{{ hit._highlightResult.lyricsAsString.value|raw }}</pre>#}
+        {# Fallback to legacy lyrics array for backward compatibility #}
+        {% if not hit.text and hit.lyrics %}
+            <ul>
+                {% for line in hit.lyrics %}
+                    <li>
+                        {{ line }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
 {#        #}{# ---------- Year (hide 0/empty) ---------- #}
 {#        </div>#}
