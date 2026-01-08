@@ -40,14 +40,27 @@ class LyricsCrudController extends BaseCrudController
             return '<pre>' . htmlspecialchars($value) . '</pre>';
         });
 
-        // Show formatted lyrics with chords
+        // Show formatted lyrics with chords using stimulus controller
         yield Field::new('formattedLyrics', 'Formatted Lyrics with Chords')->onlyOnDetail()->formatValue(function ($value, $entity) {
-            $song = $entity->getChordPro();
-            if (!$song) {
+            if (!$entity->getText()) {
                 return 'No ChordPro data available';
             }
 
-            return (new \ChordPro\Formatter\HtmlFormatter())->format($song, []);
+            $url = $this->generateUrl('lyrics_raw', ['code' => $entity->getCode()]);
+            return sprintf('
+                <div data-controller="music-display" 
+                     data-music-display-url-value="%s" 
+                     data-music-display-width-value="800" 
+                     data-music-display-height-value="600"
+                     style="min-height: 400px; border: 1px solid #dee2e6; border-radius: 0.375rem; padding: 1rem;"
+                     class="text-center text-muted">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading music...</span>
+                    </div>
+                    <p class="mt-2">Loading sheet music...</p>
+                </div>', 
+                $url
+            );
         });
     }
 

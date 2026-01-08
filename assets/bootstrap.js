@@ -2,6 +2,7 @@ import { startStimulusApp } from '@symfony/stimulus-bundle';
 import ContentLoader from 'stimulus-content-loader'
 import Reveal from 'stimulus-reveal-controller'
 import ZoomImageController from '@kanety/stimulus-zoom-image';
+import MusicDisplayController from './controllers/music_display_controller';
 
 const app = startStimulusApp();
 
@@ -12,5 +13,6 @@ app.debug = false; // process.env.NODE_ENV === 'development'
 app.register('content-loader', ContentLoader);
 app.register('reveal', Reveal)
 app.register('zoom-image', ZoomImageController);
+app.register('music-display', MusicDisplayController);
 
 localStorage.debug = 'insta:*,wire:*,hl:*'
