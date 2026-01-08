@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Process\Process;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use ChordPro\Song;
 
@@ -62,28 +61,26 @@ class FetchChoFilesCommand extends Command
             $io->info('Zip file already exists, skipping download.');
         }
 
-        // Extract zip file
-        $io->info('Extracting zip file...');
-        if ($this->filesystem->exists($extractDir)) {
-            $this->filesystem->remove($extractDir);
-        }
-        $process = new Process(['unzip', '-q', $zipFile, '-d', dirname($extractDir)]);
-        $process->run();
+        // Read directly from zip file
+        $io->info('Reading .cho files directly from zip archive...');
         
-        if (!$process->isSuccessful()) {
-            $io->error('Failed to extract zip file: ' . $process->getErrorOutput());
+        $choFiles = [];
+        $zip = new \ZipArchive();
+        $zipStatus = $zip->open($zipFile);
+        
+        if ($zipStatus !== true) {
+            $io->error('Failed to open zip file: ' . $zipStatus);
             return Command::FAILURE;
         }
-
-        // Find .cho files
-        $choFiles = [];
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($extractDir)
-        );
         
-        foreach ($iterator as $file) {
-            if ($file->isFile() && $file->getExtension() === 'cho') {
-                $choFiles[] = $file->getPathname();
+        // Find all .cho files in the zip
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $filename = $zip->getNameIndex($i);
+            if (pathinfo($filename, PATHINFO_EXTENSION) === 'cho') {
+                $choFiles[] = [
+                    'filename' => $filename,
+                    'index' => $i
+                ];
             }
         }
 
@@ -98,8 +95,8 @@ class FetchChoFilesCommand extends Command
         $lyricsRepository = $this->entityManager->getRepository(Lyrics::class);
         $processedCount = 0;
 
-        foreach ($choFiles as $file) {
-            $relativePath = str_replace($extractDir . '/', '', $file);
+        foreach ($choFiles as $fileInfo) {
+            $relativePath = $fileInfo['filename'];
             $code = pathinfo($relativePath, PATHINFO_FILENAME);
             
             // Check if lyrics already exist
@@ -110,8 +107,13 @@ class FetchChoFilesCommand extends Command
                 continue;
             }
 
-            // Read .cho file content
-            $choContent = file_get_contents($file);
+            // Read .cho file content directly from zip
+            $choContent = $zip->getFromIndex($fileInfo['index']);
+            
+            if ($choContent === false) {
+                $io->error("Failed to read file from zip: {$relativePath}");
+                continue;
+            }
             
             // Create new Lyrics entity
             $lyrics = new Lyrics();
@@ -121,24 +123,29 @@ class FetchChoFilesCommand extends Command
             
             // Parse ChordPro and store both structured data and basic lyrics array
             try {
-                $song = \ChordPro\Song::loadFromString($choContent);
+                $parser = new \ChordPro\Parser();
+                $song = $parser->parse($choContent);
                 
                 // Store ChordPro structured data
                 $chordProData = [
-                    'meta' => $song->meta,
+                    'meta' => [],
                     'lines' => []
                 ];
                 
-                foreach ($song->lines as $line) {
-                    $lineData = [];
-                    foreach ($line->parts as $part) {
-                        $lineData[] = [
-                            'type' => $part->type,
-                            'text' => $part->text ?? null,
-                            'chord' => $part->chord ?? null
-                        ];
+                foreach ($song as $line) {
+                    if ($line instanceof \ChordPro\Metadata) {
+                        $chordProData['meta'][$line->getName()] = $line->getValue();
+                    } elseif ($line instanceof \ChordPro\Lyrics) {
+                        $lineData = [];
+                        foreach ($line->getBlocks() as $block) {
+                            $lineData[] = [
+                                'type' => $block->getChord() !== null ? 'chord' : 'text',
+                                'text' => $block->getText(),
+                                'chord' => $block->getChord()
+                            ];
+                        }
+                        $chordProData['lines'][] = $lineData;
                     }
-                    $chordProData['lines'][] = $lineData;
                 }
                 
                 $lyrics->chordProData = $chordProData;
@@ -159,10 +166,10 @@ class FetchChoFilesCommand extends Command
             $io->text("Processed: $code");
         }
 
+        $zip->close();
         $this->entityManager->flush();
         
-        $io->success("Successfully processed $processedCount new .cho files");
-        $io->info('Files are located in: ' . $extractDir);
+        $io->success("Successfully processed $processedCount new .cho files from zip archive");
 
         return Command::SUCCESS;
     }
@@ -171,19 +178,22 @@ class FetchChoFilesCommand extends Command
     {
         try {
             // Use the real ChordPro parser
-            $song = Song::loadFromString($content);
+            $parser = new \ChordPro\Parser();
+            $song = $parser->parse($content);
             
             $lyrics = [];
             
             // Extract lyrics from each line, removing chords
-            foreach ($song->lines as $line) {
+            foreach ($song as $line) {
                 $lineText = '';
                 
-                foreach ($line->parts as $part) {
-                    if ($part->type === 'lyrics') {
-                        $lineText .= $part->text;
+                if ($line instanceof \ChordPro\Lyrics) {
+                    foreach ($line->getBlocks() as $block) {
+                        if ($block->getText() !== null) {
+                            $lineText .= $block->getText();
+                        }
+                        // Ignore chord parts, we only want lyrics
                     }
-                    // Ignore chord parts, we only want lyrics
                 }
                 
                 $lineText = trim($lineText);

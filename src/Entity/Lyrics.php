@@ -55,7 +55,8 @@ final class Lyrics
         }
 
         try {
-            return \ChordPro\Song::loadFromString($this->text);
+            $parser = new \ChordPro\Parser();
+            return $parser->parse($this->text);
         } catch (\Exception $e) {
             return null;
         }
