@@ -296,17 +296,14 @@ class AppService
             $year =  $data['year']??null;
 
             if (!$song = $this->songs[$code]??null) {
-                $song = (new Song($code));
-                $this->em->persist($song);
-                $this->songs[$code] = $song;
-            }
-            $song->school = $school;
-            $song->publisher = $data['publisher'];
-
-            $song
-                ->setWriters($data['writer'])
-                ->setTitle($title)
-                ->setWriters($data['writer']);
+            $song = (new Song($code));
+            $this->em->persist($song);
+            $this->songs[$code] = $song;
+        }
+        $song->school = $school;
+        $song->publisher = $data['publisher'];
+        $song->writers = $data['writer'];
+        $song->title = $title;
 
             if ($data['date'])
 //            dd($song->getDate(), $data);
@@ -400,8 +397,8 @@ class AppService
                 $item = (object)$rawData;
                 $id = $item->id['videoId'];
                 if (!$video = $repo->findOneBy(['youtubeId' => $id])) {
-                    $video = (new Video())
-                        ->setYoutubeId($id);
+                    $video = new Video();
+                    $video->youtubeId = $id;
                     $this->em->persist($video);
                 }
 
@@ -419,7 +416,7 @@ class AppService
                 if (!$song->description) {
                     $song->description = ((object)$item->snippet)->description;
                 }
-                $this->logger->warning("Adding video to song " . $song->title, ['id' => $video->getYoutubeId()]);
+                $this->logger->warning("Adding video to song " . $song->title, ['id' => $video->youtubeId]);
                 $song->addVideo($video);
                 $video->thumbnails = $snippet->thumbnails;
 
@@ -428,12 +425,11 @@ class AppService
 //                dd($raw, $snippet);
                 $video->title = $snippet->title;
                 $video->description = $snippet->description;
-                $video
-                    ->setThumbnailUrl($snippet->thumbnails['default']['url'])
-                    ->setRawData($raw);
+                $video->thumbnailUrl = $snippet->thumbnails['default']['url'] ?? null;
+                $video->rawData = $raw;
 
                 if ($snippet->publishedAt) {
-                    $video->setDate(new \DateTime($snippet->publishedAt));
+                    $video->date = new \DateTime($snippet->publishedAt);
                 }
                 array_push($videos, $video);
             }
@@ -508,8 +504,7 @@ class AppService
                 $song->publisher = $data['publisher'];
                 $song->year = $year;
                 $song->title = $title;
-                $song
-                    ->setWriters($data['writer']);
+                $song->writers = $data['writer'];
 //                if ($data['writer']) dd($data, $song);
 
                 $em = $this->em;
@@ -522,15 +517,15 @@ class AppService
                         ;
 //                        $song->setYear((int)$song->getDate()?->format('Y'));
                     } catch (\Exception) {
-                        $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->getTitle());
+                        $logger->error("Line $idx: Can't set date " . $data['date'] . ' on ' . $song->title);
                     }
                 }
                 if ($data['year']) {
                     $song
-                        ->setYear((int)$data['year']);
+                        ->year = (int)$data['year'];
                 }
 
-                $song->setNotes(json_encode($data, JSON_THROW_ON_ERROR));
+                $song->notes = json_encode($data, JSON_THROW_ON_ERROR);
                 if (count($songs) % 500 === 0) {
                     $this->em->flush();
                     $this->logger->warning("Saving, now at $idx");

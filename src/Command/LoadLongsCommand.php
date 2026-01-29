@@ -20,7 +20,7 @@ use Symfony\Component\Messenger\Stamp\DeduplicateStamp;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-#[AsCommand('load:Song', "Load the songs and videos")]
+#[AsCommand('load:Song', 'load songs, videos, and lyrics')]
 class LoadLongsCommand
 {
     public function __construct(
@@ -84,7 +84,7 @@ class LoadLongsCommand
                 }
                 $text = $process->getOutput();
                 $text = str_replace("\n\n", "\n", $text);
-                $song->setLyrics($text);
+                $song->lyrics = $text;
             } else {
                 continue;
             }

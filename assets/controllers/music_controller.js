@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import opensheetmusicdisplay from 'opensheetmusicdisplay'
 
 export default class extends Controller {
     static values = {
@@ -9,10 +10,27 @@ export default class extends Controller {
         width: { type: Number, default: 800 },
         height: { type: Number, default: 600 }
     }
+    static targets = ['display']
 
     connect() {
-        this.injectStyles()
-        this.loadMusic()
+        console.error('init osmd', this.urlValue);
+        this.displayTarget.innerHTML = 'loading ' + this.urlValue;
+        var osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(this.displayTarget);
+        osmd.setOptions({
+            backend: "svg",
+            drawTitle: true,
+            // drawingParameters: "compacttight" // don't display title, composer etc., smaller margins
+        });
+        osmd
+            .load(this.urlValue)
+            .then(
+                function() {
+                    osmd.render();
+                }
+            );
+
+        // this.injectStyles()
+        // this.loadMusic()
     }
 
     get detectedFormat() {
@@ -23,7 +41,7 @@ export default class extends Controller {
         if (['xml', 'mxl', 'musicxml'].includes(ext)) return 'musicxml'
         if (['cho', 'chordpro', 'pro', 'chopro', 'txt'].includes(ext)) return 'chordpro'
 
-        return 'unknown'
+        return 'chordpro'
     }
 
     injectStyles() {
@@ -230,9 +248,55 @@ export default class extends Controller {
         const ChordSheetJS = await import("chordsheetjs")
         const parser = new ChordSheetJS.ChordProParser()
         this.song = parser.parse(text)
-        this.ChordSheetJS = ChordSheetJS
 
-        this.renderChordPro()
+        const formatter = new ChordSheetJS.TextFormatter()
+        const output = formatter.format(this.song)
+
+        this.element.innerHTML = `<pre class="chord-sheet">${output}</pre>`
+    }
+
+    camelToKebab(str) {
+        return str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
+    }
+
+    injectLibraryStyles(css) {
+        if (document.getElementById('chordsheetjs-styles')) return
+        const style = document.createElement('style')
+        style.id = 'chordsheetjs-styles'
+        style.textContent = css + `
+        .chord-sheet .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .chord-sheet .column {
+            display: inline-flex;
+            flex-direction: column;
+        }
+        .chord-sheet .chord {
+            color: #c44;
+            font-weight: bold;
+            font-family: monospace;
+            min-height: 1.2em;
+        }
+
+pre.chord-sheet,
+pre.chord-sheet * {
+    font-family: 'Courier New', Courier, monospace !important;
+    text-align: left !important;
+}
+
+}
+
+    `
+        document.head.appendChild(style)
+    }
+    injectLibraryStyles(css) {
+        if (document.getElementById('chordsheetjs-styles')) return
+        const style = document.createElement('style')
+        style.id = 'chordsheetjs-styles'
+        style.textContent = css
+        document.head.appendChild(style)
     }
 
     renderChordPro() {

@@ -25,6 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
+use App\Entity\Lyrics;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 
 class AppController extends AbstractController
 {
@@ -124,10 +127,10 @@ class AppController extends AbstractController
             // total hack, but too lazy to do it right
             /** @var Song $song */
             foreach ($songs as $song) {
-                if ($s == $song->getTitle()) {
+                if ($s == $song->title) {
                     // found a song!
                     if ($songLyrics && $currentSong) {
-                        $currentSong->setLyrics($songLyrics);
+                        $currentSong->lyrics = $songLyrics;
                         $songLyrics = '';
                     }
                     $currentSong = $song;
@@ -195,7 +198,7 @@ class AppController extends AbstractController
         /*
         $wordpressPagePayload = [
             'type' => 'page',
-            'title' => $song->getTitle(),
+            'title' => $song->title,
             'content' => $content=$this->createPage($song)
         ];
         */
@@ -291,15 +294,17 @@ class AppController extends AbstractController
                 // look for the title
 //                dump($data);
                 if (!$song = $em->getRepository(Song::class)->findOneBy(['title' => $title])) {
-                    $song = (new Song())
-                        ->setTitle($title);
+                    $school = $data['school'] ?? $data['School'] ?? null;
+                    $year = $data['year'] ?? $data['Year'] ?? null;
+                    $code = Song::createCode($title, $school, $year);
+                    $song = new Song($code);
+                    $song->title = $title;
                     $em->persist($song);
                 }
-                $song
-                    ->setWriters($data['Writers'])
-                    ->setMusicians($data['Musicians'])
-                    ->setRecordingCredits($data['Recording Credits'])
-                    ->setFeaturedArtist($data['Featured Artist']);
+                $song->writers = $data['Writers'];
+                $song->musicians = $data['Musicians'];
+                $song->recordingCredits = $data['Recording Credits'];
+                $song->featuredArtist = $data['Featured Artist'];
                 $this->createPage($song);
                 $em->flush();
             }
@@ -311,6 +316,18 @@ class AppController extends AbstractController
             'controller_name' => 'AppController',
             'lyrics' => $lyrics,
             'songs' => $songs
+        ]);
+    }
+
+    #[AdminRoute(
+        path: '/lyrics/{code}/music',
+        name: 'app_lyrics_music'
+    )]
+    public function lyricsMusic(Lyrics $lyrics, AdminContext $adminContext)
+    {
+        return $this->render('app/lyrics_music.html.twig', [
+            'lyrics' => $lyrics,
+            'adminContext' => $adminContext
         ]);
     }
 }

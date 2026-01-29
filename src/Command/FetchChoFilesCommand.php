@@ -11,17 +11,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use ChordPro\Song;
+use function Symfony\Component\String\u;
 
-#[AsCommand('app:fetch-cho-files', 'Fetch .cho files from pathawks/Christmas-Songs GitHub repository')]
+#[AsCommand('app:fetch-cho-files', 'fetch .cho files from the christmas-songs repo')]
 class FetchChoFilesCommand extends Command
 {
     public function __construct(
         #[Autowire('%kernel.project_dir%')] private string $projectDir,
         private Filesystem $filesystem,
         private EntityManagerInterface $entityManager,
-        private HttpClientInterface $httpClient
+        private HttpClientInterface $httpClient,
+        private SluggerInterface $asciiSlugger,
     ) {
         parent::__construct();
     }
@@ -29,7 +33,7 @@ class FetchChoFilesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        
+
         $zipUrl = 'https://github.com/pathawks/Christmas-Songs/archive/refs/heads/master.zip';
         $zipFile = $this->projectDir . '/var/christmas-songs.zip';
         $extractDir = $this->projectDir . '/var/christmas-songs';
@@ -40,19 +44,19 @@ class FetchChoFilesCommand extends Command
         // Download zip file if it doesn't exist
         if (!$this->filesystem->exists($zipFile)) {
             $io->info('Downloading Christmas Songs zip file...');
-            
+
             try {
                 $response = $this->httpClient->request('GET', $zipUrl);
-                
+
                 if ($response->getStatusCode() !== 200) {
                     $io->error('Failed to download zip file: HTTP ' . $response->getStatusCode());
                     return Command::FAILURE;
                 }
-                
+
                 // Write the content to file only after successful download
                 file_put_contents($zipFile, $response->getContent());
                 $io->success('Zip file downloaded successfully.');
-                
+
             } catch (\Exception $e) {
                 $io->error('Failed to download zip file: ' . $e->getMessage());
                 return Command::FAILURE;
@@ -63,16 +67,16 @@ class FetchChoFilesCommand extends Command
 
         // Read directly from zip file
         $io->info('Reading .cho files directly from zip archive...');
-        
+
         $choFiles = [];
         $zip = new \ZipArchive();
         $zipStatus = $zip->open($zipFile);
-        
+
         if ($zipStatus !== true) {
             $io->error('Failed to open zip file: ' . $zipStatus);
             return Command::FAILURE;
         }
-        
+
         // Find all .cho files in the zip
         for ($i = 0; $i < $zip->numFiles; $i++) {
             $filename = $zip->getNameIndex($i);
@@ -97,11 +101,11 @@ class FetchChoFilesCommand extends Command
 
         foreach ($choFiles as $fileInfo) {
             $relativePath = $fileInfo['filename'];
-            $code = pathinfo($relativePath, PATHINFO_FILENAME);
-            
+            $code = $this->asciiSlugger->slug($relativePath)->toString();
+
             // Check if lyrics already exist
             $existingLyrics = $lyricsRepository->findOneBy(['code' => $code]);
-            
+
             if ($existingLyrics) {
                 $io->text("Skipping existing lyrics: $code");
                 continue;
@@ -109,63 +113,27 @@ class FetchChoFilesCommand extends Command
 
             // Read .cho file content directly from zip
             $choContent = $zip->getFromIndex($fileInfo['index']);
-            
+
             if ($choContent === false) {
                 $io->error("Failed to read file from zip: {$relativePath}");
                 continue;
             }
-            
+
             // Create new Lyrics entity
             $lyrics = new Lyrics();
             $lyrics->code = $code;
             $lyrics->file = $relativePath;
             $lyrics->text = $choContent;
-            
-            // Parse ChordPro and store both structured data and basic lyrics array
-            try {
-                $parser = new \ChordPro\Parser();
-                $song = $parser->parse($choContent);
-                
-                // Store ChordPro structured data
-                $chordProData = [
-                    'meta' => [],
-                    'lines' => []
-                ];
-                
-                foreach ($song as $line) {
-                    if ($line instanceof \ChordPro\Metadata) {
-                        $chordProData['meta'][$line->getName()] = $line->getValue();
-                    } elseif ($line instanceof \ChordPro\Lyrics) {
-                        $lineData = [];
-                        foreach ($line->getBlocks() as $block) {
-                            $lineData[] = [
-                                'type' => $block->getChord() !== null ? 'chord' : 'text',
-                                'text' => $block->getText(),
-                                'chord' => $block->getChord()
-                            ];
-                        }
-                        $chordProData['lines'][] = $lineData;
-                    }
-                }
-                
-                $lyrics->chordProData = $chordProData;
-                
-                // Lyrics are now computed from chordProData, no need to store separately
-                
-            } catch (\Exception $e) {
-                // ChordPro parsing failed, chordProData will remain null
-                // The lyrics property will compute empty array
-            }
-            
+
             $this->entityManager->persist($lyrics);
             $processedCount++;
-            
+
             $io->text("Processed: $code");
         }
 
         $zip->close();
         $this->entityManager->flush();
-        
+
         $io->success("Successfully processed $processedCount new .cho files from zip archive");
 
         return Command::SUCCESS;

@@ -477,6 +477,9 @@
     "survos/seo-bundle": {
         "version": "1.5.168"
     },
+    "survos/state-bundle": {
+        "version": "2.0.108"
+    },
     "survos/storage-bundle": {
         "version": "2.0.81"
     },

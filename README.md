@@ -3,6 +3,9 @@
 Archives for Kid Pan Alley
 
 
+Also: https://github.com/kaimatt1/kid-pan
+
+
 ## Installation
 
 ```bash

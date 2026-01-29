@@ -22,6 +22,8 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
+use Survos\StateBundle\Traits\MarkingInterface;
+use Survos\StateBundle\Traits\MarkingTrait;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -55,12 +57,13 @@ use Doctrine\DBAL\Types\Types;
     filterable: ['writersArray', 'publishersArray', 'year'],
     embedders: ['small', 'best']
 )]
-class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
+class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface, MarkingInterface
 {
 //    use SongTranslationsTrait;
 //    use TranslatableHooksTrait;
     use RouteParametersTrait;
     use BabelHooksTrait;
+    use MarkingTrait;
 
     public const array UNIQUE_PARAMETERS = ['songId' => 'id'];
     public const MEILI_ROUTE = 'meili-song';
@@ -123,6 +126,9 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     #[Groups(['song.read'])]
     public ?string $notes = null;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    public ?array $aliases = null;
+
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['song.read'])]
     public ?int $lyricsLength = null;
@@ -157,7 +163,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     {
         if (!$this->videos->contains($video)) {
             $this->videos->add($video);
-            $video->setSong($this);
+            $video->song = $this;
         }
         return $this;
     }
@@ -166,8 +172,8 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     {
         if ($this->videos->removeElement($video)) {
             // set the owning side to null (unless already changed)
-            if ($video->getSong() === $this) {
-                $video->setSong(null);
+            if ($video->song === $this) {
+                $video->song = null;
             }
         }
         return $this;
@@ -200,231 +206,6 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     {
         return $this->title;
     }
-
-    // DEPRECATED METHODS - Mark for removal after loader is updated
-
-    /**
-     * @deprecated Use public property $id directly
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @deprecated Use public property $lyrics directly
-     */
-    public function getLyrics(): ?string
-    {
-        return $this->lyrics;
-    }
-
-    /**
-     * @deprecated Use public property $lyrics directly (includes automatic lyricsLength update)
-     */
-    public function setLyrics(?string $lyrics): self
-    {
-        $this->lyrics = $lyrics;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $featuredArtist directly
-     */
-    public function getFeaturedArtist(): ?string
-    {
-        return $this->featuredArtist;
-    }
-
-    /**
-     * @deprecated Use public property $featuredArtist directly
-     */
-    public function setFeaturedArtist(?string $featuredArtist): self
-    {
-        $this->featuredArtist = $featuredArtist;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $recordingCredits directly
-     */
-    public function getRecordingCredits(): ?string
-    {
-        return $this->recordingCredits;
-    }
-
-    /**
-     * @deprecated Use public property $recordingCredits directly
-     */
-    public function setRecordingCredits(?string $recordingCredits): self
-    {
-        $this->recordingCredits = $recordingCredits;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $musicians directly
-     */
-    public function getMusicians(): ?string
-    {
-        return $this->musicians;
-    }
-
-    /**
-     * @deprecated Use public property $musicians directly
-     */
-    public function setMusicians(?string $musicians): self
-    {
-        $this->musicians = $musicians;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $writers directly
-     */
-    public function getWriters(): ?string
-    {
-        return $this->writers;
-    }
-
-    /**
-     * @deprecated Use public property $writers directly
-     */
-    public function setWriters(?string $writers): self
-    {
-        $this->writers = $writers;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $wordpressPageId directly
-     */
-    public function getWordpressPageId(): ?int
-    {
-        return $this->wordpressPageId;
-    }
-
-    /**
-     * @deprecated Use public property $wordpressPageId directly
-     */
-    public function setWordpressPageId(?int $wordpressPageId): self
-    {
-        $this->wordpressPageId = $wordpressPageId;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $recording directly
-     */
-    public function getRecording(): ?string
-    {
-        return $this->recording;
-    }
-
-    /**
-     * @deprecated Use public property $recording directly
-     */
-    public function setRecording(?string $recording): self
-    {
-        $this->recording = $recording;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $publisher directly
-     */
-    public function getPublisher(): ?string
-    {
-        return $this->publisher;
-    }
-
-    /**
-     * @deprecated Use public property $publisher directly
-     */
-    public function setPublisher(?string $publisher): self
-    {
-        $this->publisher = $publisher;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $year directly
-     */
-    public function setYear(?int $year): self
-    {
-        $this->year = $year;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $notes directly
-     */
-    public function getNotes(): ?string
-    {
-        return $this->notes;
-    }
-
-    /**
-     * @deprecated Use public property $notes directly
-     */
-    public function setNotes(?string $notes): self
-    {
-        $this->notes = $notes;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $school directly
-     */
-    public function getSchool(): ?string
-    {
-        return $this->school;
-    }
-
-    /**
-     * @deprecated Use public property $date directly
-     */
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    /**
-     * @deprecated Use public property $date directly
-     */
-    public function setDate(?\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $lyricsLength directly
-     */
-    public function getLyricsLength(): ?int
-    {
-        return $this->lyricsLength;
-    }
-
-    /**
-     * @deprecated Use public property $lyricsLength directly (automatically updated when lyrics are set)
-     */
-    public function setLyricsLength(?int $lyricsLength): self
-    {
-        $this->lyricsLength = $lyricsLength;
-        return $this;
-    }
-
-    /**
-     * @deprecated Use public property $videos directly
-     */
-    public function getVideos(): Collection
-    {
-        return $this->videos;
-    }
-
-
-
     // <BABEL:TRANSLATABLE:START title>
     #[Column(type: Types::TEXT, nullable: true)]
     public ?string $title = null;

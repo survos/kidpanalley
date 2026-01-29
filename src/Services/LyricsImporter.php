@@ -219,13 +219,12 @@ class LyricsImporter
         } else {
             // Create new song
             $code = Song::createCode($title);
-            $song = new Song();
-            $song->setCode($code);
-            $song->setTitle($title);
+            $song = new Song($code);
+            $song->title = $title;
             $this->em->persist($song);
         }
 
-        $song->setLyrics($lyrics);
+        $song->lyrics = $lyrics;
 
         // Validate
         $errors = $this->validator->validate($song);

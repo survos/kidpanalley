@@ -1,5 +1,5 @@
 survos_command:
     # expose app:my-command, etc.
-    namespaces: [app]
+    namespaces: [app,storage]
     base_layout: null
 

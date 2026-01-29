@@ -1,4 +1,9 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block body %}
 <div class="card h-100 shadow-sm">
+
+
     {# Header #}
     <div class="card-header fw-bold text-truncate" title="{{ hit.title }}">
         {{ hit._highlightResult.title.value|raw }}
@@ -13,13 +18,13 @@
                 <strong>Title:</strong> {{ hit.title }}
             </div>
         {% endif %}
-        
+
         {% if hit.artist %}
             <div class="mb-2">
                 <strong>Artist:</strong> {{ hit.artist }}
             </div>
         {% endif %}
-        
+
         {% if hit.key %}
             <div class="mb-2">
                 <strong>Key:</strong> {{ hit.key }}
@@ -68,3 +73,5 @@
         </button>
     </div>
 </div>
+
+{% endblock %}

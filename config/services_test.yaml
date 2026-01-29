@@ -1,0 +1,4 @@
+# Test-only service wiring overrides
+
+#services:
+#    Survos\BabelBundle\Debug\BabelDebugRecorderInterface: '@Survos\BabelBundle\Debug\NullBabelDebugRecorder'

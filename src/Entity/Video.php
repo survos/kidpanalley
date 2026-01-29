@@ -58,31 +58,39 @@ class Video implements RouteParametersInterface, \Stringable
     #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: 'integer')]
     #[Groups('song.read')]
-    private $id;
+    public private(set) ?int $id = null;
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     #[Groups('song.read')]
     #[MeiliId]
-    private string $youtubeId;
+    public ?string $youtubeId = null;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['video.read'])]
-    public string $title;
+    public ?string $title = null;
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['video.read'])]
     public ?string $description=null;
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['video.read'])]
-    private $date;
+    public ?\DateTimeInterface $date {
+        set {
+            if (is_string($value)) {
+                $value = new \DateTime($value);
+            }
+            $this->date = $value;
+            $this->year = $value?->format('Y') ? (int)$value->format('Y') : null;
+        }
+    }
 
     #[ORM\Column(nullable: true)]
-    private array $rawData = [];
+    public array $rawData = [];
 
     #[ORM\ManyToOne(inversedBy: 'videos', targetEntity: Song::class, cascade: ['persist'], fetch: 'EAGER')]
     #[Groups(['video.read'])]
-    private ?Song $song = null;
+    public ?Song $song = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups('song.read')]
-    private ?string $thumbnailUrl = null;
+    public ?string $thumbnailUrl = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups('song.read')]
@@ -90,104 +98,20 @@ class Video implements RouteParametersInterface, \Stringable
 
     #[ORM\Column(nullable: true)]
     #[Groups(['video.read'])]
-    private ?int $year = null;
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-    public function getYoutubeId(): ?string
-    {
-        return $this->youtubeId;
-    }
-    public function setYoutubeId(?string $youtubeId): self
-    {
-        $this->youtubeId = $youtubeId;
-
-        return $this;
-    }
+    public ?int $year = null;
     public function getYoutubeUrl(): string
     {
-        return sprintf('https://www.youtube.com/watch?v=' . $this->getYoutubeId());
-    }
-    public function setTitle(?string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-    public function setDate(null|\DateTimeInterface|\DateTime|string $date): self
-    {
-        if (is_string($date)) {
-            $date = strtotime($date);
-        }
-        $this->date = $date;
-        if ($date->format('Y')) {
-            $this->year = (int)$date->format('Y');
-        }
-
-        return $this;
-    }
-
-    public function getRawData(): array|object|null
-    {
-        return $this->rawData;
-    }
-
-    public function setRawData(array $rawData): self
-    {
-        $this->rawData = $rawData;
-
-        return $this;
+        return sprintf('https://www.youtube.com/watch?v=%s', $this->youtubeId);
     }
 
     public function __toString()
     {
-        return $this->getYoutubeId();
-    }
-
-    public function getSong(): ?Song
-    {
-        return $this->song;
-    }
-
-    public function setSong(?Song $song): static
-    {
-        $this->song = $song;
-
-        return $this;
+        return (string)$this->youtubeId;
     }
 
     #[Groups(['video.read'])]
     public function getSchool(): ?string
     {
-        return $this->getSong()?->school;
-    }
-
-    public function getThumbnailUrl(): ?string
-    {
-        return $this->thumbnailUrl;
-    }
-
-    public function setThumbnailUrl(?string $thumbnailUrl): static
-    {
-        $this->thumbnailUrl = $thumbnailUrl;
-
-        return $this;
-    }
-
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
-
-    public function setYear(?int $year): static
-    {
-        $this->year = $year;
-
-        return $this;
+        return $this->song?->school;
     }
 }

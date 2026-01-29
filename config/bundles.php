@@ -44,4 +44,5 @@ return [
     Survos\StorageBundle\SurvosStorageBundle::class => ['all' => true],
     Survos\EzBundle\SurvosEzBundle::class => ['all' => true],
     Survos\TablerBundle\SurvosTablerBundle::class => ['all' => true],
+    Survos\StateBundle\SurvosStateBundle::class => ['all' => true],
 ];

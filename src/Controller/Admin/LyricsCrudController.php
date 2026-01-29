@@ -2,16 +2,20 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Lyrics;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
-use Survos\CoreBundle\Controller\BaseCrudController;
+use App\Field\MusicDisplayField;
+use Survos\EzBundle\Controller\BaseCrudController;
 
 class LyricsCrudController extends BaseCrudController
 {
-
     public function configureFields(string $pageName): iterable
     {
         // Index fields - show key metadata
@@ -41,27 +45,31 @@ class LyricsCrudController extends BaseCrudController
         });
 
         // Show formatted lyrics with chords using stimulus controller
-        yield Field::new('formattedLyrics', 'Formatted Lyrics with Chords')->onlyOnDetail()->formatValue(function ($value, $entity) {
+        yield Field::new('musicSheet', 'Music Sheet')
+            ->setVirtual(true)
+            ->formatValue(function ($value, $entity) {
             if (!$entity->text) {
-                return 'No ChordPro data available';
+                return '<div class="alert alert-warning">No ChordPro data available</div>';
             }
 
-            $url = $this->generateUrl('lyrics_raw', ['code' => $entity->code]);
-            return sprintf('
-                <div data-controller="music-display" 
-                     data-music-display-url-value="%s" 
-                     data-music-display-width-value="800" 
-                     data-music-display-height-value="600"
-                     style="min-height: 400px; border: 1px solid #dee2e6; border-radius: 0.375rem; padding: 1rem;"
-                     class="text-center text-muted">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading music...</span>
-                    </div>
-                    <p class="mt-2">Loading sheet music...</p>
-                </div>', 
-                $url
-            );
+            $url = $this->urlGenerator->generate('meili_admin_app_lyrics_music', ['code' => $entity->code]);
+            return $url;
+            return sprintf('<a href="%s" class="btn btn-primary" target="_blank">View Music Sheet</a>', $url);
         });
+
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $actions = parent::configureActions($actions);
+        $myAction = Action::new('myAction', 'Lyrics', 'fa fa-link')
+            ->linkToRoute('meili_admin_app_lyrics_music', fn (Lyrics $entity) => ['code' => $entity->code])
+            ->displayIf(fn (Lyrics $entity) => $entity->text)
+        ; // optional
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $myAction)
+            ->add(Crud::PAGE_DETAIL, $myAction);
     }
 
     public static function getEntityFqcn(): string
