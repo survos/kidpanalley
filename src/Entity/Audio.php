@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use ApiPlatform\Metadata\ApiFilter;
+use Survos\StateBundle\Traits\MarkingInterface;
+use Survos\StateBundle\Traits\MarkingTrait;
 
 #[ORM\Entity]
 #[ApiFilter(FacetsFieldSearchFilter::class,
@@ -16,8 +18,9 @@ use ApiPlatform\Metadata\ApiFilter;
     ui: ['icon' => 'Audio'],
     filterable: ['format', 'variant'],
 )]
-class Audio
+class Audio implements MarkingInterface
 {
+    use MarkingTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

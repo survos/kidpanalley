@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\QueryParameter;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SongRepository;
+use App\Workflow\SongWFDefinition;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,6 +28,7 @@ use Survos\StateBundle\Traits\MarkingTrait;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Workflow\Marking;
 use Zenstruck\Metadata;
 
 use Doctrine\ORM\Mapping\Column;
@@ -145,6 +147,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
         assert($code, "missing code");
         $this->code = $code;
         $this->videos = new ArrayCollection();
+        $this->marking = SongWFDefinition::PLACE_NEW;
     }
 
     #[Groups(['song.read'])]
