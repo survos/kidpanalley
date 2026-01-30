@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Workflow\AudioWFDefinition;
+use App\Workflow\FileAssetWFDefinition;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
@@ -42,5 +44,6 @@ class Audio implements MarkingInterface
         #[ORM\Column(length: 32, nullable: true)]
         public ?string $variant = null,
     ) {
+        $this->marking = AudioWFDefinition::PLACE_NEW;
     }
 }
