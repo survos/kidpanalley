@@ -45,6 +45,10 @@ vendor/bin/phpunit
 ![Database Diagram](assets/db.svg)
 ![Database Diagram](assets/er.svg)
 
+## MusicXML
+
+nice progression from simple
+https://www.music-for-music-teachers.com/twinkle-twinkle.html
 
 
 ## Setup

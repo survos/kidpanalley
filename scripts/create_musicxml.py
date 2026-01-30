@@ -193,6 +193,7 @@ def main():
         if score.metadata is None:
             score.metadata = metadata.Metadata()
         score.metadata.title = args.title
+        score.metadata.movementName = args.title
     if args.creator:
         if score.metadata is None:
             score.metadata = metadata.Metadata()
