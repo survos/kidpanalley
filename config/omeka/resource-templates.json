@@ -1,0 +1,69 @@
+{
+  "vocabularies": [],
+  "properties": [],
+  "templates": [
+    {
+      "label": "Song",
+      "resource_class": null,
+      "title_property": "dcterms:title",
+      "description_property": "dcterms:description",
+      "properties": [
+        {"term": "dcterms:title", "required": true, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:creator", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:created", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:description", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:publisher", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:subject", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:identifier", "required": false, "private": false, "data_types": ["literal"]}
+      ]
+    },
+    {
+      "label": "Recording",
+      "resource_class": null,
+      "title_property": "dcterms:title",
+      "description_property": "dcterms:description",
+      "properties": [
+        {"term": "dcterms:title", "required": true, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:relation", "required": true, "private": false, "data_types": ["resource"]},
+        {"term": "dcterms:format", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:extent", "required": false, "private": false, "data_types": ["literal"]}
+      ]
+    },
+    {
+      "label": "Video",
+      "resource_class": null,
+      "title_property": "dcterms:title",
+      "description_property": "dcterms:description",
+      "properties": [
+        {"term": "dcterms:title", "required": true, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:relation", "required": true, "private": false, "data_types": ["resource"]},
+        {"term": "dcterms:description", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:date", "required": false, "private": false, "data_types": ["literal"]}
+      ]
+    },
+    {
+      "label": "FileAsset",
+      "resource_class": null,
+      "title_property": "dcterms:title",
+      "description_property": "dcterms:description",
+      "properties": [
+        {"term": "dcterms:title", "required": true, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:description", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:subject", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:identifier", "required": false, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:relation", "required": false, "private": false, "data_types": ["resource"]},
+        {"term": "dcterms:isPartOf", "required": false, "private": false, "data_types": ["resource"]}
+      ]
+    },
+    {
+      "label": "School",
+      "resource_class": null,
+      "title_property": "dcterms:title",
+      "description_property": "dcterms:description",
+      "properties": [
+        {"term": "dcterms:title", "required": true, "private": false, "data_types": ["literal"]},
+        {"term": "dcterms:spatial", "required": false, "private": false, "data_types": ["literal"]}
+      ]
+    }
+  ]
+}

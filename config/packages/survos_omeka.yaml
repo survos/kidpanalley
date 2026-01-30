@@ -1,0 +1,11 @@
+survos_omeka:
+  clients:
+    remote:
+      api_url: '%env(default::OMEKA_API_URL)%'
+      key_identity: '%env(default::OMEKA_REMOTE_KEY_IDENTITY)%'
+      key_credential: '%env(default::OMEKA_REMOTE_KEY_CREDENTIAL)%'
+#    local:
+#      api_url: '%env(OMEKA_LOCAL_API_URL)%'
+#      key_identity: '%env(default::OMEKA_LOCAL_KEY_IDENTITY)%'
+#      key_credential: '%env(default::OMEKA_LOCAL_KEY_CREDENTIAL)%'
+

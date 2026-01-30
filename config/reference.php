@@ -2122,6 +2122,13 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     workflow_paths?: list<scalar|Param|null>,
  *     async_transport_dsn?: scalar|Param|null, // Default: "doctrine://default"
  * }
+ * @psalm-type SurvosOmekaConfig = array{
+ *     clients?: array<string, array{ // Default: []
+ *         api_url?: scalar|Param|null, // Default: null
+ *         key_identity?: scalar|Param|null, // Default: null
+ *         key_credential?: scalar|Param|null, // Default: null
+ *     }>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2159,6 +2166,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_ez?: SurvosEzConfig,
  *     survos_tabler?: SurvosTablerConfig,
  *     survos_state?: SurvosStateConfig,
+ *     survos_omeka?: SurvosOmekaConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2202,6 +2210,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_ez?: SurvosEzConfig,
  *         survos_tabler?: SurvosTablerConfig,
  *         survos_state?: SurvosStateConfig,
+ *         survos_omeka?: SurvosOmekaConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2241,6 +2250,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_ez?: SurvosEzConfig,
  *         survos_tabler?: SurvosTablerConfig,
  *         survos_state?: SurvosStateConfig,
+ *         survos_omeka?: SurvosOmekaConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2283,6 +2293,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_ez?: SurvosEzConfig,
  *         survos_tabler?: SurvosTablerConfig,
  *         survos_state?: SurvosStateConfig,
+ *         survos_omeka?: SurvosOmekaConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

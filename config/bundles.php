@@ -45,4 +45,6 @@ return [
     Survos\EzBundle\SurvosEzBundle::class => ['all' => true],
     Survos\TablerBundle\SurvosTablerBundle::class => ['all' => true],
     Survos\StateBundle\SurvosStateBundle::class => ['all' => true],
+    Survos\OmekaBundle\SurvosOmekaBundle::class => ['all' => true],
+    MarcinOrlowski\DiscoToolbar\DiscoToolbarBundle::class => ['all' => true],
 ];
