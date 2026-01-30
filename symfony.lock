@@ -212,6 +212,9 @@
     "league/oauth2-google": {
         "version": "3.0.3"
     },
+    "marcin-orlowski/disco-toolbar-symfony": {
+        "version": "2.0.0"
+    },
     "monolog/monolog": {
         "version": "1.x-dev"
     },
@@ -470,6 +473,9 @@
     },
     "survos/meili-bundle": {
         "version": "1.5.0"
+    },
+    "survos/omeka-bundle": {
+        "version": "dev-main"
     },
     "survos/scraper-bundle": {
         "version": "1.4.44"

@@ -7,3 +7,6 @@
             :videoCount="videoCount"
             :audioCount="audioCount" />
 </twig:tabler:page>
+{% if app.environment == 'dev' %}
+    {% include '@DiscoToolbar/toolbar.html.twig' %}
+{% endif %}

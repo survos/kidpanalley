@@ -10,7 +10,7 @@ export default class extends Controller {
         width: { type: Number, default: 800 },
         height: { type: Number, default: 600 }
     }
-    static targets = ['display']
+    static targets = ['display', 'spinner']
 
     connect() {
         console.error('init osmd', this.urlValue);
@@ -24,10 +24,19 @@ export default class extends Controller {
         osmd
             .load(this.urlValue)
             .then(
-                function() {
+                () => {
                     osmd.render();
+                    if (this.hasSpinnerTarget) {
+                        this.spinnerTarget.remove();
+                    }
                 }
-            );
+            )
+            .catch((error) => {
+                console.error('Error loading music:', error);
+                if (this.hasSpinnerTarget) {
+                    this.spinnerTarget.remove();
+                }
+            });
 
         // this.injectStyles()
         // this.loadMusic()

@@ -9,8 +9,9 @@ python3.11 -m venv "$VENV_DIR"
 source "$VENV_DIR/bin/activate"
 
 pip install -U pip
-pip install -U basic-pitch music21 librosa soundfile mido
+pip install -U basic-pitch music21 librosa soundfile mido demucs torchcodec
 
 echo "Installed lyric tools in $VENV_DIR"
 echo "basic-pitch: $VENV_DIR/bin/basic-pitch"
+echo "demucs: $VENV_DIR/bin/demucs"
 echo "python: $VENV_DIR/bin/python"

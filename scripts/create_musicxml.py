@@ -179,6 +179,7 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--title")
     parser.add_argument("--creator")
+    parser.add_argument("--subtitle")
     parser.add_argument("--simplify", action="store_true")
     parser.add_argument("--grid", type=float, default=0.5)
     parser.add_argument("--melody", action="store_true")
@@ -189,15 +190,29 @@ def main():
     output_path = Path(args.output)
 
     score = converter.parse(midi_path.as_posix())
-    if args.title:
+
+    def normalize_metadata_value(value: str | None) -> str | None:
+        if value is None:
+            return None
+        cleaned = value.strip()
+        if not cleaned:
+            return None
+        return cleaned
+
+    title = normalize_metadata_value(args.title)
+    creator = normalize_metadata_value(args.creator)
+    subtitle = normalize_metadata_value(args.subtitle)
+
+    if title or creator or subtitle:
         if score.metadata is None:
             score.metadata = metadata.Metadata()
-        score.metadata.title = args.title
-        score.metadata.movementName = args.title
-    if args.creator:
-        if score.metadata is None:
-            score.metadata = metadata.Metadata()
-        score.metadata.composer = args.creator
+    if title:
+        score.metadata.title = title
+        score.metadata.movementName = title
+    if creator:
+        score.metadata.composer = creator
+    if subtitle:
+        score.metadata.subtitle = subtitle
     segments = load_whisper_segments(whisper_path)
     if args.simplify:
         simplified = simplify_score(score, args.grid, args.melody)

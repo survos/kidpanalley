@@ -64,7 +64,7 @@
                         'height': 600
                     }) }} style="min-height: 400px; border: 1px solid #dee2e6; border-radius: 0.375rem; padding: 1rem;"
                           class="text-center text-muted">
-                        <div class="spinner-border" role="status">
+                        <div class="spinner-border" role="status" {{ stimulus_target(_sc, 'spinner') }}>
                             <span class="visually-hidden">Loading music...</span>
                         </div>
                         <p class="mt-2">Loading sheet music...</p>

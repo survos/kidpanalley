@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0af47225d86807a93baed1b7dd3a454a",
+    "content-hash": "aec301def809f998bd11190dc003c54f",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -4292,6 +4292,66 @@
             "time": "2025-12-10T09:58:31+00:00"
         },
         {
+            "name": "marcin-orlowski/disco-toolbar-symfony",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MarcinOrlowski/php-discotoolbar-symfony.git",
+                "reference": "7ff394a6b72fe34a10527930cd70fe4c75b963d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MarcinOrlowski/php-discotoolbar-symfony/zipball/7ff394a6b72fe34a10527930cd70fe4c75b963d7",
+                "reference": "7ff394a6b72fe34a10527930cd70fe4c75b963d7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+                "symfony/http-kernel": "^6.4|^7.0|^8.0",
+                "symfony/twig-bundle": "^6.4|^7.0|^8.0",
+                "symfony/yaml": "^6.4|^7.0|^8.0"
+            },
+            "provide": {
+                "marcin-orlowski/discotoolbar": "self.version",
+                "marcin-orlowski/discotoolbar-symfony": "self.version"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
+                "squizlabs/php_codesniffer": "^3.13"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "MarcinOrlowski\\DiscoToolbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcin Orlowski",
+                    "email": "mail@marcinOrlowski.com"
+                }
+            ],
+            "description": "Customizable toolbar for Symfony projects",
+            "keywords": [
+                "development",
+                "disco",
+                "navigation",
+                "symfony",
+                "toolbar"
+            ],
+            "support": {
+                "issues": "https://github.com/MarcinOrlowski/php-discotoolbar-symfony/issues",
+                "source": "https://github.com/MarcinOrlowski/php-discotoolbar-symfony/tree/2.0.0"
+            },
+            "time": "2026-01-30T18:00:46+00:00"
+        },
+        {
             "name": "markbaker/complex",
             "version": "3.0.2",
             "source": {
@@ -7442,6 +7502,78 @@
                 }
             ],
             "time": "2026-01-22T03:51:31+00:00"
+        },
+        {
+            "name": "survos/omeka-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/omeka-bundle.git",
+                "reference": "86f3a875ddddfc6e3b3db2394f71b6f6f9f42d8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/omeka-bundle/zipball/86f3a875ddddfc6e3b3db2394f71b6f6f9f42d8d",
+                "reference": "86f3a875ddddfc6e3b3db2394f71b6f6f9f42d8d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4",
+                "symfony/config": "^8.0",
+                "symfony/console": "^8.0",
+                "symfony/dependency-injection": "^8.0",
+                "symfony/http-client": "^8.0",
+                "symfony/http-kernel": "^8.0",
+                "symfony/mime": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^12.0",
+                "roave/security-advisories": "dev-latest",
+                "symfony/var-dumper": "^8.0"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^8.0"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\OmekaBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Symfony HttpClient wrapper for the Omeka-S REST API",
+            "keywords": [
+                "Museum",
+                "api",
+                "archive",
+                "digital-humanities",
+                "omeka",
+                "omeka-s",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/omeka-bundle/issues",
+                "source": "https://github.com/survos/omeka-bundle/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-26T16:08:20+00:00"
         },
         {
             "name": "survos/scraper-bundle",
@@ -18802,6 +18934,7 @@
         "meilisearch/meilisearch-php": 20,
         "roave/security-advisories": 20,
         "survos/ciine-bundle": 20,
+        "survos/omeka-bundle": 20,
         "survos/tabler-bundle": 20
     },
     "prefer-stable": true,

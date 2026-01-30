@@ -32,8 +32,15 @@ class AudioController extends AbstractController
     #[Template('audio/show.html.twig')]
     public function show(Audio $audio): Response|array
     {
+        $segments = [];
+        $jsonPath = $this->resolveJsonPath($audio);
+        if ($jsonPath && is_file($jsonPath)) {
+            $segments = $this->loadWhisperSegments($jsonPath);
+        }
+
         return [
             'audio' => $audio,
+            'segments' => $segments,
         ];
     }
 
@@ -60,6 +67,56 @@ class AudioController extends AbstractController
         }
 
         return new BinaryFileResponse($path);
+    }
+
+    private function resolveJsonPath(Audio $audio): ?string
+    {
+        if (!$audio->id) {
+            return null;
+        }
+        $path = $this->projectDir . '/var/whisper/audio_' . $audio->id . '.json';
+        $resolved = realpath($path);
+        return $resolved ?: $path;
+    }
+
+    private function loadWhisperSegments(string $path): array
+    {
+        $raw = file_get_contents($path);
+        if ($raw === false) {
+            return [];
+        }
+
+        $data = json_decode($raw, true);
+        if (!is_array($data)) {
+            return [];
+        }
+
+        $segments = $data['segments'] ?? $data['transcription'] ?? [];
+        $result = [];
+
+        foreach ($segments as $segment) {
+            $text = trim((string) ($segment['text'] ?? ''));
+            if ($text === '') {
+                continue;
+            }
+
+            if (isset($segment['start']) || isset($segment['end'])) {
+                $start = (float) ($segment['start'] ?? 0.0);
+                $end = (float) ($segment['end'] ?? 0.0);
+            } else {
+                $offsets = $segment['offsets'] ?? [];
+                $start = ((float) ($offsets['from'] ?? 0.0)) / 1000.0;
+                $end = ((float) ($offsets['to'] ?? 0.0)) / 1000.0;
+            }
+
+            $result[] = [
+                'start' => $start,
+                'end' => $end,
+                'text' => $text,
+            ];
+        }
+
+        return $result;
     }
 
     private function resolvePath(?string $path): ?string
