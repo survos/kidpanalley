@@ -36,6 +36,13 @@
     <twig:divider />
 
     <h1>{{ song.title }} ({{ song.school }}, {{ song.year }})</h1>
+    {% if audios|length %}
+        <div class="mb-3">
+            <a href="{{ path('audio_show', { id: audios|first.id }) }}" class="btn btn-outline-primary">
+                Open First Audio
+            </a>
+        </div>
+    {% endif %}
 
     {# Music Sheet Display #}
     <div class="row mb-4">
@@ -109,6 +116,27 @@
                 <th>Youtube Videos</th>
                 <td>
 
+                </td>
+            </tr>
+            <tr>
+                <th>Audio</th>
+                <td>
+                    {% if audios|length %}
+                        <ul class="list-unstyled mb-0">
+                            {% for audio in audios %}
+                                <li>
+                                    <a href="{{ path('audio_show', { id: audio.id }) }}">
+                                        {{ audio.title }} ({{ audio.format }})
+                                    </a>
+                                    {% if audio.variant %}
+                                        <span class="text-muted">- {{ audio.variant }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span class="text-muted">No audio files yet.</span>
+                    {% endif %}
                 </td>
             </tr>
             <tr>

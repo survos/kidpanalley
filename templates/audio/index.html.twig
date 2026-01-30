@@ -1,0 +1,37 @@
+{% set slotOptions = {
+    NAVBAR_MENU: {
+        x: null,
+        frontPage: true
+    },
+    BREADCRUMBS: {
+        label: 'Audio'
+    }
+} %}
+<twig:tabler:page :title="'Audio'" :slotOptions="slotOptions">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Audio</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for audio in audios %}
+                            <a class="list-group-item list-group-item-action" href="{{ path('audio_show', { id: audio.id }) }}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-semibold">{{ audio.title }}</div>
+                                        <div class="text-muted small">{{ audio.song.title }}</div>
+                                    </div>
+                                    <div class="text-muted small">{{ audio.format }}</div>
+                                </div>
+                            </a>
+                        {% else %}
+                            <div class="text-muted">No audio files yet.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</twig:tabler:page>

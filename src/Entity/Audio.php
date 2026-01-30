@@ -46,4 +46,7 @@ class Audio implements MarkingInterface
     ) {
         $this->marking = AudioWFDefinition::PLACE_NEW;
     }
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $musicXml = null;
 }

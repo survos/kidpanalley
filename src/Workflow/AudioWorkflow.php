@@ -238,8 +238,9 @@ class AudioWorkflow
 			]);
 			return;
 		}
-        $this->logger->warning($musicXmlPath);
-        $this->entityManager->flush();
+		$audio->musicXml = (string) file_get_contents($musicXmlPath);
+		$this->logger->warning($musicXmlPath);
+		$this->entityManager->flush();
 	}
 
 	private function resolvePath(?string $path): ?string

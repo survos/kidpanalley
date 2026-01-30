@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Song;
 use App\Form\SongType;
+use App\Repository\AudioRepository;
 use App\Repository\SongRepository;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +23,13 @@ class SongController extends AbstractController
 
     #[Route('/', name: 'song_show', options: ['expose' => true], methods: [Request::METHOD_GET])]
     #[Template('song/show.html.twig')]
-    public function show(Song $song) : Response|array
+    public function show(Song $song, AudioRepository $audioRepository) : Response|array
     {
-        return ['song' => $song];
+        $audios = $audioRepository->findBy(['song' => $song], ['id' => 'DESC']);
+
+        return [
+            'song' => $song,
+            'audios' => $audios,
+        ];
     }
 }

@@ -13,7 +13,7 @@ use Survos\EzBundle\Field\LinkedTextField;
 final class AudioCrudController extends AbstractEzCrudController
 {
     /** TODO: adjust SHOW_ROUTE to your app show route */
-    public const SHOW_ROUTE = 'admin_app_audio_show';
+    public const SHOW_ROUTE = 'audio_show';
 
     public static function getEntityFqcn(): string
     {

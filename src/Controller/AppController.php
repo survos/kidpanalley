@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\IriConverterInterface;
 use App\Entity\Song;
 use App\Entity\Video;
+use App\Repository\AudioRepository;
 use App\Repository\SongRepository;
 use App\Repository\VideoRepository;
 use App\Services\AppService;
@@ -87,7 +88,7 @@ class AppController extends AbstractController
 
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
     #[Route(path: '/admin', name: 'admin', methods: ['GET'])]
-    public function homepage(SongRepository $songRepository, VideoRepository $videoRepository,
+    public function homepage(SongRepository $songRepository, VideoRepository $videoRepository, AudioRepository $audioRepository,
 //    #[Autowire('%kpa.version%')] ?string $applicationVersion = null, // was in bizkit_version
     )
     {
@@ -96,8 +97,10 @@ class AppController extends AbstractController
             'user' => $user,
             'featured' => $songRepository->findBy([], ['id' => 'DESC'], 1),
             'featuredVideo' => $videoRepository->findBy([], ['id' => 'DESC'], 1),
+            'featuredAudio' => $audioRepository->findBy([], ['id' => 'DESC'], 1),
             'songCount' => $songRepository->count([]),
-            'videoCount' => $videoRepository->count([])
+            'videoCount' => $videoRepository->count([]),
+            'audioCount' => $audioRepository->count([]),
         ]);
     }
 

@@ -12,7 +12,7 @@
 
     <div class="row mt-4">
 
-        <div class="col-md-6">
+        <div class="col-lg-4">
             <twig:card>
                 <twig:block name="card_body">
                     <span class="bi bi-music-note"></span>
@@ -50,7 +50,42 @@
             </twig:card>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-4">
+            <twig:card>
+                <twig:block name="title">
+                    Audio
+                </twig:block>
+
+                <twig:block name="card_body">
+                    <span class="bi bi-soundwave"></span>
+
+                    <div class="text-light small fw-semibold">Audio</div>
+                    <div class="mt-2">Listen and review source recordings</div>
+
+                    <h3 class="mt-3">Featured</h3>
+                    {% for feature in featuredAudio %}
+                        <div>
+                            <a href="{{ path('audio_show', { id: feature.id }) }}">
+                                Featured Audio: {{ feature.title }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </twig:block>
+
+                <twig:block name="links">
+                    <div class="demo-inline-spacing">
+                        <a
+                            href="{{ path('audio_index') }}"
+                            class="btn btn-outline-primary"
+                        >
+                            Go to {{ audioCount }} Audio Files
+                        </a>
+                    </div>
+                </twig:block>
+            </twig:card>
+        </div>
+
+        <div class="col-lg-4">
             <twig:card>
                 <twig:block name="title">
                     Videos
