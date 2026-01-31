@@ -26,6 +26,7 @@
         "intelektron/chordpro-php": "^1.1",
         "jawira/doctrine-diagram-bundle": "^1.1",
         "league/csv": "^9.18",
+        "league/flysystem-aws-s3-v3": "^3.31",
         "league/oauth2-facebook": "^2.2",
         "league/oauth2-github": "^3.1.1",
         "league/oauth2-google": "^4.0.1",

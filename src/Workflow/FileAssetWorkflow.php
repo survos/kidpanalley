@@ -5,7 +5,9 @@ namespace App\Workflow;
 use App\Entity\FileAsset;
 use App\Workflow\FileAssetWFDefinition as WF;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemOperator;
 use Survos\StateBundle\Attribute\Workflow;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Workflow\Attribute\AsGuardListener;
 use Symfony\Component\Workflow\Attribute\AsTransitionListener;
 use Symfony\Component\Workflow\Event\GuardEvent;
@@ -18,6 +20,7 @@ class FileAssetWorkflow
 
 	public function __construct(
         private EntityManagerInterface $entityManager,
+        #[Autowire(service: 'archive.storage')] private FilesystemOperator $archiveStorage,
     )
 	{
 	}
@@ -36,6 +39,67 @@ class FileAssetWorkflow
 		$fileAsset->duration = $fileAsset->probedData['summary']['duration'] ?? null;
         $this->entityManager->flush();
 
+	}
+
+	#[AsTransitionListener(WF::WORKFLOW_NAME, WF::TRANSITION_UPLOAD)]
+	public function onUpload(TransitionEvent $event): void
+	{
+		$fileAsset = $this->getFileAsset($event);
+		if (strtolower($fileAsset->extension) !== 'mp3') {
+			return;
+		}
+		if (!is_file($fileAsset->path) || !is_readable($fileAsset->path)) {
+			return;
+		}
+		$hash = hash_file('xxh3', $fileAsset->path);
+		if (!$hash) {
+			return;
+		}
+		$shard = substr($hash, 0, 2);
+		$objectKey = sprintf('mp3/%s/%s.%s', $shard, $hash, $fileAsset->extension);
+		if (!$this->archiveStorage->fileExists($objectKey)) {
+			$stream = fopen($fileAsset->path, 'rb');
+			if ($stream === false) {
+				return;
+			}
+			try {
+				$this->archiveStorage->writeStream($objectKey, $stream);
+			} finally {
+				fclose($stream);
+			}
+		}
+
+		$sidecarKey = sprintf('mp3/%s/%s.json', $shard, $hash);
+		if (!$this->archiveStorage->fileExists($sidecarKey)) {
+			$payload = $this->serializeFileAsset($fileAsset, $hash, $objectKey);
+			$encoded = json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+			$this->archiveStorage->write($sidecarKey, $encoded);
+		}
+	}
+
+	private function serializeFileAsset(FileAsset $fileAsset, string $hash, string $objectKey): array
+	{
+		return [
+			'id' => $fileAsset->id,
+			'path' => $fileAsset->path,
+			'relativePath' => $fileAsset->relativePath,
+			'filename' => $fileAsset->filename,
+			'extension' => $fileAsset->extension,
+			'dirname' => $fileAsset->dirname,
+			'size' => $fileAsset->size,
+			'modifiedTime' => $fileAsset->modifiedTime,
+			'isReadable' => $fileAsset->isReadable,
+			'type' => $fileAsset->type,
+			'duration' => $fileAsset->duration,
+			'probedData' => $fileAsset->probedData,
+			'lyricsCandidates' => $fileAsset->lyricsCandidates,
+			'marking' => $fileAsset->marking,
+			'archive' => [
+				'hash' => $hash,
+				'objectKey' => $objectKey,
+			],
+			'serializedAt' => (new \DateTimeImmutable())->format(\DateTimeInterface::ATOM),
+		];
 	}
 
 	private function probeFileAsset(FileAsset $fileAsset): array

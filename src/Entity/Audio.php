@@ -49,4 +49,10 @@ class Audio implements MarkingInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $musicXml = null;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    public ?array $lyricsJson = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $lyricsText = null;
 }

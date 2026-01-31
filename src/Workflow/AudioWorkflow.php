@@ -103,7 +103,24 @@ class AudioWorkflow
 
 		$lyricsPath = $outputBase . '.txt';
 		if (is_file($lyricsPath)) {
-			$audio->song->lyrics = trim((string) file_get_contents($lyricsPath));
+			$audio->lyricsText = trim((string) file_get_contents($lyricsPath));
+		}
+		$lyricsJsonPath = $outputBase . '.json';
+		if (is_file($lyricsJsonPath)) {
+			$rawJson = file_get_contents($lyricsJsonPath);
+			if ($rawJson !== false) {
+				try {
+					$decoded = json_decode($rawJson, true, 512, JSON_THROW_ON_ERROR);
+					if (is_array($decoded)) {
+						$audio->lyricsJson = $decoded;
+					}
+				} catch (\JsonException $e) {
+					$this->logger->warning('Failed to decode whisper json', [
+						'path' => $lyricsJsonPath,
+						'error' => $e->getMessage(),
+					]);
+				}
+			}
 		}
         $this->entityManager->flush();
 	}
@@ -155,13 +172,7 @@ class AudioWorkflow
 			return;
 		}
 
-		$midiPath = $outputDir . '/' . pathinfo($audioPath, PATHINFO_FILENAME) . '.mid';
-		if (!is_file($midiPath)) {
-			$altMidiPath = $outputDir . '/' . pathinfo($audioPath, PATHINFO_FILENAME) . '_basic_pitch.mid';
-			if (is_file($altMidiPath)) {
-				$midiPath = $altMidiPath;
-			}
-		}
+		$midiPath = $this->resolveExpectedMidiPath($audioPath, $outputDir);
 		if (!is_file($midiPath)) {
 			$this->logger->error('midi file missing before musicxml build', [
 				'expected' => $midiPath,
@@ -267,7 +278,23 @@ class AudioWorkflow
 		$this->entityManager->flush();
 	}
 
-	#[AsTransitionListener(WF::WORKFLOW_NAME, WF::TRANSITION_EXTRACT_MIDI)]
+	#[AsGuardListener(WF::WORKFLOW_NAME, WF::TRANSITION_CREATE_XML)]
+	public function onCreateXmlGuard(GuardEvent $event): void
+	{
+		$audio = $this->getAudio($event);
+		$audioPath = $this->resolvePath($audio->fileAsset->path ?? null);
+		if (!$audioPath || !is_file($audioPath)) {
+			$event->setBlocked(true, 'Audio file missing');
+			return;
+		}
+		$outputDir = $this->resolveOutputDir();
+		$midiPath = $this->resolveExpectedMidiPath($audioPath, $outputDir);
+		if (!$midiPath || !is_file($midiPath)) {
+			$event->setBlocked(true, 'MIDI file missing; run create_midi');
+		}
+	}
+
+	#[AsTransitionListener(WF::WORKFLOW_NAME, WF::TRANSITION_CREATE_MIDI)]
 	public function onExtractMidi(TransitionEvent $event): void
 	{
 		$audio = $this->getAudio($event);
@@ -347,6 +374,22 @@ class AudioWorkflow
 			]);
 			return;
 		}
+
+		$expectedMidi = $this->resolveExpectedMidiPath($audioPath, $outputDir);
+		if (!$expectedMidi) {
+			return;
+		}
+		if (!is_file($expectedMidi)) {
+			$generatedMidi = $this->findGeneratedMidi($outputDir, $sourcePath);
+			if ($generatedMidi && $generatedMidi !== $expectedMidi) {
+				if (!@rename($generatedMidi, $expectedMidi)) {
+					$this->logger->warning('Failed to rename generated midi', [
+						'from' => $generatedMidi,
+						'to' => $expectedMidi,
+					]);
+				}
+			}
+		}
 	}
 
 	private function resolvePath(?string $path): ?string
@@ -371,6 +414,40 @@ class AudioWorkflow
 			$dir = $this->projectDir . '/' . ltrim($dir, '/');
 		}
 		return $dir;
+	}
+
+	private function resolveExpectedMidiPath(string $audioPath, string $outputDir): ?string
+	{
+		$base = pathinfo($audioPath, PATHINFO_FILENAME);
+		if (!$base) {
+			return null;
+		}
+		$primary = $outputDir . '/' . $base . '.mid';
+		if (is_file($primary)) {
+			return $primary;
+		}
+		return $outputDir . '/' . $base . '_basic_pitch.mid';
+	}
+
+	private function findGeneratedMidi(string $outputDir, string $sourcePath): ?string
+	{
+		$sourceBase = pathinfo($sourcePath, PATHINFO_FILENAME);
+		if ($sourceBase) {
+			$candidate = $outputDir . '/' . $sourceBase . '.mid';
+			if (is_file($candidate)) {
+				return $candidate;
+			}
+			$candidateAlt = $outputDir . '/' . $sourceBase . '_basic_pitch.mid';
+			if (is_file($candidateAlt)) {
+				return $candidateAlt;
+			}
+		}
+		$matches = glob($outputDir . '/*.mid') ?: [];
+		if ($matches === []) {
+			return null;
+		}
+		usort($matches, static fn ($a, $b) => filemtime($b) <=> filemtime($a));
+		return $matches[0] ?? null;
 	}
 
 	private function resolveVenvBin(string $binary): ?string

@@ -20,6 +20,7 @@
                             <a class="list-group-item list-group-item-action" href="{{ path('audio_show', { id: audio.id }) }}">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
+                                        <div class="fw-semibold">{{ audio.marking }}</div>
                                         <div class="fw-semibold">{{ audio.title }}</div>
                                         <div class="text-muted small">{{ audio.song.title }}</div>
                                     </div>

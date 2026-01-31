@@ -18,6 +18,12 @@ class FileAssetWFDefinition
 	#[Place]
 	public const PLACE_PROBED = 'probed';
 
+	#[Place]
+	public const PLACE_UPLOADED = 'uploaded';
+
 	#[Transition(from: [self::PLACE_NEW], to: self::PLACE_PROBED)]
 	public const TRANSITION_PROBE = 'probe';
+
+	#[Transition(from: [self::PLACE_PROBED], to: self::PLACE_UPLOADED)]
+	public const TRANSITION_UPLOAD = 'upload';
 }

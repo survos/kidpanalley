@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Audio;
 use App\Entity\FileAsset;
 use App\Entity\Song;
+use App\Entity\Video;
 use App\Message\FetchYoutubeChannelMessage;
 use App\Message\LoadSongsMessage;
 use App\Repository\SongRepository;
@@ -207,8 +208,10 @@ class LoadDataCommand
         }
 
         if ($reset) {
-            $this->entityManager->createQuery('delete from ' . Audio::class)->execute();
-            $this->entityManager->createQuery('delete from ' . FileAsset::class)->execute();
+            foreach ([Audio::class, FileAsset::class, Video::class, Song::class] as $class) {
+                $deleted = $this->entityManager->createQuery('delete from ' . $class)->execute();
+                $io->info($class . ' ' . $deleted);
+            }
         }
 
         $fileAssetRepo = $this->entityManager->getRepository(FileAsset::class);

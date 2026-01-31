@@ -24,7 +24,7 @@ class AudioController extends AbstractController
     public function index(AudioRepository $audioRepository): Response|array
     {
         return [
-            'audios' => $audioRepository->findBy([], ['id' => 'DESC'], 25),
+            'audios' => $audioRepository->findBy(['marking' => 'xml' /* AudioWFDefinition::PLACE_XML */ ], ['id' => 'DESC'], 25),
         ];
     }
 
@@ -33,9 +33,13 @@ class AudioController extends AbstractController
     public function show(Audio $audio): Response|array
     {
         $segments = [];
-        $jsonPath = $this->resolveJsonPath($audio);
-        if ($jsonPath && is_file($jsonPath)) {
-            $segments = $this->loadWhisperSegments($jsonPath);
+        if (is_array($audio->lyricsJson)) {
+            $segments = $this->loadWhisperSegmentsFromArray($audio->lyricsJson);
+        } else {
+            $jsonPath = $this->resolveJsonPath($audio);
+            if ($jsonPath && is_file($jsonPath)) {
+                $segments = $this->loadWhisperSegments($jsonPath);
+            }
         }
 
         return [
@@ -91,6 +95,11 @@ class AudioController extends AbstractController
             return [];
         }
 
+        return $this->loadWhisperSegmentsFromArray($data);
+    }
+
+    private function loadWhisperSegmentsFromArray(array $data): array
+    {
         $segments = $data['segments'] ?? $data['transcription'] ?? [];
         $result = [];
 
