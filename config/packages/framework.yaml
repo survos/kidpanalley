@@ -7,7 +7,11 @@ framework:
     property_info:
         with_constructor_extractor: true
 
+#    router:
+#        default_uri: kpa.wip
+#        default_uri: '%env(APP_URL)%'
     # Note that the session will be started ONLY if you read or write from it.
+
     session: true
 
     #esi: true

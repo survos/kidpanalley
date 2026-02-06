@@ -2,6 +2,10 @@ survos_meili:
     host: '%env(MEILI_SERVER)%'
     apiKey: '%env(MEILI_API_KEY)%'
     searchKey: '%env(MEILI_SEARCH_KEY)%'
+    file_proxy:
+        roots:
+            test_sample: '%kernel.project_dir%/../kid-pan/test_sample'
+            epstein: '/home/tac/Downloads/epstein'
     tools:
         - label: riccox
           url:  http://localhost:24900/

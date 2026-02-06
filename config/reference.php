@@ -2017,6 +2017,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         prefixSearch?: scalar|Param|null, // Default: "indexingTime"
  *     },
  *     entity_dirs?: list<scalar|Param|null>,
+ *     file_proxy?: array{
+ *         enabled?: bool|Param, // Default: true
+ *         allow_hidden?: bool|Param, // Default: false
+ *         cache_control?: scalar|Param|null, // Default: "private, max-age=60"
+ *         roots?: list<scalar|Param|null>,
+ *     },
  * }
  * @psalm-type SurvosCodeConfig = array{
  *     base_layout?: scalar|Param|null, // Default: "base.html.twig"
