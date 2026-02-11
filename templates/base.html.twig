@@ -8,10 +8,7 @@
          {{ parent() }}
      {% endblock %}
 
-    {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {{ parent() }}
-    {% endblock %}
+    {# importmap() is already rendered by the parent SurvosTabler layout #}
 
 
 {# {% block logo_mini %}<b>KPA</b>{% endblock %} #}
@@ -37,8 +34,12 @@
 {# </footer> #}
 {# {% endblock %} #}
 
-{% block page_content %}
-    <div class=" mb-4">
-        {{ block('body') }}
+{#
+  SurvosTabler's layout uses the `content` block for the main page body.
+  Keep legacy templates working by rendering a `body` block inside `content`.
+#}
+{% block content %}
+    <div class="mb-4">
+        {% block body %}{% endblock %}
     </div>
 {% endblock %}

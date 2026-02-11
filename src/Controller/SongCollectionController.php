@@ -2,30 +2,35 @@
 
 namespace App\Controller;
 
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\IriConverterInterface;
 use App\Entity\Song;
-use App\Entity\Video;
-use App\Form\SongType;
-use App\Repository\SongRepository;
-use Survos\ApiGrid\Service\MeiliService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/songs')]
 class SongCollectionController extends AbstractController
 {
-    public function __construct()
-    {
-
-    }
     #[Route(path: '/browse/{apiRoute}', name: 'song_index', methods: ['GET'])]
-    public function index(string $apiRoute=Song::MEILI_ROUTE) : Response
+    public function index(IriConverterInterface $iriConverter, string $apiRoute = Song::DOCTRINE_ROUTE) : Response
     {
-//        $this->meiliService->getConfig()
+        // Doctrine-first: compute the API Platform collection IRI explicitly.
+        // Keep apiRoute parameter for backwards compatibility / toggling.
+        if ($apiRoute === Song::MEILI_ROUTE) {
+            // legacy: Meili endpoint (optional)
+            $apiGetCollectionUrl = '/api/meili/Song';
+        } else {
+            $apiGetCollectionUrl = $iriConverter->getIriFromResource(
+                Song::class,
+                operation: new GetCollection(name: Song::DOCTRINE_ROUTE)
+            );
+        }
+
         return $this->render('song/index.html.twig', [
-                'apiRoute' => $apiRoute,
-                'class' => Song::class,
+            'apiRoute' => $apiRoute,
+            'apiGetCollectionUrl' => $apiGetCollectionUrl,
+            'class' => Song::class,
         ]);
     }
 

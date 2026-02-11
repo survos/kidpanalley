@@ -106,7 +106,8 @@ final class AppMenu
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
         $this->add($menu, MeiliDashboardController::MEILI_ROUTE, label: "EZ");
-//        $this->add($menu, 'video_browse', label: 'Videos');
+        $this->add($menu, 'video_browse', label: 'Videos');
+        $this->add($menu, 'song_index', label: 'Songs');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
 //        $subMenu = $this->addSubmenu($menu, 'songs');

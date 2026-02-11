@@ -67,16 +67,16 @@ return [
         'version' => '2.1.7',
     ],
     'datatables.net-bs5' => [
-        'version' => '2.2.0',
+        'version' => '2.3.5',
     ],
     'jquery' => [
-        'version' => '3.7.1',
+        'version' => '4.0.0',
     ],
     'datatables.net' => [
-        'version' => '2.2.0',
+        'version' => '2.3.5',
     ],
     'datatables.net-bs5/css/dataTables.bootstrap5.min.css' => [
-        'version' => '2.2.0',
+        'version' => '2.3.5',
         'type' => 'css',
     ],
     'datatables.net-buttons-bs5' => [
@@ -454,5 +454,15 @@ return [
     ],
     'pako' => [
         'version' => '2.1.0',
+    ],
+    'datatables.net-columncontrol-bs5' => [
+        'version' => '1.2.0',
+    ],
+    'datatables.net-columncontrol' => [
+        'version' => '1.2.0',
+    ],
+    'datatables.net-columncontrol-bs5/css/columnControl.bootstrap5.min.css' => [
+        'version' => '1.2.0',
+        'type' => 'css',
     ],
 ];

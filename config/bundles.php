@@ -47,4 +47,5 @@ return [
     Survos\StateBundle\SurvosStateBundle::class => ['all' => true],
     Survos\OmekaBundle\SurvosOmekaBundle::class => ['all' => true],
     MarcinOrlowski\DiscoToolbar\DiscoToolbarBundle::class => ['all' => true],
+    Survos\ApiGridBundle\SurvosApiGridBundle::class => ['all' => true],
 ];

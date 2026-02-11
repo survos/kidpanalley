@@ -19,9 +19,11 @@
 
     <twig:api_grid
         :class="class"
-        :apiRoute="apiRoute"
+        :apiGetCollectionUrl="apiGetCollectionUrl"
         :columns="columns"
         :caller="_self"
+        :searchPanes="false"
+        :columnControl="true"
         >
         <twig:block name="youtubeId">
             <a target="_blank" href="http://www.youtube.com/watch?v={{ row.youtubeId }}">

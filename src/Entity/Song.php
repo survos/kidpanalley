@@ -21,7 +21,9 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use Survos\ApiGridBundle\Api\Filter\MultiFieldSearchFilter;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
+use Survos\MeiliBundle\Metadata\Facet;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Survos\StateBundle\Traits\MarkingInterface;
 use Survos\StateBundle\Traits\MarkingTrait;
@@ -38,7 +40,7 @@ use Doctrine\DBAL\Types\Types;
 #[ORM\UniqueConstraint('song_code', ['code'])]
 #[ApiResource(operations: [
     new Get(),
-    new GetCollection(name: 'doctrine_songs')],
+    new GetCollection(name: self::DOCTRINE_ROUTE)],
     parameters: [
         'q' => new QueryParameter(
             filter: new FreeTextQueryFilter(new PartialSearchFilter()),
@@ -47,9 +49,9 @@ use Doctrine\DBAL\Types\Types;
     ],
     normalizationContext: ['groups' => ['song.read', 'rp']])]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
-#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['title', 'year', 'lyricsLength', 'publisher', 'writers'])]
-//#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['school', 'writersArray', 'publishersArray', 'year'], arguments: ["searchParameterName" => "facet_filter"])]
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title', 'publisher', 'writers'])]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['school', 'year'], arguments: ["searchParameterName" => "facet_filter"]) ]
 #[Groups(['song.read'])]
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
@@ -69,6 +71,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 
     public const array UNIQUE_PARAMETERS = ['songId' => 'id'];
     public const MEILI_ROUTE = 'meili-song';
+    public const DOCTRINE_ROUTE = 'doctrine_songs';
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\IriConverterInterface;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
@@ -26,11 +28,19 @@ class VideoController extends AbstractController
         ]);
     }
     #[Route(path: '/browse', name: 'video_browse', methods: ['GET'])]
-    public function browse(VideoRepository $videoRepository) : Response
+    public function browse(
+        IriConverterInterface $iriConverter,
+        VideoRepository $videoRepository) : Response
     {
+
+        $apiGetCollectionUrl = $iriConverter->getIriFromResource(
+            Video::class,
+            operation: new GetCollection(name: Video::DOCTRINE_ROUTE)
+        );
+
         return $this->render('video/browse.html.twig', [
-            'apiRoute' => Video::MEILI_ROUTE,
             'class' => Video::class,
+            'apiGetCollectionUrl' => $apiGetCollectionUrl,
             'videos' => $videoRepository->findBy([], ['id' => 'DESC'], 30),
             'videoCount' => $videoRepository->count([])
         ]);

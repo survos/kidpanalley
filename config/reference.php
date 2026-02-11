@@ -2135,6 +2135,15 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         key_credential?: scalar|Param|null, // Default: null
  *     }>,
  * }
+ * @psalm-type SurvosApiGridConfig = array{
+ *     stimulus_controller?: scalar|Param|null, // The stimulus controller to use, should extend @survos/api-grid-bundle/api_grid // Default: "@survos/api-grid-bundle/api_grid"
+ *     grid_stimulus_controller?: scalar|Param|null, // Default: "@survos/api-grid-bundle/grid"
+ *     meiliHost?: scalar|Param|null, // Default: "%env(MEILI_SERVER)%"
+ *     meiliKey?: scalar|Param|null, // Default: "%env(MEILI_API_KEY)%"
+ *     meiliPrefix?: scalar|Param|null, // Default: "%env(MEILI_PREFIX)%"
+ *     passLocale?: bool|Param, // Default: false
+ *     maxValuesPerFacet?: int|Param, // https://www.meilisearch.com/docs/reference/api/settings#faceting-object // Default: 1000
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2173,6 +2182,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_tabler?: SurvosTablerConfig,
  *     survos_state?: SurvosStateConfig,
  *     survos_omeka?: SurvosOmekaConfig,
+ *     survos_api_grid?: SurvosApiGridConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2217,6 +2227,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_tabler?: SurvosTablerConfig,
  *         survos_state?: SurvosStateConfig,
  *         survos_omeka?: SurvosOmekaConfig,
+ *         survos_api_grid?: SurvosApiGridConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2257,6 +2268,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_tabler?: SurvosTablerConfig,
  *         survos_state?: SurvosStateConfig,
  *         survos_omeka?: SurvosOmekaConfig,
+ *         survos_api_grid?: SurvosApiGridConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2300,6 +2312,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_tabler?: SurvosTablerConfig,
  *         survos_state?: SurvosStateConfig,
  *         survos_omeka?: SurvosOmekaConfig,
+ *         survos_api_grid?: SurvosApiGridConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
