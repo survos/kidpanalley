@@ -2,28 +2,52 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Api\Filter\FacetsFieldSearchFilter;
+use App\Repository\FileAssetRepository;
 use App\Workflow\FileAssetWFDefinition;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
+use Survos\ApiGridBundle\Api\Filter\MultiFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
-use ApiPlatform\Metadata\ApiFilter;
 use Survos\StateBundle\Traits\MarkingInterface;
 use Survos\StateBundle\Traits\MarkingTrait;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: FileAssetRepository::class)]
 #[ORM\UniqueConstraint(name: 'file_asset_path', columns: ['path'])]
+#[ApiResource(operations: [
+    new Get(),
+    new GetCollection(name: self::DOCTRINE_ROUTE),
+])]
+#[ApiFilter(SearchFilter::class, properties: [
+    'filename' => 'partial',
+    'relativePath' => 'partial',
+    'path' => 'partial',
+    'dirname' => 'partial',
+    'extension' => 'partial',
+    'mimeType' => 'partial',
+    'type' => 'partial',
+])]
+#[ApiFilter(OrderFilter::class, properties: ['filename', 'size', 'modifiedTime', 'duration', 'extension', 'mimeType', 'type'])]
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['filename', 'relativePath', 'dirname'])]
 #[ApiFilter(FacetsFieldSearchFilter::class,
-    properties: ['type', 'extension', 'dirname', 'isReadable'],
+    properties: ['type'],
     arguments: ["searchParameterName" => "facet_filter"]
 )]
 #[MeiliIndex(
     ui: ['icon' => 'FileAsset'],
-    filterable: ['type', 'extension', 'dirname', 'isReadable'],
+    filterable: ['type'],
 )]
 class FileAsset implements MarkingInterface
 {
     use MarkingTrait;
+
+    public const DOCTRINE_ROUTE = 'api_file_assets';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -49,6 +73,12 @@ class FileAsset implements MarkingInterface
         public bool $isReadable = true,
         #[ORM\Column(length: 32)]
         public string $type = 'other',
+        #[ORM\Column(length: 255, nullable: true)]
+        public ?string $school = null,
+        #[ORM\Column(type: 'integer', nullable: true)]
+        public ?int $year = null,
+        #[ORM\Column(length: 127, nullable: true)]
+        public ?string $mimeType = null,
         #[ORM\Column(type: Types::FLOAT, nullable: true)]
         public ?float $duration = null,
         #[ORM\Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
@@ -57,6 +87,5 @@ class FileAsset implements MarkingInterface
         public ?array $lyricsCandidates = null,
     ) {
         $this->marking = FileAssetWFDefinition::PLACE_NEW;
-
     }
 }

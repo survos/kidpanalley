@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Attribute\Option;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -58,7 +59,7 @@ class LoadDataCommand
         $assets ??= true;
 
         if ($assets) {
-            $jsonlPath = $jsonl ?? 'data/files.jsonl';
+            $jsonlPath = $jsonl ?? 'data/seagate.jsonl';
             $this->loadFileAssetsFromJsonl($jsonlPath, $reset, $limit, $persist, $io);
         }
 
@@ -150,33 +151,49 @@ class LoadDataCommand
             $io->error(sprintf('JSONL not readable: %s', $jsonlPath));
             return;
         }
-        $count = 0;
+
+        $totalRows = $this->countJsonlRows($jsonlPath);
+        if ($limit !== null) {
+            $totalRows = min($totalRows, $limit);
+        }
+
+        $scanCount = 0;
+        $audioScanCount = 0;
         $uniqueSongs = [];
         $knownTitles = [];
         $newSongCount = 0;
 
+        $io->section('Scanning assets');
+        $scanProgress = new ProgressBar($io, max($totalRows, 1));
+        $scanProgress->setFormat('%current%/%max% [%bar%] %percent:3s%% %message%');
+        $scanProgress->setMessage('building song index');
+        $scanProgress->start();
+
         $reader = JsonlReader::open($jsonlPath);
         foreach ($reader as $row) {
+            if ($limit !== null && $scanCount >= $limit) {
+                break;
+            }
+
+            $scanCount++;
             $path = (string)($row['path'] ?? '');
             $relativePath = (string)($row['relative_path'] ?? '');
             $filename = (string)($row['filename'] ?? '');
-            $extension = strtolower((string)($row['extension'] ?? pathinfo($filename, PATHINFO_EXTENSION)));
+            $extension = $this->normalizeExtension((string)($row['extension'] ?? ''), $filename);
+            $scanProgress->setMessage($this->progressLabel($relativePath, $path, $filename));
 
             if ($path === '' || $filename === '') {
+                $scanProgress->advance();
                 continue;
             }
 
             $type = $this->detectFileType($extension);
             if ($type !== 'audio') {
-                if ($io->isVerbose()) {
-                    $io->text(sprintf('skip %s -> %s', $relativePath ?: $path, $type));
-                }
-                $count++;
-                if ($limit !== null && $count >= $limit) {
-                    break;
-                }
+                $scanProgress->advance();
                 continue;
             }
+
+            $audioScanCount++;
 
             $title = $this->normalizeTitle($filename);
             [, $year] = $this->extractSchoolYear($relativePath);
@@ -185,25 +202,23 @@ class LoadDataCommand
             if (!isset($uniqueSongs[$key])) {
                 $uniqueSongs[$key] = ['title' => $title, 'year' => $year];
                 $knownTitles[$this->normalizeSongKey($title)] = true;
-                $io->text(sprintf('song: %s%s', $title, $year ? " ($year)" : ''));
+                if ($io->isVeryVerbose()) {
+                    $io->text(sprintf('song: %s%s', $title, $year ? " ($year)" : ''));
+                }
                 $newSongCount++;
             }
 
-            if ($io->isVerbose()) {
-                $io->text(sprintf('map: %s -> %s%s', $relativePath ?: $path, $title, $year ? " ($year)" : ''));
-            }
-
-            $count++;
-            if ($limit !== null && $count >= $limit) {
-                break;
-            }
+            $scanProgress->advance();
         }
+
+        $scanProgress->finish();
+        $io->newLine(2);
 
         if (!$persist) {
             if ($reset) {
                 $io->warning('reset is ignored in no-persist mode');
             }
-            $io->success(sprintf('Listed %d audio files, %d unique songs', $count, count($uniqueSongs)));
+            $io->success(sprintf('Indexed %d audio files, %d unique songs', $audioScanCount, count($uniqueSongs)));
             return;
         }
 
@@ -217,20 +232,46 @@ class LoadDataCommand
         $fileAssetRepo = $this->entityManager->getRepository(FileAsset::class);
         $audioRepo = $this->entityManager->getRepository(Audio::class);
         $audioCount = 0;
+        $fileAssetCount = 0;
+        $lyricsStats = [
+            'attempted' => 0,
+            'withCandidates' => 0,
+            'skippedExpected' => 0,
+            'failedUnexpected' => 0,
+            'unreadable' => 0,
+        ];
         $songCache = [];
+        $batchSize = 250;
+        $pendingFlushCount = 0;
+        $importCount = 0;
+
+        $io->section('Importing assets');
+        $importProgress = new ProgressBar($io, max($totalRows, 1));
+        $importProgress->setFormat('%current%/%max% [%bar%] %percent:3s%% %message%');
+        $importProgress->setMessage('persisting entities');
+        $importProgress->start();
 
         $reader = JsonlReader::open($jsonlPath);
         foreach ($reader as $row) {
+            if ($limit !== null && $importCount >= $limit) {
+                break;
+            }
+
+            $importCount++;
             $path = (string)($row['path'] ?? '');
             $relativePath = (string)($row['relative_path'] ?? '');
             $filename = (string)($row['filename'] ?? '');
             $dirname = (string)($row['dirname'] ?? '');
-            $extension = strtolower((string)($row['extension'] ?? pathinfo($filename, PATHINFO_EXTENSION)));
+            $extension = $this->normalizeExtension((string)($row['extension'] ?? ''), $filename);
             $size = isset($row['size']) ? (int)$row['size'] : null;
             $modifiedTime = isset($row['modified_time']) ? (int)$row['modified_time'] : null;
             $isReadable = (bool)($row['is_readable'] ?? true);
+            [$school, $year] = $this->extractSchoolYear($relativePath);
+            $mimeType = $this->guessMimeTypeFromExtension($extension);
+            $importProgress->setMessage($this->progressLabel($relativePath, $path, $filename));
 
             if ($path === '' || $filename === '') {
+                $importProgress->advance();
                 continue;
             }
 
@@ -248,8 +289,17 @@ class LoadDataCommand
                     modifiedTime: $modifiedTime,
                     isReadable: $isReadable,
                     type: $type,
+                    school: $school,
+                    year: $year,
+                    mimeType: $mimeType,
                 );
                 $this->entityManager->persist($fileAsset);
+                $pendingFlushCount++;
+                $fileAssetCount++;
+            } else {
+                $fileAsset->school = $school;
+                $fileAsset->year = $year;
+                $fileAsset->mimeType = $mimeType;
             }
 
             if ($type === 'audio') {
@@ -269,6 +319,7 @@ class LoadDataCommand
                             $song->year = $year;
                             $song->aliases = $this->buildAliases($filename, $title);
                             $this->entityManager->persist($song);
+                            $pendingFlushCount++;
                         }
                         $songCache[$code] = $song;
                     }
@@ -288,12 +339,15 @@ class LoadDataCommand
                         variant: $this->detectVariant($filename)
                     );
                     $this->entityManager->persist($audio);
+                    $pendingFlushCount++;
                     $audioCount++;
                 }
             } elseif ($type === 'lyrics') {
                 if ($reset || $fileAsset->lyricsCandidates === null) {
-                    $candidates = $this->extractLyricsCandidates($path, $extension, $filename, $knownTitles, $io);
+                    $lyricsStats['attempted']++;
+                    $candidates = $this->extractLyricsCandidates($path, $extension, $filename, $knownTitles, $io, $lyricsStats);
                     if ($candidates !== null) {
+                        $lyricsStats['withCandidates']++;
                         $fileAsset->lyricsCandidates = $candidates;
                         if ($io->isVerbose()) {
                             $this->renderLyricsCandidatesPreview($fileAsset->relativePath ?: $fileAsset->path, $candidates, $io);
@@ -302,14 +356,31 @@ class LoadDataCommand
                 }
             }
 
-            $count++;
-            if ($limit !== null && $count >= $limit) {
-                break;
+            $importProgress->advance();
+
+            if ($pendingFlushCount >= $batchSize) {
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+                $songCache = [];
+                $pendingFlushCount = 0;
             }
         }
 
-        $this->entityManager->flush();
-        $io->success(sprintf('Imported %d file assets, %d audio records, %d new songs', $count, $audioCount, $newSongCount));
+        if ($pendingFlushCount > 0) {
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
+
+        $importProgress->finish();
+        $io->newLine(2);
+        $io->success(sprintf('Imported %d file assets, %d audio records, %d indexed songs', $fileAssetCount, $audioCount, $newSongCount));
+        $io->note([
+            sprintf('Lyrics attempted: %d', $lyricsStats['attempted']),
+            sprintf('Lyrics with candidates: %d', $lyricsStats['withCandidates']),
+            sprintf('Lyrics skipped (expected parse issues): %d', $lyricsStats['skippedExpected']),
+            sprintf('Lyrics failed (unexpected): %d', $lyricsStats['failedUnexpected']),
+            sprintf('Lyrics unreadable files: %d', $lyricsStats['unreadable']),
+        ]);
     }
 
     private function detectFileType(string $extension): string
@@ -320,6 +391,44 @@ class LoadDataCommand
             'pdf' => 'chart',
             'doc', 'docx' => 'lyrics',
             default => 'other',
+        };
+    }
+
+    private function normalizeExtension(string $extension, string $filename = ''): string
+    {
+        $extension = trim(strtolower($extension));
+        if ($extension === '' && $filename !== '') {
+            $extension = strtolower((string)pathinfo($filename, PATHINFO_EXTENSION));
+        }
+
+        $extension = preg_replace('/[^a-z0-9]+/', '', $extension) ?? '';
+        if ($extension === '') {
+            return 'unknown';
+        }
+
+        return mb_substr($extension, 0, 16);
+    }
+
+    private function guessMimeTypeFromExtension(string $extension): ?string
+    {
+        return match ($extension) {
+            'mp3' => 'audio/mpeg',
+            'm4a' => 'audio/mp4',
+            'wav' => 'audio/wav',
+            'aif', 'aiff' => 'audio/aiff',
+            'mp4' => 'video/mp4',
+            'mov' => 'video/quicktime',
+            'avi' => 'video/x-msvideo',
+            'pdf' => 'application/pdf',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'txt' => 'text/plain',
+            'csv' => 'text/csv',
+            'json' => 'application/json',
+            'xml' => 'application/xml',
+            default => null,
         };
     }
 
@@ -334,11 +443,14 @@ class LoadDataCommand
         string $extension,
         string $filename,
         array $knownTitles,
-        SymfonyStyle $io
+        SymfonyStyle $io,
+        array &$lyricsStats,
     ): ?array {
         $fullPath = $this->resolvePath($path);
+        $label = $this->progressLabel('', $path, $filename);
         if (!is_file($fullPath) || !is_readable($fullPath)) {
-            $io->warning(sprintf('lyrics file not readable: %s', $fullPath));
+            $lyricsStats['unreadable']++;
+            $io->warning(sprintf('lyrics file not readable: %s', $label));
             return null;
         }
 
@@ -348,7 +460,16 @@ class LoadDataCommand
                 default => $this->documentTextExtractor->extractFromDocx($fullPath),
             };
         } catch (\Throwable $exception) {
-            $io->warning(sprintf('lyrics extraction failed: %s', $exception->getMessage()));
+            $message = $exception->getMessage();
+            if ($this->isExpectedLyricsParseNoise($message)) {
+                $lyricsStats['skippedExpected']++;
+                if ($io->isVerbose()) {
+                    $io->text(sprintf('lyrics extraction skipped for %s: %s', $label, $message));
+                }
+            } else {
+                $lyricsStats['failedUnexpected']++;
+                $io->warning(sprintf('lyrics extraction failed for %s: %s', $label, $message));
+            }
             return null;
         }
 
@@ -435,6 +556,60 @@ class LoadDataCommand
         }
         $combined = $this->projectDir . '/' . ltrim($path, '/');
         return realpath($combined) ?: $combined;
+    }
+
+    private function countJsonlRows(string $jsonlPath): int
+    {
+        $rows = 0;
+        $file = new \SplFileObject($jsonlPath, 'r');
+
+        while (!$file->eof()) {
+            $line = trim((string)$file->fgets());
+            if ($line !== '') {
+                $rows++;
+            }
+        }
+
+        return $rows;
+    }
+
+    private function progressLabel(string $relativePath, string $path, string $filename): string
+    {
+        $label = trim($relativePath);
+        if ($label === '') {
+            $label = trim($path);
+        }
+        if ($label === '') {
+            $label = trim($filename);
+        }
+        if ($label === '') {
+            return 'processing';
+        }
+
+        if (mb_strlen($label) <= 80) {
+            return $label;
+        }
+
+        return '...' . mb_substr($label, -77);
+    }
+
+    private function isExpectedLyricsParseNoise(string $message): bool
+    {
+        $message = strtolower($message);
+
+        foreach ([
+            'array to string conversion',
+            'textrun could not be converted to string',
+            'archive failed to load',
+            'setcommentreference()',
+            'invalid image:',
+        ] as $needle) {
+            if (str_contains($message, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function renderLyricsCandidatesPreview(string $label, array $candidates, SymfonyStyle $io): void

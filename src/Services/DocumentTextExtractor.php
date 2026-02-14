@@ -87,16 +87,14 @@ class DocumentTextExtractor
         foreach ($elements as $element) {
             $elementClass = get_class($element);
 
-            // Handle different element types
             if (method_exists($element, 'getText')) {
-                $text .= $element->getText();
+                $text .= $this->normalizeExtractedValue($element->getText());
             } elseif (method_exists($element, 'getElements')) {
-                // Recursive for containers (tables, textboxes, etc.)
                 $text .= $this->extractTextFromElements($element->getElements());
             } elseif ($elementClass === 'PhpOffice\PhpWord\Element\TextRun') {
                 foreach ($element->getElements() as $textElement) {
                     if (method_exists($textElement, 'getText')) {
-                        $text .= $textElement->getText();
+                        $text .= $this->normalizeExtractedValue($textElement->getText());
                     }
                 }
             }
@@ -112,6 +110,43 @@ class DocumentTextExtractor
         }
 
         return $text;
+    }
+
+    private function normalizeExtractedValue(mixed $value): string
+    {
+        if ($value === null) {
+            return '';
+        }
+
+        if (is_scalar($value)) {
+            return (string)$value;
+        }
+
+        if ($value instanceof \Stringable) {
+            return (string)$value;
+        }
+
+        if (is_array($value)) {
+            $parts = [];
+            foreach ($value as $item) {
+                $normalized = $this->normalizeExtractedValue($item);
+                if ($normalized !== '') {
+                    $parts[] = $normalized;
+                }
+            }
+
+            return implode('', $parts);
+        }
+
+        if (is_object($value) && method_exists($value, 'getText')) {
+            return $this->normalizeExtractedValue($value->getText());
+        }
+
+        if (is_object($value) && method_exists($value, 'getElements')) {
+            return $this->extractTextFromElements($value->getElements());
+        }
+
+        return '';
     }
 
     /**

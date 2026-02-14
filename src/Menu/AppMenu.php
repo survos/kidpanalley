@@ -3,6 +3,7 @@
 namespace App\Menu;
 
 use App\Controller\Admin\MeiliDashboardController;
+use App\Entity\FileAsset;
 use App\Entity\Song;
 use App\Entity\Video;
 use Survos\MeiliBundle\Controller\MeiliAdminController;
@@ -108,6 +109,7 @@ final class AppMenu
         $this->add($menu, MeiliDashboardController::MEILI_ROUTE, label: "EZ");
         $this->add($menu, 'video_browse', label: 'Videos');
         $this->add($menu, 'song_index', label: 'Songs');
+        $this->add($menu, 'file_asset_browse', label: 'Files');
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
 //        $subMenu = $this->addSubmenu($menu, 'songs');
@@ -129,7 +131,7 @@ final class AppMenu
             $this->add($menu, 'app_publish');
             $subMenu = $this->addSubmenu($menu, '@commands');
             if ($this->env === 'dev') {
-                foreach ([Song::class, Video::class] as $class) {
+                foreach ([Song::class, Video::class, FileAsset::class] as $class) {
                     $this->add($subMenu, 'survos_command', [
                         'commandName' => 'grid:index',
                         'class' => $class
