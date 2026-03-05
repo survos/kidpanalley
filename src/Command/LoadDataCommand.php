@@ -9,6 +9,7 @@ use App\Entity\Video;
 use App\Message\FetchYoutubeChannelMessage;
 use App\Message\LoadSongsMessage;
 use App\Repository\SongRepository;
+use App\Service\SongMatcher;
 use App\Services\AppService;
 use App\Services\DocumentTextExtractor;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,11 +20,8 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DeduplicateStamp;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use Survos\JsonlBundle\IO\JsonlReader;
 
 #[AsCommand('app:load', 'load songs, videos, lyrics, and assets')]
@@ -36,6 +34,7 @@ class LoadDataCommand
         private readonly AppService                        $appService,
         private SongRepository                             $songRepository,
         private DocumentTextExtractor                      $documentTextExtractor,
+        private readonly SongMatcher                      $songMatcher,
         #[Autowire('%kernel.project_dir%')] private string $projectDir,
     )
     {
@@ -85,61 +84,23 @@ class LoadDataCommand
         return Command::SUCCESS;
     }
 
-    private function loadLyricFiles(bool $reset)
+    private function loadLyricFiles(bool $reset): void
     {
-
         $dir = $this->projectDir . '/../data/kpa/individual';
-        $jsonLPath = 'data/lyrics.jsonl';
+        $jsonLPath = $this->projectDir . '/data/lyrics.jsonl';
+
         if ($reset && file_exists($jsonLPath)) {
             unlink($jsonLPath);
         }
+
         if (!file_exists($jsonLPath)) {
             $this->appService->loadLyrics($dir, $jsonLPath);
         }
+
         foreach ($this->appService->eachLyricsFromJsonl($jsonLPath) as $lyrics) {
-            dump($lyrics);
-            break;
+            // TODO: persist lyrics onto matching Song records
+            unset($lyrics);
         }
-
-        // get the collections with sqlite files
-        $finder = new Finder();
-        $collectionIds = [];
-
-        return;
-
-
-        foreach ($finder->in($dir)->name('*.doc') as $file) {
-            $title = $file->getFilenameWithoutExtension();
-            if ($song = $this->songRepository->findOneBy(['title' => $title])) {
-                // yay!
-                $process = new Process(['catdoc', $file->getRealPath()]);
-                $process->run();
-// executes after the command finishes
-                if (!$process->isSuccessful()) {
-                    throw new ProcessFailedException($process);
-                }
-                $text = $process->getOutput();
-                $text = str_replace("\n\n", "\n", $text);
-                $song->lyrics = $text;
-            } else {
-                continue;
-            }
-
-
-            dd($filename, $text, $file->getRealPath());
-            $text = $converter->convertToText();
-            dd($text, $file);
-            if (preg_match('/coll-(\d*)/', $file->getFilename(), $m)) {
-                $collectionIds[] = $m[1];
-            }
-        }
-        if (empty($collectionIds)) {
-            $io->error("No collections in " . $collectionSqliteDir);
-            return self::FAILURE;
-        }
-
-        $this->entityManager->flush();
-
     }
 
     private function loadFileAssetsFromJsonl(string $jsonlPath, bool $reset, ?int $limit, bool $persist, SymfonyStyle $io): void
@@ -195,7 +156,7 @@ class LoadDataCommand
 
             $audioScanCount++;
 
-            $title = $this->normalizeTitle($filename);
+            $title = $this->songMatcher->normalizeTitle($filename);
             [, $year] = $this->extractSchoolYear($relativePath);
             $key = mb_strtolower($title) . '|' . ($year ?? '');
 
@@ -240,10 +201,12 @@ class LoadDataCommand
             'failedUnexpected' => 0,
             'unreadable' => 0,
         ];
-        $songCache = [];
         $batchSize = 250;
         $pendingFlushCount = 0;
         $importCount = 0;
+
+        // Warm SongMatcher cache once so per-row lookups are O(1) in-memory
+        $this->songMatcher->warmCache();
 
         $io->section('Importing assets');
         $importProgress = new ProgressBar($io, max($totalRows, 1));
@@ -305,30 +268,14 @@ class LoadDataCommand
             if ($type === 'audio') {
                 $audio = $audioRepo->findOneBy(['fileAsset' => $fileAsset]);
                 if (!$audio) {
-                    $title = $this->normalizeTitle($filename);
-                    [$school, $year] = $this->extractSchoolYear($relativePath);
+                    $title = $this->songMatcher->normalizeTitle($filename);
+                    $song  = $this->songMatcher->findOrCreate($filename, $school, $year, persist: true);
 
-                    $code = Song::createCode($title, $school, $year);
-                    $song = $songCache[$code] ?? null;
-                    if (!$song) {
-                        $song = $this->songRepository->findOneBy(['code' => $code]);
-                        if (!$song) {
-                            $song = new Song($code);
-                            $song->title = $title;
-                            $song->school = $school;
-                            $song->year = $year;
-                            $song->aliases = $this->buildAliases($filename, $title);
-                            $this->entityManager->persist($song);
-                            $pendingFlushCount++;
-                        }
-                        $songCache[$code] = $song;
-                    }
-
-                    if ($song->aliases === null) {
-                        $song->aliases = $this->buildAliases($filename, $title);
-                    } else {
-                        $song->aliases = $this->mergeAliases($song->aliases, $this->buildAliases($filename, $title));
-                    }
+                    // Merge aliases onto the song
+                    $newAliases = $this->buildAliases($filename, $title);
+                    $song->aliases = $song->aliases === null
+                        ? $newAliases
+                        : $this->mergeAliases($song->aliases, $newAliases);
 
                     $audio = new Audio(
                         fileAsset: $fileAsset,
@@ -361,7 +308,8 @@ class LoadDataCommand
             if ($pendingFlushCount >= $batchSize) {
                 $this->entityManager->flush();
                 $this->entityManager->clear();
-                $songCache = [];
+                $this->songMatcher->clearCache();
+                $this->songMatcher->warmCache();
                 $pendingFlushCount = 0;
             }
         }
@@ -373,7 +321,7 @@ class LoadDataCommand
 
         $importProgress->finish();
         $io->newLine(2);
-        $io->success(sprintf('Imported %d file assets, %d audio records, %d indexed songs', $fileAssetCount, $audioCount, $newSongCount));
+        $io->success(sprintf('Imported %d file assets, %d audio records (%d unique song titles scanned)', $fileAssetCount, $audioCount, $newSongCount));
         $io->note([
             sprintf('Lyrics attempted: %d', $lyricsStats['attempted']),
             sprintf('Lyrics with candidates: %d', $lyricsStats['withCandidates']),
@@ -385,13 +333,23 @@ class LoadDataCommand
 
     private function detectFileType(string $extension): string
     {
-        return match ($extension) {
-            'mp3', 'm4a', 'wav' => 'audio',
-            'mp4', 'mov', 'avi' => 'video',
-            'pdf' => 'chart',
-            'doc', 'docx' => 'lyrics',
-            default => 'other',
-        };
+        // Audio: matches SongsTreeCommand::AUDIO_EXTS
+        if (in_array($extension, ['mp3', 'm4a', 'wav', 'aif', 'aiff', 'flac', 'ogg', 'w64'], true)) {
+            return 'audio';
+        }
+        // Video
+        if (in_array($extension, ['mp4', 'mov', 'avi', 'wmv', 'mkv'], true)) {
+            return 'video';
+        }
+        // Charts/notation: matches SongsTreeCommand::CHART_EXTS
+        if (in_array($extension, ['pdf', 'musx', 'mus', 'sib', 'mxl', 'musicxml', 'xml', 'song', 'plj'], true)) {
+            return 'chart';
+        }
+        // Lyrics: matches SongsTreeCommand::LYRICS_EXTS
+        if (in_array($extension, ['doc', 'docx', 'txt', 'rtf', 'pages'], true)) {
+            return 'lyrics';
+        }
+        return 'other';
     }
 
     private function normalizeExtension(string $extension, string $filename = ''): string
@@ -416,9 +374,14 @@ class LoadDataCommand
             'm4a' => 'audio/mp4',
             'wav' => 'audio/wav',
             'aif', 'aiff' => 'audio/aiff',
+            'flac' => 'audio/flac',
+            'ogg' => 'audio/ogg',
+            'w64' => 'audio/x-w64',
             'mp4' => 'video/mp4',
             'mov' => 'video/quicktime',
             'avi' => 'video/x-msvideo',
+            'wmv' => 'video/x-ms-wmv',
+            'mkv' => 'video/x-matroska',
             'pdf' => 'application/pdf',
             'doc' => 'application/msword',
             'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -640,27 +603,6 @@ class LoadDataCommand
     private function mergeAliases(array $existing, array $newAliases): array
     {
         return array_values(array_unique(array_merge($existing, $newAliases)));
-    }
-
-    private function normalizeTitle(string $filename): string
-    {
-        $baseName = pathinfo($filename, PATHINFO_FILENAME);
-        $baseName = preg_replace('/\([^)]*\)/', '', $baseName) ?? $baseName;
-        $baseName = preg_replace('/^\d+\.\s*/', '', $baseName) ?? $baseName;
-        $baseName = str_replace(['_', '-'], ' ', $baseName);
-
-        $suffixes = [
-            'gtr', 'gv', 'wf', 'guitar', 'guide vocal', 'vocal',
-            'guitar only', 'backing track', 'instrumental',
-            'ai version', 'ai', 'arrangement', 'cover',
-            'drums', 'bass', 'other', 'remastered',
-            'concert', 'live',
-        ];
-
-        $suffixPattern = implode('|', array_map(static fn(string $suffix) => preg_quote($suffix, '/'), $suffixes));
-        $baseName = preg_replace('/\s*[-_\s]+(' . $suffixPattern . ')\s*$/i', '', $baseName) ?? $baseName;
-
-        return trim(preg_replace('/\s+/', ' ', $baseName) ?? $baseName);
     }
 
     private function detectVariant(string $filename): ?string

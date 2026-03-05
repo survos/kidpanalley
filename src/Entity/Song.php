@@ -28,6 +28,7 @@ use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Survos\StateBundle\Traits\MarkingInterface;
 use Survos\StateBundle\Traits\MarkingTrait;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Workflow\Marking;
@@ -142,6 +143,14 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     #[Groups('song.read')]
     public Collection $videos;
 
+    #[ORM\OneToMany(mappedBy: 'song', targetEntity: Audio::class)]
+    #[Ignore]
+    public Collection $audios;
+
+    #[ORM\OneToMany(mappedBy: 'song', targetEntity: SongLyrics::class)]
+    #[Ignore]
+    public Collection $songLyrics;
+
     #[ORM\Column(length: 255)]
     public string $code;
 
@@ -150,7 +159,15 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
         assert($code, "missing code");
         $this->code = $code;
         $this->videos = new ArrayCollection();
+        $this->audios = new ArrayCollection();
+        $this->songLyrics = new ArrayCollection();
         $this->marking = SongWFDefinition::PLACE_NEW;
+    }
+
+    #[Groups(['song.read'])]
+    public function getFileCount(): int
+    {
+        return $this->audios->count();
     }
 
     #[Groups(['song.read'])]

@@ -32,7 +32,7 @@ class Audio implements MarkingInterface
         #[ORM\OneToOne(targetEntity: FileAsset::class, cascade: ['persist'])]
         #[ORM\JoinColumn(nullable: false, unique: true)]
         public FileAsset $fileAsset,
-        #[ORM\ManyToOne(targetEntity: Song::class)]
+        #[ORM\ManyToOne(targetEntity: Song::class, inversedBy: 'audios')]
         #[ORM\JoinColumn(nullable: false)]
         public Song $song,
         #[ORM\Column(length: 255)]

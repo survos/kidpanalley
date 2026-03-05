@@ -23,6 +23,16 @@ class SongRepository extends ServiceEntityRepository implements QueryBuilderHelp
         parent::__construct($registry, Song::class);
     }
 
+    public function findOneByTitleNormalized(string $title): ?Song
+    {
+        return $this->createQueryBuilder('s')
+            ->where('LOWER(s.title) = LOWER(:title)')
+            ->setParameter('title', $title)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Song[] Returns an array of Song objects
     //  */

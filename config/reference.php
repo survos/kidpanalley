@@ -2134,6 +2134,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         key_identity?: scalar|Param|null, // Default: null
  *         key_credential?: scalar|Param|null, // Default: null
  *     }>,
+ *     crawler_cache?: array{
+ *         directory?: scalar|Param|null, // Filesystem path for cached Omeka HTTP responses // Default: "%kernel.cache_dir%/omeka_http"
+ *         default_ttl?: int|Param, // Default TTL in seconds for cached responses (default: 24h) // Default: 86400
+ *     },
  * }
  * @psalm-type SurvosApiGridConfig = array{
  *     stimulus_controller?: scalar|Param|null, // The stimulus controller to use, should extend @survos/api-grid-bundle/api_grid // Default: "@survos/api-grid-bundle/api_grid"
