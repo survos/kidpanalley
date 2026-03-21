@@ -465,4 +465,19 @@ return [
         'version' => '1.2.0',
         'type' => 'css',
     ],
+    '@tacman1123/twig-browser' => [
+        'version' => '0.4.9',
+    ],
+    '@tacman1123/twig-browser/src/compat/compileTwigBlocks.js' => [
+        'version' => '0.4.9',
+    ],
+    '@tacman1123/twig-browser/adapters/symfony' => [
+        'version' => '0.4.9',
+    ],
+    'dexie' => [
+        'version' => '4.3.0',
+    ],
+    'marked' => [
+        'version' => '17.0.4',
+    ],
 ];

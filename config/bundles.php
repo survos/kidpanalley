@@ -48,4 +48,6 @@ return [
     Survos\OmekaBundle\SurvosOmekaBundle::class => ['all' => true],
     MarcinOrlowski\DiscoToolbar\DiscoToolbarBundle::class => ['all' => true],
     Survos\ApiGridBundle\SurvosApiGridBundle::class => ['all' => true],
+    Survos\JsTwigBundle\SurvosJsTwigBundle::class => ['all' => true],
+    Mezcalito\ImgproxyBundle\ImgproxyBundle::class => ['all' => true],
 ];

@@ -26,12 +26,12 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiFilter(filterClass: \ApiPlatform\Doctrine\Orm\Filter\SearchFilter::class, properties: self::FILTERABLE_FIELDS)]
 #[ApiFilter(filterClass: \ApiPlatform\Doctrine\Orm\Filter\SearchFilter::class, properties: self::SEARCHABLE_FIELDS)]
 #[ApiFilter(filterClass: \ApiPlatform\Doctrine\Orm\Filter\OrderFilter::class, properties: self::SORTABLE_FIELDS)]
-#[MeiliIndex(
-	primaryKey: 'id',
-	filterable: self::FILTERABLE_FIELDS,
-	sortable: self::SORTABLE_FIELDS,
-	searchable: self::SEARCHABLE_FIELDS,
-)]
+//#[MeiliIndex(
+//	primaryKey: 'id',
+//	filterable: self::FILTERABLE_FIELDS,
+//	sortable: self::SORTABLE_FIELDS,
+//	searchable: self::SEARCHABLE_FIELDS,
+//)]
 final class Sample
 {
 	public const FILTERABLE_FIELDS = [

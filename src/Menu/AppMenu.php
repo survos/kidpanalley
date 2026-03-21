@@ -106,6 +106,8 @@ final class AppMenu
         }
         $menu = $event->getMenu();
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'admin');
+//        $this->add($menu, 'survos_meili_admin');
         $this->add($menu, MeiliDashboardController::MEILI_ROUTE, label: "EZ");
         $this->add($menu, 'video_browse', label: 'Videos');
         $this->add($menu, 'song_index', label: 'Songs');
@@ -127,7 +129,7 @@ final class AppMenu
         if (
 //            $this->isEnv('dev') ||
         $this->isGranted('ROLE_ADMIN')) {
-            $this->add($menu, 'survos_meili_admin', external: true);
+//            $this->add($menu, 'survos_meili_admin', external: true);
             $this->add($menu, 'app_publish');
             $subMenu = $this->addSubmenu($menu, '@commands');
             if ($this->env === 'dev') {
