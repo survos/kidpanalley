@@ -37,6 +37,48 @@ bin/console doctrine:fixtures:load -n --env=test
 vendor/bin/phpunit
 ```
 
+## Search + Lyrics Indexing
+
+Use these commands when Song search results are stale, missing lyrics, or sorting/filtering fields changed.
+
+```bash
+# 1) (Optional) reset Song index settings/documents if the index is in a bad state
+bin/console meili:settings:update song --force --wait --reset
+
+# 2) Re-apply Song index settings (filterable/sortable/searchable fields)
+bin/console meili:settings:update song --force --wait
+
+# 3) Repopulate Song documents into Meili
+bin/console meili:populate song --sync --wait
+
+# 4) Sync local index metadata table (index_info)
+bin/console meili:registry:sync
+```
+
+Lyrics ingestion (DB-first):
+
+```bash
+# Build SongLyrics links from already-extracted FileAsset.lyricsCandidates
+bin/console app:link-lyrics
+
+# One-time backfill from legacy JSONL extraction file
+bin/console app:ingest-lyrics-jsonl data/lyrics.jsonl
+```
+
+Quick verification:
+
+```bash
+bin/console dbal:run-sql "SELECT COUNT(*) AS songs_with_lyrics FROM song WHERE lyrics IS NOT NULL AND lyrics <> ''"
+bin/console dbal:run-sql "SELECT index_name, document_count FROM index_info WHERE index_name='kpa_song'"
+```
+
+If browser templates throw `Twig function path is not configured`, ensure JS-Twig support is installed and routes are generated:
+
+```bash
+composer require survos/js-twig-bundle
+bin/console cache:clear
+```
+
 
     usage here.
 
