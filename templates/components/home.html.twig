@@ -10,6 +10,8 @@
         </div>
     {% endif %}
 
+    {% set workspace = defaultWorkspace|default('default') %}
+
     <div class="row mt-4">
 
         <div class="col-lg-4">
@@ -40,10 +42,16 @@
                 <twig:block name="links">
                     <div class="demo-inline-spacing">
                         <a
-                            href="{{ path('meili_insta', { indexName: 'kpa_Song' }) }}"
+                            href="{{ path('meili_insta', { indexName: 'song' }) }}"
                             class="btn btn-outline-primary"
                         >
-                            Go to {{ songCount }} Songs
+                            Search {{ songCount }} Songs
+                        </a>
+                        <a
+                            href="{{ path('meili_chat', { indexName: 'song', workspace: workspace }) }}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Chat Songs
                         </a>
                     </div>
                 </twig:block>
@@ -88,6 +96,44 @@
         <div class="col-lg-4">
             <twig:card>
                 <twig:block name="title">
+                    Files
+                </twig:block>
+
+                <twig:block name="card_body">
+                    <span class="bi bi-folder2-open"></span>
+
+                    <div class="text-light small fw-semibold">File Assets</div>
+                    <div class="mt-2">Browse source docs, charts, and audio/video files</div>
+                </twig:block>
+
+                <twig:block name="links">
+                    <div class="demo-inline-spacing">
+                        <a
+                            href="{{ path('meili_insta', { indexName: 'fileasset' }) }}"
+                            class="btn btn-outline-primary"
+                        >
+                            Search {{ fileAssetCount }} Files
+                        </a>
+                        <a
+                            href="{{ path('meili_chat', { indexName: 'fileasset', workspace: workspace }) }}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Chat Files
+                        </a>
+                        <a
+                            href="{{ path('file_asset_browse') }}"
+                            class="btn btn-outline-info"
+                        >
+                            Browse Table
+                        </a>
+                    </div>
+                </twig:block>
+            </twig:card>
+        </div>
+
+        <div class="col-lg-4">
+            <twig:card>
+                <twig:block name="title">
                     Videos
                 </twig:block>
 
@@ -109,10 +155,16 @@
                         {% endfor %}
 
                         <a
-                            href="{{ path('meili_insta', { indexName: 'kpa_Video' }) }}"
+                            href="{{ path('meili_insta', { indexName: 'video' }) }}"
                             class="btn btn-outline-primary"
                         >
-                            Go to {{ videoCount }} Videos
+                            Search {{ videoCount }} Videos
+                        </a>
+                        <a
+                            href="{{ path('meili_chat', { indexName: 'video', workspace: workspace }) }}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Chat Videos
                         </a>
 
                         {% if is_granted('ROLE_ADMIN') %}

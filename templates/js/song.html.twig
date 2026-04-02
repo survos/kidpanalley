@@ -1,7 +1,14 @@
 <div class="card h-100 shadow-sm">
     {# Header #}
-    <div class="card-header fw-bold text-truncate" title="{{ hit.title }}">
-        {{ hit._highlightResult.title.value|raw }}
+    <div class="card-header d-flex justify-content-between align-items-start gap-2">
+        <div class="fw-bold text-truncate" title="{{ hit.title }}">
+            {{ hit._highlightResult.title.value|default(hit.title)|raw }}
+        </div>
+        {% if hit.rp is defined and hit.rp.songId is defined %}
+            <a href="{{ path('song_show', { songId: hit.rp.songId }) }}" class="btn btn-sm btn-outline-primary">Open</a>
+        {% elseif hit.id is defined %}
+            <a href="{{ path('song_show', { songId: hit.id }) }}" class="btn btn-sm btn-outline-primary">Open</a>
+        {% endif %}
     </div>
 
     {# Body #}
@@ -10,7 +17,6 @@
         {# ---------- Videos (show up to 3) ---------- #}
         {% set videos = hit.videos|default([]) %}
         {% if videos|length > 0 %}
-            {{ videos|json_encode }}
             <div class="mb-3">
                 <div class="d-flex flex-wrap gap-2">
                     {% for v in videos|slice(0,3) %}
@@ -90,7 +96,6 @@
         {% if  hit.writersArray %}
             {% for w in hit.writersArray %}
                 {% if w %}
-                    {{ w|json_encode }}
                     {% set writersList = writersList|merge([w]) %}
                 {% endif %}
             {% endfor %}
@@ -112,8 +117,13 @@
 {#            {% set publishersList = [hit.publisher] %}#}
 {#        {% endif %}#}
 
-        {{ hit._highlightResult.lyrics.value|raw }}
-{#        {{ hit.lyrics|slice(0, 500)|raw }}#}
+        {% set lyricsHighlight = hit._highlightResult.lyrics.value|default('') %}
+        {% set lyricsRaw = hit.lyrics|default('') %}
+        {% if lyricsHighlight != '' %}
+            <div class="mb-3 small text-muted">{{ lyricsHighlight|raw }}</div>
+        {% elseif lyricsRaw != '' %}
+            <div class="mb-3 small text-muted">{{ lyricsRaw|slice(0, 300) }}{% if lyricsRaw|length > 300 %}…{% endif %}</div>
+        {% endif %}
 
         {# ---------- Year (hide 0/empty) ---------- #}
         {% set yearVal = hit.year|default(null) %}
@@ -139,6 +149,11 @@
             {% if yearVal %}
                 <div class="meta-key fw-semibold">Year</div>
                 <div class="meta-val">{{ yearVal }}</div>
+            {% endif %}
+
+            {% if hit.lyricsLength is defined and hit.lyricsLength %}
+                <div class="meta-key fw-semibold">Lyrics chars</div>
+                <div class="meta-val">{{ hit.lyricsLength }}</div>
             {% endif %}
 
 {#            {% if hit.locale is defined and hit.locale|trim != '' %}#}

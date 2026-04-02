@@ -140,6 +140,45 @@
                 </td>
             </tr>
             <tr>
+                <th>Related Files</th>
+                <td>
+                    {% if relatedFiles|length %}
+                        <ul class="list-unstyled mb-0">
+                            {% for file in relatedFiles %}
+                                <li>
+                                    <code>{{ file.filename }}</code>
+                                    <span class="text-muted">({{ file.type }}, {{ file.extension }})</span>
+                                    {% if file.relativePath %}
+                                        <div class="small text-muted">{{ file.relativePath }}</div>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span class="text-muted">No related files yet.</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Lyrics Sources</th>
+                <td>
+                    {% if songLyrics|length %}
+                        <ul class="list-unstyled mb-0">
+                            {% for link in songLyrics %}
+                                <li>
+                                    <code>{{ link.fileAsset.filename }}</code>
+                                    {% if link.sourceTitle %}
+                                        <span class="text-muted">→ {{ link.sourceTitle }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span class="text-muted">No lyrics source files linked yet.</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
                 <th>Date</th>
                 <td>{{ song.date ? song.date|date('Y-m-d') : '' }}</td>
             </tr>

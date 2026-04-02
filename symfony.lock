@@ -510,6 +510,18 @@
     "swiftmailer/swiftmailer": {
         "version": "6.2-dev"
     },
+    "symfony/ai-bundle": {
+        "version": "0.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "0.1",
+            "ref": "2be6ccd77335c2631fdf12d1680649b072efb8ad"
+        },
+        "files": [
+            "config/packages/ai.yaml"
+        ]
+    },
     "symfony/asset": {
         "version": "4.4.x-dev"
     },
