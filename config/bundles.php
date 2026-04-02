@@ -50,4 +50,5 @@ return [
     Survos\ApiGridBundle\SurvosApiGridBundle::class => ['all' => true],
     Survos\JsTwigBundle\SurvosJsTwigBundle::class => ['all' => true],
     Mezcalito\ImgproxyBundle\ImgproxyBundle::class => ['all' => true],
+    Symfony\AI\AiBundle\AiBundle::class => ['all' => true],
 ];

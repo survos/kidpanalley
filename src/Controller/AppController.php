@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\IriConverterInterface;
 use App\Entity\Song;
 use App\Entity\Video;
 use App\Repository\AudioRepository;
+use App\Repository\FileAssetRepository;
 use App\Repository\SongRepository;
 use App\Repository\VideoRepository;
 use App\Services\AppService;
@@ -88,11 +89,19 @@ class AppController extends AbstractController
 
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
     #[Route(path: '/admin', name: 'admin', methods: ['GET'])]
-    public function homepage(SongRepository $songRepository, VideoRepository $videoRepository, AudioRepository $audioRepository,
+    public function homepage(
+        SongRepository $songRepository,
+        VideoRepository $videoRepository,
+        AudioRepository $audioRepository,
+        FileAssetRepository $fileAssetRepository,
+        #[Autowire('%survos_meili.chat%')] array $chatConfig = [],
 //    #[Autowire('%kpa.version%')] ?string $applicationVersion = null, // was in bizkit_version
     )
     {
         $user = $this->getUser();
+        $workspaces = $chatConfig['workspaces'] ?? [];
+        $defaultWorkspace = $workspaces !== [] ? array_key_first($workspaces) : 'default';
+
         return $this->render('app/homepage.html.twig', [
             'user' => $user,
             'featured' => $songRepository->findBy([], ['id' => 'DESC'], 1),
@@ -101,6 +110,8 @@ class AppController extends AbstractController
             'songCount' => $songRepository->count([]),
             'videoCount' => $videoRepository->count([]),
             'audioCount' => $audioRepository->count([]),
+            'fileAssetCount' => $fileAssetRepository->count([]),
+            'defaultWorkspace' => $defaultWorkspace,
         ]);
     }
 

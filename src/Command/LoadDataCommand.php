@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Audio;
 use App\Entity\FileAsset;
 use App\Entity\Song;
+use App\Entity\SongLyrics;
 use App\Entity\Video;
 use App\Message\FetchYoutubeChannelMessage;
 use App\Message\LoadSongsMessage;
@@ -13,6 +14,7 @@ use App\Service\SongMatcher;
 use App\Services\AppService;
 use App\Services\DocumentTextExtractor;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Attribute\Option;
 use Symfony\Component\Console\Command\Command;
@@ -27,6 +29,9 @@ use Survos\JsonlBundle\IO\JsonlReader;
 #[AsCommand('app:load', 'load songs, videos, lyrics, and assets')]
 class LoadDataCommand
 {
+    /** @var array<string, true> */
+    private array $lyricsLinkSeen = [];
+
     public function __construct(
         private readonly EntityManagerInterface            $entityManager,
         private readonly ParameterBagInterface             $bag,
@@ -192,6 +197,7 @@ class LoadDataCommand
 
         $fileAssetRepo = $this->entityManager->getRepository(FileAsset::class);
         $audioRepo = $this->entityManager->getRepository(Audio::class);
+        $songLyricsRepo = $this->entityManager->getRepository(SongLyrics::class);
         $audioCount = 0;
         $fileAssetCount = 0;
         $lyricsStats = [
@@ -301,6 +307,14 @@ class LoadDataCommand
                         }
                     }
                 }
+
+                if (is_array($fileAsset->lyricsCandidates) && $fileAsset->lyricsCandidates !== []) {
+                    $pendingFlushCount += $this->persistLyricsCandidates(
+                        $fileAsset,
+                        $fileAsset->lyricsCandidates,
+                        $songLyricsRepo,
+                    );
+                }
             }
 
             $importProgress->advance();
@@ -310,6 +324,8 @@ class LoadDataCommand
                 $this->entityManager->clear();
                 $this->songMatcher->clearCache();
                 $this->songMatcher->warmCache();
+                $songLyricsRepo = $this->entityManager->getRepository(SongLyrics::class);
+                $this->lyricsLinkSeen = [];
                 $pendingFlushCount = 0;
             }
         }
@@ -399,6 +415,61 @@ class LoadDataCommand
     {
         $title = preg_replace('/\s+/u', ' ', $title) ?? $title;
         return mb_strtolower(trim($title));
+    }
+
+    /**
+     * @param array<string, string|array<int, string>> $candidates
+     */
+    private function persistLyricsCandidates(FileAsset $fileAsset, array $candidates, ObjectRepository $songLyricsRepo): int
+    {
+        $created = 0;
+
+        foreach ($candidates as $rawTitle => $lyrics) {
+            $variants = is_array($lyrics) ? $lyrics : [$lyrics];
+
+            foreach ($variants as $lyricsText) {
+                $lyricsText = trim((string) $lyricsText);
+                if ($lyricsText === '') {
+                    continue;
+                }
+
+                $song = $this->songMatcher->findOrCreate(
+                    $rawTitle,
+                    $fileAsset->school,
+                    $fileAsset->year,
+                    persist: true,
+                );
+
+                $existing = $songLyricsRepo->findOneBy(['song' => $song, 'fileAsset' => $fileAsset]);
+                $pairKey = ($song->id ?? ('new' . spl_object_id($song))) . ':' . $fileAsset->id;
+                if (isset($this->lyricsLinkSeen[$pairKey])) {
+                    continue;
+                }
+                if ($existing instanceof SongLyrics) {
+                    if ($existing->lyricsText === null || mb_strlen($lyricsText) > mb_strlen((string) $existing->lyricsText)) {
+                        $existing->lyricsText = $lyricsText;
+                        $existing->sourceTitle = mb_substr($rawTitle, 0, 255);
+                    }
+                    $this->lyricsLinkSeen[$pairKey] = true;
+                } else {
+                    $this->entityManager->persist(new SongLyrics(
+                        song: $song,
+                        fileAsset: $fileAsset,
+                        lyricsText: $lyricsText,
+                        sourceTitle: mb_substr($rawTitle, 0, 255),
+                    ));
+                    $created++;
+                    $this->lyricsLinkSeen[$pairKey] = true;
+                }
+
+                $existingLyrics = isset($song->lyrics) ? (string) $song->lyrics : '';
+                if ($existingLyrics === '' || mb_strlen($lyricsText) > mb_strlen($existingLyrics)) {
+                    $song->lyrics = $lyricsText;
+                }
+            }
+        }
+
+        return $created;
     }
 
     private function extractLyricsCandidates(

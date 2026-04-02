@@ -58,9 +58,10 @@ use Doctrine\DBAL\Types\Types;
 #[Metadata('translatable', ['title'])]
 #[MeiliIndex(
     ui: ['icon' => 'Song'],
+    persisted: ['id', 'code', 'title', 'year', 'school', 'lyrics', 'lyricsLength', 'writersArray', 'publishersArray', 'description', 'rp', 'fileCount'],
     searchable: ['lyrics','title'],
-    filterable: ['writersArray', 'publishersArray', 'year'],
-    embedders: ['small', 'best']
+    filterable: ['writersArray', 'publishersArray', 'year', 'lyricsLength'],
+    sortable: ['lyricsLength', 'year', 'title']
 )]
 class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface, MarkingInterface
 {
