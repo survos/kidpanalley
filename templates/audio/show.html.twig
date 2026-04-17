@@ -1,20 +1,9 @@
-{% set slotOptions = {
-    NAVBAR_MENU: {
-        x: null,
-        frontPage: true
-    },
-    PAGE_ACTIONS: {
-        audio: audio,
-        song: audio.song
-    },
-    BREADCRUMBS: {
-        audio: audio,
-        song: audio.song
-    }
-} %}
-<twig:tabler:page :title="audio.title"
-                  :slotOptions="slotOptions"
->
+{% extends 'base.html.twig' %}
+
+{% block page_title audio.title %}
+{% block page_subtitle audio.song.title %}
+
+{% block body %}
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3">
@@ -120,4 +109,4 @@
             audio.addEventListener('timeupdate', () => highlight(audio.currentTime))
         })()
     </script>
-</twig:tabler:page>
+{% endblock %}

@@ -71,6 +71,10 @@
             }
         },
         "@survos/tabler-bundle": {
+            "accordion": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
             "search": {
                 "enabled": true,
                 "fetch": "lazy"

@@ -2132,6 +2132,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * }
  * @psalm-type SurvosStorageConfig = array{
  *     enabled?: bool|Param, // Default: true
+ *     debug?: bool|Param, // Default: false
  * }
  * @psalm-type SurvosEzConfig = array{
  *     enabled?: bool|Param, // Default: true
@@ -2733,6 +2734,37 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         store?: string|Param, // Service name of store // Default: "Symfony\\AI\\Store\\StoreInterface"
  *     }>,
  * }
+ * @psalm-type McpConfig = array{
+ *     app?: scalar|Param|null, // Default: "app"
+ *     version?: scalar|Param|null, // Default: "0.0.1"
+ *     description?: scalar|Param|null, // Default: null
+ *     icons?: list<array{ // Default: []
+ *         src?: scalar|Param|null,
+ *         mime_type?: scalar|Param|null, // Default: null
+ *         sizes?: list<scalar|Param|null>,
+ *     }>,
+ *     website_url?: scalar|Param|null, // Default: null
+ *     pagination_limit?: int|Param, // Default: 50
+ *     instructions?: scalar|Param|null, // Default: null
+ *     client_transports?: array{
+ *         stdio?: bool|Param, // Default: false
+ *         http?: bool|Param, // Default: false
+ *     },
+ *     discovery?: array{
+ *         scan_dirs?: list<scalar|Param|null>,
+ *         exclude_dirs?: list<scalar|Param|null>,
+ *     },
+ *     http?: array{
+ *         path?: scalar|Param|null, // Default: "/_mcp"
+ *         session?: array{
+ *             store?: "file"|"memory"|"cache"|Param, // Default: "file"
+ *             directory?: scalar|Param|null, // Default: "%kernel.cache_dir%/mcp-sessions"
+ *             cache_pool?: scalar|Param|null, // Default: "cache.mcp.sessions"
+ *             prefix?: scalar|Param|null, // Default: "mcp-"
+ *             ttl?: int|Param, // Default: 3600
+ *         },
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2775,6 +2807,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_js_twig?: SurvosJsTwigConfig,
  *     imgproxy?: ImgproxyConfig,
  *     ai?: AiConfig,
+ *     mcp?: McpConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2823,6 +2856,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_js_twig?: SurvosJsTwigConfig,
  *         imgproxy?: ImgproxyConfig,
  *         ai?: AiConfig,
+ *         mcp?: McpConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2867,6 +2901,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_js_twig?: SurvosJsTwigConfig,
  *         imgproxy?: ImgproxyConfig,
  *         ai?: AiConfig,
+ *         mcp?: McpConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2914,6 +2949,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_js_twig?: SurvosJsTwigConfig,
  *         imgproxy?: ImgproxyConfig,
  *         ai?: AiConfig,
+ *         mcp?: McpConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

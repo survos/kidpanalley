@@ -75,6 +75,7 @@
         "symfony/intl": "^7.4||^8.0",
         "symfony/lock": "^7.4||^8.0",
         "symfony/mailer": "^7.4||^8.0",
+        "symfony/mcp-bundle": "*",
         "symfony/messenger": "^7.4||^8.0",
         "symfony/monolog-bundle": "^4.0",
         "symfony/object-mapper": "^7.4||^8.0",

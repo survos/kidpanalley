@@ -1,13 +1,8 @@
-{% set slotOptions = {
-    NAVBAR_MENU: {
-        x: null,
-        frontPage: true
-    },
-    BREADCRUMBS: {
-        label: 'Audio'
-    }
-} %}
-<twig:tabler:page :title="'Audio'" :slotOptions="slotOptions">
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Audio' %}
+
+{% block body %}
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -35,4 +30,4 @@
             </div>
         </div>
     </div>
-</twig:tabler:page>
+{% endblock %}

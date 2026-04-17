@@ -1,19 +1,9 @@
+{% extends 'base.html.twig' %}
 
-    {% set slotOptions = {
-        NAVBAR_MENU: {
-            x: null,
-            frontPage: true
-        },
-        PAGE_ACTIONS: {
-            song: song,
-        },
-        BREADCRUMBS: {
-            song: song
-        }
-    } %}
-    <twig:tabler:page :title="song.title"
-                      :slotOptions="slotOptions"
-    >
+{% block page_title song.title %}
+{% block page_subtitle song.school ~ ', ' ~ song.year %}
+
+{% block body %}
     <div class="row">
     <div class="col-md-6">
         {% for video in song.videos %}
@@ -232,5 +222,4 @@
 {#            </tr>#}
         </tbody>
     </table>
-
-    </twig:tabler:page>
+{% endblock %}
