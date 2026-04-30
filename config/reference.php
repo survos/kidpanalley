@@ -1797,9 +1797,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         vary?: list<scalar|Param|null>,
  *     },
  * }
- * @psalm-type SurvosInspectionConfig = array{
- *     debug?: bool|Param, // Default: false
- * }
  * @psalm-type KnpMenuConfig = array{
  *     providers?: array{
  *         builder_alias?: bool|Param, // Default: true
@@ -2192,6 +2189,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         profile?: scalar|Param|null, // Default: null
  *         settings?: scalar|Param|null, // Default: null
  *         search?: scalar|Param|null, // Default: null
+ *     },
+ *     debug?: array{
+ *         menu_slots?: bool|Param, // Default: false
  *     },
  *     options?: array{
  *         theme?: scalar|Param|null, // Default: "tabler"
@@ -2782,7 +2782,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *     twig_component?: TwigComponentConfig,
  *     fos_js_routing?: FosJsRoutingConfig,
- *     survos_inspection?: SurvosInspectionConfig,
  *     knp_menu?: KnpMenuConfig,
  *     survos_auth?: SurvosAuthConfig,
  *     knpu_oauth2_client?: KnpuOauth2ClientConfig,
@@ -2828,7 +2827,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *         twig_component?: TwigComponentConfig,
  *         fos_js_routing?: FosJsRoutingConfig,
- *         survos_inspection?: SurvosInspectionConfig,
  *         knp_menu?: KnpMenuConfig,
  *         survos_auth?: SurvosAuthConfig,
  *         knpu_oauth2_client?: KnpuOauth2ClientConfig,
@@ -2875,7 +2873,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *         twig_component?: TwigComponentConfig,
  *         fos_js_routing?: FosJsRoutingConfig,
- *         survos_inspection?: SurvosInspectionConfig,
  *         knp_menu?: KnpMenuConfig,
  *         survos_auth?: SurvosAuthConfig,
  *         knpu_oauth2_client?: KnpuOauth2ClientConfig,
@@ -2921,7 +2918,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *         twig_component?: TwigComponentConfig,
  *         fos_js_routing?: FosJsRoutingConfig,
- *         survos_inspection?: SurvosInspectionConfig,
  *         knp_menu?: KnpMenuConfig,
  *         survos_auth?: SurvosAuthConfig,
  *         knpu_oauth2_client?: KnpuOauth2ClientConfig,
