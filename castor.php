@@ -3,7 +3,6 @@
 use Castor\Attribute\AsTask;
 
 use function Castor\{import, io, fs, capture, run, load_dot_env};
- //import('.castor/vendor/tacman/castor-tools/src/castor.php');
 
 #[AsTask(description: 'Welcome to Castor!')]
 function hello(): void

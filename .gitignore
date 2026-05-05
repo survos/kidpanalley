@@ -27,3 +27,4 @@ coverage
 
 .php-cs-fixer.cache
 /public/js
+.castor.stub.php
