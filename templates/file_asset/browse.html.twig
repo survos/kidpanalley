@@ -5,7 +5,7 @@
 
 {% block body %}
     {% set columns = [
-        col('filename'),
+        col(name: 'filename'),
         col(name: 'school', sortable: true),
         col(name: 'year', sortable: true),
         col(name: 'type', title: 'filetype', browsable: true, sortable: true),
@@ -21,7 +21,7 @@
 
     <twig:api_grid
         :class="class"
-        :apiGetCollectionUrl="apiGetCollectionUrl"
+        :apiGetCollectionUrl="api_route(class)"
         :columns="columns"
         :caller="_self"
         :searchPanes="true"

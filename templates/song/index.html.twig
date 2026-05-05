@@ -14,18 +14,18 @@
 
 {% block body %}
     {% set columns = [
-        col('title'),
-        col('videos'),
+        col(name: 'title'),
+        col(name: 'videos'),
         col(name: 'publishersArray', title: 'publishers'),
-        col('writers'),
+        col(name: 'writers'),
         col(name: 'year', searchable: false, sortable: true, browsable: true),
         col(name: 'school', searchable: true, sortable: true, browsable: true),
-        col('code'),
+        col(name: 'code'),
     ] %}
 
     <twig:api_grid
             :class="class"
-            :apiGetCollectionUrl="apiGetCollectionUrl"
+            :apiGetCollectionUrl="api_route(class)"
             :caller="_self"
             :columns="columns"
             :searchPanes="false"

@@ -1,7 +1,9 @@
 {
     "name": "tacman/kpa",
     "description": "Archives for Kid Pan Alley",
-    "keywords": ["symfony"],
+    "keywords": [
+        "symfony"
+    ],
     "license": "proprietary",
     "type": "project",
     "minimum-stability": "RC",
@@ -49,6 +51,7 @@
         "survos/crawler-bundle": "^2.0",
         "survos/deployment-bundle": "^2.0",
         "survos/ez-bundle": "^2.0",
+        "survos/field-bundle": "^2.0",
         "survos/import-bundle": "^2.0",
         "survos/js-twig-bundle": "*",
         "survos/jsonl-bundle": "^2.0",
@@ -141,7 +144,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\": "tests/",
+            "App\\Mate\\": "mate/src/"
         }
     },
     "config": {
@@ -149,6 +153,7 @@
             "endroid/installer": false,
             "php-http/discovery": true,
             "survos/installer": false,
+            "symfony/ai-mate-composer-plugin": true,
             "symfony/flex": true,
             "symfony/runtime": true,
             "zenstruck/class-metadata": true
@@ -161,6 +166,15 @@
     "extra": {
         "symfony": {
             "allow-contrib": "true"
+        },
+        "ai-mate": {
+            "extension": false,
+            "scan-dirs": [
+                "mate/src"
+            ],
+            "includes": [
+                "mate/config.php"
+            ]
         }
     },
     "scripts": {
@@ -177,7 +191,6 @@
             "importmap:install": "symfony-cmd"
         },
         "coverage": "php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage",
-
         "diagram": [
             "bin/console doctrine:diagram:er --filename=assets/er.svg --exclude=doctrine_migration_versions,messenger_messages",
             "bin/console doctrine:diagram:class --filename=assets/db.svg --exclude=doctrine_migration_versions,messenger_messages"
@@ -185,6 +198,5 @@
         "index": [
             "php -d memory_limit=512M bin/console grid:index --reset"
         ]
-
     }
 }

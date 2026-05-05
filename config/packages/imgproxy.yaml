@@ -1,5 +1,0 @@
-imgproxy:
-    host: '%env(IMGPROXY_HOST)%'
-    signature:
-        key: '%env(IMGPROXY_KEY)%'
-        salt: '%env(IMGPROXY_SALT)%'

@@ -5,13 +5,13 @@
 
 {% block body %}
     {% set columns = [
-        col('youtubeId'),
-        col('_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')),
+        col(name: 'youtubeId'),
+        col(name: '_actions', prefix: 'video_', actions: ['show'], condition: is_granted('ROLE_ADMIN')),
         col(name: 'year', sortable: true, browsable: true),
         col(name: 'id', title: 'Song'),
-        col('description'),
-        col('school'),
-        col('date'),
+        col(name: 'description'),
+        col(name: 'school'),
+        col(name: 'date'),
     ] %}
 
 
@@ -19,7 +19,7 @@
 
     <twig:api_grid
         :class="class"
-        :apiGetCollectionUrl="apiGetCollectionUrl"
+        :apiGetCollectionUrl="api_route(class)"
         :columns="columns"
         :caller="_self"
         :searchPanes="false"

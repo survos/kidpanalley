@@ -215,18 +215,6 @@
     "marcin-orlowski/disco-toolbar-symfony": {
         "version": "2.0.0"
     },
-    "mezcalito/imgproxy-bundle": {
-        "version": "0.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "0.5",
-            "ref": "4edbd0003f8f68eaa8e995b9221aaae992d60f6a"
-        },
-        "files": [
-            "config/packages/imgproxy.yaml"
-        ]
-    },
     "monolog/monolog": {
         "version": "1.x-dev"
     },
@@ -421,6 +409,9 @@
     "survos/api-grid-bundle": {
         "version": "dev-main"
     },
+    "survos/atlas-bundle": {
+        "version": "2.0.217"
+    },
     "survos/auth-bundle": {
         "version": "dev-main"
     },
@@ -470,6 +461,9 @@
     },
     "survos/ez-bundle": {
         "version": "2.0.81"
+    },
+    "survos/field-bundle": {
+        "version": "2.0.217"
     },
     "survos/grid-bundle": {
         "version": "1.5.89"
