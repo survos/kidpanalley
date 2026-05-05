@@ -13,7 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGridBundle\Api\Filter\MultiFieldSearchFilter;
 use Survos\ApiGridBundle\Attribute\MeiliId;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
-use Survos\CoreBundle\Entity\RouteParametersTrait;
+use Survos\FieldBundle\Attribute\EntityMeta;
+use Survos\FieldBundle\Attribute\Field;
+use Survos\FieldBundle\Attribute\RouteIdentity;
+use Survos\FieldBundle\Entity\RouteIdentityTrait;
+use Survos\FieldBundle\Enum\Widget;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -26,6 +30,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )],
     normalizationContext: ['groups' => ['video.read', 'rp']]
 )]
+#[RouteIdentity(field: 'youtubeId', key: 'videoId')]
 #[GetCollection(
     name: self::DOCTRINE_ROUTE,
 //    uriTemplate: "meili-videos", // was {indexName}
@@ -50,13 +55,18 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ui: ['icon' => 'Video'],
     filterable: ['school','year'],
 )]
+#[EntityMeta(
+    icon: 'tabler:video',
+    order: 20,
+    group: 'Catalog',
+    label: 'Videos',
+    description: 'YouTube videos linked to songs and indexed for browsing.'
+)]
 
 class Video implements RouteParametersInterface, \Stringable
 {
-    use RouteParametersTrait;
+    use RouteIdentityTrait;
 
-    const UNIQUE_PARAMETERS=['videoId' => 'youtubeId'];
-    const MEILI_ROUTE='meili-video';
     const DOCTRINE_ROUTE='api-video';
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
@@ -66,15 +76,19 @@ class Video implements RouteParametersInterface, \Stringable
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     #[Groups('song.read')]
     #[MeiliId]
+    #[Field(searchable: true, sortable: true, order: 20)]
     public ?string $youtubeId = null;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['video.read'])]
+    #[Field(searchable: true, sortable: true, order: 10)]
     public ?string $title = null;
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['video.read'])]
+    #[Field(searchable: true, visible: false, order: 50)]
     public ?string $description=null;
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['video.read'])]
+    #[Field(sortable: true, filterable: true, widget: Widget::Date, visible: false, order: 40, format: 'date')]
     public ?\DateTimeInterface $date {
         set {
             if (is_string($value)) {
@@ -94,6 +108,7 @@ class Video implements RouteParametersInterface, \Stringable
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups('song.read')]
+    #[Field(visible: false, order: 70)]
     public ?string $thumbnailUrl = null;
 
     #[ORM\Column(nullable: true)]
@@ -102,6 +117,7 @@ class Video implements RouteParametersInterface, \Stringable
 
     #[ORM\Column(nullable: true)]
     #[Groups(['video.read'])]
+    #[Field(sortable: true, filterable: true, widget: Widget::Range, facet: true, order: 30)]
     public ?int $year = null;
     public function getYoutubeUrl(): string
     {
@@ -114,6 +130,7 @@ class Video implements RouteParametersInterface, \Stringable
     }
 
     #[Groups(['video.read'])]
+    #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, order: 60)]
     public function getSchool(): ?string
     {
         return $this->song?->school;

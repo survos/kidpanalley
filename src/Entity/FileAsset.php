@@ -14,6 +14,7 @@ use App\Workflow\FileAssetWFDefinition;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGridBundle\Api\Filter\MultiFieldSearchFilter;
+use Survos\FieldBundle\Attribute\EntityMeta;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Survos\StateBundle\Traits\MarkingInterface;
 use Survos\StateBundle\Traits\MarkingTrait;
@@ -38,6 +39,13 @@ use Survos\StateBundle\Traits\MarkingTrait;
 #[ApiFilter(FacetsFieldSearchFilter::class,
     properties: ['type'],
     arguments: ["searchParameterName" => "facet_filter"]
+)]
+#[EntityMeta(
+    icon: 'tabler:files',
+    order: 30,
+    group: 'Catalog',
+    label: 'Files',
+    description: 'Source documents, charts, audio, video, and imported file metadata.'
 )]
 #[MeiliIndex(
     ui: ['icon' => 'FileAsset'],

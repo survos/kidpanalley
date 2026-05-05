@@ -2,14 +2,7 @@
 
 namespace App\Controller;
 
-use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\IriConverterInterface;
 use App\Entity\Song;
-use App\Entity\Video;
-use App\Repository\AudioRepository;
-use App\Repository\FileAssetRepository;
-use App\Repository\SongRepository;
-use App\Repository\VideoRepository;
 use App\Services\AppService;
 use App\Services\DocxConversion;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,12 +10,14 @@ use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Psr\Log\LoggerInterface;
+use Survos\FieldBundle\Enum\Purpose;
+use Survos\FieldBundle\Registry\EntityMetaRegistry;
+use Survos\FieldBundle\Registry\RouteMetaRegistry;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Attribute\Route;
@@ -46,40 +41,6 @@ class AppController extends AbstractController
     {
     }
 
-    // browse with meili or doctrine
-    #[Route(path: '/meili/{shortClass}', name: 'app_browse', methods: ['GET'])]
-    #[Route(path: '/doctrine/{shortClass}', name: 'app_browse_with_doctrine', methods: ['GET'])]
-    public function browse(Request $request, IriConverterInterface $iriConverter, string $shortClass) : Response
-    {
-
-        // get the columns based on the type
-        $columns = [];
-        $columns = [
-            ['name' => 'title', 'block' => $shortClass . 'Title', 'order' => 2],
-            ['name' => 'year'],
-            'school',
-            'id'
-        ];
-
-        $useMeili = $request->get('_route') == 'app_browse';
-        $class = match ($shortClass) {
-            'Song' => Song::class,
-            'Video' => Video::class
-        };
-        $apiCall = $useMeili
-            ? '/api/meili/' . $shortClass
-            : $iriConverter->getIriFromResource($class, operation: new GetCollection(),
-                context: $context??[])
-            ;
-
-        return $this->render('app/meili.html.twig', [
-            'apiCall' => $apiCall,
-            'useMeili' => $useMeili,
-            'columns' => $columns,
-            'class' => $class
-        ]);
-    }
-
     private function getAuth()
     {
         $u = trim($this->getParameter('api_username'));
@@ -90,10 +51,8 @@ class AppController extends AbstractController
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
     #[Route(path: '/admin', name: 'admin', methods: ['GET'])]
     public function homepage(
-        SongRepository $songRepository,
-        VideoRepository $videoRepository,
-        AudioRepository $audioRepository,
-        FileAssetRepository $fileAssetRepository,
+        EntityMetaRegistry $entityMetaRegistry,
+        RouteMetaRegistry $routeMetaRegistry,
         #[Autowire('%survos_meili.chat%')] array $chatConfig = [],
 //    #[Autowire('%kpa.version%')] ?string $applicationVersion = null, // was in bizkit_version
     )
@@ -101,16 +60,31 @@ class AppController extends AbstractController
         $user = $this->getUser();
         $workspaces = $chatConfig['workspaces'] ?? [];
         $defaultWorkspace = $workspaces !== [] ? array_key_first($workspaces) : 'default';
+        $entities = [];
+
+        foreach ($entityMetaRegistry->getByGroup('Catalog') as $descriptor) {
+            $listRoute = $routeMetaRegistry->forEntityPurpose($descriptor->class, Purpose::List);
+            if ($listRoute === null) {
+                continue;
+            }
+
+            $entities[] = [
+                'class' => $descriptor->class,
+                'label' => $descriptor->label,
+                'icon' => $descriptor->icon,
+                'description' => $descriptor->description,
+                'count' => $this->em->getRepository($descriptor->class)->count([]),
+                'gridRoute' => $listRoute->name,
+                'meiliIndex' => strtolower($descriptor->getShortName()),
+                'order' => $descriptor->order,
+            ];
+        }
+
+        usort($entities, static fn (array $a, array $b) => $a['order'] <=> $b['order']);
 
         return $this->render('app/homepage.html.twig', [
             'user' => $user,
-            'featured' => $songRepository->findBy([], ['id' => 'DESC'], 1),
-            'featuredVideo' => $videoRepository->findBy([], ['id' => 'DESC'], 1),
-            'featuredAudio' => $audioRepository->findBy([], ['id' => 'DESC'], 1),
-            'songCount' => $songRepository->count([]),
-            'videoCount' => $videoRepository->count([]),
-            'audioCount' => $audioRepository->count([]),
-            'fileAssetCount' => $fileAssetRepository->count([]),
+            'dashboardEntities' => $entities,
             'defaultWorkspace' => $defaultWorkspace,
         ]);
     }

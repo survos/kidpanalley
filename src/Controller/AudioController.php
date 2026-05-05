@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Audio;
-use App\Repository\AudioRepository;
+use Survos\FieldBundle\Attribute\ControllerMeta;
+use Survos\FieldBundle\Attribute\RouteMeta;
+use Survos\FieldBundle\Enum\Audience;
+use Survos\FieldBundle\Enum\Purpose;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -13,6 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 #[Route(path: '/audio', priority: 10000)]
+#[ControllerMeta(entity: Audio::class, audience: Audience::Public, tags: ['catalog', 'media'])]
 class AudioController extends AbstractController
 {
     public function __construct(
@@ -21,10 +25,17 @@ class AudioController extends AbstractController
     }
     #[Route('/', name: 'audio_index', methods: [Request::METHOD_GET])]
     #[Template('audio/index.html.twig')]
-    public function index(AudioRepository $audioRepository): Response|array
+    #[RouteMeta(
+        description: 'Browse and search audio recordings through the Doctrine-backed API grid.',
+        purpose: Purpose::List,
+        sitemap: true,
+        changefreq: 'weekly',
+        priority: 0.7
+    )]
+    public function index(): Response|array
     {
         return [
-            'audios' => $audioRepository->findBy(['marking' => 'xml' /* AudioWFDefinition::PLACE_XML */ ], ['id' => 'DESC'], 25),
+            'class' => Audio::class,
         ];
     }
 

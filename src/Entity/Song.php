@@ -16,12 +16,16 @@ use Survos\BabelBundle\Attribute\Translatable;
 use Survos\BabelBundle\Contract\BabelHooksInterface;
 use Survos\BabelBundle\Entity\Traits\BabelHooksTrait;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
-use Survos\CoreBundle\Entity\RouteParametersTrait;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Survos\ApiGridBundle\Api\Filter\MultiFieldSearchFilter;
+use Survos\FieldBundle\Attribute\EntityMeta;
+use Survos\FieldBundle\Attribute\Field;
+use Survos\FieldBundle\Attribute\RouteIdentity;
+use Survos\FieldBundle\Entity\RouteIdentityTrait;
+use Survos\FieldBundle\Enum\Widget;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\Facet;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
@@ -39,6 +43,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\DBAL\Types\Types;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[ORM\UniqueConstraint('song_code', ['code'])]
+#[RouteIdentity(field: 'id', key: 'songId')]
 #[ApiResource(operations: [
     new Get(),
     new GetCollection(name: self::DOCTRINE_ROUTE)],
@@ -56,6 +61,13 @@ use Doctrine\DBAL\Types\Types;
 #[Groups(['song.read'])]
 #[Assert\EnableAutoMapping]
 #[Metadata('translatable', ['title'])]
+#[EntityMeta(
+    icon: 'tabler:music',
+    order: 10,
+    group: 'Catalog',
+    label: 'Songs',
+    description: 'Songs, lyrics, credits, recordings, and related media.'
+)]
 #[MeiliIndex(
     ui: ['icon' => 'Song'],
     persisted: ['id', 'code', 'title', 'year', 'school', 'lyrics', 'lyricsLength', 'writersArray', 'publishersArray', 'description', 'rp', 'fileCount'],
@@ -67,12 +79,10 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 {
 //    use SongTranslationsTrait;
 //    use TranslatableHooksTrait;
-    use RouteParametersTrait;
+    use RouteIdentityTrait;
     use BabelHooksTrait;
     use MarkingTrait;
 
-    public const array UNIQUE_PARAMETERS = ['songId' => 'id'];
-    public const MEILI_ROUTE = 'meili-song';
     public const DOCTRINE_ROUTE = 'doctrine_songs';
 
     #[ORM\Id]
@@ -82,23 +92,28 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read', 'searchable', 'video.read'])]
+    #[Field(searchable: true, visible: false, order: 80)]
     public ?string $description = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['song.read', 'searchable'])]
+    #[Field(sortable: true, filterable: true, widget: Widget::Date, visible: false, order: 70, format: 'date')]
     public ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['song.facet', 'song.read', 'video.read', 'searchable'])]
     #[Facet]
+    #[Field(sortable: true, filterable: true, widget: Widget::Range, facet: true, order: 30)]
     public ?int $year = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['song.read', 'video.read', 'searchable'])]
     #[Facet]
+    #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, order: 40)]
     public ?string $school = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Field(searchable: true, visible: false, order: 90)]
     public ?string $lyrics {
         set {
             $this->lyrics = $value;
@@ -108,15 +123,19 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read'])]
+    #[Field(searchable: true, visible: false, order: 95)]
     public ?string $featuredArtist = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Field(searchable: true, visible: false, order: 100)]
     public ?string $recordingCredits = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Field(searchable: true, visible: false, order: 110)]
     public ?string $musicians = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, visible: false, order: 50)]
     public ?string $writers = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -127,10 +146,12 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, visible: false, order: 60)]
     public ?string $publisher = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read'])]
+    #[Field(searchable: true, visible: false, order: 120)]
     public ?string $notes = null;
 
     #[ORM\Column(type: 'json', nullable: true)]
@@ -138,6 +159,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['song.read'])]
+    #[Field(sortable: true, filterable: true, widget: Widget::Range, visible: false, order: 75)]
     public ?int $lyricsLength = null;
 
     #[ORM\OneToMany(mappedBy: 'song', targetEntity: Video::class)]
@@ -153,6 +175,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     public Collection $songLyrics;
 
     #[ORM\Column(length: 255)]
+    #[Field(searchable: true, sortable: true, order: 20)]
     public string $code;
 
     public function __construct(?string $code = null)
@@ -166,6 +189,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     }
 
     #[Groups(['song.read'])]
+    #[Field(sortable: true, filterable: true, widget: Widget::Range, order: 65)]
     public function getFileCount(): int
     {
         return $this->audios->count();
@@ -232,6 +256,7 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     }
     // <BABEL:TRANSLATABLE:START title>
     #[Column(type: Types::TEXT, nullable: true)]
+    #[Field(searchable: true, sortable: true, order: 10)]
     public ?string $title = null;
 
 }

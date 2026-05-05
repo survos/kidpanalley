@@ -2,9 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Workflow\AudioWFDefinition;
 use App\Workflow\FileAssetWFDefinition;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\FieldBundle\Attribute\EntityMeta;
 use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use ApiPlatform\Metadata\ApiFilter;
@@ -12,9 +16,20 @@ use Survos\StateBundle\Traits\MarkingInterface;
 use Survos\StateBundle\Traits\MarkingTrait;
 
 #[ORM\Entity]
+#[ApiResource(operations: [
+    new Get(),
+    new GetCollection(name: self::DOCTRINE_ROUTE),
+])]
 #[ApiFilter(FacetsFieldSearchFilter::class,
     properties: ['format', 'variant'],
     arguments: ["searchParameterName" => "facet_filter"]
+)]
+#[EntityMeta(
+    icon: 'tabler:wave-sine',
+    order: 40,
+    group: 'Catalog',
+    label: 'Audio',
+    description: 'Audio recordings and generated music metadata.'
 )]
 #[MeiliIndex(
     ui: ['icon' => 'Audio'],
@@ -23,6 +38,9 @@ use Survos\StateBundle\Traits\MarkingTrait;
 class Audio implements MarkingInterface
 {
     use MarkingTrait;
+
+    public const DOCTRINE_ROUTE = 'api_audio';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

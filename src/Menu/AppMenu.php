@@ -6,6 +6,9 @@ use App\Controller\Admin\MeiliDashboardController;
 use App\Entity\FileAsset;
 use App\Entity\Song;
 use App\Entity\Video;
+use Survos\FieldBundle\Enum\Purpose;
+use Survos\FieldBundle\Registry\EntityMetaRegistry;
+use Survos\FieldBundle\Registry\RouteMetaRegistry;
 use Survos\MeiliBundle\Controller\MeiliAdminController;
 use Survos\MeiliBundle\Service\MeiliService;
 use Survos\TablerBundle\Event\MenuEvent;
@@ -32,6 +35,8 @@ final class AppMenu
         private ContextService                               $contextService,
         private MenuService                                  $menuService,
         private MeiliService                                 $meiliService,
+        private EntityMetaRegistry                           $entityMetaRegistry,
+        private RouteMetaRegistry                            $routeMetaRegistry,
 //        private DatatableService                                       $datatableService,
         // why is autowire required?
 //        #[Autowire(service: 'api_meili_service')] private MeiliService $meiliService,
@@ -109,9 +114,16 @@ final class AppMenu
         $this->add($menu, 'admin');
 //        $this->add($menu, 'survos_meili_admin');
         $this->add($menu, MeiliDashboardController::MEILI_ROUTE, label: "EZ");
-        $this->add($menu, 'video_browse', label: 'Videos');
-        $this->add($menu, 'song_index', label: 'Songs');
-        $this->add($menu, 'file_asset_browse', label: 'Files');
+
+        $contentMenu = $this->addSubmenu($menu, 'Content');
+        foreach ($this->entityMetaRegistry->getByGroup('Catalog') as $entityMeta) {
+            $route = $this->routeMetaRegistry->forEntityPurpose($entityMeta->class, Purpose::List);
+            if ($route === null) {
+                continue;
+            }
+
+            $this->add($contentMenu, $route->name, label: $entityMeta->label);
+        }
 //        $this->addMenuItem($menu, ['route' => 'song_index', 'label' => "Songs", 'icon' => 'fas fa-home']);
 //        $this->addMenuItem($menu, ['route' => 'song_browse', 'label' => "Song Search", 'icon' => 'fas fa-search']);
 //        $subMenu = $this->addSubmenu($menu, 'songs');
@@ -121,8 +133,6 @@ final class AppMenu
 //        $subMenu->setLinkAttribute('class', 'nav-link');
 
 //        foreach (['Song','Video'] as $shortClass) {
-//            $this->add($menu, 'app_browse_with_doctrine', ['shortClass' => $shortClass], label: '@sql ' . $shortClass);
-//            $this->add($menu, 'app_browse', ['shortClass' => $shortClass], label: '@meili ' . $shortClass);
 //        }
 
         //
