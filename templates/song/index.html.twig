@@ -14,13 +14,13 @@
 
 {% block body %}
     {% set columns = [
-        col(name: 'title'),
-        col(name: 'videos'),
-        col(name: 'publishersArray', title: 'publishers'),
-        col(name: 'writers'),
-        col(name: 'year', searchable: false, sortable: true, browsable: true),
-        col(name: 'school', searchable: true, sortable: true, browsable: true),
-        col(name: 'code'),
+        col(name: 'title', responsivePriority: 1),
+        col(name: 'school', searchable: true, sortable: true, browsable: true, width: '13rem', responsivePriority: 2),
+        col(name: 'year', searchable: false, sortable: true, browsable: true, width: '9rem', responsivePriority: 3),
+        col(name: 'videos', width: '5rem', responsivePriority: 30),
+        col(name: 'publishersArray', title: 'publishers', responsivePriority: 40),
+        col(name: 'writers', responsivePriority: 50),
+        col(name: 'code', responsivePriority: 60),
     ] %}
 
     <twig:api_grid

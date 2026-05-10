@@ -1,0 +1,17 @@
+<div class="lyrics">
+    {% for segment in this.segments %}
+        {% if segment.type == 'fallback' %}
+            <pre class="lyrics-fallback">{{ segment.lines|join("\n") }}</pre>
+        {% else %}
+            <div class="{{ segment.type }}">
+                {% for line in segment.lines %}
+                    {% if line == '' %}
+                        <div class="line line-blank">&nbsp;</div>
+                    {% else %}
+                        <div class="line">{{ line }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

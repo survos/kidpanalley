@@ -37,8 +37,11 @@ class SongController extends AbstractController
         changefreq: 'monthly',
         priority: 0.7
     )]
-    public function show(Song $song, AudioRepository $audioRepository, EntityManagerInterface $entityManager) : Response|array
-    {
+    public function show(
+        Song $song,
+        AudioRepository $audioRepository,
+        EntityManagerInterface $entityManager,
+    ): Response|array {
         $audios = $audioRepository->findBy(['song' => $song], ['id' => 'DESC']);
         $songLyrics = $entityManager->getRepository(SongLyrics::class)->findBy(['song' => $song], ['id' => 'DESC']);
 
@@ -54,11 +57,20 @@ class SongController extends AbstractController
             }
         }
 
+        $notesData = [];
+        if ($song->notes !== null && $song->notes !== '') {
+            $decoded = json_decode((string) $song->notes, true);
+            if (is_array($decoded)) {
+                $notesData = $decoded;
+            }
+        }
+
         return [
             'song' => $song,
             'audios' => $audios,
             'songLyrics' => $songLyrics,
             'relatedFiles' => array_values($relatedFiles),
+            'notesData' => $notesData,
         ];
     }
 }

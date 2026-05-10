@@ -42,7 +42,6 @@ use Doctrine\ORM\Mapping\Column;
 
 use Doctrine\DBAL\Types\Types;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
-#[ORM\UniqueConstraint('song_code', ['code'])]
 #[RouteIdentity(field: 'id', key: 'songId')]
 #[ApiResource(operations: [
     new Get(),
@@ -70,8 +69,8 @@ use Doctrine\DBAL\Types\Types;
 )]
 #[MeiliIndex(
     ui: ['icon' => 'Song'],
-    persisted: ['id', 'code', 'title', 'year', 'school', 'lyrics', 'lyricsLength', 'writersArray', 'publishersArray', 'description', 'rp', 'fileCount'],
-    searchable: ['lyrics','title'],
+    persisted: ['id', 'title', 'chorus', 'year', 'school', 'lyrics', 'lyricsLength', 'writersArray', 'publishersArray', 'description', 'rp', 'fileCount'],
+    searchable: ['lyrics','title','chorus'],
     filterable: ['writersArray', 'publishersArray', 'year', 'lyricsLength'],
     sortable: ['lyricsLength', 'year', 'title']
 )]
@@ -84,11 +83,6 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     use MarkingTrait;
 
     public const DOCTRINE_ROUTE = 'doctrine_songs';
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
-    #[ORM\Column(type: 'integer')]
-    public readonly ?int $id;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['song.read', 'searchable', 'video.read'])]
@@ -119,6 +113,17 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
             $this->lyrics = $value;
             $this->lyricsLength = $value ? mb_strlen($value) : null;
         }
+    }
+
+    /**
+     * First {start_of_chorus}…{end_of_chorus} block, derived from $lyrics.
+     * No DB column — computed on access. Indexed in Meili via the
+     * persisted/searchable arrays below so grids + search pick it up.
+     */
+    #[Groups(['song.read', 'searchable'])]
+    #[Field(searchable: true, visible: true, order: 25)]
+    public ?string $chorus {
+        get => \App\Service\ChordProInspector::firstChorus($this->lyrics);
     }
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -174,14 +179,12 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     #[Ignore]
     public Collection $songLyrics;
 
-    #[ORM\Column(length: 255)]
-    #[Field(searchable: true, sortable: true, order: 20)]
-    public string $code;
-
-    public function __construct(?string $code = null)
+    public function __construct(    #[ORM\Id]
+                                    #[ORM\Column(length: 255)]
+                                    #[Field(searchable: true, sortable: true, order: 20)]
+                                    public string $id
+    )
     {
-        assert($code, "missing code");
-        $this->code = $code;
         $this->videos = new ArrayCollection();
         $this->audios = new ArrayCollection();
         $this->songLyrics = new ArrayCollection();

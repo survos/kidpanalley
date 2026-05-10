@@ -1,4 +1,0 @@
-survos_api_grid:
-  resource: '@SurvosApiGridBundle/src/Controller/'
-  prefix: /facets
-  type: attribute

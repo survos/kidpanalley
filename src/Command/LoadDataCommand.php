@@ -60,7 +60,7 @@ class LoadDataCommand
         $video ??= false;
         $songs ??= false;
         $lyrics ??= false;
-        $assets ??= true;
+        $assets ??= false;
 
         if ($assets) {
             $jsonlPath = $jsonl ?? 'data/seagate.jsonl';

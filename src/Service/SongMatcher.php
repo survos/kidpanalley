@@ -71,6 +71,50 @@ class SongMatcher
     // ------------------------------------------------------------------
 
     /**
+     * Aggressive comparison key for fuzzy title matching across smart-quotes,
+     * punctuation, ampersands, dashes, diacritics, and leading articles.
+     *
+     *   "I Don't Think So!"          → "i dont think so"
+     *   "I Don\u{2019}t Think So"    → "i dont think so"
+     *   "Frogs & Polliwogs"          → "frogs and polliwogs"
+     *   "Café — Live"                → "cafe live"
+     *   "A Thousand Baby Turtles"    → "thousand baby turtles"
+     *   "The Eye of My Hurricane"    → "eye of my hurricane"
+     *
+     * Use this for *matching only*. For display/persistence, use {@see normalizeTitle()}.
+     */
+    public static function matchKey(string $title): string
+    {
+        // Decode HTML entities that occasionally leak through from .docx authoring
+        // (e.g. "Tulips &amp; Roses" should match "Tulips and roses" in the CSV).
+        $title = html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        if (function_exists('transliterator_transliterate')) {
+            $key = transliterator_transliterate('Any-Latin; Latin-ASCII; Lower();', $title);
+        } else {
+            $key = mb_strtolower($title);
+        }
+        $key = (string) $key;
+        $key = str_replace('&', ' and ', $key);
+
+        // Hyphens and apostrophes are intra-word — strip to nothing so "band-aid"/"bandaid"
+        // and "don't"/"dont" collapse to the same key. Other punctuation → space.
+        $key = (string) preg_replace("/[-']+/", '', $key);
+        $key = (string) preg_replace('/[^a-z0-9 ]+/', ' ', $key);
+        $key = (string) preg_replace('/\s+/', ' ', $key);
+        $key = trim($key);
+
+        // Strip a leading article so "A Thousand Baby Turtles" matches "Thousand Baby Turtles".
+        // Applied to both sides at lookup time, so the same song is the same key regardless
+        // of whether the source kept the article.
+        if (preg_match('/^(?:a|an|the)\s+(.+)$/', $key, $m) === 1) {
+            $key = $m[1];
+        }
+
+        return $key;
+    }
+
+    /**
      * Normalize a raw filename/title into a canonical song title.
      * This is the same logic used for matching — call it before persisting
      * a title so the stored value is already canonical.

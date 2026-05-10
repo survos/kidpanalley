@@ -119,11 +119,11 @@
 
         {% set lyricsHighlight = hit._highlightResult.lyrics.value|default('') %}
         {% set lyricsRaw = hit.lyrics|default('') %}
-        {% if lyricsHighlight != '' %}
-            <div class="mb-3 small text-muted">{{ lyricsHighlight|raw }}</div>
-        {% elseif lyricsRaw != '' %}
-            <div class="mb-3 small text-muted">{{ lyricsRaw|slice(0, 300) }}{% if lyricsRaw|length > 300 %}…{% endif %}</div>
-        {% endif %}
+{#        {% if lyricsHighlight != '' %}#}
+{#            <div class="mb-3 small text-muted">{{ lyricsHighlight|raw }}</div>#}
+{#        {% elseif lyricsRaw != '' %}#}
+{#            <div class="mb-3 small text-muted">{{ lyricsRaw|slice(0, 300) }}{% if lyricsRaw|length > 300 %}…{% endif %}</div>#}
+{#        {% endif %}#}
 
         {# ---------- Year (hide 0/empty) ---------- #}
         {% set yearVal = hit.year|default(null) %}

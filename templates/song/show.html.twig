@@ -34,184 +34,105 @@
         </div>
     {% endif %}
 
-    {# Music Sheet Display #}
+    {# Lyrics — rendered from the ChordPro source in song.lyrics #}
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sheet Music</h3>
+                    <h3 class="card-title">Lyrics</h3>
                 </div>
-
                 <div class="card-body">
-                    {% set _sc = 'music' %}
-                    {% set url = asset('blinked.xml') %}
-{#                    {% set url = asset('coffee-complex.cho') %}#}
-                    <a href="{{ url }}" target="_blank">{{ url }}</a>
-                    <div {{ stimulus_controller(_sc, {
-                        'url': url,
-                        'format': 'xml',
-                        'width': 800,
-                        'height': 600
-                    }) }} style="min-height: 400px; border: 1px solid #dee2e6; border-radius: 0.375rem; padding: 1rem;"
-                          class="text-center text-muted">
-                        <div class="spinner-border" role="status" {{ stimulus_target(_sc, 'spinner') }}>
-                            <span class="visually-hidden">Loading music...</span>
-                        </div>
-                        <p class="mt-2">Loading sheet music...</p>
-                        <div {{ stimulus_target(_sc, 'display') }}>
-                            Rendered music goes here.
-                        </div>
-                    </div>
+                    {% if song.lyrics %}
+                        <twig:Lyrics text="{{ song.lyrics }}" />
+                    {% else %}
+                        <span class="text-muted">No lyrics yet.</span>
+                    {% endif %}
                 </div>
-
-                <div id="osmdContainer">
-                    xml here
-                </div>
-
-
-{#                {% for ext in ['xml','cho'] %}#}
-{#                    <div class="card-body">#}
-{#                        {% set _sc = 'music-display' %}#}
-{#                        {% set url = asset('abuelo.' ~ ext) %}#}
-{#                        <a href="{{ url }}" target="_blank">{{ url }}</a>#}
-{#                        <div {{ stimulus_controller(_sc, {#}
-{#                            'url': url,#}
-{#                            'width': 800,#}
-{#                            'height': 600#}
-{#                        }) }} style="min-height: 400px; border: 1px solid #dee2e6; border-radius: 0.375rem; padding: 1rem;"#}
-{#                              class="text-center text-muted">#}
-{#                            <div class="spinner-border" role="status">#}
-{#                                <span class="visually-hidden">Loading music...</span>#}
-{#                            </div>#}
-{#                            <p class="mt-2">Loading sheet music...</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                {% endfor %}#}
             </div>
         </div>
     </div>
 
-    <table class="table">
+    {# Metadata — only show fields with values, in info-density order. #}
+    {% set notesData = song.notes ? song.notes : {} %}
+    <table class="table table-sm">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ song.id }}</td>
+                <th style="width: 12rem;">Id</th>
+                <td><code>{{ song.id }}</code></td>
             </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ song.title }}</td>
-            </tr>
-            <tr>
-                <th>Youtube Videos</th>
-                <td>
+            <tr><th>Title</th><td>{{ song.title }}</td></tr>
+            {% if song.writers %}<tr><th>Writers</th><td>{{ song.writers }}</td></tr>{% endif %}
+            {% if song.publisher %}<tr><th>Publisher</th><td>{{ song.publisher }}</td></tr>{% endif %}
+            {% if song.school %}<tr><th>School</th><td>{{ song.school }}</td></tr>{% endif %}
+            {% if song.date %}<tr><th>Date</th><td>{{ song.date|date('Y-m-d') }}</td></tr>{% endif %}
+            {% if song.year and not song.date %}<tr><th>Year</th><td>{{ song.year }}</td></tr>{% endif %}
+            {% if song.featuredArtist %}<tr><th>Featured Artist</th><td>{{ song.featuredArtist }}</td></tr>{% endif %}
+            {% if song.recording %}<tr><th>Recording</th><td>{{ song.recording }}</td></tr>{% endif %}
+            {% if song.recordingCredits %}<tr><th>Recording Credits</th><td>{{ song.recordingCredits }}</td></tr>{% endif %}
+            {% if song.musicians %}<tr><th>Musicians</th><td>{{ song.musicians }}</td></tr>{% endif %}
 
-                </td>
-            </tr>
-            <tr>
-                <th>Audio</th>
-                <td>
-                    {% if audios|length %}
+            {% if audios|length %}
+                <tr>
+                    <th>Audio</th>
+                    <td>
                         <ul class="list-unstyled mb-0">
                             {% for audio in audios %}
                                 <li>
                                     <a href="{{ path('audio_show', { id: audio.id }) }}">
                                         {{ audio.title }} ({{ audio.format }})
                                     </a>
-                                    {% if audio.variant %}
-                                        <span class="text-muted">- {{ audio.variant }}</span>
-                                    {% endif %}
+                                    {% if audio.variant %}<span class="text-muted">- {{ audio.variant }}</span>{% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
-                    {% else %}
-                        <span class="text-muted">No audio files yet.</span>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Related Files</th>
-                <td>
-                    {% if relatedFiles|length %}
+                    </td>
+                </tr>
+            {% endif %}
+
+            {% if relatedFiles|length %}
+                <tr>
+                    <th>Related Files</th>
+                    <td>
                         <ul class="list-unstyled mb-0">
                             {% for file in relatedFiles %}
                                 <li>
                                     <code>{{ file.filename }}</code>
                                     <span class="text-muted">({{ file.type }}, {{ file.extension }})</span>
-                                    {% if file.relativePath %}
-                                        <div class="small text-muted">{{ file.relativePath }}</div>
-                                    {% endif %}
+                                    {% if file.relativePath %}<div class="small text-muted">{{ file.relativePath }}</div>{% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
-                    {% else %}
-                        <span class="text-muted">No related files yet.</span>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Lyrics Sources</th>
-                <td>
-                    {% if songLyrics|length %}
+                    </td>
+                </tr>
+            {% endif %}
+
+            {% if songLyrics|length %}
+                <tr>
+                    <th>Lyrics Sources</th>
+                    <td>
                         <ul class="list-unstyled mb-0">
                             {% for link in songLyrics %}
                                 <li>
                                     <code>{{ link.fileAsset.filename }}</code>
-                                    {% if link.sourceTitle %}
-                                        <span class="text-muted">→ {{ link.sourceTitle }}</span>
-                                    {% endif %}
+                                    {% if link.sourceTitle %}<span class="text-muted">→ {{ link.sourceTitle }}</span>{% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
-                    {% else %}
-                        <span class="text-muted">No lyrics source files linked yet.</span>
+                    </td>
+                </tr>
+            {% endif %}
+
+            {# notes column carries the original CSV row as JSON — flatten it inline. #}
+            {% if notesData is iterable and notesData|length %}
+                {% for k, v in notesData %}
+                    {% if v %}
+                        <tr>
+                            <th class="text-muted small">{{ k }}</th>
+                            <td class="small">{{ v }}</td>
+                        </tr>
                     {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ song.date ? song.date|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Year</th>
-                <td>{{ song.year }}</td>
-            </tr>
-            <tr>
-                <th>School</th>
-                <td>{{ song.school }}</td>
-            </tr>
-            <tr>
-                <th>Lyrics</th>
-                <td>
-                    <pre>
-                    {{ song.lyrics }}
-                    </pre>
-                </td>
-            </tr>
-            <tr>
-                <th>FeaturedArtist</th>
-                <td>{{ song.featuredArtist }}</td>
-            </tr>
-            <tr>
-                <th>RecordingCredits</th>
-                <td>{{ song.recordingCredits }}</td>
-            </tr>
-            <tr>
-                <th>Musicians</th>
-                <td>{{ song.musicians }}</td>
-            </tr>
-            <tr>
-                <th>Writers</th>
-                <td>{{ song.writers }}</td>
-            </tr>
-            <tr>
-                <th>WordpressPageId</th>
-                <td>{{ song.wordpressPageId }}</td>
-            </tr>
-            <tr>
-                <th>Recording</th>
-                <td>{{ song.recording }}</td>
-            </tr>
+                {% endfor %}
+            {% endif %}
             <tr>
                 <th>Publisher</th>
                 <td>{{ song.publisher }}</td>
