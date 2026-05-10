@@ -26,3 +26,41 @@ body {
 .song-artist, .song-composer { margin: 0; color: #666; }
 
 
+
+/* Lyrics rendering — used by <twig:Lyrics> component on song show page.
+   Songbook convention: verses left-aligned at the base column; chorus
+   pushed to the right and OUTDENTED past the verse column's right edge,
+   so the chorus visually hangs off to the right. Bridge sits between. */
+.lyrics {
+    font-family: ui-serif, Georgia, serif;
+    line-height: 1.5;
+    max-width: 56ch;
+    padding-right: 4rem;             /* room for chorus to outdent into */
+    position: relative;
+}
+.lyrics .line { padding: 0.05rem 0; }
+.lyrics .line-blank { min-height: 0.75em; }
+
+/* Verse — left-aligned at the baseline column. */
+.lyrics .verse {
+    margin: 0.5rem 0;
+}
+
+/* Chorus — right-shifted column, outdented past the right edge. */
+.lyrics .chorus {
+    margin: 0.75rem 0 0.75rem 6rem;  /* push right of the verse column */
+    margin-right: -4rem;              /* outdent past the right edge */
+    font-weight: 500;
+    color: #1f3a8a;                   /* subtle emphasis */
+}
+
+/* Bridge — italic, mid-indent. */
+.lyrics .bridge {
+    margin: 0.75rem 0 0.75rem 3rem;
+    font-style: italic;
+}
+
+/* Plain (lines outside any block). */
+.lyrics .plain { margin: 0.5rem 0; }
+
+.lyrics-fallback { white-space: pre-wrap; font-size: 0.875rem; }

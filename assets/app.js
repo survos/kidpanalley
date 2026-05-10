@@ -3,7 +3,7 @@ import 'instantsearch.css/themes/algolia.min.css';
 
  // stimulus
 
-// import './styles/app.css';
+import './styles/app.css';
 
 // import 'bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css'
