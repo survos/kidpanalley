@@ -212,9 +212,6 @@
     "league/oauth2-google": {
         "version": "3.0.3"
     },
-    "marcin-orlowski/disco-toolbar-symfony": {
-        "version": "2.0.0"
-    },
     "monolog/monolog": {
         "version": "1.x-dev"
     },

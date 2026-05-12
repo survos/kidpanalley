@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f88fd670123c6ec12361a785d07981e",
+    "content-hash": "4ee2515254e9235224062299297d37bf",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -4512,69 +4512,6 @@
             "time": "2026-04-11T18:38:28+00:00"
         },
         {
-            "name": "marcin-orlowski/disco-toolbar-symfony",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MarcinOrlowski/php-discotoolbar-symfony.git",
-                "reference": "abbe16ff8f6392df921928f2d48d6f542fa1a1a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MarcinOrlowski/php-discotoolbar-symfony/zipball/abbe16ff8f6392df921928f2d48d6f542fa1a1a5",
-                "reference": "abbe16ff8f6392df921928f2d48d6f542fa1a1a5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1",
-                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
-                "symfony/http-kernel": "^6.4|^7.0|^8.0",
-                "symfony/twig-bundle": "^6.4|^7.0|^8.0",
-                "symfony/yaml": "^6.4|^7.0|^8.0"
-            },
-            "provide": {
-                "marcin-orlowski/discotoolbar": "self.version",
-                "marcin-orlowski/discotoolbar-symfony": "self.version"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^2.0",
-                "phpstan/phpstan-symfony": "^2.0",
-                "squizlabs/php_codesniffer": "^3.13"
-            },
-            "suggest": {
-                "symfony/ux-icons": "Required for icon_type: ux support"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "MarcinOrlowski\\DiscoToolbar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marcin Orlowski",
-                    "email": "mail@marcinOrlowski.com"
-                }
-            ],
-            "description": "Customizable toolbar for Symfony projects",
-            "keywords": [
-                "development",
-                "disco",
-                "navigation",
-                "symfony",
-                "toolbar"
-            ],
-            "support": {
-                "issues": "https://github.com/MarcinOrlowski/php-discotoolbar-symfony/issues",
-                "source": "https://github.com/MarcinOrlowski/php-discotoolbar-symfony/tree/2.1.0"
-            },
-            "time": "2026-02-01T22:30:05+00:00"
-        },
-        {
             "name": "markbaker/complex",
             "version": "3.0.2",
             "source": {
@@ -7344,7 +7281,7 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "dev-main",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosApiGridBundle.git",
@@ -7397,7 +7334,6 @@
                 "friendsofsymfony/jsrouting-bundle": "use path() in javascript grid rendering",
                 "monolog/monolog": "Allows more advanced logging of the application flow"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -7651,7 +7587,7 @@
         },
         {
             "name": "survos/ciine-bundle",
-            "version": "dev-main",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/ciine-bundle.git",
@@ -7685,7 +7621,6 @@
                 "symfony/panther": "^2.2",
                 "symfony/routing": "^7.4||^8.0"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -7711,7 +7646,7 @@
             "description": "Symfony  tools for asciinema.org",
             "support": {
                 "issues": "https://github.com/survos/ciine-bundle/issues",
-                "source": "https://github.com/survos/ciine-bundle/tree/2.1.1"
+                "source": "https://github.com/survos/ciine-bundle/tree/2.1.2"
             },
             "funding": [
                 {
@@ -20930,8 +20865,6 @@
         "api-platform/core": 20,
         "meilisearch/meilisearch-php": 20,
         "roave/security-advisories": 20,
-        "survos/api-grid-bundle": 20,
-        "survos/ciine-bundle": 20,
         "survos/omeka-bundle": 20,
         "survos/tabler-bundle": 20
     },
