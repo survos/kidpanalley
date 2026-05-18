@@ -2119,7 +2119,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     dir?: scalar|Param|null, // Default: "%env(default::CIINE_LOCAL_DIR)%"
  * }
  * @psalm-type SurvosImportConfig = array{
- *     dir?: scalar|Param|null, // The default directory for data files // Default: "data"
+ *     dir?: scalar|Param|null, // Default directory for data files // Default: "data"
+ *     dto_namespace_roots?: list<scalar|Param|null>,
+ *     dto_mappings?: array<string, scalar|Param|null>,
  * }
  * @psalm-type FlysystemConfig = array{
  *     storages?: array<string, array{ // Default: []
@@ -2357,6 +2359,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     meiliHost?: scalar|Param|null, // Default: "%env(MEILI_SERVER)%"
  *     meiliKey?: scalar|Param|null, // Default: "%env(MEILI_API_KEY)%"
  *     meiliPrefix?: scalar|Param|null, // Default: "%env(MEILI_PREFIX)%"
+ *     meili_provider?: bool|Param, // Register MeiliSearchStateProvider as a global api_platform.state_provider. Only enable when Meili is configured and entities should be served from it. // Default: false
  *     passLocale?: bool|Param, // Default: false
  *     maxValuesPerFacet?: int|Param, // https://www.meilisearch.com/docs/reference/api/settings#faceting-object // Default: 1000
  * }

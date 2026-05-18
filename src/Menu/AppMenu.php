@@ -14,7 +14,6 @@ use Survos\MeiliBundle\Service\MeiliService;
 use Survos\TablerBundle\Event\MenuEvent;
 use Survos\TablerBundle\Menu\MenuBuilderTrait;
 use Survos\TablerBundle\Service\ContextService;
-use Survos\TablerBundle\Service\MenuService;
 use Survos\TablerBundle\Traits\KnpMenuHelperTrait;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -33,7 +32,6 @@ final class AppMenu
     public function __construct(
         #[Autowire('%kernel.environment%')] protected string $env,
         private ContextService                               $contextService,
-        private MenuService                                  $menuService,
         private MeiliService                                 $meiliService,
         private EntityMetaRegistry                           $entityMetaRegistry,
         private RouteMetaRegistry                            $routeMetaRegistry,
@@ -56,7 +54,15 @@ final class AppMenu
     {
         $menu = $event->getMenu();
         $this->add($menu, MeiliDashboardController::DASHBOARD_ROUTE, label: "Dashboard");
-        $this->menuService->addAuthMenu($menu);
+
+        if ($this->security?->getUser()) {
+            $this->add($menu, 'app_logout', label: 'Logout', icon: 'logout');
+
+            return;
+        }
+
+        $this->add($menu, 'app_login', label: 'Login', icon: 'login');
+        $this->add($menu, 'app_register', label: 'Register', icon: 'user-plus');
     }
 
     public function pageMenu(MenuEvent $event): void
