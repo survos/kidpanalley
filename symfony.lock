@@ -468,6 +468,9 @@
     "survos/jsonl-bundle": {
         "version": "2.0.77"
     },
+    "survos/kit-bundle": {
+        "version": "2.0.1"
+    },
     "survos/meili-bundle": {
         "version": "1.5.0"
     },
