@@ -6,7 +6,7 @@
     ],
     "license": "proprietary",
     "type": "project",
-    "minimum-stability": "RC",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "require": {
         "php": "^8.4",
@@ -54,6 +54,7 @@
         "survos/import-bundle": "^2.0",
         "survos/js-twig-bundle": "*",
         "survos/jsonl-bundle": "^2.0",
+        "survos/kit-bundle": "^2.0",
         "survos/lingua-core": "^2.0",
         "survos/meili-bundle": "^2.0",
         "survos/omeka-bundle": "dev-main",

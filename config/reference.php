@@ -2333,8 +2333,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     impersonate?: array<string, scalar|Param|null>,
  * }
  * @psalm-type SurvosStateConfig = array{
- *     routes_enabled?: bool|Param, // Auto-register this bundle's controllers via attribute scanning. Set false to manage routes manually in your app's config/routes/. // Default: true
- *     route_prefix?: scalar|Param|null, // URL prefix applied to this bundle's routes. // Default: "/state"
+ *     routes_enabled?: bool|Param, // Set false to manage this bundle's routes manually in your app. // Default: true
+ *     route_prefix?: scalar|Param|null, // URL prefix applied to all routes from this bundle. // Default: "/state"
  *     queue_prefix?: scalar|Param|null, // Default: ""
  *     base_layout?: scalar|Param|null, // Default: "base.html.twig"
  *     enable_dynamic_routing?: bool|Param, // Default: true
@@ -2869,8 +2869,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  * }
  * @psalm-type SurvosFieldConfig = array{
- *     routes_enabled?: bool|Param, // Auto-register this bundle's controllers via attribute scanning. Set false to manage routes manually in your app's config/routes/. // Default: true
- *     route_prefix?: scalar|Param|null, // URL prefix applied to this bundle's routes. // Default: ""
+ *     routes_enabled?: bool|Param, // Set false to manage this bundle's routes manually in your app. // Default: true
+ *     route_prefix?: scalar|Param|null, // URL prefix applied to all routes from this bundle. // Default: ""
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
