@@ -188,7 +188,8 @@
             "cache:clear --no-warmup": "symfony-cmd",
             "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "importmap:install": "symfony-cmd",
+            "cache:clear": "symfony-cmd"
         },
         "coverage": "php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage",
         "diagram": [
