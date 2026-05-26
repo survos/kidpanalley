@@ -1,47 +1,110 @@
 {% extends 'base.html.twig' %}
 
 {% block page_title song.title %}
-{% block page_subtitle song.school ~ ', ' ~ song.year %}
+{% block page_subtitle song.school ~ (song.year ? ', ' ~ song.year : '') %}
 
 {% block body %}
-    <div class="row">
-    <div class="col-md-6">
-        {% for video in song.videos %}
-            <object width="420" height="315"
-                    data="https://www.youtube.com/embed/{{ video.youtubeId }}">
-            </object>
-        {% endfor %}
-    </div>
-    <div class="col-md-6">
-        {# reused accordion? #}
-        {{ component('cards:tabs', { active: 'profile',
-            tabs: [
-                tab('profile', '@profile data', translationDomain='fosUserBundle'),
-                tab('school', content=song.school),
-            ] }) }}
-    </div>
-</div>
-
-
-    <twig:divider />
-
-    <h1>{{ song.title }} ({{ song.school }}, {{ song.year }})</h1>
-    {% if audios|length %}
-        <div class="mb-3">
-            <a href="{{ path('audio_show', { id: audios|first.id }) }}" class="btn btn-outline-primary">
-                Open First Audio
-            </a>
-        </div>
-    {% endif %}
-
-    {# Lyrics — rendered from the ChordPro source in song.lyrics #}
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Lyrics</h3>
+        <div class="col-lg-7">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h3 class="card-title mb-0">Audio Recordings</h3>
+                    {% if audios|length %}
+                        <span class="badge bg-blue">{{ audios|length }}</span>
+                    {% endif %}
                 </div>
                 <div class="card-body">
+                    {% if audios|length %}
+                        {% for audio in audios %}
+                            <div class="{% if not loop.last %}mb-3 border-bottom pb-3{% endif %}">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div>
+                                        <a href="{{ path('audio_show', { id: audio.id }) }}" class="fw-semibold">{{ audio.title }}</a>
+                                        {% if audio.variant %}<span class="text-muted ms-1">{{ audio.variant }}</span>{% endif %}
+                                    </div>
+                                    <span class="badge bg-secondary">{{ audio.format }}</span>
+                                </div>
+                                <audio controls preload="none" style="width: 100%;">
+                                    <source src="{{ path('audio_file', { id: audio.id }) }}" type="audio/mpeg">
+                                </audio>
+                                {% if audio.fileAsset %}
+                                    <div class="text-muted small mt-1">
+                                        <code>{{ audio.fileAsset.filename }}</code>
+                                        {% if audio.fileAsset.size %}
+                                            &middot; {{ (audio.fileAsset.size / 1048576)|number_format(1) }} MB
+                                        {% endif %}
+                                        {% if audio.fileAsset.duration %}
+                                            &middot; {{ (audio.fileAsset.duration / 60)|round(0, 'floor') }}:{{ '%02d'|format(audio.fileAsset.duration % 60) }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <span class="text-muted">No audio recordings yet.</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if songLyrics|length %}
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h3 class="card-title mb-0">Lyric Documents</h3>
+                        <span class="badge bg-blue">{{ songLyrics|length }}</span>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for link in songLyrics %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <code>{{ link.fileAsset.filename }}</code>
+                                    <span class="badge bg-secondary">{{ link.fileAsset.extension }}</span>
+                                </div>
+                                {% if link.sourceTitle %}
+                                    <div class="text-muted small">Matched title: {{ link.sourceTitle }}</div>
+                                {% endif %}
+                                {% if link.fileAsset.relativePath %}
+                                    <div class="text-muted small">{{ link.fileAsset.relativePath }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if relatedFiles|length %}
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h3 class="card-title mb-0">All Source Files</h3>
+                        <span class="badge bg-blue">{{ relatedFiles|length }}</span>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for file in relatedFiles %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <code>{{ file.filename }}</code>
+                                    {% if file.relativePath %}
+                                        <div class="text-muted small">{{ file.relativePath }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-secondary">{{ file.extension }}</span>
+                                    {% if file.size %}
+                                        <div class="text-muted small">{{ (file.size / 1048576)|number_format(1) }} MB</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Lyrics</h3>
+                </div>
+                <div class="card-body" style="max-height: 70vh; overflow: auto;">
                     {% if song.lyrics %}
                         <twig:Lyrics text="{{ song.lyrics }}" />
                     {% else %}
@@ -49,98 +112,50 @@
                     {% endif %}
                 </div>
             </div>
+
+            {% if song.videos|length %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Videos</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for video in song.videos %}
+                            <div class="ratio ratio-16x9 {% if not loop.last %}mb-3{% endif %}">
+                                <iframe src="https://www.youtube.com/embed/{{ video.youtubeId }}" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 
-    {# Metadata — only show fields with values, in info-density order. #}
-    {% set notesData = song.notes ? song.notes : {} %}
-    <table class="table table-sm">
-        <tbody>
-            <tr>
-                <th style="width: 12rem;">Id</th>
-                <td><code>{{ song.id }}</code></td>
-            </tr>
-            <tr><th>Title</th><td>{{ song.title }}</td></tr>
-            {% if song.writers %}<tr><th>Writers</th><td>{{ song.writers }}</td></tr>{% endif %}
-            {% if song.publisher %}<tr><th>Publisher</th><td>{{ song.publisher }}</td></tr>{% endif %}
-            {% if song.school %}<tr><th>School</th><td>{{ song.school }}</td></tr>{% endif %}
-            {% if song.date %}<tr><th>Date</th><td>{{ song.date|date('Y-m-d') }}</td></tr>{% endif %}
-            {% if song.year and not song.date %}<tr><th>Year</th><td>{{ song.year }}</td></tr>{% endif %}
-            {% if song.featuredArtist %}<tr><th>Featured Artist</th><td>{{ song.featuredArtist }}</td></tr>{% endif %}
-            {% if song.recording %}<tr><th>Recording</th><td>{{ song.recording }}</td></tr>{% endif %}
-            {% if song.recordingCredits %}<tr><th>Recording Credits</th><td>{{ song.recordingCredits }}</td></tr>{% endif %}
-            {% if song.musicians %}<tr><th>Musicians</th><td>{{ song.musicians }}</td></tr>{% endif %}
-
-            {% if audios|length %}
-                <tr>
-                    <th>Audio</th>
-                    <td>
-                        <ul class="list-unstyled mb-0">
-                            {% for audio in audios %}
-                                <li>
-                                    <a href="{{ path('audio_show', { id: audio.id }) }}">
-                                        {{ audio.title }} ({{ audio.format }})
-                                    </a>
-                                    {% if audio.variant %}<span class="text-muted">- {{ audio.variant }}</span>{% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
-            {% endif %}
-
-            {% if relatedFiles|length %}
-                <tr>
-                    <th>Related Files</th>
-                    <td>
-                        <ul class="list-unstyled mb-0">
-                            {% for file in relatedFiles %}
-                                <li>
-                                    <code>{{ file.filename }}</code>
-                                    <span class="text-muted">({{ file.type }}, {{ file.extension }})</span>
-                                    {% if file.relativePath %}<div class="small text-muted">{{ file.relativePath }}</div>{% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
-            {% endif %}
-
-            {% if songLyrics|length %}
-                <tr>
-                    <th>Lyrics Sources</th>
-                    <td>
-                        <ul class="list-unstyled mb-0">
-                            {% for link in songLyrics %}
-                                <li>
-                                    <code>{{ link.fileAsset.filename }}</code>
-                                    {% if link.sourceTitle %}<span class="text-muted">→ {{ link.sourceTitle }}</span>{% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
-            {% endif %}
-
-            {# notes column carries the original CSV row as JSON — flatten it inline. #}
-            {% if notesData is iterable and notesData|length %}
-                {% for k, v in notesData %}
-                    {% if v %}
-                        <tr>
-                            <th class="text-muted small">{{ k }}</th>
-                            <td class="small">{{ v }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-            <tr>
-                <th>Publisher</th>
-                <td>{{ song.publisher }}</td>
-            </tr>
-{#            <tr>#}
-{#                <th>Notes</th>#}
-{#                <td>{{ song.notes }}</td>#}
-{#            </tr>#}
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title mb-0">Song Details</h3>
+        </div>
+        <table class="table table-sm mb-0">
+            <tbody>
+                {% if song.writers %}<tr><th style="width: 12rem;">Writers</th><td>{{ song.writers }}</td></tr>{% endif %}
+                {% if song.publisher %}<tr><th style="width: 12rem;">Publisher</th><td>{{ song.publisher }}</td></tr>{% endif %}
+                {% if song.school %}<tr><th style="width: 12rem;">School</th><td>{{ song.school }}</td></tr>{% endif %}
+                {% if song.date %}<tr><th style="width: 12rem;">Date</th><td>{{ song.date|date('Y-m-d') }}</td></tr>{% endif %}
+                {% if song.year and not song.date %}<tr><th style="width: 12rem;">Year</th><td>{{ song.year }}</td></tr>{% endif %}
+                {% if song.featuredArtist %}<tr><th style="width: 12rem;">Featured Artist</th><td>{{ song.featuredArtist }}</td></tr>{% endif %}
+                {% if song.recording %}<tr><th style="width: 12rem;">Recording</th><td>{{ song.recording }}</td></tr>{% endif %}
+                {% if song.recordingCredits %}<tr><th style="width: 12rem;">Recording Credits</th><td>{{ song.recordingCredits }}</td></tr>{% endif %}
+                {% if song.musicians %}<tr><th style="width: 12rem;">Musicians</th><td>{{ song.musicians }}</td></tr>{% endif %}
+                {% if song.description %}<tr><th style="width: 12rem;">Description</th><td>{{ song.description }}</td></tr>{% endif %}
+                {% set notesData = song.notes ? song.notes : {} %}
+                {% if notesData is iterable and notesData|length %}
+                    {% for k, v in notesData %}
+                        {% if v %}
+                            <tr><th style="width: 12rem;" class="text-muted">{{ k }}</th><td class="small">{{ v }}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <tr><th style="width: 12rem;">ID</th><td><code>{{ song.id }}</code></td></tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

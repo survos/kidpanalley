@@ -51,6 +51,7 @@
         "survos/deployment-bundle": "^2.0",
         "survos/ez-bundle": "^2.0",
         "survos/field-bundle": "^2.0",
+        "survos/imgproxy-bundle": "^2.3",
         "survos/import-bundle": "^2.0",
         "survos/js-twig-bundle": "*",
         "survos/jsonl-bundle": "^2.0",

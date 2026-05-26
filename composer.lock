@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "008a7d604655e5799a8aced182a38a7d",
+    "content-hash": "2746de9feb0dabfc3c3d75f6f48d115e",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -8119,6 +8119,70 @@
                 }
             ],
             "time": "2026-05-21T14:10:52+00:00"
+        },
+        {
+            "name": "survos/imgproxy-bundle",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/imgproxy-bundle.git",
+                "reference": "bcf1d6747f79dd71fe59efcc2bb1623ac40713f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/imgproxy-bundle/zipball/bcf1d6747f79dd71fe59efcc2bb1623ac40713f7",
+                "reference": "bcf1d6747f79dd71fe59efcc2bb1623ac40713f7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4",
+                "survos/core-bundle": "^2.0",
+                "symfony/config": "^8.0",
+                "symfony/console": "^8.0",
+                "symfony/dependency-injection": "^8.0",
+                "symfony/http-kernel": "^8.0",
+                "twig/twig": "^3.14"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.0",
+                "symfony/framework-bundle": "^8.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^8.0"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\ImgproxyBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Symfony bundle for signing and generating imgproxy URLs",
+            "keywords": [
+                "image",
+                "imgproxy",
+                "resize",
+                "symfony",
+                "symfony-ux",
+                "thumbnail",
+                "ux"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/imgproxy-bundle/issues",
+                "source": "https://github.com/survos/imgproxy-bundle/tree/2.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-17T16:33:35+00:00"
         },
         {
             "name": "survos/import-bundle",
@@ -21029,6 +21093,6 @@
         "ext-xml": "*",
         "ext-zip": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.9.0"
 }

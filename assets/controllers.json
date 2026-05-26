@@ -14,6 +14,13 @@
                 }
             }
         },
+        "@survos/imgproxy-bundle": {
+            "imgproxy": {
+                "enabled": true,
+                "fetch": "lazy",
+                "autoimport": []
+            }
+        },
         "@survos/js-twig-bundle": {
             "dexie": {
                 "enabled": true,
