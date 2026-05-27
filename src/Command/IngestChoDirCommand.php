@@ -118,18 +118,89 @@ final class IngestChoDirCommand
             ];
         }
 
+        // Second pass: metadata-only dirs (no .cho file)
+        $metaFinder = (new Finder())
+            ->files()
+            ->in($absDir)
+            ->name('*-metadata.json')
+            ->sortByName();
+
+        $metaOnly = 0;
+        foreach ($metaFinder as $metaFile) {
+            if ($limit > 0 && $count >= $limit) {
+                break;
+            }
+
+            $songDir = $metaFile->getPath();
+            $choFiles = glob($songDir . '/*-lyrics.cho');
+            if ($choFiles !== false && $choFiles !== []) {
+                continue;
+            }
+
+            $count++;
+            $stem = pathinfo($metaFile->getFilename(), PATHINFO_FILENAME);
+            $slug = (string) preg_replace('/-metadata$/', '', $stem);
+
+            try {
+                $metadata = json_decode((string) file_get_contents($metaFile->getPathname()), true, 512, JSON_THROW_ON_ERROR);
+            } catch (\Throwable) {
+                $skipped++;
+                continue;
+            }
+            if (!is_array($metadata)) {
+                $skipped++;
+                continue;
+            }
+
+            $title = trim((string) ($metadata['title'] ?? ''));
+            if ($title === '') {
+                $skipped++;
+                continue;
+            }
+
+            $effectiveSchool = $metadata['school'] ?? null;
+            $effectiveYear = isset($metadata['year']) && is_numeric($metadata['year'])
+                ? (int) $metadata['year']
+                : null;
+
+            $song = $this->songMatcher->findOrCreate(
+                rawTitle: $title,
+                school: $effectiveSchool,
+                year: $effectiveYear,
+                persist: !$dry,
+            );
+            $existed = isset($song->id);
+
+            $this->applyToSong($song, '', $effectiveSchool, $effectiveYear, $metadata);
+
+            $existed ? $updated++ : $created++;
+            $metaOnly++;
+
+            $rows[] = [
+                $existed ? 'upd' : 'new',
+                $title,
+                $effectiveSchool ?? '-',
+                $effectiveYear !== null ? (string) $effectiveYear : '-',
+                '✓',
+                $metaFile->getRelativePathname() . ' (no lyrics)',
+            ];
+        }
+
         if (!$dry) {
             $this->entityManager->flush();
         }
 
-        $io->table(['action', 'title', 'school', 'year', 'meta', 'file'], $rows);
+        if (count($rows) <= 200) {
+            $io->table(['action', 'title', 'school', 'year', 'meta', 'file'], $rows);
+        }
         $io->success(sprintf(
-            '%s — created: %d, updated: %d, skipped: %d (of %d found)',
+            '%s — created: %d, updated: %d, skipped: %d, metadata-only: %d (of %d total)',
             $dry ? 'DRY RUN' : 'Done',
             $created,
             $updated,
             $skipped,
-            $total,
+            $metaOnly,
+            $total + $metaOnly,
         ));
 
         return Command::SUCCESS;
@@ -148,7 +219,9 @@ final class IngestChoDirCommand
      */
     private function applyToSong(Song $song, string $cho, ?string $school, ?int $year, array $metadata): void
     {
-        $song->lyrics = $cho;
+        if ($cho !== '') {
+            $song->lyrics = $cho;
+        }
 
         if ($school !== null) {
             $song->school = $school;

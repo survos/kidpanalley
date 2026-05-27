@@ -15,6 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[AsCommand('app:enrich-song-dirs-from-csv', 'For each <slug>/<slug>-lyrics.cho in the song-archive, look up the song in the master CSV and write <slug>/<slug>-metadata.json (only when matched)')]
 final class EnrichSongDirsFromCsvCommand
@@ -22,6 +23,7 @@ final class EnrichSongDirsFromCsvCommand
     public function __construct(
         #[Autowire('%kernel.project_dir%')] private readonly string $projectDir,
         private readonly Filesystem $filesystem = new Filesystem(),
+        private readonly AsciiSlugger $slugger = new AsciiSlugger(),
     ) {
     }
 
@@ -37,6 +39,8 @@ final class EnrichSongDirsFromCsvCommand
         bool $dry = false,
         #[Option('only show miss rows in the output table (still writes JSON for matches)')]
         bool $missedOnly = false,
+        #[Option('create song dirs + metadata for CSV rows that have no .cho yet')]
+        bool $createDirs = false,
     ): int {
         $absDir = str_starts_with($dir, '/') ? $dir : $this->projectDir . '/' . ltrim($dir, '/');
         $absCsv = str_starts_with($csv, '/') ? $csv : $this->projectDir . '/' . ltrim($csv, '/');
@@ -66,6 +70,7 @@ final class EnrichSongDirsFromCsvCommand
         $skipped = 0;
         $written = 0;
         $rows = [];
+        $matchedKeys = [];
 
         foreach ($finder as $file) {
             $cho = file_get_contents($file->getPathname());
@@ -91,7 +96,8 @@ final class EnrichSongDirsFromCsvCommand
             }
 
             $matched++;
-            $stem = pathinfo($file->getFilename(), PATHINFO_FILENAME);  // "<slug>-lyrics"
+            $matchedKeys[$key] = true;
+            $stem = pathinfo($file->getFilename(), PATHINFO_FILENAME);
             $slug = (string) preg_replace('/-lyrics$/', '', $stem);
             $metadataPath = $file->getPath() . '/' . $slug . '-metadata.json';
 
@@ -111,17 +117,58 @@ final class EnrichSongDirsFromCsvCommand
             $rows[] = ['write', $title, $row['school'] ?? '-', basename($metadataPath)];
         }
 
+        $created = 0;
+        if ($createDirs) {
+            foreach ($byKey as $key => $csvRow) {
+                if (isset($matchedKeys[$key])) {
+                    continue;
+                }
+                $title = trim((string) ($csvRow['title'] ?? ''));
+                if ($title === '') {
+                    continue;
+                }
+
+                $slug = $this->slugifyTitle($title);
+                if ($slug === '') {
+                    continue;
+                }
+
+                $songDir = $absDir . '/' . $slug;
+                $metadataPath = $songDir . '/' . $slug . '-metadata.json';
+
+                if (file_exists($metadataPath) && !$force) {
+                    $rows[] = ['exists', $title, $csvRow['school'] ?? '-', $slug . '/'];
+                    continue;
+                }
+
+                if (!$dry) {
+                    $this->filesystem->mkdir($songDir);
+                    $payload = $this->buildMetadataPayload($csvRow, $title, (string) $key, $absCsv);
+                    $this->filesystem->dumpFile(
+                        $metadataPath,
+                        json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n",
+                    );
+                }
+                $created++;
+                $written++;
+                $rows[] = ['create', $title, $csvRow['school'] ?? '-', $slug . '/'];
+            }
+        }
+
         $tableRows = $missedOnly
             ? array_values(array_filter($rows, static fn(array $r): bool => $r[0] === 'miss'))
             : $rows;
-        $io->table(['action', 'title', 'school', 'file'], $tableRows);
+        if (count($tableRows) <= 200) {
+            $io->table(['action', 'title', 'school', 'file'], $tableRows);
+        }
         $io->success(sprintf(
-            '%s — matched: %d, unmatched: %d, skipped: %d, written: %d',
+            '%s — matched: %d, unmatched: %d, skipped: %d, written: %d, dirs created: %d',
             $dry ? 'DRY RUN' : 'Done',
             $matched,
             $unmatched,
             $skipped,
             $written,
+            $created,
         ));
 
         if ($unmatched > 0) {
@@ -129,6 +176,17 @@ final class EnrichSongDirsFromCsvCommand
         }
 
         return Command::SUCCESS;
+    }
+
+    private function slugifyTitle(string $title): string
+    {
+        $clean = html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if (function_exists('transliterator_transliterate')) {
+            $clean = (string) transliterator_transliterate('Any-Latin; Latin-ASCII;', $clean);
+        }
+        $clean = (string) preg_replace("/'+/", '', $clean);
+
+        return mb_strtolower((string) $this->slugger->slug($clean));
     }
 
     private function extractTitle(ChordProParser $parser, string $cho): ?string
