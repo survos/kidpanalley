@@ -8911,16 +8911,16 @@
         },
         {
             "name": "survos/storage-bundle",
-            "version": "2.7.5",
+            "version": "2.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/storage-bundle.git",
-                "reference": "6707104f10787d018ee536a945582663f97b133b"
+                "reference": "8c5b08233783dd8e13b21c2f16067bc9df0c65bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/storage-bundle/zipball/6707104f10787d018ee536a945582663f97b133b",
-                "reference": "6707104f10787d018ee536a945582663f97b133b",
+                "url": "https://api.github.com/repos/survos/storage-bundle/zipball/8c5b08233783dd8e13b21c2f16067bc9df0c65bf",
+                "reference": "8c5b08233783dd8e13b21c2f16067bc9df0c65bf",
                 "shasum": ""
             },
             "require": {
@@ -8976,7 +8976,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/storage-bundle/issues",
-                "source": "https://github.com/survos/storage-bundle/tree/2.7.5"
+                "source": "https://github.com/survos/storage-bundle/tree/2.7.6"
             },
             "funding": [
                 {
@@ -8984,7 +8984,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-02T18:21:37+00:00"
+            "time": "2026-06-03T00:56:41+00:00"
         },
         {
             "name": "survos/tabler-bundle",
