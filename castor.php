@@ -63,6 +63,8 @@ const SONGS_LYRICS_INDIVIDUAL  = SONGS_DROPBOX_GMU . '/Lyrics KPA/Lyrics individ
 const SONGS_RESIDENCY_CURRENT  = SONGS_DROPBOX_GMU . '/!!Residency documentation/Residencies current FY25-26';
 const SONGS_STAGING_DIR        = 'var/data';
 const SONGS_MASTER_CSV         = 'data/master-song-list.csv';
+const SONGS_AUDIO_JSONL        = 'data/audio.jsonl';
+const SONGS_RECORDINGS_ROOT    = '/media/tac/x10a/kpa-dropbox/Kid Pan Alley Dropbox/Songs-Recordings';
 
 #[AsTask(namespace: 'songs', name: 'export-csv', description: 'Re-export the Master Song List .xlsx → data/master-song-list.csv')]
 function songs_export_csv(): void
@@ -92,16 +94,41 @@ function songs_split_individual(): void
     run([...get_console(), 'app:split-lyrics-docx', SONGS_LYRICS_INDIVIDUAL, '--force', '--no-preview']);
 }
 
-#[AsTask(namespace: 'songs', name: 'enrich', description: 'Drop <slug>-metadata.json next to each <slug>-lyrics.cho using the master CSV')]
+#[AsTask(namespace: 'songs', name: 'enrich', description: 'Drop <slug>-metadata.json next to each <slug>-lyrics.cho + create dirs for CSV-only songs')]
 function songs_enrich(): void
 {
-    run([...get_console(), 'app:enrich-song-dirs-from-csv', SONGS_STAGING_DIR, '--csv=' . SONGS_MASTER_CSV, '--force']);
+    run([...get_console(), 'app:enrich-song-dirs-from-csv', SONGS_STAGING_DIR, '--csv=' . SONGS_MASTER_CSV, '--force', '--create-dirs']);
 }
 
 #[AsTask(namespace: 'songs', name: 'ingest', description: 'Walk var/data/ and create/update Song records from .cho + metadata.json')]
 function songs_ingest(): void
 {
     run([...get_console(), 'app:ingest-cho-dir', SONGS_STAGING_DIR]);
+}
+
+#[AsTask(namespace: 'songs', name: 'scan-audio', description: 'Scan Songs-Recordings tree to data/audio.jsonl (slow — x10a drive)')]
+function songs_scan_audio(): void
+{
+    io()->title('Scanning audio files from Songs-Recordings');
+    io()->note('Source is on the x10a drive — this may take a few minutes.');
+    run([...get_console(), 'import:dir', SONGS_RECORDINGS_ROOT,
+        '--output=' . SONGS_AUDIO_JSONL,
+        '--extensions=mp3,wav,aif,aiff,flac,m4a,ogg,wma',
+        '--exclude-dirs=Cache,History',
+        '--probe=2',
+    ]);
+}
+
+#[AsTask(namespace: 'songs', name: 'link-audio', description: 'Read data/audio.jsonl and symlink matched audio into var/data/<slug>/')]
+function songs_link_audio(): void
+{
+    run([...get_console(), 'app:link-audio', SONGS_AUDIO_JSONL, '--staging=' . SONGS_STAGING_DIR]);
+}
+
+#[AsTask(namespace: 'songs', name: 'ingest-audio', description: 'Create FileAsset + Audio DB records from audio files in var/data/<slug>/')]
+function songs_ingest_audio(): void
+{
+    run([...get_console(), 'app:ingest-audio', SONGS_STAGING_DIR]);
 }
 
 #[AsTask(namespace: 'songs', name: 'clean', description: 'Wipe var/data/<song-slug> dirs (keeps unrelated files in var/data)')]
@@ -120,21 +147,28 @@ function songs_clean(): void
     io()->success("Removed $removed song dirs from $base");
 }
 
-#[AsTask(namespace: 'songs', name: 'status', description: 'Show counts: .cho files on disk, Song records in DB')]
+#[AsTask(namespace: 'songs', name: 'status', description: 'Show counts: .cho files on disk, Song/Audio/FileAsset records in DB')]
 function songs_status(): void
 {
     $base = SONGS_STAGING_DIR;
     $choCount = is_dir($base) ? count(glob($base . '/*/*-lyrics.cho') ?: []) : 0;
     $metaCount = is_dir($base) ? count(glob($base . '/*/*-metadata.json') ?: []) : 0;
+    $audioFileCount = is_dir($base) ? count(array_filter(
+        glob($base . '/*/*.*') ?: [],
+        fn ($f) => in_array(strtolower(pathinfo($f, PATHINFO_EXTENSION)), ['mp3','wav','aif','aiff','flac','m4a'], true),
+    )) : 0;
+    $jsonlRows = is_file(SONGS_AUDIO_JSONL) ? count(file(SONGS_AUDIO_JSONL)) : 0;
     io()->definitionList(
         ['Staging dir' => $base],
         ['.cho files on disk' => $choCount],
         ['-metadata.json files' => $metaCount],
+        ['Audio files (symlinks) on disk' => $audioFileCount],
+        ['audio.jsonl rows' => $jsonlRows],
     );
-    run([...get_console(), 'd:run-sql', 'SELECT count(*) as song_count FROM song']);
+    run([...get_console(), 'd:run-sql', "SELECT 'song' as entity, count(*) as cnt FROM song UNION ALL SELECT 'audio', count(*) FROM audio UNION ALL SELECT 'file_asset', count(*) FROM file_asset"]);
 }
 
-#[AsTask(namespace: 'songs', name: 'all', description: 'Run the full pipeline: export-csv → split-location → split-residency → enrich → ingest')]
+#[AsTask(namespace: 'songs', name: 'all', description: 'Run the full pipeline: export-csv → split → enrich → ingest → scan-audio → link-audio → ingest-audio')]
 function songs_all(): void
 {
     songs_export_csv();
@@ -142,5 +176,8 @@ function songs_all(): void
     songs_split_residency();
     songs_enrich();
     songs_ingest();
+    songs_scan_audio();
+    songs_link_audio();
+    songs_ingest_audio();
     songs_status();
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2746de9feb0dabfc3c3d75f6f48d115e",
+    "content-hash": "68510a3a76e247084d86ba097cf2f9dd",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -8911,16 +8911,16 @@
         },
         {
             "name": "survos/storage-bundle",
-            "version": "2.5.1",
+            "version": "2.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/storage-bundle.git",
-                "reference": "0a6a90dba6879ba4c29923d0b14ec274cc6dfa4a"
+                "reference": "6707104f10787d018ee536a945582663f97b133b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/storage-bundle/zipball/0a6a90dba6879ba4c29923d0b14ec274cc6dfa4a",
-                "reference": "0a6a90dba6879ba4c29923d0b14ec274cc6dfa4a",
+                "url": "https://api.github.com/repos/survos/storage-bundle/zipball/6707104f10787d018ee536a945582663f97b133b",
+                "reference": "6707104f10787d018ee536a945582663f97b133b",
                 "shasum": ""
             },
             "require": {
@@ -8929,8 +8929,8 @@
                 "ext-zip": "*",
                 "league/flysystem-bundle": "^3.5",
                 "php": "^8.4",
-                "survos/jsonl-bundle": "*",
-                "survos/kit-bundle": "^2.0",
+                "survos/jsonl-bundle": "^2.5",
+                "survos/kit-bundle": "^2.5",
                 "symfony/config": "^7.4||^8.0",
                 "symfony/dependency-injection": "^7.4||^8.0",
                 "symfony/http-kernel": "^7.4||^8.0",
@@ -8942,8 +8942,8 @@
                 "league/flysystem-aws-s3-v3": "^3.29",
                 "phpstan/phpstan": "^2.0",
                 "phpstan/phpstan-symfony": "^2.0",
-                "phpunit/phpunit": "^13",
-                "survos/simple-datatables-bundle": "^2.0",
+                "phpunit/phpunit": "^13.0",
+                "survos/simple-datatables-bundle": "^2.5",
                 "symfony/browser-kit": "^7.4||^8.0",
                 "symfony/console": "^7.4||^8.0",
                 "symfony/framework-bundle": "^7.4||^8.0",
@@ -8976,7 +8976,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/storage-bundle/issues",
-                "source": "https://github.com/survos/storage-bundle/tree/2.5.1"
+                "source": "https://github.com/survos/storage-bundle/tree/2.7.5"
             },
             "funding": [
                 {
@@ -8984,7 +8984,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-19T19:23:11+00:00"
+            "time": "2026-06-02T18:21:37+00:00"
         },
         {
             "name": "survos/tabler-bundle",

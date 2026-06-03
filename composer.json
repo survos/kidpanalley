@@ -62,7 +62,7 @@
         "survos/scraper-bundle": "^2.0",
         "survos/seo-bundle": "^2.0",
         "survos/state-bundle": "^2.0",
-        "survos/storage-bundle": "^2.0",
+        "survos/storage-bundle": "^2.7",
         "survos/tabler-bundle": "dev-main",
         "symfony/ai-bundle": "^0.8.0",
         "symfony/asset": "^8.0",
