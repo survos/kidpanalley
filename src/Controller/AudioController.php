@@ -10,6 +10,7 @@ use Survos\FieldBundle\Enum\Purpose;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -76,6 +77,13 @@ class AudioController extends AbstractController
     #[Route('/{id}/file', name: 'audio_file', methods: [Request::METHOD_GET])]
     public function audioFile(Audio $audio): Response
     {
+        // Uploaded → s3 holds the full public URL; hand it to the browser (native Range/seeking).
+        $url = $audio->fileAsset->s3 ?? null;
+        if ($url) {
+            return new RedirectResponse($url);
+        }
+
+        // Not yet uploaded → serve from the local drive (dev fallback).
         $path = $this->resolvePath($audio->fileAsset->path ?? null);
         if (!$path || !is_file($path)) {
             return new Response('Audio file not available', Response::HTTP_NOT_FOUND);

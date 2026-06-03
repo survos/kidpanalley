@@ -51,12 +51,12 @@ class FileAssetWorkflow
 		if (!is_file($fileAsset->path) || !is_readable($fileAsset->path)) {
 			return;
 		}
-		$hash = hash_file('xxh3', $fileAsset->path);
-		if (!$hash) {
+		// Mirror the var/data symlink layout as the object key: <song-slug>/<name>.mp3
+		// (e.g. "st/st-gv.mp3"). relativePath is already unique across all assets.
+		$objectKey = $fileAsset->relativePath;
+		if ($objectKey === '') {
 			return;
 		}
-		$shard = substr($hash, 0, 2);
-		$objectKey = sprintf('mp3/%s/%s.%s', $shard, $hash, $fileAsset->extension);
 		if (!$this->archiveStorage->fileExists($objectKey)) {
 			$stream = fopen($fileAsset->path, 'rb');
 			if ($stream === false) {
@@ -69,8 +69,14 @@ class FileAssetWorkflow
 			}
 		}
 
-		$sidecarKey = sprintf('mp3/%s/%s.json', $shard, $hash);
-		if (!$this->archiveStorage->fileExists($sidecarKey)) {
+		// Persist the full public URL for easy use in templates/links.
+		$fileAsset->s3 = $this->archiveStorage->publicUrl($objectKey);
+		$this->entityManager->flush();
+
+		// Sidecar JSON caches probe metadata (duration, streams, etc.) next to the mp3.
+		$hash = hash_file('xxh3', $fileAsset->path) ?: '';
+		$sidecarKey = preg_replace('/\.[^.\/]+$/', '.json', $objectKey);
+		if ($sidecarKey !== null && !$this->archiveStorage->fileExists($sidecarKey)) {
 			$payload = $this->serializeFileAsset($fileAsset, $hash, $objectKey);
 			$encoded = json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 			$this->archiveStorage->write($sidecarKey, $encoded);

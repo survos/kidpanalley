@@ -19,25 +19,38 @@
                             <div class="{% if not loop.last %}mb-3 border-bottom pb-3{% endif %}">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <div>
-                                        <a href="{{ path('audio_show', { id: audio.id }) }}" class="fw-semibold">{{ audio.title }}</a>
-                                        {% if audio.variant %}<span class="text-muted ms-1">{{ audio.variant }}</span>{% endif %}
+                                        <a href="{{ path('audio_show', { id: audio.id }) }}" class="fw-semibold">{{ audio.fileAsset.filename ?? audio.title }}</a>
+                                        {% if audio.variant %}<span class="badge bg-azure-lt ms-2">{{ audio.variant }}</span>{% endif %}
                                     </div>
                                     <span class="badge bg-secondary">{{ audio.format }}</span>
+                                    {% if app.environment == 'dev' %}
+                                        {% set _mk = audio.fileAsset.marking %}
+                                        <span class="badge ms-1 {{ _mk == 'uploaded' ? 'bg-green' : (_mk == 'probed' ? 'bg-yellow' : 'bg-secondary') }}">
+                                            {{ _mk }}{{ audio.fileAsset.s3 ? ' · S3' : ' · local' }}
+                                        </span>
+                                    {% endif %}
                                 </div>
+                                {% if audio.fileAsset %}
+                                    {% set sourceDir = audio.fileAsset.dirname|replace({'/media/tac/x10a/kpa-dropbox/Kid Pan Alley Dropbox/Songs-Recordings/': ''}) %}
+                                    <div class="bg-light rounded px-2 py-1 mb-1 small d-flex justify-content-between">
+                                        {% if audio.fileAsset.s3 %}
+                                            <a class="text-truncate me-2" href="{{ audio.fileAsset.s3 }}" target="_blank" rel="noopener">{{ audio.fileAsset.s3 }}</a>
+                                        {% else %}
+                                            <span class="text-muted text-truncate me-2">{{ sourceDir }}</span>
+                                        {% endif %}
+                                        <span class="text-muted text-nowrap">
+                                            {% if audio.fileAsset.duration %}
+                                                {{ (audio.fileAsset.duration / 60)|round(0, 'floor') }}:{{ '%02d'|format(audio.fileAsset.duration % 60) }}
+                                            {% endif %}
+                                            {% if audio.fileAsset.size %}
+                                                &middot; {{ (audio.fileAsset.size / 1048576)|number_format(1) }} MB
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                {% endif %}
                                 <audio controls preload="none" style="width: 100%;">
                                     <source src="{{ path('audio_file', { id: audio.id }) }}" type="audio/mpeg">
                                 </audio>
-                                {% if audio.fileAsset %}
-                                    <div class="text-muted small mt-1">
-                                        <code>{{ audio.fileAsset.filename }}</code>
-                                        {% if audio.fileAsset.size %}
-                                            &middot; {{ (audio.fileAsset.size / 1048576)|number_format(1) }} MB
-                                        {% endif %}
-                                        {% if audio.fileAsset.duration %}
-                                            &middot; {{ (audio.fileAsset.duration / 60)|round(0, 'floor') }}:{{ '%02d'|format(audio.fileAsset.duration % 60) }}
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
                             </div>
                         {% endfor %}
                     {% else %}

@@ -96,4 +96,12 @@ class FileAsset implements MarkingInterface
     ) {
         $this->marking = FileAssetWFDefinition::PLACE_NEW;
     }
+
+    /**
+     * Object key within the archive bucket once uploaded (e.g. "mp3/48/48ef….mp3").
+     * Null until the FileAssetWorkflow upload transition succeeds. Doubles as the
+     * sync flag: null = not in S3, set = uploaded.
+     */
+    #[ORM\Column(length: 512, nullable: true)]
+    public ?string $s3 = null;
 }

@@ -125,12 +125,7 @@ final class LinkAudioCommand
 
             // Extract probe metadata (duration, etc.) from JSONL
             $meta = $row['metadata'] ?? [];
-            $probeDuration = null;
-            if (isset($meta['probe_duration'])) {
-                $probeDuration = (float) $meta['probe_duration'];
-            } elseif (isset($meta['probe_duration_ms']) && (float) $meta['probe_duration_ms'] > 1000) {
-                $probeDuration = (float) $meta['probe_duration_ms'] / 1000.0;
-            }
+            $probeDuration = isset($meta['media_duration']) ? (float) $meta['media_duration'] : null;
 
             if (!$dry) {
                 $this->filesystem->mkdir($songDir);

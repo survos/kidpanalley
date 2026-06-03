@@ -150,6 +150,15 @@ class SongMatcher
     }
 
     /**
+     * Find an existing Song by exact or fuzzy title match. Returns null if no match.
+     */
+    public function find(string $rawTitle): ?Song
+    {
+        $canonical = $this->normalizeTitle($rawTitle);
+        return $this->findByNormalized($canonical) ?? $this->findByLevenshtein($canonical);
+    }
+
+    /**
      * Find an existing Song by exact or fuzzy title match, or create a new one.
      *
      * @param string      $rawTitle  Raw filename or title string.
