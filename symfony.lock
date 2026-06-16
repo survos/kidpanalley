@@ -203,9 +203,6 @@
     "survos/atlas-bundle": {
         "version": "2.5.1"
     },
-    "survos/babel-bundle": {
-        "version": "2.5.1"
-    },
     "survos/ciine-bundle": {
         "version": "2.5.1"
     },

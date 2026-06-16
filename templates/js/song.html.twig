@@ -156,6 +156,15 @@
                 <div class="meta-val">{{ hit.lyricsLength }}</div>
             {% endif %}
 
+            {% if hit.fileCount is defined and hit.fileCount %}
+                <div class="meta-key fw-semibold">Recordings</div>
+                <div class="meta-val">
+                    <span class="badge bg-info-subtle text-info-emphasis">
+                        <span class="me-1 icon-wrapper">{{ icons.audio|default('🎵')|raw }}</span>{{ hit.fileCount }}
+                    </span>
+                </div>
+            {% endif %}
+
 {#            {% if hit.locale is defined and hit.locale|trim != '' %}#}
 {#                <div class="meta-key fw-semibold">Locale</div>#}
 {#                <div class="meta-val">{{ hit.locale }}</div>#}

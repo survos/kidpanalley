@@ -12,9 +12,6 @@ use App\Workflow\SongWFDefinition;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\Lingua\Contracts\Attribute\Translatable;
-use Survos\BabelBundle\Contract\BabelHooksInterface;
-use Survos\BabelBundle\Entity\Traits\BabelHooksTrait;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
@@ -36,7 +33,6 @@ use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Workflow\Marking;
-use Zenstruck\Metadata;
 
 use Doctrine\ORM\Mapping\Column;
 
@@ -59,7 +55,6 @@ use Doctrine\DBAL\Types\Types;
 #[ApiFilter(FacetsFieldSearchFilter::class, properties: ['school', 'year'], arguments: ["searchParameterName" => "facet_filter"]) ]
 #[Groups(['song.read'])]
 #[Assert\EnableAutoMapping]
-#[Metadata('translatable', ['title'])]
 #[EntityMeta(
     icon: 'tabler:music',
     order: 10,
@@ -71,15 +66,12 @@ use Doctrine\DBAL\Types\Types;
     ui: ['icon' => 'Song'],
     persisted: ['id', 'title', 'chorus', 'year', 'school', 'lyrics', 'lyricsLength', 'writersArray', 'publishersArray', 'description', 'rp', 'fileCount'],
     searchable: ['lyrics','title','chorus'],
-    filterable: ['writersArray', 'publishersArray', 'year', 'lyricsLength'],
+    filterable: ['writersArray', 'publishersArray', 'year', 'lyricsLength', 'fileCount'],
     sortable: ['lyricsLength', 'year', 'title']
 )]
-class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface, MarkingInterface
+class Song implements RouteParametersInterface, \Stringable, MarkingInterface
 {
-//    use SongTranslationsTrait;
-//    use TranslatableHooksTrait;
     use RouteIdentityTrait;
-    use BabelHooksTrait;
     use MarkingTrait;
 
     public const DOCTRINE_ROUTE = 'doctrine_songs';
@@ -191,8 +183,9 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
         $this->marking = SongWFDefinition::PLACE_NEW;
     }
 
-    #[Groups(['song.read'])]
-    #[Field(sortable: true, filterable: true, widget: Widget::Range, order: 65)]
+    #[Groups(['song.facet', 'song.read'])]
+    #[Facet]
+    #[Field(sortable: true, filterable: true, widget: Widget::Range, facet: true, order: 65)]
     public function getFileCount(): int
     {
         return $this->audios->count();
@@ -257,7 +250,6 @@ class Song implements RouteParametersInterface, \Stringable, BabelHooksInterface
     {
         return $this->title;
     }
-    // <BABEL:TRANSLATABLE:START title>
     #[Column(type: Types::TEXT, nullable: true)]
     #[Field(searchable: true, sortable: true, order: 10)]
     public ?string $title = null;
