@@ -203,4 +203,7 @@ return [
     'call-bind-apply-helpers/applyBind' => ['version' => '1.0.0'],
     'define-data-property' => ['version' => '1.1.4'],
     'has-property-descriptors' => ['version' => '1.0.2'],
+    'markdown-to-jsx' => ['version' => '9.8.2'],
+    'react' => ['version' => '19.2.7'],
+    'markdown-to-jsx/entities' => ['version' => '9.8.2'],
 ];
