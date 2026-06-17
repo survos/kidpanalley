@@ -18,6 +18,15 @@
 
     {% set workspace = defaultWorkspace|default('default') %}
 
+    <div class="mt-4 d-flex gap-2">
+        <a href="/api/songs/export.csv" class="btn btn-outline-success" download>
+            {{ ux_icon('tabler:file-download')|raw }} Download Song CSV
+        </a>
+        <a href="/api/file-assets/export.csv" class="btn btn-outline-success" download>
+            {{ ux_icon('tabler:file-download')|raw }} Download Files CSV
+        </a>
+    </div>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mt-4">
         {% for entity in dashboardEntities %}
             <div class="col">

@@ -63,6 +63,7 @@
         "survos/state-bundle": "^2.0",
         "survos/storage-bundle": "^2.7",
         "survos/tabler-bundle": "^2.7",
+        "survos/tui-extras-bundle": "^2.9",
         "symfony/ai-bundle": "^0.8.0",
         "symfony/asset": "^8.0",
         "symfony/asset-mapper": "^8.0",

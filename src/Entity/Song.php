@@ -40,6 +40,13 @@ use Doctrine\DBAL\Types\Types;
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 #[RouteIdentity(field: 'id', key: 'songId')]
 #[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/songs/export.{_format}',
+        formats: ['csv' => ['text/csv']],
+        normalizationContext: ['groups' => ['song.csv'], 'skip_null_values' => false],
+        paginationEnabled: false,
+        name: 'songs_csv',
+    ),
     new Get(),
     new GetCollection(name: self::DOCTRINE_ROUTE)],
     parameters: [
@@ -77,28 +84,29 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
     public const DOCTRINE_ROUTE = 'doctrine_songs';
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['song.read', 'searchable', 'video.read'])]
+    #[Groups(['song.read', 'song.csv', 'searchable', 'video.read'])]
     #[Field(searchable: true, visible: false, order: 80)]
     public ?string $description = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Groups(['song.read', 'searchable'])]
+    #[Groups(['song.read', 'song.csv', 'searchable'])]
     #[Field(sortable: true, filterable: true, widget: Widget::Date, visible: false, order: 70, format: 'date')]
     public ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['song.facet', 'song.read', 'video.read', 'searchable'])]
+    #[Groups(['song.facet', 'song.read', 'song.csv', 'video.read', 'searchable'])]
     #[Facet]
     #[Field(sortable: true, filterable: true, widget: Widget::Range, facet: true, order: 30)]
     public ?int $year = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Groups(['song.read', 'song.csv', 'video.read', 'searchable'])]
     #[Facet]
     #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, order: 40)]
     public ?string $school = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.csv'])]
     #[Field(searchable: true, visible: false, order: 90)]
     public ?string $lyrics {
         set {
@@ -112,26 +120,29 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
      * No DB column — computed on access. Indexed in Meili via the
      * persisted/searchable arrays below so grids + search pick it up.
      */
-    #[Groups(['song.read', 'searchable'])]
+    #[Groups(['song.read', 'song.csv', 'searchable'])]
     #[Field(searchable: true, visible: true, order: 25)]
     public ?string $chorus {
         get => \App\Service\ChordProInspector::firstChorus($this->lyrics);
     }
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'song.csv'])]
     #[Field(searchable: true, visible: false, order: 95)]
     public ?string $featuredArtist = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.csv'])]
     #[Field(searchable: true, visible: false, order: 100)]
     public ?string $recordingCredits = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.csv'])]
     #[Field(searchable: true, visible: false, order: 110)]
     public ?string $musicians = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.csv'])]
     #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, visible: false, order: 50)]
     public ?string $writers = null;
 
@@ -139,15 +150,16 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
     public ?int $wordpressPageId = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['song.csv'])]
     public ?string $recording = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['song.read', 'video.read', 'searchable'])]
+    #[Groups(['song.read', 'song.csv', 'video.read', 'searchable'])]
     #[Field(searchable: true, filterable: true, widget: Widget::Select, facet: true, visible: false, order: 60)]
     public ?string $publisher = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'song.csv'])]
     #[Field(searchable: true, visible: false, order: 120)]
     public ?string $notes = null;
 
@@ -155,7 +167,7 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
     public ?array $aliases = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['song.read'])]
+    #[Groups(['song.read', 'song.csv'])]
     #[Field(sortable: true, filterable: true, widget: Widget::Range, visible: false, order: 75)]
     public ?int $lyricsLength = null;
 
@@ -173,6 +185,7 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
 
     public function __construct(    #[ORM\Id]
                                     #[ORM\Column(length: 255)]
+                                    #[Groups(['song.csv'])]
                                     #[Field(searchable: true, sortable: true, order: 20)]
                                     public string $id
     )
@@ -183,7 +196,7 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
         $this->marking = SongWFDefinition::PLACE_NEW;
     }
 
-    #[Groups(['song.facet', 'song.read'])]
+    #[Groups(['song.facet', 'song.read', 'song.csv'])]
     #[Facet]
     #[Field(sortable: true, filterable: true, widget: Widget::Range, facet: true, order: 65)]
     public function getFileCount(): int
@@ -250,6 +263,7 @@ class Song implements RouteParametersInterface, \Stringable, MarkingInterface
     {
         return $this->title;
     }
+    #[Groups(['song.read', 'song.csv'])]
     #[Column(type: Types::TEXT, nullable: true)]
     #[Field(searchable: true, sortable: true, order: 10)]
     public ?string $title = null;

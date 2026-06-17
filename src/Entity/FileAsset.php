@@ -18,10 +18,18 @@ use Survos\FieldBundle\Attribute\EntityMeta;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Survos\StateBundle\Traits\MarkingInterface;
 use Survos\StateBundle\Traits\MarkingTrait;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: FileAssetRepository::class)]
 #[ORM\UniqueConstraint(name: 'file_asset_path', columns: ['path'])]
 #[ApiResource(operations: [
+    new GetCollection(
+        uriTemplate: '/file-assets/export.{_format}',
+        formats: ['csv' => ['text/csv']],
+        normalizationContext: ['groups' => ['fileasset.csv'], 'skip_null_values' => false],
+        paginationEnabled: false,
+        name: 'file_assets_csv',
+    ),
     new Get(),
     new GetCollection(name: self::DOCTRINE_ROUTE),
 ])]
@@ -60,34 +68,48 @@ class FileAsset implements MarkingInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['fileasset.csv'])]
     public private(set) ?int $id = null;
 
     public function __construct(
         #[ORM\Column(type: 'text')]
+        #[Groups(['fileasset.csv'])]
         public string $path,
         #[ORM\Column(length: 512)]
+        #[Groups(['fileasset.csv'])]
         public string $relativePath,
         #[ORM\Column(length: 255)]
+        #[Groups(['fileasset.csv'])]
         public string $filename,
         #[ORM\Column(length: 16)]
+        #[Groups(['fileasset.csv'])]
         public string $extension,
         #[ORM\Column(length: 512, nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?string $dirname = null,
         #[ORM\Column(type: 'integer', nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?int $size = null,
         #[ORM\Column(type: 'integer', nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?int $modifiedTime = null,
         #[ORM\Column(type: 'boolean')]
+        #[Groups(['fileasset.csv'])]
         public bool $isReadable = true,
         #[ORM\Column(length: 32)]
+        #[Groups(['fileasset.csv'])]
         public string $type = 'other',
         #[ORM\Column(length: 255, nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?string $school = null,
         #[ORM\Column(type: 'integer', nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?int $year = null,
         #[ORM\Column(length: 127, nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?string $mimeType = null,
         #[ORM\Column(type: Types::FLOAT, nullable: true)]
+        #[Groups(['fileasset.csv'])]
         public ?float $duration = null,
         #[ORM\Column(type: Types::JSON, options: ['jsonb' => true], nullable: true)]
         public ?array $probedData = null,
@@ -103,5 +125,6 @@ class FileAsset implements MarkingInterface
      * sync flag: null = not in S3, set = uploaded.
      */
     #[ORM\Column(length: 512, nullable: true)]
+    #[Groups(['fileasset.csv'])]
     public ?string $s3 = null;
 }
