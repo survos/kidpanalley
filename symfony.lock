@@ -200,8 +200,17 @@
             "config/packages/sentry.yaml"
         ]
     },
+    "survos/admin-bundle": {
+        "version": "2.10.3"
+    },
+    "survos/api-grid-bundle": {
+        "version": "2.10.3"
+    },
     "survos/atlas-bundle": {
         "version": "2.5.1"
+    },
+    "survos/auth-bundle": {
+        "version": "2.10.3"
     },
     "survos/ciine-bundle": {
         "version": "2.5.1"
@@ -241,14 +250,23 @@
     "survos/deployment-bundle": {
         "version": "2.5.1"
     },
+    "survos/doc-bundle": {
+        "version": "2.10.3"
+    },
     "survos/ez-bundle": {
         "version": "2.5.1"
     },
     "survos/field-bundle": {
         "version": "2.5.1"
     },
+    "survos/imgproxy-bundle": {
+        "version": "2.10.3"
+    },
     "survos/import-bundle": {
         "version": "2.5.1"
+    },
+    "survos/js-twig-bundle": {
+        "version": "2.10.3"
     },
     "survos/jsonl-bundle": {
         "version": "2.5.1"
@@ -277,6 +295,18 @@
     },
     "survos/seo-bundle": {
         "version": "2.5.1"
+    },
+    "survos/state-bundle": {
+        "version": "2.10.3"
+    },
+    "survos/storage-bundle": {
+        "version": "2.10.3"
+    },
+    "survos/tabler-bundle": {
+        "version": "2.10.3"
+    },
+    "survos/tui-extras-bundle": {
+        "version": "2.10.3"
     },
     "symfony/ai-bundle": {
         "version": "0.8",

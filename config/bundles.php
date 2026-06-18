@@ -53,4 +53,5 @@ return [
     Survos\FieldBundle\SurvosFieldBundle::class => ['all' => true],
     Survos\Kit\SurvosKitBundle::class => ['all' => true],
     Survos\AdminBundle\SurvosAdminBundle::class => ['all' => true],
+    Survos\TuiExtrasBundle\SurvosTuiExtrasBundle::class => ['all' => true],
 ];
