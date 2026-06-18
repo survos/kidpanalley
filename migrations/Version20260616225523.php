@@ -26,7 +26,7 @@ final class Version20260616225523 extends AbstractMigration
         $this->addSql('DROP TABLE str');
         $this->addSql('DROP TABLE str_tr');
         $this->addSql('DROP TABLE term_set');
-        $this->addSql('ALTER TABLE file_asset ADD s3 VARCHAR(512) DEFAULT NULL');
+//         $this->addSql('ALTER TABLE file_asset ADD s3 VARCHAR(512) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
