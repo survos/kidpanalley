@@ -2,7 +2,7 @@ import { startStimulusApp } from '@symfony/stimulus-bundle';
 import ContentLoader from 'stimulus-content-loader'
 import Reveal from 'stimulus-reveal-controller'
 import ZoomImageController from '@kanety/stimulus-zoom-image';
-import MusicDisplayController from 'opensheetmusicdisplay'
+import MusicDisplayController from './controllers/music_controller.js'
 const app = startStimulusApp();
 
 // register any custom, 3rd party controllers here

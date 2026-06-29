@@ -1,6 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import opensheetmusicdisplay from 'opensheetmusicdisplay'
-
 export default class extends Controller {
     static values = {
         url: String,
@@ -13,33 +11,8 @@ export default class extends Controller {
     static targets = ['display', 'spinner']
 
     connect() {
-        console.error('init osmd', this.urlValue);
-        this.displayTarget.innerHTML = 'loading ' + this.urlValue;
-        var osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(this.displayTarget);
-        osmd.setOptions({
-            backend: "svg",
-            drawTitle: true,
-            // drawingParameters: "compacttight" // don't display title, composer etc., smaller margins
-        });
-        osmd
-            .load(this.urlValue)
-            .then(
-                () => {
-                    osmd.render();
-                    if (this.hasSpinnerTarget) {
-                        this.spinnerTarget.remove();
-                    }
-                }
-            )
-            .catch((error) => {
-                console.error('Error loading music:', error);
-                if (this.hasSpinnerTarget) {
-                    this.spinnerTarget.remove();
-                }
-            });
-
-        // this.injectStyles()
-        // this.loadMusic()
+        this.injectStyles()
+        this.loadMusic()
     }
 
     get detectedFormat() {
@@ -47,7 +20,6 @@ export default class extends Controller {
         if (this.contentValue) return 'chordpro'
 
         const ext = this.urlValue?.split('.').pop()?.toLowerCase()
-        if (['xml', 'mxl', 'musicxml'].includes(ext)) return 'musicxml'
         if (['cho', 'chordpro', 'pro', 'chopro', 'txt'].includes(ext)) return 'chordpro'
 
         return 'chordpro'
@@ -212,9 +184,7 @@ export default class extends Controller {
         try {
             const format = this.detectedFormat
 
-            if (format === 'musicxml') {
-                await this.loadMusicXML()
-            } else if (format === 'chordpro') {
+            if (format === 'chordpro') {
                 await this.loadChordPro()
             } else {
                 this.showError(`Unknown format for: ${this.urlValue}`)
@@ -223,27 +193,6 @@ export default class extends Controller {
             console.error('Error loading music:', error)
             this.showError(error.message)
         }
-    }
-
-    async loadMusicXML() {
-        const osmdModule = await import("opensheetmusicdisplay")
-        const OpenSheetMusicDisplay = osmdModule.default.OpenSheetMusicDisplay
-
-        this.osmd = new OpenSheetMusicDisplay(this.element, {
-            autoResize: true,
-            backend: "svg",
-            drawTitle: true,
-            drawSubtitle: true,
-            drawComposer: true,
-            drawCredits: true,
-            drawPartNames: true,
-            coloringEnabled: true,
-            defaultColorNotehead: "#CC0055",
-            defaultColorStem: "#CC0055"
-        })
-
-        await this.osmd.load(this.urlValue)
-        this.osmd.render()
     }
 
     async loadChordPro() {
@@ -372,7 +321,4 @@ pre.chord-sheet * {
         this.element.innerHTML = `<div class="alert alert-danger">Error: ${message}</div>`
     }
 
-    disconnect() {
-        if (this.osmd) this.osmd.clear()
-    }
 }

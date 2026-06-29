@@ -21,7 +21,7 @@
 
     <twig:api_grid
         :class="class"
-        :apiGetCollectionUrl="api_route(class)"
+        :apiGetCollectionUrl="path(constant(class ~ '::DOCTRINE_ROUTE'))"
         :columns="columns"
         :caller="_self"
         :searchPanes="true"

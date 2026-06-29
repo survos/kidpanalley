@@ -63,11 +63,6 @@ window.addEventListener('DOMContentLoaded', async () => {
  // Set up the editor
  const { Editor } = await import('./app/editor.js');
  const editor = new Editor(document.body);
-
- // Set up the menu
- const { Menu } = await import('./app/menu.js');
- new Menu(document.querySelector('.actions'), editor);
-
  // Save content to database on edit
  editor.onUpdate(async (content) => {
   await db.put('settings', content, 'content');
