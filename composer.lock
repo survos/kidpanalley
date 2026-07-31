@@ -4897,12 +4897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "c6517510d7fc7c8d92fbe476e3d942ca2d03915e"
+                "reference": "24d6d72a717d872aabbdd7d7c4a93eb804fc5d0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/c6517510d7fc7c8d92fbe476e3d942ca2d03915e",
-                "reference": "c6517510d7fc7c8d92fbe476e3d942ca2d03915e",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/24d6d72a717d872aabbdd7d7c4a93eb804fc5d0c",
+                "reference": "24d6d72a717d872aabbdd7d7c4a93eb804fc5d0c",
                 "shasum": ""
             },
             "require": {
@@ -4972,7 +4972,7 @@
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
                 "source": "https://github.com/meilisearch/meilisearch-php/tree/main"
             },
-            "time": "2026-04-28T09:12:29+00:00"
+            "time": "2026-07-29T11:07:01+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8860,16 +8860,16 @@
         },
         {
             "name": "survos/meili-bundle",
-            "version": "2.10.24",
+            "version": "2.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/meili-bundle.git",
-                "reference": "f17760faafd2cdfe42279a3007b3907e09cfdb2f"
+                "reference": "e556e276bff6804a0b4a5fb952f102dcfea4b643"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/f17760faafd2cdfe42279a3007b3907e09cfdb2f",
-                "reference": "f17760faafd2cdfe42279a3007b3907e09cfdb2f",
+                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/e556e276bff6804a0b4a5fb952f102dcfea4b643",
+                "reference": "e556e276bff6804a0b4a5fb952f102dcfea4b643",
                 "shasum": ""
             },
             "require": {
@@ -8902,6 +8902,7 @@
                 "rector/rector": "^2.0",
                 "survos/babel-bundle": "^2.5",
                 "survos/inspection-bundle": "^2.5",
+                "survos/tabler-bundle": "^2.5",
                 "symfony/browser-kit": "^8.1",
                 "symfony/framework-bundle": "^8.1",
                 "symfony/http-client": "^8.1",
@@ -8939,7 +8940,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/meili-bundle/issues",
-                "source": "https://github.com/survos/meili-bundle/tree/2.10.24"
+                "source": "https://github.com/survos/meili-bundle/tree/2.18.1"
             },
             "funding": [
                 {
@@ -8947,7 +8948,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-25T01:24:25+00:00"
+            "time": "2026-07-31T14:44:49+00:00"
         },
         {
             "name": "survos/omeka-bundle",
