@@ -1,0 +1,4 @@
+survos_fetch:
+    # var/data holds kpa's real per-song working files (lyrics, metadata) -- keep the
+    # disposable fetch cache out of it, at the var/ root instead.
+    persistent_cache_path: '%kernel.project_dir%/var/fetch_cache.db'

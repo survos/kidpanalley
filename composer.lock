@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b1218f4c981b5ad20526fbbfc2d9853",
+    "content-hash": "3a6038bcca4c1432cd9ba3c38602ee25",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -8377,6 +8377,55 @@
             "time": "2026-06-25T11:39:36+00:00"
         },
         {
+            "name": "survos/fetch-bundle",
+            "version": "2.18.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/fetch-bundle.git",
+                "reference": "520921b640f7639c64468719427e0fe90a3ef543"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/fetch-bundle/zipball/520921b640f7639c64468719427e0fe90a3ef543",
+                "reference": "520921b640f7639c64468719427e0fe90a3ef543",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.5",
+                "psr/log": "^3.0",
+                "survos/jsonl-bundle": "^2.6",
+                "survos/kit-bundle": "^2.6",
+                "symfony/cache": "^8.1",
+                "symfony/console": "^8.1",
+                "symfony/event-dispatcher": "^8.1",
+                "symfony/framework-bundle": "^8.1",
+                "symfony/http-client": "^8.1",
+                "symfony/messenger": "^8.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\FetchBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "HTTP fetch utilities for Symfony: resumable chunk downloads, caching, retry/backoff, and concurrent fetch into JSONL",
+            "support": {
+                "issues": "https://github.com/survos/fetch-bundle/issues",
+                "source": "https://github.com/survos/fetch-bundle/tree/2.18.12"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-08-04T14:24:44+00:00"
+        },
+        {
             "name": "survos/field-bundle",
             "version": "2.10.19",
             "source": {
@@ -9025,71 +9074,6 @@
                 }
             ],
             "time": "2026-06-17T12:10:39+00:00"
-        },
-        {
-            "name": "survos/scraper-bundle",
-            "version": "2.10.19",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/scraper-bundle.git",
-                "reference": "9ebb5f7a912b782769c731e3f6b2275e0492259c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/scraper-bundle/zipball/9ebb5f7a912b782769c731e3f6b2275e0492259c",
-                "reference": "9ebb5f7a912b782769c731e3f6b2275e0492259c",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pdo": "*",
-                "php": "^8.5",
-                "symfony/cache-contracts": "^3.4",
-                "symfony/config": "^8.1",
-                "symfony/dependency-injection": "^8.1",
-                "symfony/http-client": "^8.1",
-                "symfony/http-client-contracts": "^3.5",
-                "symfony/http-kernel": "^8.1",
-                "symfony/string": "^8.1"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^2.0",
-                "phpunit/phpunit": "^13.0",
-                "psr/log": "^3.0",
-                "symfony/browser-kit": "^8.1",
-                "symfony/cache": "^8.1",
-                "symfony/framework-bundle": "^8.1",
-                "symfony/phpunit-bridge": "^8.1",
-                "symfony/twig-bundle": "^8.1",
-                "symfony/var-dumper": "^8.1",
-                "twig/twig": "^3.4"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Survos\\Scraper\\": "src/",
-                    "Survos\\Scraper\\Tests\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Scrape and cache web pages",
-            "keywords": [
-                "symfony",
-                "symfony-ux"
-            ],
-            "support": {
-                "issues": "https://github.com/survos/scraper-bundle/issues",
-                "source": "https://github.com/survos/scraper-bundle/tree/2.10.19"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/kbond",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-06-09T21:16:44+00:00"
         },
         {
             "name": "survos/seo-bundle",

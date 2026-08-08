@@ -25,7 +25,7 @@ use PhpOffice\PhpWord\Element\Title;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Style\Table;
 use Psr\Log\LoggerInterface;
-use Survos\Scraper\Service\ScraperService;
+use Survos\FetchBundle\Contract\PersistentFetcherInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
@@ -49,7 +49,7 @@ class AppService
 
     public function __construct(private readonly EntityManagerInterface $em,
                                 private SongRepository                  $songRepository,
-                                private ScraperService                  $scraperService,
+                                private PersistentFetcherInterface      $persistentFetcher,
                                 private ValidatorInterface $validator,
                                 private readonly LoggerInterface        $logger,
                                 #[Autowire('%env(YOUTUBE_API_KEY)%')] private string $youtubeApiKey,
@@ -389,11 +389,11 @@ class AppService
 
             $url = sprintf("https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&maxResults=50&channelId=$channelId&type=video&key=$key&pageToken=$next");
 
-            $results = $this->scraperService->fetchUrl($url, key: $channelId . '-x' . $next, asData: 'array');
+            $result = $this->persistentFetcher->fetch($url);
+            $data = json_decode($result->contents ?? '', true) ?? [];
 
-
-            $next = $results['data']['nextPageToken'] ?? false;
-            foreach ($results['data']['items'] as $rawData) {
+            $next = $data['nextPageToken'] ?? false;
+            foreach ($data['items'] as $rawData) {
                 $item = (object)$rawData;
                 $id = $item->id['videoId'];
                 if (!$video = $repo->findOneBy(['youtubeId' => $id])) {

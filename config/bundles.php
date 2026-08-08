@@ -22,7 +22,6 @@ return [
     Survos\AuthBundle\SurvosAuthBundle::class => ['all' => true],
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
     Survos\CrawlerBundle\SurvosCrawlerBundle::class => ['dev' => true, 'test' => true],
-    Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
     Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true, 'test' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
@@ -54,4 +53,5 @@ return [
     Survos\Kit\SurvosKitBundle::class => ['all' => true],
     Survos\AdminBundle\SurvosAdminBundle::class => ['all' => true],
     Survos\TuiExtrasBundle\SurvosTuiExtrasBundle::class => ['all' => true],
+    Survos\FetchBundle\SurvosFetchBundle::class => ['all' => true],
 ];

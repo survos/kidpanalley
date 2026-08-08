@@ -204,7 +204,7 @@
         "version": "2.10.3"
     },
     "survos/api-grid-bundle": {
-        "version": "2.10.3"
+        "version": "2.10.19"
     },
     "survos/atlas-bundle": {
         "version": "2.5.1"
@@ -256,6 +256,9 @@
     "survos/ez-bundle": {
         "version": "2.5.1"
     },
+    "survos/fetch-bundle": {
+        "version": "2.18.12"
+    },
     "survos/field-bundle": {
         "version": "2.5.1"
     },
@@ -289,9 +292,6 @@
     },
     "survos/omeka-bundle": {
         "version": "dev-main"
-    },
-    "survos/scraper-bundle": {
-        "version": "2.5.1"
     },
     "survos/seo-bundle": {
         "version": "2.5.1"
