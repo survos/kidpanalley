@@ -2952,6 +2952,27 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type SurvosFetchConfig = array{
  *     persistent_cache_path?: scalar|Param|null, // SQLite file backing PersistentFetcher -- an app-controlled-TTL cache independent of what (if anything) the origin sends as Cache-Control/Expires. Deliberately outside %kernel.cache_dir% so it survives cache:clear. // Default: "%kernel.project_dir%/var/data/fetch_cache.db"
  * }
+ * @psalm-type LiveComponentConfig = array{
+ *     secret?: scalar|Param|null, // The secret used to compute fingerprints and checksums // Default: "%kernel.secret%"
+ *     fetch_credentials?: "same-origin"|"include"|"omit"|Param, // The default fetch credentials mode for all Live Components ('same-origin', 'include', 'omit') // Default: "same-origin"
+ * }
+ * @psalm-type SurvosSearchConfig = array{
+ *     routes_enabled?: bool|Param, // Set false to manage this bundle's routes manually in your app. Bundles exposing sensitive routes (e.g. running console commands) should default this off. // Default: true
+ *     route_prefix?: scalar|Param|null, // URL prefix applied to all routes from this bundle. // Default: ""
+ *     locale_prefix?: bool|Param, // Prepend {_locale} (constrained to kernel.enabled_locales) to this bundle's route prefix, e.g. /{_locale}/f instead of /f -- for bundles whose routes are meant to be shared/bookmarked, so the URL itself carries the locale instead of a query param. // Default: false
+ *     default_adapter?: scalar|Param|null, // Default: "default"
+ *     adapters?: array<string, Param|string|array{ // Default: {"default":{"dsn":"doctrine://default"}}
+ *         dsn?: scalar|Param|null,
+ *     }>,
+ *     default_hits_per_page?: int|Param, // Default: 24
+ *     default_hits_per_page_choices?: list<int|Param>,
+ * }
+ * @psalm-type SurvosElasticConfig = array{
+ *     spool_dir?: scalar|Param|null, // Where postFlush writes the ids awaiting reindex. // Default: "%kernel.project_dir%/var/elastic-spool"
+ *     spool_enabled?: bool|Param, // Turn the Doctrine listener off for bulk imports that reindex explicitly afterwards. // Default: true
+ *     async?: bool|Param, // Dispatch reindex work through Messenger. With this off (or with no bus installed) the listener writes a JSONL spool for elastic:spool:flush instead -- the right mode for bulk imports. // Default: true
+ *     batch_size?: int|Param, // Ids per message. One huge flush becomes several bounded jobs. // Default: 500
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2996,6 +3017,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_field?: SurvosFieldConfig,
  *     survos_admin?: SurvosAdminConfig,
  *     survos_fetch?: SurvosFetchConfig,
+ *     live_component?: LiveComponentConfig,
+ *     survos_search?: SurvosSearchConfig,
+ *     survos_elastic?: SurvosElasticConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -3046,6 +3070,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_field?: SurvosFieldConfig,
  *         survos_admin?: SurvosAdminConfig,
  *         survos_fetch?: SurvosFetchConfig,
+ *         live_component?: LiveComponentConfig,
+ *         survos_search?: SurvosSearchConfig,
+ *         survos_elastic?: SurvosElasticConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -3092,6 +3119,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_field?: SurvosFieldConfig,
  *         survos_admin?: SurvosAdminConfig,
  *         survos_fetch?: SurvosFetchConfig,
+ *         live_component?: LiveComponentConfig,
+ *         survos_search?: SurvosSearchConfig,
+ *         survos_elastic?: SurvosElasticConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -3141,6 +3171,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_field?: SurvosFieldConfig,
  *         survos_admin?: SurvosAdminConfig,
  *         survos_fetch?: SurvosFetchConfig,
+ *         live_component?: LiveComponentConfig,
+ *         survos_search?: SurvosSearchConfig,
+ *         survos_elastic?: SurvosElasticConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

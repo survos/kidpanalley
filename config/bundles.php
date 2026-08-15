@@ -54,4 +54,7 @@ return [
     Survos\AdminBundle\SurvosAdminBundle::class => ['all' => true],
     Survos\TuiExtrasBundle\SurvosTuiExtrasBundle::class => ['all' => true],
     Survos\FetchBundle\SurvosFetchBundle::class => ['all' => true],
+    Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
+    Survos\SearchBundle\SurvosSearchBundle::class => ['all' => true],
+    Survos\ElasticBundle\SurvosElasticBundle::class => ['all' => true],
 ];
