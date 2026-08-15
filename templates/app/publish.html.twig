@@ -1,13 +1,60 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Publish to WordPress{% endblock %}
+
 {% block body %}
+    <h1>Publish to WordPress</h1>
 
-    @todo: publish to wordpress
+    <dl class="row">
+        <dt class="col-sm-3">Site</dt>
+        <dd class="col-sm-9"><a href="{{ siteUrl }}" target="_blank" rel="noopener">{{ siteUrl }}</a></dd>
 
-    <pre>{{ command }}</pre>
+        <dt class="col-sm-3">Credentials</dt>
+        <dd class="col-sm-9">
+            {% if authenticated %}
+                configured
+            {% else %}
+                none — set <code>API_USERNAME</code> and <code>API_PASSWORD</code> (an Application Password) in <code>.env.local</code>
+            {% endif %}
+        </dd>
+
+        <dt class="col-sm-3">REST API</dt>
+        <dd class="col-sm-9">
+            {% if error %}
+                <span class="text-danger">{{ error }}</span>
+            {% else %}
+                reachable — {{ index.name|default('') }}
+            {% endif %}
+        </dd>
+
+        <dt class="col-sm-3">Songs</dt>
+        <dd class="col-sm-9">{{ totalSongs }} total, {{ unpublished }} without a WordPress page</dd>
+    </dl>
+
+    <p class="text-muted">
+        Publishing writes to a live public site, so it is a console command rather than a link:
+        <code>bin/console kpa:song:publish &lt;songId&gt; --publish</code>
+        (omit <code>--publish</code> to preview the payload).
+    </p>
+
+    <table class="table table-sm">
+        <thead>
+            <tr><th>Song</th><th>WordPress page</th></tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+                <tr>
+                    <td>{{ song.title }}</td>
+                    <td>
+                        {% if song.wordpressPageId %}
+                            {# ?page_id= rather than ?p= — these are pages, and ?p= only resolves posts #}
+                            <a href="{{ siteUrl }}/?page_id={{ song.wordpressPageId }}" target="_blank" rel="noopener">#{{ song.wordpressPageId }}</a>
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-

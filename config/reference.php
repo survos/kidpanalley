@@ -2973,6 +2973,21 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     async?: bool|Param, // Dispatch reindex work through Messenger. With this off (or with no bus installed) the listener writes a JSONL spool for elastic:spool:flush instead -- the right mode for bulk imports. // Default: true
  *     batch_size?: int|Param, // Ids per message. One huge flush becomes several bounded jobs. // Default: 500
  * }
+ * @psalm-type SurvosWordpressConfig = array{
+ *     default_site?: scalar|Param|null, // Which site WordpressClientInterface resolves to. Defaults to the first configured site. // Default: null
+ *     rest_prefix?: scalar|Param|null, // Path of the REST API root under the site URL. Only sites with pretty permalinks disabled need something else. // Default: "/wp-json"
+ *     user_agent?: scalar|Param|null, // Sent on every request. Managed hosts block generic agents, so identify the app. // Default: "Survos WordpressBundle/1.0 (+https://github.com/survos/mono)"
+ *     timeout?: int|Param, // HTTP timeout in seconds. // Default: 30
+ *     retry_enabled?: bool|Param, // Retry transport errors and HTTP 500/502/503/504 with exponential backoff. 429 is deliberately excluded — it surfaces as RateLimitException carrying the real Retry-After. // Default: true
+ *     max_retries?: int|Param, // Default: 3
+ *     cache_enabled?: bool|Param, // Wrap the client in Symfony's RFC 9111 CachingHttpClient. Off by default because WordPress core sends "Cache-Control: no-cache" on REST responses, making this a no-op — turn it on only for a site fronted by a CDN or a caching plugin that emits real freshness headers. // Default: false
+ *     cache_max_ttl?: int|Param, // Upper bound on how long a response is cached, even if the origin sends a longer max-age. // Default: 3600
+ *     sites?: array<string, array{ // Default: []
+ *         base_url?: scalar|Param|null, // Site root, e.g. https://example.org — no trailing /wp-json. // Default: null
+ *         username?: scalar|Param|null, // WordPress user login. Omit for read-only access to public content. // Default: null
+ *         application_password?: scalar|Param|null, // A WordPress Application Password (Users → Profile), NOT the account password. Spaces in the generated value are fine. // Default: null
+ *     }>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -3020,6 +3035,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     live_component?: LiveComponentConfig,
  *     survos_search?: SurvosSearchConfig,
  *     survos_elastic?: SurvosElasticConfig,
+ *     survos_wordpress?: SurvosWordpressConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -3073,6 +3089,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         live_component?: LiveComponentConfig,
  *         survos_search?: SurvosSearchConfig,
  *         survos_elastic?: SurvosElasticConfig,
+ *         survos_wordpress?: SurvosWordpressConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -3122,6 +3139,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         live_component?: LiveComponentConfig,
  *         survos_search?: SurvosSearchConfig,
  *         survos_elastic?: SurvosElasticConfig,
+ *         survos_wordpress?: SurvosWordpressConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -3174,6 +3192,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         live_component?: LiveComponentConfig,
  *         survos_search?: SurvosSearchConfig,
  *         survos_elastic?: SurvosElasticConfig,
+ *         survos_wordpress?: SurvosWordpressConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

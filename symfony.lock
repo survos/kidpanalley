@@ -314,6 +314,9 @@
     "survos/tui-extras-bundle": {
         "version": "2.10.3"
     },
+    "survos/wordpress-bundle": {
+        "version": "2.24.3"
+    },
     "symfony/ai-bundle": {
         "version": "0.8",
         "recipe": {

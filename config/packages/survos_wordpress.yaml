@@ -1,0 +1,8 @@
+survos_wordpress:
+    default_site: kpa
+    sites:
+        kpa:
+            base_url: '%env(WORDPRESS_BASE_URL)%'
+            # A WordPress Application Password (Users -> Profile), not the account password.
+            username: '%env(API_USERNAME)%'
+            application_password: '%env(API_PASSWORD)%'

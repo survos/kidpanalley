@@ -10,16 +10,17 @@ use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Psr\Log\LoggerInterface;
+use App\Repository\SongRepository;
 use Survos\FieldBundle\Enum\Purpose;
 use Survos\FieldBundle\Registry\EntityMetaRegistry;
 use Survos\FieldBundle\Registry\RouteMetaRegistry;
+use Survos\WordpressBundle\Client\WordpressClientInterface;
+use Survos\WordpressBundle\Exception\WordpressExceptionInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 use App\Entity\Lyrics;
@@ -28,10 +29,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 
 class AppController extends AbstractController
 {
-    private $auth;
-
-    final const ENDPOINT = 'https://www.kidpanalley.org/wp-json/wp/v2/pages';
-
     public function __construct(
         private AppService $appService,
                                 private readonly Environment $twig,
@@ -39,13 +36,6 @@ class AppController extends AbstractController
         #[Autowire('%kernel.environment%')] private string $env,
     )
     {
-    }
-
-    private function getAuth()
-    {
-        $u = trim($this->getParameter('api_username'));
-        $p = trim($this->getParameter('api_password'));
-        return [$u, $p];
     }
 
     #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
@@ -157,73 +147,35 @@ class AppController extends AbstractController
 
 
     /**
-     * Publish a song on the KPA wordpress site
+     * WordPress publishing status: which songs already have a page, and whether the site is
+     * reachable with the credentials we hold.
      *
+     * Read-only on purpose. Publishing writes to a live public website, so it lives in
+     * `kpa:song:publish` (see App\Services\WordpressService) rather than behind a GET route.
      */
     #[Route(path: '/publish', name: 'app_publish')]
     #[Template('app/publish.html.twig')]
-    public function publish(array $options=[])
-    {
-        [$u, $p] = $this->getAuth();
-        $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
-            'https://www.kidpanalley.org', $u, $p);
-//        if ($this->env=='dev') {
-//            dd($command);
-//        }
-        return ['command' => $command];
-
-        $song = null;
-        $wordpressPagePayload = (new OptionsResolver())
-            ->setDefaults(
-                [
-                    'type' => 'page',
-                    'title' => null,
-                    'content' => null
-                ]
-            )
-            ->setRequired(['title', 'content'])
-            ->resolve($options);
-        /*
-        $wordpressPagePayload = [
-            'type' => 'page',
-            'title' => $song->title,
-            'content' => $content=$this->createPage($song)
-        ];
-        */
-        $client = HttpClient::create();
-        $method = 'POST';
-        $endPoint = self::ENDPOINT;
-        /*
-        if ($wordpressId = $song->getWordpressPageId()) {
-            // update instead of create
-            $endPoint .= '/' . $wordpressId;
-            // add id?
-            // $method = 'PUT';
-        } else {
-
+    public function publish(
+        WordpressClientInterface $wordpress,
+        SongRepository $songRepository,
+    ): array {
+        $error = null;
+        $index = [];
+        try {
+            $index = $wordpress->index();
+        } catch (WordpressExceptionInterface $e) {
+            $error = $e->getMessage();
         }
-        */
-        $results = $client->request($method, $endPoint, $data = [
-            'auth_basic' => $this->getAuth(),
-            'json' => $wordpressPagePayload
-        ]);
-        $command = sprintf('curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -d \'{"title":"Test Page","content":"lyrics go here.","type":"page"}\' %s/wp-json.php/posts -u %s:%s',
-           'https://www.kidpanalley.org', $u, $p);
-        dd($command);
 
-        $results = exec($command);
-        $response = json_decode($results->getContent(), null, 512, JSON_THROW_ON_ERROR);
-        $id = $response->id;
-        $song->setWordpressPageId($id);
-        dump($id, $endPoint, $data, $results, $response);
-        /* lyrics-page, but is this different?
-           $client = HttpClient::create();
-           $endPoint = self::ENDPOINT . '/1870';
-           $results = $client->request('GET', $endPoint, $data = [
-               'auth_basic' => $this->getAuth(),
-           ]);
-           $lyricsPage = json_decode($results->getContent());
-           */
+        return [
+            'siteUrl' => $wordpress->siteUrl(),
+            'authenticated' => $wordpress->isAuthenticated(),
+            'index' => $index,
+            'error' => $error,
+            'totalSongs' => $songRepository->count([]),
+            'unpublished' => $songRepository->count(['wordpressPageId' => null]),
+            'songs' => $songRepository->findBy([], ['id' => 'ASC'], 50),
+        ];
     }
 
     #[Route(path: '/load-kpa-channel', name: 'app_load_youtube_channel')]

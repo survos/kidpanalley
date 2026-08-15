@@ -66,6 +66,7 @@
         "survos/storage-bundle": "^2.10.25",
         "survos/tabler-bundle": "^2.10.28",
         "survos/tui-extras-bundle": "^2.10.19",
+        "survos/wordpress-bundle": "^2.24",
         "symfony/ai-bundle": "^0.8.0",
         "symfony/asset": "^8.1",
         "symfony/asset-mapper": "^8.1.1",
