@@ -43,7 +43,7 @@ return [
     'datatables.net-responsive-bs5/css/responsive.bootstrap5.css' => ['version' => '4.0.1', 'type' => 'css'],
     'datatables.net-scroller-bs5' => ['version' => '3.0.0'],
     'datatables.net-scroller' => ['version' => '3.0.0'],
-    'datatables.net-scroller-bs5/css/scroller.bootstrap5.css' => ['version' => '3.0.0-beta.1', 'type' => 'css'],
+    'datatables.net-scroller-bs5/css/scroller.bootstrap5.css' => ['version' => '3.0.0', 'type' => 'css'],
     'datatables.net-searchpanes-bs5' => ['version' => '2.3.5'],
     'datatables.net-searchpanes' => ['version' => '2.3.5'],
     'datatables.net-searchpanes-bs5/css/searchPanes.bootstrap5.css' => ['version' => '2.3.5', 'type' => 'css'],
@@ -177,4 +177,5 @@ return [
     '@floating-ui/core' => ['version' => '1.8.0'],
     '@floating-ui/utils' => ['version' => '0.2.12'],
     '@floating-ui/utils/dom' => ['version' => '0.2.12'],
+    '@symfony/ux-live-component' => ['path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js'],
 ];
