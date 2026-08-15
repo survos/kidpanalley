@@ -9578,16 +9578,16 @@
         },
         {
             "name": "survos/search-bundle",
-            "version": "2.24.3",
+            "version": "2.24.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/search-bundle.git",
-                "reference": "0fbad719ec716bb1ebbc4d8068cdb532ab96ed40"
+                "reference": "a55cc45048054b98b6a11c4254e6eb55864b59c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/search-bundle/zipball/0fbad719ec716bb1ebbc4d8068cdb532ab96ed40",
-                "reference": "0fbad719ec716bb1ebbc4d8068cdb532ab96ed40",
+                "url": "https://api.github.com/repos/survos/search-bundle/zipball/a55cc45048054b98b6a11c4254e6eb55864b59c4",
+                "reference": "a55cc45048054b98b6a11c4254e6eb55864b59c4",
                 "shasum": ""
             },
             "require": {
@@ -9656,7 +9656,7 @@
             "description": "First-party Symfony search kernel and faceted UX with field-driven Doctrine, Meilisearch, Algolia, SQLite FTS5, PostgreSQL BM25, and Elasticsearch adapters.",
             "support": {
                 "issues": "https://github.com/survos/search-bundle/issues",
-                "source": "https://github.com/survos/search-bundle/tree/2.24.3"
+                "source": "https://github.com/survos/search-bundle/tree/2.24.4"
             },
             "funding": [
                 {
@@ -9664,7 +9664,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-15T21:29:27+00:00"
+            "time": "2026-08-15T21:44:07+00:00"
         },
         {
             "name": "survos/seo-bundle",
