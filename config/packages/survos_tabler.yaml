@@ -15,6 +15,9 @@ survos_tabler:
       code: kpa
       abbr: <b>kpa</b>Archive
 
+  favicon:
+    text: KP
+
   menu_options:
     entityClass: null
     video: null
