@@ -2961,6 +2961,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     route_prefix?: scalar|Param|null, // URL prefix applied to all routes from this bundle. // Default: ""
  *     locale_prefix?: bool|Param, // Prepend {_locale} (constrained to kernel.enabled_locales) to this bundle's route prefix, e.g. /{_locale}/f instead of /f -- for bundles whose routes are meant to be shared/bookmarked, so the URL itself carries the locale instead of a query param. // Default: false
  *     default_adapter?: scalar|Param|null, // Default: "default"
+ *     index_prefix?: scalar|Param|null, // Prefix applied to every Elasticsearch index name, once, by ElasticIndexNameResolver. Reuses MEILI_PREFIX so one app has one index namespace across both engines. Leaving it unset is an error the first time a name is resolved: bare index names share a flat cluster namespace with every other app on the node. Set it to an empty string to share deliberately. // Default: "%env(default::MEILI_PREFIX)%"
  *     adapters?: array<string, Param|string|array{ // Default: {"default":{"dsn":"doctrine://default"}}
  *         dsn?: scalar|Param|null,
  *     }>,
@@ -2972,6 +2973,17 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     spool_enabled?: bool|Param, // Turn the Doctrine listener off for bulk imports that reindex explicitly afterwards. // Default: true
  *     async?: bool|Param, // Dispatch reindex work through Messenger. With this off (or with no bus installed) the listener writes a JSONL spool for elastic:spool:flush instead -- the right mode for bulk imports. // Default: true
  *     batch_size?: int|Param, // Ids per message. One huge flush becomes several bounded jobs. // Default: 500
+ *     analysis?: array{ // Text analysis. Without it every text field uses the "standard" analyzer, which does no stemming and no accent folding -- searches work but are markedly worse, and any comparison against Meilisearch is unfair. index.analysis is a STATIC setting, so changing this needs elastic:index:rebuild.
+ *         language?: scalar|Param|null, // Elasticsearch stemmer language: english, hungarian, spanish, german, french, ... Null leaves the default analyzer in place. // Default: null
+ *         ascii_folding?: bool|Param, // Fold accents so "Kovacs" matches "Kovács". Applies only when a language is set. // Default: true
+ *     },
+ *     index_pattern?: scalar|Param|null, // Which cluster indices the admin page considers this app's, e.g. "kpa_*". The cluster index namespace is flat and shared by every app pointed at the node, so this is how the page finds indices this app owns but never declared -- a leftover from a rename, a locale variant. Defaults to survos_search.index_prefix + "*", so it tracks exactly what this app writes; set it only to widen or narrow that deliberately. // Default: null
+ *     elasticvue_url?: scalar|Param|null, // Elasticvue (https://elasticvue.com) — the closest equivalent to the riccox Meilisearch UI. Point this at a self-hosted instance (docker run -p 8080:8080 cars10/elasticvue) or https://app.elasticvue.com. Null hides the menu link. Note that Elasticvue talks to Elasticsearch from the browser, so the node needs http.cors.enabled unless it is proxied. // Default: null
+ *     kibana_url?: scalar|Param|null, // Kibana, if one is running. Null hides the menu link. // Default: null
+ *     server_url?: scalar|Param|null, // The Elasticsearch node itself, for a direct link in the admin menu. Null hides it. // Default: null
+ *     routes_enabled?: bool|Param, // Set false to manage this bundle's routes manually in your app. Bundles exposing sensitive routes (e.g. running console commands) should default this off. // Default: true
+ *     route_prefix?: scalar|Param|null, // URL prefix applied to all routes from this bundle. // Default: "/admin/elastic"
+ *     locale_prefix?: bool|Param, // Prepend {_locale} (constrained to kernel.enabled_locales) to this bundle's route prefix, e.g. /{_locale}/f instead of /f -- for bundles whose routes are meant to be shared/bookmarked, so the URL itself carries the locale instead of a query param. // Default: false
  * }
  * @psalm-type SurvosWordpressConfig = array{
  *     default_site?: scalar|Param|null, // Which site WordpressClientInterface resolves to. Defaults to the first configured site. // Default: null
