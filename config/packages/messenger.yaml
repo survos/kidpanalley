@@ -26,6 +26,18 @@ framework:
 #                            binding_keys: [async]
 #                retry_strategy: *rabbitmq_retry
 #
+            # Separate queue from meili on purpose: a full Elasticsearch reindex must not
+            # delay Meilisearch updates, the two want different retry behaviour (ES answers
+            # 429 when its write queue saturates), and each can be consumed and stopped by
+            # its own worker.
+            elastic:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: elastic
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+
             meili:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
             failed: 'doctrine://default?queue_name=failed'
@@ -37,6 +49,8 @@ framework:
             App\Message\LoadSongsMessage: sync
 
             Survos\MeiliBundle\Message\BatchIndexEntitiesMessage: meili
+            Survos\ElasticBundle\Message\ReindexDocuments: elastic
+            Survos\ElasticBundle\Message\RemoveDocuments: elastic
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 
