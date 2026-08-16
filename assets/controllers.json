@@ -55,6 +55,23 @@
                 }
             }
         },
+        "@survos/search-bundle": {
+            "ux-search": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@survos/search-bundle/styles/ux-search.css": true
+                }
+            },
+            "ux-search--refinement-list": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "ux-search-range-slider": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        },
         "@survos/state-bundle": {
             "workflow": {
                 "enabled": true,
