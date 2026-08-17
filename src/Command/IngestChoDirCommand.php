@@ -35,6 +35,8 @@ final class IngestChoDirCommand
         int $limit = 0,
         #[Option('do not flush; show what would happen')]
         bool $dry = false,
+        #[Option('flush every N songs so a killed run keeps its progress')]
+        int $batch = 100,
     ): int {
         $absDir = str_starts_with($dir, '/') ? $dir : $this->projectDir . '/' . ltrim($dir, '/');
         if (!is_dir($absDir)) {
@@ -63,11 +65,24 @@ final class IngestChoDirCommand
         $rows = [];
         $count = 0;
 
+        // Flush periodically: a run over the full tree takes minutes, and a single
+        // flush at the end means an interrupted run persists nothing at all.
+        // No EntityManager::clear() — SongMatcher's cache holds these entities.
+        $maybeFlush = function () use (&$count, $batch, $dry): void {
+            if (!$dry && $batch > 0 && $count % $batch === 0) {
+                $this->entityManager->flush();
+            }
+        };
+
+        $io->progressStart($total);
+
         foreach ($finder as $file) {
             if ($limit > 0 && $count >= $limit) {
                 break;
             }
             $count++;
+            $io->progressAdvance();
+            $maybeFlush();
 
             $cho = file_get_contents($file->getPathname());
             if ($cho === false || trim($cho) === '') {
@@ -118,6 +133,8 @@ final class IngestChoDirCommand
             ];
         }
 
+        $io->progressFinish();
+
         // Second pass: metadata-only dirs (no .cho file)
         $metaFinder = (new Finder())
             ->files()
@@ -125,11 +142,15 @@ final class IngestChoDirCommand
             ->name('*-metadata.json')
             ->sortByName();
 
+        $io->progressStart(iterator_count($metaFinder->getIterator()));
+
         $metaOnly = 0;
         foreach ($metaFinder as $metaFile) {
             if ($limit > 0 && $count >= $limit) {
                 break;
             }
+
+            $io->progressAdvance();
 
             $songDir = $metaFile->getPath();
             $choFiles = glob($songDir . '/*-lyrics.cho');
@@ -138,6 +159,7 @@ final class IngestChoDirCommand
             }
 
             $count++;
+            $maybeFlush();
             $stem = pathinfo($metaFile->getFilename(), PATHINFO_FILENAME);
             $slug = (string) preg_replace('/-metadata$/', '', $stem);
 
@@ -185,6 +207,8 @@ final class IngestChoDirCommand
                 $metaFile->getRelativePathname() . ' (no lyrics)',
             ];
         }
+
+        $io->progressFinish();
 
         if (!$dry) {
             $this->entityManager->flush();

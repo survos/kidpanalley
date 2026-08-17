@@ -242,6 +242,13 @@ class SongMatcher
             return $this->cache[$key];
         }
 
+        // Once warmCache() has run the cache holds every Song in the DB, so a miss
+        // here is authoritative — querying would cost a round trip per song and
+        // always return null. Only fall back to the DB before the cache is warm.
+        if ($this->cacheLoaded) {
+            return null;
+        }
+
         // Fallback to DB (for first use before warmCache())
         $song = $this->songRepository->findOneByTitleNormalized($canonical);
         if ($song !== null) {
