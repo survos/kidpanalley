@@ -8,6 +8,7 @@ use App\Entity\Audio;
 use App\Entity\Song;
 use App\Entity\SongLyrics;
 use App\Entity\Video;
+use App\Service\ChordProInspector;
 use Spatie\SchemaOrg\AudioObject;
 use Spatie\SchemaOrg\CreativeWork;
 use Spatie\SchemaOrg\EducationalOrganization;
@@ -104,7 +105,7 @@ final readonly class SongSchema
             $composition->contributor($this->school($siteUrl, $song->school)->referenced());
         }
 
-        $this->addLyrics($songLyrics, $composition, $compositionId);
+        $this->addLyrics($song, $songLyrics, $composition, $compositionId);
 
         $recordings = array_map(
             fn (Audio $audio) => $this->recording($audio, $canonicalUrl, $compositionId)->referenced(),
@@ -145,32 +146,41 @@ final readonly class SongSchema
     }
 
     /**
-     * Lyrics come from the matched lyric DOCUMENTS, never from Song::$lyrics.
+     * Lyrics, as a CreativeWork hanging off the composition.
      *
-     * Song::$lyrics is ChordPro — chord brackets and {start_of_chorus} directives —
-     * so publishing it as schema.org lyrics would emit a chord chart claiming to be
-     * lyric text. SongLyrics::$lyricsText is already plain text. When we only have
-     * the ChordPro, the property is omitted rather than approximated.
+     * Song::$lyrics is ChordPro, which IS the lyrics — the same words, in a
+     * notation that also carries chord positions and `{directives}`. Stripping
+     * those leaves plain lyric text, so it is the primary source here:
+     * Song::$lyrics is populated for a third of the catalogue, while
+     * SongLyrics::$lyricsText (kept as a fallback, since it needs no parsing) is
+     * currently populated for none of it.
      *
      * @param list<SongLyrics> $songLyrics
      */
-    private function addLyrics(array $songLyrics, MusicComposition $composition, string $compositionId): void
+    private function addLyrics(Song $song, array $songLyrics, MusicComposition $composition, string $compositionId): void
     {
-        foreach ($songLyrics as $link) {
-            if (!$this->hasText($link->lyricsText)) {
-                continue;
+        $text = ChordProInspector::plainLyrics($song->lyrics);
+
+        if (null === $text) {
+            foreach ($songLyrics as $link) {
+                if ($this->hasText($link->lyricsText)) {
+                    $text = trim($link->lyricsText);
+                    break;
+                }
             }
+        }
 
-            $lyricsId = $compositionId . '-lyrics';
-            $lyrics = $this->schemaOrg->getOrCreate(CreativeWork::class, $lyricsId);
-            $lyrics
-                ->identifier($lyricsId)
-                ->text(trim($link->lyricsText));
-
-            $composition->lyrics($lyrics->referenced());
-
+        if (null === $text) {
             return;
         }
+
+        $lyricsId = $compositionId . '-lyrics';
+        $lyrics = $this->schemaOrg->getOrCreate(CreativeWork::class, $lyricsId);
+        $lyrics
+            ->identifier($lyricsId)
+            ->text($text);
+
+        $composition->lyrics($lyrics->referenced());
     }
 
     private function recording(Audio $audio, string $canonicalUrl, string $compositionId): MusicRecording
