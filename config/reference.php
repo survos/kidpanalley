@@ -2925,12 +2925,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         stdio?: bool|Param, // Default: false
  *         http?: bool|Param, // Default: false
  *     },
- *     apps?: array{ // MCP Apps support (interactive HTML UI resources). Apps are registered with the #[AsMcpApp] attribute.
- *         enabled?: bool|Param|null, // Default: null
+ *     discovery?: array{
+ *         scan_dirs?: list<scalar|Param|null>,
+ *         exclude_dirs?: list<scalar|Param|null>,
  *     },
  *     http?: array{
  *         path?: scalar|Param|null, // Default: "/_mcp"
- *         allowed_hosts?: mixed, // DNS rebinding protection hosts (without port). Leave unset to keep the SDK default (localhost only), set an array of hostnames to expose a public MCP server, or false to disable the protection entirely. // Default: null
  *         session?: array{
  *             store?: "file"|"memory"|"cache"|"framework"|Param, // Default: "file"
  *             directory?: scalar|Param|null, // Default: "%kernel.cache_dir%/mcp-sessions"
@@ -3005,7 +3005,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type SurvosSchemaOrgConfig = array{
  *     pretty_print?: scalar|Param|null, // Indent the JSON-LD. Readable in dev, wasted bytes in prod, so it follows kernel.debug by default. Accepts a bool or a parameter reference. // Default: "%kernel.debug%"
  *     debug_panel?: scalar|Param|null, // Let schema_org_debug() render its panel. Follows kernel.debug by default; set false to keep the Twig call in the template but render nothing. // Default: "%kernel.debug%"
- *     auto_inject?: bool|Param, // Insert the JSON-LD before </head> on HTML responses instead of calling render_schema_org() in a template. For apps whose layout you would rather not edit. Off by default: an explicit Twig call is greppable, injected output is not. A template that calls render_schema_org() suppresses the injection, so enabling this can never double up. // Default: false
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
