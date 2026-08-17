@@ -106,16 +106,20 @@ function songs_ingest(): void
     run([...get_console(), 'app:ingest-cho-dir', SONGS_STAGING_DIR]);
 }
 
-#[AsTask(namespace: 'songs', name: 'scan-audio', description: 'Scan Songs-Recordings tree to data/audio.jsonl (slow — x10a drive)')]
-function songs_scan_audio(): void
+#[AsTask(namespace: 'songs', name: 'scan-audio', description: 'Scan Songs-Recordings tree to data/audio.jsonl (pass --probe=2 for ffprobe metadata — much slower)')]
+function songs_scan_audio(int $probe = 0): void
 {
     io()->title('Scanning audio files from Songs-Recordings');
     io()->note('Source is on the x10a drive — this may take a few minutes.');
+    if ($probe > 0) {
+        // ffprobe runs per file over the Dropbox mount; it dominates the scan.
+        io()->note(sprintf('Probe level %d — expect this to take much longer.', $probe));
+    }
     run([...get_console(), 'import:dir', SONGS_RECORDINGS_ROOT,
         '--output=' . SONGS_AUDIO_JSONL,
         '--extensions=mp3,wav,aif,aiff,flac,m4a,ogg,wma',
         '--exclude-dirs=Cache,History',
-        '--probe=2',
+        ...($probe > 0 ? ['--probe=' . $probe] : []),
     ]);
 }
 
@@ -169,14 +173,25 @@ function songs_status(): void
 }
 
 #[AsTask(namespace: 'songs', name: 'all', description: 'Run the full pipeline: export-csv → split → enrich → ingest → scan-audio → link-audio → ingest-audio')]
-function songs_all(): void
+function songs_all(bool $rescanAudio = false): void
 {
     songs_export_csv();
     songs_split_location();
     songs_split_residency();
     songs_enrich();
     songs_ingest();
-    songs_scan_audio();
+
+    // data/audio.jsonl (+ its .db sidecar) IS the cache for the Songs-Recordings
+    // tree: scan once, then let link-audio read the JSONL instead of re-walking the
+    // Dropbox mount on every run. Re-scan only when explicitly asked.
+    // __DIR__, not the relative path — castor can be invoked from a subdirectory,
+    // where is_file('data/audio.jsonl') would miss the cache and re-scan.
+    if ($rescanAudio || !is_file(__DIR__ . '/' . SONGS_AUDIO_JSONL)) {
+        songs_scan_audio();
+    } else {
+        io()->note(sprintf('Reusing %s — pass --rescan-audio to re-scan the x10a tree.', SONGS_AUDIO_JSONL));
+    }
+
     songs_link_audio();
     songs_ingest_audio();
     songs_status();
