@@ -35,6 +35,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final readonly class SongSchema
 {
+    /** Every song in the archive is his; see addCopyright(). */
+    private const COPYRIGHT_HOLDER = 'Paul Reisler';
+
     public function __construct(
         private SchemaOrgGraph $schemaOrg,
         private UrlGeneratorInterface $urlGenerator,
@@ -105,6 +108,7 @@ final readonly class SongSchema
             $composition->contributor($this->school($siteUrl, $song->school)->referenced());
         }
 
+        $this->addCopyright($song, $composition, $siteUrl);
         $this->addLyrics($song, $songLyrics, $composition, $compositionId);
 
         $recordings = array_map(
@@ -143,6 +147,32 @@ final readonly class SongSchema
         $composition->mainEntityOfPage($webPage->referenced());
 
         $this->schemaOrg->add($composition);
+    }
+
+    /**
+     * Copyright: Paul Reisler, all rights reserved.
+     *
+     * Stated rather than derived. Nothing in the data records it — no `{copyright}`
+     * ChordPro directive exists in the catalogue — and the publisher column names
+     * the ASCAP publishers, which is who administers the songs, not who holds the
+     * copyright. So the holder is a fixed fact about this archive, and the notice is
+     * built from it plus the song's year.
+     */
+    private function addCopyright(Song $song, MusicComposition $composition, string $siteUrl): void
+    {
+        $holder = $this->person($siteUrl, self::COPYRIGHT_HOLDER);
+        $composition->copyrightHolder($holder->referenced());
+
+        $year = $song->year ?? (int) $song->date?->format('Y');
+        if ($year > 0) {
+            $composition->copyrightYear($year);
+        }
+
+        $composition->copyrightNotice(\sprintf(
+            '%s%s. All rights reserved.',
+            $year > 0 ? '© ' . $year . ' ' : '© ',
+            self::COPYRIGHT_HOLDER,
+        ));
     }
 
     /**

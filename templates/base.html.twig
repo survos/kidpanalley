@@ -51,10 +51,3 @@
         {% block body %}{% endblock %}
     </div>
 {% endblock %}
-
-{% block body_end %}
-    {{ parent() }}
-
-    {# No-op unless survos_schema_org.debug_panel is on (follows kernel.debug). #}
-    {{ schema_org_debug() }}
-{% endblock %}
