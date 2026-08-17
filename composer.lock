@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "125cb2ea75f8daafdfe448ce88dca2a0",
+    "content-hash": "b1a0b2fc55ecf7abc0c3ba8f628e7277",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -9211,16 +9211,16 @@
         },
         {
             "name": "survos/schema-org-bundle",
-            "version": "2.24.10",
+            "version": "2.24.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/schema-org-bundle.git",
-                "reference": "71a8d872d37b335e950403aea3b524ceca82879c"
+                "reference": "8a04caeaaae7ff54601f799a53de26489b896ec1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/schema-org-bundle/zipball/71a8d872d37b335e950403aea3b524ceca82879c",
-                "reference": "71a8d872d37b335e950403aea3b524ceca82879c",
+                "url": "https://api.github.com/repos/survos/schema-org-bundle/zipball/8a04caeaaae7ff54601f799a53de26489b896ec1",
+                "reference": "8a04caeaaae7ff54601f799a53de26489b896ec1",
                 "shasum": ""
             },
             "require": {
@@ -9264,7 +9264,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/schema-org-bundle/issues",
-                "source": "https://github.com/survos/schema-org-bundle/tree/2.24.10"
+                "source": "https://github.com/survos/schema-org-bundle/tree/2.24.12"
             },
             "funding": [
                 {
@@ -9272,7 +9272,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-17T10:01:45+00:00"
+            "time": "2026-08-17T12:01:49+00:00"
         },
         {
             "name": "survos/search-bundle",
@@ -9375,22 +9375,24 @@
         },
         {
             "name": "survos/seo-bundle",
-            "version": "2.18.18",
+            "version": "2.24.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/seo-bundle.git",
-                "reference": "5d5502a4a60a509fb712a9de42b746a82153f3d9"
+                "reference": "a3fcf404bce9c6315e2d25206add599540cdd9ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/seo-bundle/zipball/5d5502a4a60a509fb712a9de42b746a82153f3d9",
-                "reference": "5d5502a4a60a509fb712a9de42b746a82153f3d9",
+                "url": "https://api.github.com/repos/survos/seo-bundle/zipball/a3fcf404bce9c6315e2d25206add599540cdd9ea",
+                "reference": "a3fcf404bce9c6315e2d25206add599540cdd9ea",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.5",
+                "survos/kit-bundle": "^2.24",
                 "symfony/config": "^8.1",
                 "symfony/dependency-injection": "^8.1",
+                "symfony/dom-crawler": "^8.1",
                 "symfony/http-kernel": "^8.1",
                 "symfony/string": "^8.1",
                 "twig/twig": "^3.4|^4.0"
@@ -9424,7 +9426,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/seo-bundle/issues",
-                "source": "https://github.com/survos/seo-bundle/tree/2.18.18"
+                "source": "https://github.com/survos/seo-bundle/tree/2.24.12"
             },
             "funding": [
                 {
@@ -9432,7 +9434,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-06T14:12:29+00:00"
+            "time": "2026-08-17T12:01:33+00:00"
         },
         {
             "name": "survos/state-bundle",
