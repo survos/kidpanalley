@@ -60,6 +60,7 @@
         "survos/lingua-core": "^2.10.19",
         "survos/meili-bundle": "^2.10.24",
         "survos/omeka-bundle": "^2.10.19",
+        "survos/schema-org-bundle": "^2.24",
         "survos/search-bundle": "^2.24",
         "survos/seo-bundle": "^2.10.19",
         "survos/state-bundle": "^2.11.4",

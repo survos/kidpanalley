@@ -3000,6 +3000,11 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         application_password?: scalar|Param|null, // A WordPress Application Password (Users → Profile), NOT the account password. Spaces in the generated value are fine. // Default: null
  *     }>,
  * }
+ * @psalm-type SurvosSchemaOrgConfig = array{
+ *     pretty_print?: scalar|Param|null, // Indent the JSON-LD. Readable in dev, wasted bytes in prod, so it follows kernel.debug by default. Accepts a bool or a parameter reference. // Default: "%kernel.debug%"
+ *     debug_panel?: scalar|Param|null, // Let schema_org_debug() render its panel. Follows kernel.debug by default; set false to keep the Twig call in the template but render nothing. // Default: "%kernel.debug%"
+ *     auto_inject?: bool|Param, // Insert the JSON-LD before </head> on HTML responses instead of calling render_schema_org() in a template. For apps whose layout you would rather not edit. Off by default: an explicit Twig call is greppable, injected output is not. A template that calls render_schema_org() suppresses the injection, so enabling this can never double up. // Default: false
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -3048,6 +3053,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_search?: SurvosSearchConfig,
  *     survos_elastic?: SurvosElasticConfig,
  *     survos_wordpress?: SurvosWordpressConfig,
+ *     survos_schema_org?: SurvosSchemaOrgConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -3102,6 +3108,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_search?: SurvosSearchConfig,
  *         survos_elastic?: SurvosElasticConfig,
  *         survos_wordpress?: SurvosWordpressConfig,
+ *         survos_schema_org?: SurvosSchemaOrgConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -3152,6 +3159,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_search?: SurvosSearchConfig,
  *         survos_elastic?: SurvosElasticConfig,
  *         survos_wordpress?: SurvosWordpressConfig,
+ *         survos_schema_org?: SurvosSchemaOrgConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -3205,6 +3213,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_search?: SurvosSearchConfig,
  *         survos_elastic?: SurvosElasticConfig,
  *         survos_wordpress?: SurvosWordpressConfig,
+ *         survos_schema_org?: SurvosSchemaOrgConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

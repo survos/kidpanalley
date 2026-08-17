@@ -58,4 +58,5 @@ return [
     Survos\SearchBundle\SurvosSearchBundle::class => ['all' => true],
     Survos\ElasticBundle\SurvosElasticBundle::class => ['all' => true],
     Survos\WordpressBundle\SurvosWordpressBundle::class => ['all' => true],
+    Survos\SchemaOrgBundle\SurvosSchemaOrgBundle::class => ['all' => true],
 ];

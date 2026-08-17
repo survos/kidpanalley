@@ -296,6 +296,9 @@
     "survos/omeka-bundle": {
         "version": "dev-main"
     },
+    "survos/schema-org-bundle": {
+        "version": "2.24.10"
+    },
     "survos/search-bundle": {
         "version": "2.24.2"
     },

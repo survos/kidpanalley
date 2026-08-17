@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Song;
 use App\Entity\SongLyrics;
 use App\Form\SongType;
+use App\Schema\SongSchema;
 use App\Repository\AudioRepository;
 use App\Repository\SongRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,9 +42,16 @@ class SongController extends AbstractController
         Song $song,
         AudioRepository $audioRepository,
         EntityManagerInterface $entityManager,
+        Request $request,
+        SongSchema $songSchema,
     ): Response|array {
         $audios = $audioRepository->findBy(['song' => $song], ['id' => 'DESC']);
         $songLyrics = $entityManager->getRepository(SongLyrics::class)->findBy(['song' => $song], ['id' => 'DESC']);
+
+        // Contributes MusicComposition/MusicRecording/AudioObject/... to the request
+        // graph; base.html.twig renders whatever ended up there. Nothing to pass
+        // through to the template.
+        $songSchema->addToGraph($song, $request->getSchemeAndHttpHost(), $audios, $songLyrics);
 
         $relatedFiles = [];
         foreach ($audios as $audio) {
