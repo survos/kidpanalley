@@ -2052,6 +2052,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         size?: "mini"|"midi"|"maxi"|Param, // Default: "midi"
  *         theme?: scalar|Param|null, // Default: "_none_"
  *         connection?: scalar|Param|null, // Default: null
+ *         include?: list<scalar|Param|null>,
  *         exclude?: list<scalar|Param|null>,
  *     },
  *     class?: array{
@@ -2059,6 +2060,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         size?: "mini"|"midi"|"maxi"|Param, // Default: "midi"
  *         theme?: scalar|Param|null, // Default: "_none_"
  *         em?: scalar|Param|null, // Default: null
+ *         include?: list<scalar|Param|null>,
  *         exclude?: list<scalar|Param|null>,
  *     },
  *     convert?: array{
@@ -2923,12 +2925,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         stdio?: bool|Param, // Default: false
  *         http?: bool|Param, // Default: false
  *     },
- *     discovery?: array{
- *         scan_dirs?: list<scalar|Param|null>,
- *         exclude_dirs?: list<scalar|Param|null>,
+ *     apps?: array{ // MCP Apps support (interactive HTML UI resources). Apps are registered with the #[AsMcpApp] attribute.
+ *         enabled?: bool|Param|null, // Default: null
  *     },
  *     http?: array{
  *         path?: scalar|Param|null, // Default: "/_mcp"
+ *         allowed_hosts?: mixed, // DNS rebinding protection hosts (without port). Leave unset to keep the SDK default (localhost only), set an array of hostnames to expose a public MCP server, or false to disable the protection entirely. // Default: null
  *         session?: array{
  *             store?: "file"|"memory"|"cache"|"framework"|Param, // Default: "file"
  *             directory?: scalar|Param|null, // Default: "%kernel.cache_dir%/mcp-sessions"
@@ -3032,7 +3034,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_seo?: SurvosSeoConfig,
  *     ux_icons?: UxIconsConfig,
  *     inspector?: InspectorConfig,
- *     doctrine_diagram?: DoctrineDiagramConfig,
  *     survos_meili?: SurvosMeiliConfig,
  *     survos_ciine?: SurvosCiineConfig,
  *     survos_import?: SurvosImportConfig,
@@ -3138,7 +3139,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_seo?: SurvosSeoConfig,
  *         ux_icons?: UxIconsConfig,
  *         inspector?: InspectorConfig,
- *         doctrine_diagram?: DoctrineDiagramConfig,
  *         survos_meili?: SurvosMeiliConfig,
  *         survos_ciine?: SurvosCiineConfig,
  *         survos_import?: SurvosImportConfig,

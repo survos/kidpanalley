@@ -25,7 +25,6 @@
         "google/apiclient": "^2.19.4",
         "inspector-apm/inspector-symfony": "^1.11.5",
         "intelektron/chordpro-php": "^1.1.1",
-        "jawira/doctrine-diagram-bundle": "^1.2",
         "league/csv": "^9.28",
         "league/flysystem-aws-s3-v3": "^3.35.1",
         "league/oauth2-facebook": "^2.2",
@@ -111,6 +110,7 @@
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.4.1",
+        "jawira/doctrine-diagram-bundle": "^2.0",
         "nette/php-generator": "^4.2.2",
         "nikic/php-parser": "^5.7",
         "phpmetrics/phpmetrics": "^2.9.1",
