@@ -42,6 +42,8 @@ final class IngestAudioCommand
         bool $dry = false,
         #[Option('delete existing Audio + FileAsset records before import')]
         bool $reset = false,
+        #[Option('audio scan JSONL used as the source of file facts (from import:dir)')]
+        string $jsonl = 'data/audio.jsonl',
     ): int {
         $absDir = str_starts_with($dir, '/') ? $dir : $this->projectDir . '/' . ltrim($dir, '/');
         if (!is_dir($absDir)) {
@@ -56,6 +58,22 @@ final class IngestAudioCommand
         $this->songMatcher->warmCache();
         $existingPaths = $this->loadExistingPaths();
         $songCache = [];
+
+        // The symlinks in var/data point at the Dropbox FUSE mount, where every stat
+        // and every content read is expensive. import:dir already recorded size,
+        // mtime, readability and mime for each file, so read those from the scan
+        // JSONL and never touch the mount here.
+        $absJsonl = str_starts_with($jsonl, '/') ? $jsonl : $this->projectDir . '/' . ltrim($jsonl, '/');
+        $scan = $this->loadScan($absJsonl);
+        if ($scan === []) {
+            $io->warning(sprintf(
+                'No file records loaded from %s — falling back to stat()ing each file over FUSE (slow). Run songs:scan-audio first.',
+                $absJsonl,
+            ));
+        } else {
+            $io->note(sprintf('Loaded %d file records from %s', count($scan), $absJsonl));
+        }
+        $missingFromScan = 0;
 
         $finder = (new Finder())
             ->files()
@@ -98,7 +116,17 @@ final class IngestAudioCommand
                 $realPath = $file->getPathname();
             }
 
-            if (!is_readable($file->getPathname())) {
+            // Prefer the scan record over stat()ing the symlink target on the mount.
+            $scanned = $scan[$realPath] ?? null;
+            if ($scanned === null) {
+                $missingFromScan++;
+            }
+
+            $isReadable = $scanned !== null
+                ? (bool) ($scanned['is_readable'] ?? true)
+                : is_readable($file->getPathname());
+
+            if (!$isReadable) {
                 $skipped++;
                 if ($io->isVerbose()) {
                     $io->warning(sprintf('Dangling symlink or unreadable: %s', $file->getPathname()));
@@ -112,7 +140,11 @@ final class IngestAudioCommand
             }
 
             $ext = strtolower($file->getExtension());
-            $mime = $mimeTypes->guessMimeType($file->getPathname());
+            // Extension lookup, not guessMimeType() — the latter runs finfo, which
+            // reads the file's opening bytes over FUSE for every single file.
+            $mime = $scanned['mime_type'] ?? ($mimeTypes->getMimeTypes($ext)[0] ?? null);
+            $size = (int) ($scanned['size'] ?? $file->getSize());
+            $mtime = (int) ($scanned['modified_time'] ?? $file->getMTime());
             $originalFilename = basename($realPath);
             $originalStem = pathinfo($originalFilename, PATHINFO_FILENAME);
             $variant = self::detectVariant($originalStem);
@@ -120,7 +152,9 @@ final class IngestAudioCommand
 
             $audioMeta = $this->loadAudioMeta($file->getPath(), $songSlug);
             $fileMeta = $audioMeta[$file->getFilename()] ?? [];
-            $duration = isset($fileMeta['duration']) ? (float) $fileMeta['duration'] : null;
+            // Both are probe-derived, so both are null unless the scan ran with --probe=2.
+            $duration = $fileMeta['duration'] ?? $scanned['media_duration'] ?? null;
+            $duration = $duration !== null ? (float) $duration : null;
 
             $fileAsset = new FileAsset(
                 path: $realPath,
@@ -128,9 +162,9 @@ final class IngestAudioCommand
                 filename: $fileMeta['originalFilename'] ?? $originalFilename,
                 extension: $ext,
                 dirname: dirname($realPath),
-                size: (int) $file->getSize(),
-                modifiedTime: (int) $file->getMTime(),
-                isReadable: $file->isReadable(),
+                size: $size,
+                modifiedTime: $mtime,
+                isReadable: $isReadable,
                 type: 'audio',
                 school: $song->school,
                 year: $song->year,
@@ -143,7 +177,7 @@ final class IngestAudioCommand
                 song: $song,
                 title: $title ?: (string) $song->title,
                 format: $ext,
-                size: (int) $file->getSize(),
+                size: $size,
                 variant: $variant,
             );
 
@@ -177,6 +211,13 @@ final class IngestAudioCommand
             $orphaned,
             $total,
         ));
+
+        if ($missingFromScan > 0) {
+            $io->warning(sprintf(
+                '%d file(s) had no record in the scan and were stat()ed over FUSE. Re-run songs:scan-audio --rescan-audio to refresh it.',
+                $missingFromScan,
+            ));
+        }
 
         return Command::SUCCESS;
     }
@@ -252,6 +293,57 @@ final class IngestAudioCommand
         }
 
         return $tags !== [] ? implode(',', $tags) : null;
+    }
+
+    /**
+     * Load an import:dir scan into a map of absolute source path → file facts, so
+     * ingest can read size/mtime/mime/duration without stat()ing the FUSE mount.
+     *
+     * Merges file_info and metadata: file_info always carries the stat fields, while
+     * mime_type and media_duration only appear in metadata at probe level >= 1 / 2.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    private function loadScan(string $path): array
+    {
+        if (!is_file($path) || !is_readable($path)) {
+            return [];
+        }
+
+        $handle = fopen($path, 'rb');
+        if ($handle === false) {
+            return [];
+        }
+
+        $map = [];
+        while (($line = fgets($handle)) !== false) {
+            $line = trim($line);
+            if ($line === '') {
+                continue;
+            }
+
+            try {
+                $row = json_decode($line, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\Throwable) {
+                continue;
+            }
+            if (!is_array($row) || ($row['type'] ?? null) !== 'FILE') {
+                continue;
+            }
+
+            $fileInfo = is_array($row['file_info'] ?? null) ? $row['file_info'] : [];
+            $pathname = $fileInfo['pathname'] ?? null;
+            if (!is_string($pathname) || $pathname === '') {
+                continue;
+            }
+
+            $metadata = is_array($row['metadata'] ?? null) ? $row['metadata'] : [];
+            $map[$pathname] = $metadata + $fileInfo;
+        }
+
+        fclose($handle);
+
+        return $map;
     }
 
     /** @var array<string, array<string, mixed>> */

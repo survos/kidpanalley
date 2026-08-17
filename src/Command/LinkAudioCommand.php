@@ -130,7 +130,7 @@ final class LinkAudioCommand
             if (!$dry) {
                 $this->filesystem->mkdir($songDir);
                 $target = $songDir . '/' . $symlinkName;
-                if (!file_exists($target)) {
+                if (!self::nameTaken($target)) {
                     $this->filesystem->symlink($sourcePath, $target);
                 }
 
@@ -186,11 +186,21 @@ final class LinkAudioCommand
         return mb_strtolower((string) (new AsciiSlugger())->slug($clean));
     }
 
+    /**
+     * Is this path already in use? Checked with is_link() first: file_exists() follows
+     * symlinks, so on an existing link it stats the Dropbox mount, and it reports false
+     * for a dangling link whose name is nonetheless taken.
+     */
+    private static function nameTaken(string $path): bool
+    {
+        return is_link($path) || file_exists($path);
+    }
+
     private function uniqueSymlinkName(string $songDir, string $slug, string $label, string $ext, array &$taken): string
     {
         $candidate = sprintf('%s-%s.%s', $slug, $label, $ext);
         $full = $songDir . '/' . $candidate;
-        if (!isset($taken[$full]) && !file_exists($full)) {
+        if (!isset($taken[$full]) && !self::nameTaken($full)) {
             return $candidate;
         }
 
@@ -199,7 +209,7 @@ final class LinkAudioCommand
             $candidate = sprintf('%s-%s-%d.%s', $slug, $label, $n, $ext);
             $full = $songDir . '/' . $candidate;
             $n++;
-        } while (isset($taken[$full]) || file_exists($full));
+        } while (isset($taken[$full]) || self::nameTaken($full));
 
         return $candidate;
     }
