@@ -334,16 +334,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.392.3",
+            "version": "3.393.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0ca19a44856b2497ae426f800d35ad97ee179d1a"
+                "reference": "1401412d30a7542b9b7a2e97ddd73c82723bc624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0ca19a44856b2497ae426f800d35ad97ee179d1a",
-                "reference": "0ca19a44856b2497ae426f800d35ad97ee179d1a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1401412d30a7542b9b7a2e97ddd73c82723bc624",
+                "reference": "1401412d30a7542b9b7a2e97ddd73c82723bc624",
                 "shasum": ""
             },
             "require": {
@@ -425,9 +425,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.392.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.393.1"
             },
-            "time": "2026-08-14T18:11:43+00:00"
+            "time": "2026-08-18T18:16:28+00:00"
         },
         {
             "name": "behat/mink",
@@ -4964,16 +4964,16 @@
         },
         {
             "name": "nette/schema",
-            "version": "v1.3.5",
+            "version": "v1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/schema.git",
-                "reference": "f0ab1a3cda782dbc5da270d28545236aa80c4002"
+                "reference": "c54350438cd6914616f790a49cb424605f421562"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/schema/zipball/f0ab1a3cda782dbc5da270d28545236aa80c4002",
-                "reference": "f0ab1a3cda782dbc5da270d28545236aa80c4002",
+                "url": "https://api.github.com/repos/nette/schema/zipball/c54350438cd6914616f790a49cb424605f421562",
+                "reference": "c54350438cd6914616f790a49cb424605f421562",
                 "shasum": ""
             },
             "require": {
@@ -5025,9 +5025,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/schema/issues",
-                "source": "https://github.com/nette/schema/tree/v1.3.5"
+                "source": "https://github.com/nette/schema/tree/v1.3.6"
             },
-            "time": "2026-02-23T03:47:12+00:00"
+            "time": "2026-08-16T21:58:41+00:00"
         },
         {
             "name": "nette/utils",
@@ -5571,16 +5571,16 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "4714da6efdc782c06690bc72ce34fae7941c2d9f"
+                "reference": "e4d4933af9463a96a1a3cbaeb94327b90e3350ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/4714da6efdc782c06690bc72ce34fae7941c2d9f",
-                "reference": "4714da6efdc782c06690bc72ce34fae7941c2d9f",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/e4d4933af9463a96a1a3cbaeb94327b90e3350ca",
+                "reference": "e4d4933af9463a96a1a3cbaeb94327b90e3350ca",
                 "shasum": ""
             },
             "require": {
@@ -5661,9 +5661,9 @@
             ],
             "support": {
                 "issues": "https://github.com/paragonie/sodium_compat/issues",
-                "source": "https://github.com/paragonie/sodium_compat/tree/v2.5.0"
+                "source": "https://github.com/paragonie/sodium_compat/tree/v2.5.1"
             },
-            "time": "2025-12-30T16:12:18+00:00"
+            "time": "2026-08-18T15:39:41+00:00"
         },
         {
             "name": "php-http/discovery",
@@ -8212,16 +8212,16 @@
         },
         {
             "name": "survos/data-contracts",
-            "version": "2.24.10",
+            "version": "2.24.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/data-contracts.git",
-                "reference": "e16459fb7e7b5768be80b355e22c8e846d7c22d4"
+                "reference": "cb52a02d13c6c0724f346a4be6a2340e8c13b77b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/data-contracts/zipball/e16459fb7e7b5768be80b355e22c8e846d7c22d4",
-                "reference": "e16459fb7e7b5768be80b355e22c8e846d7c22d4",
+                "url": "https://api.github.com/repos/survos/data-contracts/zipball/cb52a02d13c6c0724f346a4be6a2340e8c13b77b",
+                "reference": "cb52a02d13c6c0724f346a4be6a2340e8c13b77b",
                 "shasum": ""
             },
             "require": {
@@ -8233,6 +8233,9 @@
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^13.0",
                 "symplify/easy-coding-standard": "^13.0"
+            },
+            "suggest": {
+                "survos/schema-org-bundle": "Reads the #[SchemaOrg]/#[SchemaProperty] attributes on these DTOs to emit JSON-LD. The attributes are inert without it."
             },
             "type": "library",
             "autoload": {
@@ -8247,7 +8250,7 @@
             "description": "Shared data vocabularies, content metadata, and item DTO contracts for Survos data/media/import packages.",
             "support": {
                 "issues": "https://github.com/survos/data-contracts/issues",
-                "source": "https://github.com/survos/data-contracts/tree/2.24.10"
+                "source": "https://github.com/survos/data-contracts/tree/2.24.15"
             },
             "funding": [
                 {
@@ -8255,7 +8258,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-17T10:20:20+00:00"
+            "time": "2026-08-17T15:00:10+00:00"
         },
         {
             "name": "survos/debug-utils",
@@ -8310,16 +8313,16 @@
         },
         {
             "name": "survos/deployment-bundle",
-            "version": "2.24.8",
+            "version": "2.24.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/deployment-bundle.git",
-                "reference": "41935c82350f4ca218ba5496ed99581d1e7458b3"
+                "reference": "af18262f2fc56d446d789d2a5aa88242273fd69f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/deployment-bundle/zipball/41935c82350f4ca218ba5496ed99581d1e7458b3",
-                "reference": "41935c82350f4ca218ba5496ed99581d1e7458b3",
+                "url": "https://api.github.com/repos/survos/deployment-bundle/zipball/af18262f2fc56d446d789d2a5aa88242273fd69f",
+                "reference": "af18262f2fc56d446d789d2a5aa88242273fd69f",
                 "shasum": ""
             },
             "require": {
@@ -8359,7 +8362,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/deployment-bundle/issues",
-                "source": "https://github.com/survos/deployment-bundle/tree/2.24.8"
+                "source": "https://github.com/survos/deployment-bundle/tree/2.24.17"
             },
             "funding": [
                 {
@@ -8367,7 +8370,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-16T17:12:47+00:00"
+            "time": "2026-08-18T00:18:30+00:00"
         },
         {
             "name": "survos/elastic-bundle",
@@ -8498,16 +8501,16 @@
         },
         {
             "name": "survos/fetch-bundle",
-            "version": "2.19.2",
+            "version": "2.24.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/fetch-bundle.git",
-                "reference": "7f41c2f9be2b2d64c1cf876340724879ee72d51e"
+                "reference": "ee6099e249b7ea0c1ecaf01a0a09a73793fa6f48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/fetch-bundle/zipball/7f41c2f9be2b2d64c1cf876340724879ee72d51e",
-                "reference": "7f41c2f9be2b2d64c1cf876340724879ee72d51e",
+                "url": "https://api.github.com/repos/survos/fetch-bundle/zipball/ee6099e249b7ea0c1ecaf01a0a09a73793fa6f48",
+                "reference": "ee6099e249b7ea0c1ecaf01a0a09a73793fa6f48",
                 "shasum": ""
             },
             "require": {
@@ -8549,7 +8552,7 @@
             "description": "HTTP fetch utilities for Symfony: caching (RFC 9111 or app-controlled TTL), retry/backoff, bounded concurrency, and resumable downloads. Optional JSONL dataset-harvesting pagination on top if survos/jsonl-bundle is installed.",
             "support": {
                 "issues": "https://github.com/survos/fetch-bundle/issues",
-                "source": "https://github.com/survos/fetch-bundle/tree/2.19.2"
+                "source": "https://github.com/survos/fetch-bundle/tree/2.24.16"
             },
             "funding": [
                 {
@@ -8557,7 +8560,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-11T10:55:48+00:00"
+            "time": "2026-08-17T22:24:32+00:00"
         },
         {
             "name": "survos/field-bundle",
@@ -8897,16 +8900,16 @@
         },
         {
             "name": "survos/kit-bundle",
-            "version": "2.24.8",
+            "version": "2.24.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/kit-bundle.git",
-                "reference": "e27bc177594a7bd23b3a969343a17f2389b6d05b"
+                "reference": "c03f337b4d46683cda600ee66403e7b6da5ec048"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/kit-bundle/zipball/e27bc177594a7bd23b3a969343a17f2389b6d05b",
-                "reference": "e27bc177594a7bd23b3a969343a17f2389b6d05b",
+                "url": "https://api.github.com/repos/survos/kit-bundle/zipball/c03f337b4d46683cda600ee66403e7b6da5ec048",
+                "reference": "c03f337b4d46683cda600ee66403e7b6da5ec048",
                 "shasum": ""
             },
             "require": {
@@ -8918,7 +8921,15 @@
                 "doctrine/orm": "^3.0",
                 "symfony/asset-mapper": "^8.1",
                 "symfony/framework-bundle": "^8.1",
-                "symfony/twig-bundle": "^8.1"
+                "symfony/messenger": "^8.1",
+                "symfony/remote-event": "^8.1",
+                "symfony/twig-bundle": "^8.1",
+                "symfony/webhook": "^8.1"
+            },
+            "suggest": {
+                "symfony/messenger": "For Survos\\Kit\\Webhook\\RemoteEventTransportMiddleware — per-webhook Messenger transports.",
+                "symfony/remote-event": "For Survos\\Kit\\Webhook — RemoteEvent consumers behind the webhook endpoint.",
+                "symfony/webhook": "For Survos\\Kit\\Webhook — the shared inbound-webhook convention (signature verification, /webhook/{name} matching)."
             },
             "type": "symfony-bundle",
             "extra": {
@@ -8944,7 +8955,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/kit-bundle/issues",
-                "source": "https://github.com/survos/kit-bundle/tree/2.24.8"
+                "source": "https://github.com/survos/kit-bundle/tree/2.24.16"
             },
             "funding": [
                 {
@@ -8952,20 +8963,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-16T18:53:26+00:00"
+            "time": "2026-08-17T22:24:28+00:00"
         },
         {
             "name": "survos/lingua-contracts",
-            "version": "2.24.8",
+            "version": "2.24.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/lingua-contracts.git",
-                "reference": "107ad8038dda23261035eac6ffe29272f5458303"
+                "reference": "fb19cd61e13796bc9439b6616e09963702fe1475"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/lingua-contracts/zipball/107ad8038dda23261035eac6ffe29272f5458303",
-                "reference": "107ad8038dda23261035eac6ffe29272f5458303",
+                "url": "https://api.github.com/repos/survos/lingua-contracts/zipball/fb19cd61e13796bc9439b6616e09963702fe1475",
+                "reference": "fb19cd61e13796bc9439b6616e09963702fe1475",
                 "shasum": ""
             },
             "require": {
@@ -8988,7 +8999,7 @@
             "description": "Shared DTOs and API surface (routes/headers) for Survos Lingua client/server interoperability.",
             "support": {
                 "issues": "https://github.com/survos/lingua-contracts/issues",
-                "source": "https://github.com/survos/lingua-contracts/tree/2.24.8"
+                "source": "https://github.com/survos/lingua-contracts/tree/2.24.16"
             },
             "funding": [
                 {
@@ -8996,7 +9007,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-16T18:53:15+00:00"
+            "time": "2026-08-17T22:24:51+00:00"
         },
         {
             "name": "survos/lingua-core",
@@ -9214,16 +9225,16 @@
         },
         {
             "name": "survos/schema-org-bundle",
-            "version": "2.24.13",
+            "version": "2.24.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/schema-org-bundle.git",
-                "reference": "d422965c92857658331bcc6021756b3d4fe4a7d2"
+                "reference": "cb23491d5d4d1d81ed058502983a4f1420b950cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/schema-org-bundle/zipball/d422965c92857658331bcc6021756b3d4fe4a7d2",
-                "reference": "d422965c92857658331bcc6021756b3d4fe4a7d2",
+                "url": "https://api.github.com/repos/survos/schema-org-bundle/zipball/cb23491d5d4d1d81ed058502983a4f1420b950cd",
+                "reference": "cb23491d5d4d1d81ed058502983a4f1420b950cd",
                 "shasum": ""
             },
             "require": {
@@ -9231,6 +9242,7 @@
                 "spatie/schema-org": "^5.0",
                 "survos/kit-bundle": "^2.6",
                 "symfony/config": "^8.1",
+                "symfony/console": "^8.1",
                 "symfony/dependency-injection": "^8.1",
                 "symfony/event-dispatcher": "^8.1",
                 "symfony/framework-bundle": "^8.1",
@@ -9238,9 +9250,15 @@
                 "twig/twig": "^3.21|^4.0"
             },
             "require-dev": {
+                "doctrine/persistence": "^4.0",
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^13.0",
+                "symfony/http-client": "^8.1",
                 "symfony/twig-bundle": "^8.1"
+            },
+            "suggest": {
+                "doctrine/orm": "For schema:map with no arguments, which lists every Doctrine entity.",
+                "symfony/http-client": "For schema:validate, which fetches a URL to check the JSON-LD it publishes."
             },
             "type": "symfony-bundle",
             "extra": {
@@ -9267,7 +9285,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/schema-org-bundle/issues",
-                "source": "https://github.com/survos/schema-org-bundle/tree/2.24.13"
+                "source": "https://github.com/survos/schema-org-bundle/tree/2.24.20"
             },
             "funding": [
                 {
@@ -9275,20 +9293,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-17T13:09:14+00:00"
+            "time": "2026-08-18T10:58:07+00:00"
         },
         {
             "name": "survos/search-bundle",
-            "version": "2.24.9",
+            "version": "2.24.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/search-bundle.git",
-                "reference": "4cc31ceadf3d4538115dca6d5571ef8c85241ea8"
+                "reference": "643fa65211a022d4dd323ac2019db6e0df7c7b90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/search-bundle/zipball/4cc31ceadf3d4538115dca6d5571ef8c85241ea8",
-                "reference": "4cc31ceadf3d4538115dca6d5571ef8c85241ea8",
+                "url": "https://api.github.com/repos/survos/search-bundle/zipball/643fa65211a022d4dd323ac2019db6e0df7c7b90",
+                "reference": "643fa65211a022d4dd323ac2019db6e0df7c7b90",
                 "shasum": ""
             },
             "require": {
@@ -9366,7 +9384,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/search-bundle/issues",
-                "source": "https://github.com/survos/search-bundle/tree/2.24.9"
+                "source": "https://github.com/survos/search-bundle/tree/2.24.21"
             },
             "funding": [
                 {
@@ -9374,7 +9392,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-16T19:09:49+00:00"
+            "time": "2026-08-18T13:00:13+00:00"
         },
         {
             "name": "survos/seo-bundle",
@@ -9441,16 +9459,16 @@
         },
         {
             "name": "survos/state-bundle",
-            "version": "2.23.1",
+            "version": "2.24.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/state-bundle.git",
-                "reference": "bdc3f8e91364b41aa33c29b994ed823abc5f0a8d"
+                "reference": "0c64829d844e4d9d886fac10a926d484ed09761f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/state-bundle/zipball/bdc3f8e91364b41aa33c29b994ed823abc5f0a8d",
-                "reference": "bdc3f8e91364b41aa33c29b994ed823abc5f0a8d",
+                "url": "https://api.github.com/repos/survos/state-bundle/zipball/0c64829d844e4d9d886fac10a926d484ed09761f",
+                "reference": "0c64829d844e4d9d886fac10a926d484ed09761f",
                 "shasum": ""
             },
             "require": {
@@ -9516,7 +9534,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/state-bundle/issues",
-                "source": "https://github.com/survos/state-bundle/tree/2.23.1"
+                "source": "https://github.com/survos/state-bundle/tree/2.24.16"
             },
             "funding": [
                 {
@@ -9524,7 +9542,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-14T14:19:20+00:00"
+            "time": "2026-08-17T22:25:19+00:00"
         },
         {
             "name": "survos/storage-bundle",
