@@ -1512,7 +1512,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         query_parameter_validation?: bool|Param, // Deprecated: Will be removed in API Platform 5.0. // Default: true
  *     },
  *     jsonapi?: array{
- *         use_iri_as_id?: bool|Param|null, // Set to false to use entity identifiers instead of IRIs as the "id" field in JSON:API responses. Defaults to true; this default will change to false in API Platform 5.0. // Default: null
+ *         use_iri_as_id?: bool|Param, // Set to false to use entity identifiers instead of IRIs as the "id" field in JSON:API responses. // Default: true
  *         allow_client_generated_id?: bool|Param, // Allow client-generated IDs on JSON:API POST per https://jsonapi.org/format/#crud-creating-client-ids. Off by default to prevent id spoofing on public endpoints. // Default: false
  *     },
  *     eager_loading?: bool|array{
@@ -1529,7 +1529,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     enable_scalar?: bool|Param, // Enable Scalar API Reference // Default: true
  *     enable_entrypoint?: bool|Param, // Enable the entrypoint // Default: true
  *     enable_docs?: bool|Param, // Enable the docs // Default: true
- *     enable_head_request_optimization?: bool|Param, // Skip response body construction on HEAD requests so collections are not iterated. Disable to process HEAD identically to GET. // Default: true
  *     enable_profiler?: bool|Param, // Enable the data collector and the WebProfilerBundle integration. // Default: true
  *     enable_phpdoc_parser?: bool|Param, // Enable resource metadata collector using PHPStan PhpDocParser. // Default: true
  *     enable_link_security?: bool|Param, // Deprecated: This option is always enabled and will be removed in API Platform 5.0. // Enable security for Links (sub resources). // Default: true
@@ -1595,7 +1594,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     swagger?: array{
  *         persist_authorization?: bool|Param, // Persist the SwaggerUI Authorization in the localStorage. // Default: false
- *         with_credentials?: bool|Param, // Send credentials (cookies, authorization headers) on Swagger UI cross-origin requests (e.g. when running behind Cloudflare Access). // Default: false
  *         versions?: list<scalar|Param|null>,
  *         api_keys?: array<string, array{ // Default: []
  *             name?: scalar|Param|null, // The name of the header or query parameter containing the api key.
@@ -1712,7 +1710,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         denormalization_context?: mixed,
  *         collect_denormalization_errors?: mixed,
  *         hydra_context?: mixed,
- *         jsonld_context?: mixed,
  *         openapi?: mixed,
  *         validation_context?: mixed,
  *         filters?: mixed,
@@ -1779,7 +1776,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         strict_query_parameter_validation?: mixed,
  *         hide_hydra_operation?: mixed,
  *         json_stream?: mixed,
- *         throw_on_not_found?: mixed,
  *         extra_properties?: mixed,
  *         map?: mixed,
  *         mcp?: mixed,
@@ -2503,6 +2499,11 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             host?: string|Param, // Default: "https://api.decart.ai/v1"
  *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
  *         },
+ *         deepgram?: array{
+ *             api_key?: string|Param,
+ *             endpoint?: string|Param, // Deepgram REST API endpoint // Default: "https://api.deepgram.com/v1/"
+ *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
+ *         },
  *         deepseek?: array{
  *             api_key?: string|Param,
  *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
@@ -2543,6 +2544,11 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             host_url?: string|Param, // Default: "http://127.0.0.1:1234"
  *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
  *         },
+ *         minimax?: array{
+ *             endpoint?: string|Param, // Default: "https://api.minimax.io/v1"
+ *             api_key?: string|Param,
+ *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
+ *         },
  *         mistral?: array{
  *             api_key?: string|Param,
  *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
@@ -2557,6 +2563,13 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             region?: scalar|Param|null, // The region for OpenAI API (EU, US, or null for default) // Default: null
  *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
  *         },
+ *         openresponses?: array<string, array{ // Default: []
+ *             base_url?: string|Param,
+ *             api_key?: string|Param,
+ *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
+ *             model_catalog?: string|Param, // Service ID of the model catalog to use
+ *             responses_path?: string|Param, // Default: "/v1/responses"
+ *         }>,
  *         openrouter?: array{
  *             api_key?: string|Param,
  *             http_client?: string|Param, // Service ID of the HTTP client to use // Default: "http_client"
@@ -2600,8 +2613,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             enable_translation?: bool|Param, // Enable translation for the system prompt // Default: false
  *             translation_domain?: string|Param, // The translation domain for the system prompt // Default: null
  *         },
- *         tools?: bool|array{
- *             enabled?: bool|Param, // Default: true
+ *         tools?: bool|array{ // Tools are opt-in: set to true to inject all services tagged with "ai.tool", or configure an explicit list of tools. When the option is omitted (or set to null or false), no tools are registered.
+ *             enabled?: bool|Param, // Default: false
  *             services?: list<Param|string|array{ // Default: []
  *                 service?: string|Param,
  *                 agent?: string|Param,
@@ -2612,6 +2625,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         },
  *         keep_tool_messages?: bool|Param, // Keep tool messages in the conversation history // Default: false
  *         include_sources?: bool|Param, // Include sources exposed by tools as part of the tool result metadata // Default: false
+ *         max_tool_calls?: scalar|Param|null, // Maximum number of tool calls per agent call, null to disable // Default: 50
  *         fault_tolerant_toolbox?: bool|Param, // Continue the agent run even if a tool call fails // Default: true
  *         speech?: bool|array{ // Speech (TTS/STT) decorator configuration
  *             enabled?: bool|Param, // Default: true
@@ -2656,6 +2670,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             account_id?: string|Param,
  *             api_key?: string|Param,
  *             index_name?: string|Param,
+ *             http_client?: string|Param, // Default: "http_client"
  *             dimensions?: int|Param, // Default: 1536
  *             metric?: string|Param, // Default: "cosine"
  *             endpoint?: string|Param,
@@ -2691,6 +2706,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             endpoint?: string|Param,
  *             api_key?: string|Param,
  *             index_name?: string|Param,
+ *             http_client?: string|Param, // Default: "http_client"
  *             embedder?: string|Param, // Default: "default"
  *             vector_field?: string|Param, // Default: "_vectors"
  *             dimensions?: int|Param, // Default: 1536
@@ -2753,6 +2769,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             table_name?: string|Param,
  *             vector_field?: string|Param, // Default: "embedding"
  *             distance?: "cosine"|"inner_product"|"l1"|"l2"|Param, // Distance metric to use for vector similarity search // Default: "l2"
+ *             lang?: string|Param, // Default: "english"
  *             dbal_connection?: string|Param,
  *             setup_options?: array{
  *                 vector_type?: string|Param, // Default: "vector"
@@ -2810,6 +2827,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             namespace?: string|Param,
  *             database?: string|Param,
  *             table?: string|Param,
+ *             http_client?: string|Param, // Default: "http_client"
  *             vector_field?: string|Param, // Default: "_vectors"
  *             strategy?: string|Param, // Default: "cosine"
  *             dimensions?: int|Param, // Default: 1536
@@ -2819,6 +2837,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             endpoint?: string|Param,
  *             api_key?: string|Param,
  *             collection?: string|Param,
+ *             http_client?: string|Param, // Default: "http_client"
  *             vector_field?: string|Param, // Default: "_vectors"
  *             dimensions?: int|Param, // Default: 1536
  *         }>,
@@ -2925,12 +2944,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         stdio?: bool|Param, // Default: false
  *         http?: bool|Param, // Default: false
  *     },
- *     discovery?: array{
- *         scan_dirs?: list<scalar|Param|null>,
- *         exclude_dirs?: list<scalar|Param|null>,
+ *     apps?: array{ // MCP Apps support (interactive HTML UI resources). Apps are registered with the #[AsMcpApp] attribute.
+ *         enabled?: bool|Param|null, // Default: null
  *     },
  *     http?: array{
  *         path?: scalar|Param|null, // Default: "/_mcp"
+ *         allowed_hosts?: mixed, // DNS rebinding protection hosts (without port). Leave unset to keep the SDK default (localhost only), set an array of hostnames to expose a public MCP server, or false to disable the protection entirely. // Default: null
  *         session?: array{
  *             store?: "file"|"memory"|"cache"|"framework"|Param, // Default: "file"
  *             directory?: scalar|Param|null, // Default: "%kernel.cache_dir%/mcp-sessions"
