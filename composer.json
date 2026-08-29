@@ -105,7 +105,7 @@
         "symfonycasts/verify-email-bundle": "^1.18.0",
         "twig/extra-bundle": "^3.24.0",
         "twig/intl-extra": "^3.26",
-        "twig/twig": "^3.27.1",
+        "twig/twig": "^3.24",
         "zenstruck/class-metadata": "^1.1.1"
     },
     "require-dev": {
