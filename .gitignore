@@ -28,3 +28,11 @@ coverage
 .php-cs-fixer.cache
 /public/js
 .castor.stub.php
+
+# Song/audio data exports -- large, regenerable, not source
+*.jsonl
+*.jsonl.db
+*.jsonl.sidecar.json
+/data/*.csv
+/kpa-seagate-8t.csv
+/.dokku-remote
